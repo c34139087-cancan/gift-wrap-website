@@ -1,0 +1,15 @@
+HEX CODES/BRAND COLORS
+Based on standard color naming conventions and hexadecimal color tools, here are the names for the hex codes provided:
+
+#281545: Dark Purple / Deep Indigo
+#ECDB9F: Pale Gold / Creamy Yellow
+#785678: Muted Violet / Dusty Purple
+#1A0E30: Midnight Blue / Very Dark Violet
+
+Color Palette Summary
+This combination forms a sophisticated, dark-themed palette often used for luxury or creative brands, featuring deep purple/blue tones contrasted with a soft, pale yellow.
+
+#281545 (Dark Purple)
+#1A0E30 (Deep Indigo)
+#785678 (Dusty Violet)
+#ECDB9F (Cream/Gold)
