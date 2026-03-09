@@ -906,12 +906,13 @@ border: 1px solid rgba(195, 149, 89, 0.3);
 }
 
 .nav-logo {
-    height: 45px;
-    width: auto;
-    display: block;
-    border-radius: 50%;
-    background: transparent;
-    border: 2px solid #D4AF37;
+  height: 60px;
+  width: 60px;
+  display: block;
+  border-radius: 8px;
+  background: transparent;
+  border: 4px solid #D4AF37;
+}
 }@media (max-width: 600px) {
   .cta-button {
     padding: 1rem 1.5rem;
