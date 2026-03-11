@@ -1,1 +1,121 @@
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Candida Cook | Cancan's Corner Gift Wrapping</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
+            <h1>Candida Cook</h1>
+            <p class="tagline">Cancan's Corner Gift Wrapping</p>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="about.html" class="nav-link">About</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle">Services</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#luxury">Luxury Wrapping</a></li>
+                    <li><a href="#custom">Custom Designs</a></li>
+                    <li><a href="#events">Event Packages</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle">Gallery</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#press">Press & Features</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="business-card.html" class="nav-link">Business Card</a>
+            </li>
+            <li class="nav-item">
+                <a href="contact.html" class="nav-link">Contact</a>
+            </li>
+        </ul>
+        <button class="mobile-toggle" id="mobileToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <section class="about">
+        <div class="about-container">
+            <div class="about-image">
+                <div class="image-frame">
+                    <img src="CandidaCook.jpg" alt="Candida Cook - Gift Wrapping Artist" class="profile-photo">
+                </div>
+            </div>
+            <div class="about-text">
+                <h3 class="section-title">About Me</h3>
+                <p>
+                    Hello! I'm Candida Cook, owner of Cancan's Corner Gift Wrapping Service. I believe
+                    that the presentation of a gift is just as important as what's inside. With years of
+                    experience in gift wrapping artistry, I've transformed many ordinary packages
+                    into extraordinary works of art.
+                </p>
+                <p>
+                    My passion lies in creating beautiful wrapping designs that capture the
+                    essence of celebration, love, and thoughtfulness. Every ribbon, every fold,
+                    every detail is crafted with care and precision.
+                </p>
+                <div class="skills-tags">
+                    <span class="tag">Custom Design</span>
+                    <span class="tag">Luxury Materials</span>
+                    <span class="tag">Event Styling</span>
+                    <span class="tag">Sustainable Options</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>© 2025 Candida Cook | Cancan's Corner Gift Wrapping</p>
+        <p class="footer-note">"Pretty bows & tidy lines, Cancan's Corner always shines!"</p>
+    </footer>
+
+    <script>
+        // Confetti animation
+        const container = document.getElementById('confettiContainer');
+        const colors = ['#f5d79a', '#ecdb9f', '#866e9f', '#c39559'];
+        for (let i = 0; i < 30; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('confetti');
+            dot.style.left = Math.random() * 100 + '%';
+            dot.style.top = Math.random() * 100 + '%';
+            dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+            dot.style.animationDuration = (Math.random() * 10 + 5) + 's';
+            dot.style.animationDelay = (Math.random() * 5) + 's';
+            dot.style.width = dot.style.height = (Math.random() * 8 + 4) + 'px';
+            container.appendChild(dot);
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobileToggle').addEventListener('click', function () {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>
