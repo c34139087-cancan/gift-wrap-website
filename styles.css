@@ -235,7 +235,7 @@ body {
     font-family: var(--font-body);
     font-size: 1.1rem;
     font-weight: 600;
-    padding: 1rem 2.5rem;
+    padding: 0.75rem 1.5rem; font-size: 0.95rem; white-space: nowrap;
     border: none;
     border-radius: var(--radius-lg);
     cursor: pointer;
@@ -763,7 +763,7 @@ border: 1px solid rgba(195, 149, 89, 0.3);
     font-family: var(--font-body);
     font-size: 1.1rem;
     font-weight: 600;
-    padding: 1rem 2.5rem;
+    padding: 0.75rem 1.5rem; font-size: 0.95rem; white-space: nowrap;
     border: none;
     border-radius: var(--radius-lg);
     cursor: pointer;
