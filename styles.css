@@ -223,7 +223,7 @@ body {
 }
 
 .hero-description {
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: var(--pastel-yellow);
     margin-bottom: var(--spacing-md);
     line-height: 1.8;
@@ -627,7 +627,7 @@ border: 1px solid rgba(195, 149, 89, 0.3);
 }
 
 .card-title {
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: var(--pastel-yellow);
     font-weight: 400;
     margin-bottom: 0.5rem;
