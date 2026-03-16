@@ -8,13 +8,219 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap"
         rel="stylesheet">
+    <style>
+        /* GALLERY PAGE STYLES */
+        .gallery-hero {
+            text-align: center;
+            padding: 60px 20px 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .gallery-hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #f5d79a;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-hero p {
+            color: #ecdb9f;
+            font-size: 1.15rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .gallery-divider {
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #f5d79a, transparent);
+            margin: 1.2rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* GALLERY GRID */
+        .gallery-section {
+            padding: 40px 5% 80px;
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        /* Make first photo span full width for a feature look */
+        .gallery-item:first-child {
+            grid-column: 1 / -1;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid #866e9f;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease;
+            background: rgba(64, 41, 91, 0.6);
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px) scale(1.01);
+            border-color: #f5d79a;
+            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(245, 215, 154, 0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:first-child img {
+            height: 480px;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Overlay on hover */
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(32, 17, 60, 0.85) 0%,
+                rgba(32, 17, 60, 0.2) 50%,
+                transparent 100%
+            );
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 24px;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .overlay-text {
+            color: #f5d79a;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+        }
+
+        /* LIGHTBOX */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 5, 20, 0.92);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(6px);
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-img {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 16px;
+            box-shadow: 0 0 60px rgba(245, 215, 154, 0.25), 0 0 0 3px #f5d79a;
+            object-fit: contain;
+            animation: lightboxIn 0.3s ease;
+        }
+
+        @keyframes lightboxIn {
+            from { opacity: 0; transform: scale(0.92); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        .lightbox-close {
+            position: fixed;
+            top: 20px;
+            right: 28px;
+            font-size: 2.5rem;
+            color: #f5d79a;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s ease, transform 0.2s ease;
+            background: none;
+            border: none;
+            font-family: sans-serif;
+        }
+
+        .lightbox-close:hover {
+            color: #fff;
+            transform: scale(1.2);
+        }
+
+        /* BACK LINK */
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #D4AF37;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            position: relative;
+            z-index: 10;
+        }
+
+        .back-link:hover {
+            color: #f5d79a;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 640px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item:first-child {
+                grid-column: 1;
+            }
+
+            .gallery-hero h2 {
+                font-size: 2rem;
+            }
+
+            .gallery-item img,
+            .gallery-item:first-child img {
+                height: 280px;
+            }
+        }
+    </style>
 </head>
 <body>
+
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-brand">
-           <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
-            <h1>Candida Cook</h1>
-            <p class="tagline">Cancan's Corner Gift Wrapping</p>
+            <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
+            <div>
+                <h1>Candida Cook</h1>
+                <p class="tagline">Cancan's Corner Gift Wrapping</p>
+            </div>
         </div>
         <ul class="nav-menu">
             <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
@@ -25,15 +231,77 @@
             <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
         </ul>
     </nav>
-    <section style="text-align: center; padding: 100px 20px; color: #D4AF37;">
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 3rem;">Gallery - Coming Soon</h2>
-        <p style="color: white; font-size: 1.2rem; margin-top: 20px;">Beautiful photos coming your way!</p>
-        <br>
-        <a href="index.html" style="color: #D4AF37; font-size: 1.1rem;">← Back to Homepage</a>
+
+    <!-- GALLERY HERO HEADER -->
+    <div class="gallery-hero">
+        <h2>🎁 Gift Wrapping Gallery</h2>
+        <p>A peek at the pretty bows & tidy lines!</p>
+        <div class="gallery-divider"></div>
+    </div>
+
+    <!-- GALLERY GRID -->
+    <section class="gallery-section">
+        <div class="gallery-grid">
+
+            <div class="gallery-item" onclick="openLightbox('present4.jpg')">
+                <img src="present4.jpg" alt="Gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay">
+                    <span class="overlay-text">Click to view</span>
+                </div>
+            </div>
+
+            <div class="gallery-item" onclick="openLightbox('present1.png')">
+                <img src="present1.png" alt="Gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay">
+                    <span class="overlay-text">Click to view</span>
+                </div>
+            </div>
+
+            <div class="gallery-item" onclick="openLightbox('present2.jpg')">
+                <img src="present2.jpg" alt="Gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay">
+                    <span class="overlay-text">Click to view</span>
+                </div>
+            </div>
+
+            <div class="gallery-item" onclick="openLightbox('present3.jpg')">
+                <img src="present3.jpg" alt="Gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay">
+                    <span class="overlay-text">Click to view</span>
+                </div>
+            </div>
+
+        </div>
     </section>
-     <footer class="footer">
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+        <img class="lightbox-img" id="lightbox-img" src="" alt="Gallery photo enlarged">
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
         <p>© 2025 Candida Cook | Cancan's Corner Gift Wrapping</p>
         <p class="footer-note">"Pretty bows & tidy lines, Cancan's Corner always shines!"</p>
     </footer>
+
+    <script>
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.getElementById('lightbox-img').src = '';
+        }
+
+        // Close with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+
 </body>
 </html>
