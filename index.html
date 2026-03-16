@@ -30,19 +30,11 @@
                 <a href="about.html" class="nav-link">About</a>
             </li>
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle">Services</a>
+                <a href="services.html" class="nav-link dropdown-toggle">Services</a>
                 <ul class="dropdown-menu">
-                    <li><a href="#luxury">Luxury Wrapping</a></li>
-                    <li><a href="#custom">Custom Designs</a></li>
-                    <li><a href="#events">Event Packages</a></li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle">Gallery</a>
-                <ul class="dropdown-menu">
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#press">Press & Features</a></li>
+                    <li><a href="services.html#luxury">Luxury Wrapping</a></li>
+                    <li><a href="services.html#custom">Custom Designs</a></li>
+                    <li><a href="services.html#events">Event Packages</a></li>
                 </ul>
             </li>
             <li class="nav-item">
@@ -73,35 +65,19 @@
             <img src="purple-gifts.jpg" alt="Purple and Gold Gifts" class="hero-image">
         </div>
     </section>
-X
-    <section class="services" id="services">
-        <h3 class="section-title centered">What I Offer</h3>
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="card-icon">🎁</div>
-                <h4>Luxury Wrapping</h4>
-                <p>Premium materials, exquisite finishes, and attention to every detail for your most special gifts.</p>
-            </div>
-            <div class="service-card">
-                <div class="card-icon">✨</div>
-                <h4>Custom Designs</h4>
-                <p>Personalized wrapping solutions tailored to your event, brand, or personal style.</p>
-            </div>
-            <div class="service-card">
-                <div class="card-icon">🎉</div>
-                <h4>Event Packages</h4>
-                <p>Complete gift presentation services for weddings, corporate events, and celebrations.</p>
-            </div>
-        </div>
 
-        <div class="card-badge">
-            <p>✨ Making Every Gift Special ✨</p>
-        </div>
-    </section>
- <footer class="footer">
+    <footer class="footer">
         <p>© 2025 Candida Cook | Cancan's Corner Gift Wrapping</p>
         <p class="footer-note">"Pretty bows & tidy lines, Cancan's Corner always shines!"</p>
     </footer>
+
+    <script>
+        const toggle = document.getElementById('mobileToggle');
+        const menu = document.querySelector('.nav-menu');
+        toggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+    </script>
 </body>
 
 </html>

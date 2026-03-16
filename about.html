@@ -115,6 +115,15 @@
             document.querySelector('.nav-menu').classList.toggle('active');
         });
     </script>
+
+<script>
+  const toggle = document.getElementById('mobileToggle');
+  const menu = document.querySelector('.nav-menu');
+  toggle.addEventListener('click', () => {
+    menu.classList.toggle('active');
+  });
+</script>
 </body>
 
 </html>
+
