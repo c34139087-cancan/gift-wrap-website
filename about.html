@@ -37,11 +37,11 @@
                     <li><a href="#events">Event Packages</a></li>
                 </ul>
             </li>
-           
-        </li>
-            <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+         <li class="nav-item">
+                <a href="gallery.html" class="nav-link">Gallery</a>
+            </li>
             <li class="nav-item">
-                <a href="business-card.html"
+                <a href="business-card.html" class="nav-link">Business Card</a>
             </li>
             <li class="nav-item">
                 <a href="contact.html" class="nav-link">Contact</a>
@@ -110,6 +110,15 @@
             document.querySelector('.nav-menu').classList.toggle('active');
         });
     </script>
+
+<script>
+  const toggle = document.getElementById('mobileToggle');
+  const menu = document.querySelector('.nav-menu');
+  toggle.addEventListener('click', () => {
+    menu.classList.toggle('active');
+  });
+</script>
 </body>
 
 </html>
+
