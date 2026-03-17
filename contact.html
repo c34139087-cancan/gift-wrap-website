@@ -518,7 +518,54 @@
                     <input type="tel" name="quote_phone" placeholder="(555) 123-4567"/>
                 </div>
             </div>
+          <div class="form-group">
+                <label>Email Address <span class="req">*</span></label>
+                <input type="email" name="quote_email" placeholder="you@email.com"/>
+            </div>
             <div class="form-group">
+                <label>Description of Item(s) <span class="req">*</span></label>
+                <textarea name="quote_desc" placeholder="Describe your items — shape, material, anything unusual about them…"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Number of Items <span class="req">*</span></label>
+                    <input type="number" name="quote_qty" placeholder="e.g. 3" min="1"/>
+                </div>
+                <div class="form-group">
+                    <label>Gift Size / Dimensions</label>
+                    <input type="text" name="quote_size" placeholder="e.g. 24 inches wide"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Type of Event</label>
+                <select name="quote_event">
+                    <option value="" disabled selected>Select event type…</option>
+                    <option>Birthday</option>
+                    <option>Holiday</option>
+                    <option>Baby Shower</option>
+                    <option>Wedding</option>
+                    <option>Anniversary</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Preferred Contact Method</label>
+                <select name="quote_contact">
+                    <option value="" disabled selected>How should I reach you?</option>
+                    <option>Email</option>
+                    <option>Phone Call</option>
+                    <option>Text Message</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Special Requests or Notes</label>
+                <textarea name="quote_notes" placeholder="Anything else I should know about your items or the occasion…"></textarea>
+            </div>
+            <button class="send-btn" onclick="sendQuote()">💬 Get My Quote</button>
+        </div>
+    </div>
+
+    <footer class="footer">
         <p>© 2025 Candida Cook | Cancan's Corner Gift Wrapping</p>
         <p class="footer-note">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!"</p>
     </footer>
