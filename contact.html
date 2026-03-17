@@ -418,7 +418,107 @@
         </div>
     </div>
 
-    <footer class="footer">
+    <!-- Booking Form Section -->
+    <div class="contact-page-header" style="padding-top: 1rem;">
+        <h2>📅 Book an Appointment</h2>
+        <p>Schedule your drop off time — I'll be ready for you!</p>
+        <div class="gold-divider"></div>
+    </div>
+
+    <div class="contact-layout" style="grid-template-columns: 1fr;">
+        <div class="form-card">
+            <h3>Booking Request</h3>
+            <p class="form-subtitle">Fill out the form below and I'll confirm your appointment shortly.</p>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Full Name <span class="req">*</span></label>
+                    <input type="text" name="book_name" placeholder="Your full name"/>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number <span class="req">*</span></label>
+                    <input type="tel" name="book_phone" placeholder="(555) 123-4567"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Email Address <span class="req">*</span></label>
+                <input type="email" name="book_email" placeholder="you@email.com"/>
+            </div>
+            <div class="form-group">
+                <label>Service Type <span class="req">*</span></label>
+                <select name="book_service">
+                    <option value="" disabled selected>Select a service…</option>
+                    <option>Standard Gift Wrapping ($3–$8 per gift)</option>
+                    <option>Special Occasion Wrapping (starting at $10)</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Drop Off Date <span class="req">*</span></label>
+                    <input type="date" name="book_date"/>
+                </div>
+                <div class="form-group">
+                    <label>Drop Off Time <span class="req">*</span></label>
+                    <input type="time" name="book_time"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Number of Gifts <span class="req">*</span></label>
+                    <input type="number" name="book_qty" placeholder="e.g. 5" min="1"/>
+                </div>
+                <div class="form-group">
+                    <label>Gift Size</label>
+                    <select name="book_size">
+                        <option value="" disabled selected>Select size…</option>
+                        <option>Small</option>
+                        <option>Medium</option>
+                        <option>Large</option>
+                        <option>Mixed Sizes</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Type of Event</label>
+                <select name="book_event">
+                    <option value="" disabled selected>Select event type…</option>
+                    <option>Birthday</option>
+                    <option>Holiday</option>
+                    <option>Baby Shower</option>
+                    <option>Wedding</option>
+                    <option>Anniversary</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Special Requests or Notes</label>
+                <textarea name="book_notes" placeholder="Any special wrapping requests, ribbon colors, or details I should know…"></textarea>
+            </div>
+            <button class="send-btn" onclick="sendBooking()">📅 Book My Appointment</button>
+        </div>
+    </div>
+
+    <!-- Quote Request Form Section -->
+    <div class="contact-page-header" style="padding-top: 1rem;">
+        <h2>💬 Get a Custom Quote</h2>
+        <p>Large or unusual items? Let's talk pricing!</p>
+        <div class="gold-divider"></div>
+    </div>
+
+    <div class="contact-layout" style="grid-template-columns: 1fr;">
+        <div class="form-card">
+            <h3>Quote Request</h3>
+            <p class="form-subtitle">Tell me about your items and I'll get back to you with a custom price.</p>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Full Name <span class="req">*</span></label>
+                    <input type="text" name="quote_name" placeholder="Your full name"/>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number <span class="req">*</span></label>
+                    <input type="tel" name="quote_phone" placeholder="(555) 123-4567"/>
+                </div>
+            </div>
+            <div class="form-group">
         <p>© 2025 Candida Cook | Cancan's Corner Gift Wrapping</p>
         <p class="footer-note">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!"</p>
     </footer>
@@ -449,6 +549,76 @@
             window.location.href = 'mailto:c34139087@gmail.com?subject=' + subject + '&body=' + body;
 
             // Show success popup
+            document.getElementById('successModal').classList.add('active');
+        }
+
+        function sendBooking() {
+            const name    = document.querySelector('input[name="book_name"]').value.trim();
+            const phone   = document.querySelector('input[name="book_phone"]').value.trim();
+            const email   = document.querySelector('input[name="book_email"]').value.trim();
+            const service = document.querySelector('select[name="book_service"]').value;
+            const date    = document.querySelector('input[name="book_date"]').value;
+            const time    = document.querySelector('input[name="book_time"]').value;
+            const qty     = document.querySelector('input[name="book_qty"]').value;
+            const size    = document.querySelector('select[name="book_size"]').value;
+            const event   = document.querySelector('select[name="book_event"]').value;
+            const notes   = document.querySelector('textarea[name="book_notes"]').value.trim();
+
+            if (!name || !phone || !email || !service || !date || !time || !qty) {
+                alert('Please fill in all required fields before booking.');
+                return;
+            }
+
+            const subject = encodeURIComponent('Booking Request — Cancan\'s Corner');
+            const body = encodeURIComponent(
+                'BOOKING REQUEST\n\n' +
+                'Name: ' + name + '\n' +
+                'Phone: ' + phone + '\n' +
+                'Email: ' + email + '\n' +
+                'Service: ' + service + '\n' +
+                'Drop Off Date: ' + date + '\n' +
+                'Drop Off Time: ' + time + '\n' +
+                'Number of Gifts: ' + qty + '\n' +
+                'Gift Size: ' + (size || 'Not specified') + '\n' +
+                'Event Type: ' + (event || 'Not specified') + '\n' +
+                'Notes: ' + (notes || 'None')
+            );
+
+            window.location.href = 'mailto:c34139087@gmail.com?subject=' + subject + '&body=' + body;
+            document.getElementById('successModal').classList.add('active');
+        }
+
+        function sendQuote() {
+            const name    = document.querySelector('input[name="quote_name"]').value.trim();
+            const phone   = document.querySelector('input[name="quote_phone"]').value.trim();
+            const email   = document.querySelector('input[name="quote_email"]').value.trim();
+            const desc    = document.querySelector('textarea[name="quote_desc"]').value.trim();
+            const qty     = document.querySelector('input[name="quote_qty"]').value;
+            const size    = document.querySelector('input[name="quote_size"]').value.trim();
+            const event   = document.querySelector('select[name="quote_event"]').value;
+            const contact = document.querySelector('select[name="quote_contact"]').value;
+            const notes   = document.querySelector('textarea[name="quote_notes"]').value.trim();
+
+            if (!name || !phone || !email || !desc || !qty) {
+                alert('Please fill in all required fields before requesting a quote.');
+                return;
+            }
+
+            const subject = encodeURIComponent('Quote Request — Cancan\'s Corner');
+            const body = encodeURIComponent(
+                'QUOTE REQUEST\n\n' +
+                'Name: ' + name + '\n' +
+                'Phone: ' + phone + '\n' +
+                'Email: ' + email + '\n' +
+                'Item Description: ' + desc + '\n' +
+                'Number of Items: ' + qty + '\n' +
+                'Size/Dimensions: ' + (size || 'Not specified') + '\n' +
+                'Event Type: ' + (event || 'Not specified') + '\n' +
+                'Preferred Contact: ' + (contact || 'Not specified') + '\n' +
+                'Notes: ' + (notes || 'None')
+            );
+
+            window.location.href = 'mailto:c34139087@gmail.com?subject=' + subject + '&body=' + body;
             document.getElementById('successModal').classList.add('active');
         }
     </script>
