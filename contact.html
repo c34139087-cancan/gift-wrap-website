@@ -465,4 +465,12 @@
             dot.style.left   = Math.random() * 100 + '%';
             dot.style.top    = Math.random() * 100 + '%';
             dot.style.width  = dot.style.height = (Math.random() * 8 + 4) + 'px';
-            dot.style.background = colors[Math.fl
+            dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+            dot.style.animationDuration = (Math.random() * 10 + 8) + 's';
+            dot.style.animationDelay    = (Math.random() * 5) + 's';
+            container.appendChild(dot);
+        }
+    </script>
+
+</body>
+</html>
