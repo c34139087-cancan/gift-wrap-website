@@ -398,7 +398,7 @@
         <div class="form-card">
             <h3>Quote Request</h3>
             <p class="form-subtitle">Tell me about your items and I'll get back to you with a custom price.</p>
-            <form action="https://formspree.io/f/xpqykjkn" method="POST">
+            <form action="https://formspree.io/f/xpqykjkn" method="POST" class="quote-form">
             <input type="hidden" name="_subject" value="Quote Request — Cancan's Corner">
             <div class="form-row">
                 <div class="form-group">
@@ -453,7 +453,7 @@
                 <label>Special Requests or Notes</label>
                 <textarea name="quote_notes" placeholder="Anything else I should know about your items or the occasion…"></textarea>
             </div>
-            <button type="submit" class="send-btn">💬 Get My Quote</button>
+            <button type="submit" class="send-btn" onclick="return validateQuoteForm()">💬 Get My Quote</button>
             </form>
         </div>
     </div>
@@ -501,6 +501,67 @@ function validateContactForm() {
         valid = false;
     } else if (message.value.trim().length < 10) {
         showError(message, 'Please give us a little more detail so we can help!');
+        valid = false;
+    }
+
+    return valid;
+}
+
+function validateQuoteForm() {
+    let valid = true;
+
+    // Clear old errors
+    document.querySelectorAll('.quote-form .error-msg').forEach(e => e.remove());
+    document.querySelectorAll('.quote-form .input-error').forEach(e => e.classList.remove('input-error'));
+
+    const name = document.querySelector('.quote-form [name="quote_name"]');
+    const phone = document.querySelector('.quote-form [name="quote_phone"]');
+    const email = document.querySelector('.quote-form [name="quote_email"]');
+    const desc = document.querySelector('.quote-form [name="quote_desc"]');
+    const qty = document.querySelector('.quote-form [name="quote_qty"]');
+
+    // Full Name - required
+    if (!name.value.trim()) {
+        showError(name, 'Please enter your full name');
+        valid = false;
+    }
+
+    // Phone - required, 10 digits
+    if (!phone.value.trim()) {
+        showError(phone, 'Please enter your phone number');
+        valid = false;
+    } else {
+        const digits = phone.value.replace(/\D/g, '');
+        if (digits.length < 10) {
+            showError(phone, 'Please enter a valid phone number (example: 555-123-4567)');
+            valid = false;
+        }
+    }
+
+    // Email - required, valid format
+    if (!email.value.trim()) {
+        showError(email, 'We need your email to send you a quote');
+        valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        showError(email, 'Please enter a valid email (example: you@email.com)');
+        valid = false;
+    }
+
+    // Description - required, min 10 characters
+    if (!desc.value.trim()) {
+        showError(desc, 'Please describe the items you need wrapped');
+        valid = false;
+    } else if (desc.value.trim().length < 10) {
+        showError(desc, 'Please give us more details so we can give you an accurate quote');
+        valid = false;
+    }
+
+    // Number of Items - required, greater than 0
+    if (!qty.value) {
+        showError(qty, 'Please enter the number of items');
+        valid = false;
+    } else if (parseInt(qty.value) < 1) {
+        showError(qty, 'Please enter a valid number greater than 0');
         valid = false;
     }
 
