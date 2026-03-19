@@ -126,9 +126,17 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(245, 215, 154, 0.3);
         }
-        .send-btn:hover {
+     .send-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 30px rgba(245, 215, 154, 0.5);
+        }
+        .error-msg {
+            color: #ff6b6b;
+            font-size: 0.78rem;
+            margin-top: 0.3rem;
+        }
+        .input-error {
+            border-color: #ff6b6b !important;
         }
         .contact-sidebar { display: flex; flex-direction: column; gap: 1.4rem; }
         .side-card {
@@ -273,8 +281,8 @@
         <div class="form-card">
             <h3>Send a Message</h3>
             <p class="form-subtitle">Tell me about your project and I'll get back to you shortly.</p>
-            <form action="https://formspree.io/f/xpqykjkn" method="POST">
-            <input type="hidden" name="_subject" value="New Message — Cancan's Corner">
+           <form action="https://formspree.io/f/xpqykjkn" method="POST" class="contact-form">
+            <input type="hidden" name="_subject" value="New Message — Cancan's Corner"> 
             <div class="form-row">
                 <div class="form-group">
                     <label>Name <span class="req">*</span></label>
@@ -303,7 +311,7 @@
                 <label>Message <span class="req">*</span></label>
                 <textarea name="message" placeholder="What can Cancan's Corner do for you? Share your wrapping details — number of gifts, gift sizes, event date, and any special requests. The more you tell me the better I can help! 🎁" required></textarea>
             </div>
-            <button type="submit" class="send-btn">✉ Send Message</button>
+         <button type="submit" class="send-btn" onclick="return validateContactForm()">✉ Send Message</button>
             </form>
         </div>
 
@@ -450,7 +458,71 @@
         </div>
     </div>
 
-    <footer class="footer">
+    <script>
+function validateContactForm() {
+    let valid = true;
+
+    // Clear old errors
+    document.querySelectorAll('.contact-form .error-msg').forEach(e => e.remove());
+    document.querySelectorAll('.contact-form .input-error').forEach(e => e.classList.remove('input-error'));
+
+    const name = document.querySelector('.contact-form [name="name"]');
+    const phone = document.querySelector('.contact-form [name="phone"]');
+    const email = document.querySelector('.contact-form [name="email"]');
+    const message = document.querySelector('.contact-form [name="message"]');
+
+    // Name - required
+    if (!name.value.trim()) {
+        showError(name, 'Please enter your full name');
+        valid = false;
+    }
+
+    // Phone - optional but must be 10 digits if entered
+    if (phone.value.trim()) {
+        const digits = phone.value.replace(/\D/g, '');
+        if (digits.length < 10) {
+            showError(phone, 'Please enter a valid phone number (example: 555-123-4567)');
+            valid = false;
+        }
+    }
+
+    // Email - required, valid format
+    if (!email.value.trim()) {
+        showError(email, 'We need your email to get back to you');
+        valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        showError(email, 'Please enter a valid email (example: you@email.com)');
+        valid = false;
+    }
+
+    // Message - required, min 10 characters
+    if (!message.value.trim()) {
+        showError(message, 'Please tell us how we can help you');
+        valid = false;
+    } else if (message.value.trim().length < 10) {
+        showError(message, 'Please give us a little more detail so we can help!');
+        valid = false;
+    }
+
+    return valid;
+}
+
+function showError(field, msg) {
+    field.classList.add('input-error');
+    const err = document.createElement('div');
+    err.className = 'error-msg';
+    err.textContent = msg;
+    field.parentNode.appendChild(err);
+
+    // Clear error when user starts typing
+    field.addEventListener('input', () => {
+        field.classList.remove('input-error');
+        err.remove();
+    }, { once: true });
+}
+</script>
+
+<footer class="footer">
         <p>© 2025 Candida Cook | Cancan's Corner Gift Wrapping</p>
         <p class="footer-note">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!"</p>
     </footer>
