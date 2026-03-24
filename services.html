@@ -7,11 +7,9 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ── Services page extra styles ── */
         .services-hero {
             padding: 80px 40px 40px;
             text-align: center;
@@ -29,8 +27,6 @@
             margin: 0 auto;
             line-height: 1.7;
         }
-
-        /* ── What I Offer cards (matches homepage style) ── */
         .services-section {
             padding: 20px 40px 60px;
         }
@@ -38,8 +34,6 @@
             text-align: center;
             margin-bottom: 40px;
         }
-
-        /* ── Pricing section ── */
         .pricing-section {
             padding: 60px 40px;
             background: rgba(0,0,0,0.2);
@@ -57,7 +51,6 @@
             font-size: 1rem;
             margin-bottom: 48px;
         }
-
         .pricing-grid {
             display: flex;
             justify-content: center;
@@ -66,7 +59,6 @@
             max-width: 1000px;
             margin: 0 auto;
         }
-
         .pricing-card {
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(236,219,159,0.25);
@@ -100,8 +92,15 @@
             padding: 4px 16px;
             border-radius: 20px;
         }
-        .pricing-card .card-icon {
-            font-size: 2.2rem;
+        .card-icon-fa {
+            font-size: 2rem;
+            color: #ECDB9F;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .service-card .card-icon-fa {
+            font-size: 2rem;
+            color: #ECDB9F;
             margin-bottom: 14px;
             display: block;
         }
@@ -145,8 +144,6 @@
             background: #ECDB9F;
             color: #1A0E30;
         }
-
-        /* ── CTA strip ── */
         .services-cta {
             text-align: center;
             padding: 60px 40px;
@@ -156,7 +153,6 @@
             font-size: 1.1rem;
             margin-bottom: 24px;
         }
-
         @media (max-width: 640px) {
             .services-hero,
             .services-section,
@@ -178,7 +174,7 @@
         <ul class="nav-menu">
             <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
             <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-           <li class="nav-item"><a href="services.html" class="nav-link active">Services</a></li>
+            <li class="nav-item"><a href="services.html" class="nav-link active">Services</a></li>
             <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
             <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
         </ul>
@@ -189,35 +185,32 @@
         </button>
     </nav>
 
-    <!-- Page Header -->
     <div class="services-hero">
         <h2>Gift Wrapping Services</h2>
         <p>From a single special gift to full event packages — every wrap is crafted with care, artistry, and a personal touch.</p>
     </div>
 
-    <!-- What I Offer (matches homepage cards style) -->
     <section class="services-section" id="services">
         <h3 class="section-title centered">What I Offer</h3>
         <div class="services-grid">
             <div class="service-card" id="luxury">
-                <div class="card-icon">🎁</div>
+                <i class="fa-solid fa-crown card-icon-fa"></i>
                 <h4>Luxury Wrapping</h4>
                 <p>Premium materials, exquisite finishes, and attention to every detail for your most special gifts.</p>
             </div>
             <div class="service-card" id="custom">
-                <div class="card-icon">✨</div>
+                <i class="fa-solid fa-wand-magic-sparkles card-icon-fa"></i>
                 <h4>Custom Designs</h4>
                 <p>Personalized wrapping solutions tailored to your event, brand, or personal style.</p>
             </div>
             <div class="service-card" id="events">
-                <div class="card-icon">🎉</div>
+                <i class="fa-solid fa-champagne-glasses card-icon-fa"></i>
                 <h4>Event Packages</h4>
                 <p>Complete gift presentation services for weddings, corporate events, and celebrations.</p>
             </div>
         </div>
     </section>
 
-    <!-- Pricing -->
     <section class="pricing-section">
         <h3>Pricing</h3>
         <p class="pricing-subtitle">Simple, affordable pricing for every occasion</p>
@@ -225,40 +218,39 @@
         <div class="pricing-grid">
 
             <div class="pricing-card">
-                <span class="card-icon">🎀</span>
+                <i class="fa-solid fa-ribbon card-icon-fa"></i>
                 <h4>Standard Gift Wrapping</h4>
                 <p>Beautifully wrapped gifts with clean folds, crisp edges, and a finished ribbon.</p>
                 <div class="pricing-amount">$3 – $8</div>
                 <p class="pricing-note">per gift</p>
-                <a href="contact.html" class="pricing-btn">Book Now</a>
+                <a href="contact.html#get-in-touch" class="pricing-btn">Book Now</a>
             </div>
 
             <div class="pricing-card featured">
                 <span class="featured-badge">Most Popular</span>
-                <span class="card-icon">🌟</span>
+                <i class="fa-solid fa-star card-icon-fa"></i>
                 <h4>Special Occasion Wrapping</h4>
                 <p>Perfect for holidays, birthdays, baby showers, and celebrations. Premium paper and extras included.</p>
                 <div class="pricing-amount">Starting at $10</div>
                 <p class="pricing-note">per gift</p>
-                <a href="contact.html" class="pricing-btn">Book Now</a>
+                <a href="contact.html#get-in-touch" class="pricing-btn">Book Now</a>
             </div>
 
             <div class="pricing-card">
-                <span class="card-icon">📦</span>
+                <i class="fa-solid fa-box-open card-icon-fa"></i>
                 <h4>Large or Custom Items</h4>
                 <p>Oversized, unusual, or uniquely shaped gifts wrapped carefully with expert presentation.</p>
                 <div class="pricing-amount">Custom Quote</div>
                 <p class="pricing-note">contact for pricing</p>
-                <a href="contact.html" class="pricing-btn">Get a Quote</a>
+                <a href="contact.html#get-in-touch" class="pricing-btn">Get a Quote</a>
             </div>
 
         </div>
     </section>
 
-    <!-- CTA -->
     <div class="services-cta">
         <p>Ready to make your gifts unforgettable?</p>
-        <a href="contact.html" class="cta-button">Text To Schedule</a>
+        <a href="contact.html#get-in-touch" class="cta-button">Get In Touch</a>
     </div>
 
     <footer class="footer">
