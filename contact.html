@@ -308,14 +308,12 @@
             align-items: center;
             margin-bottom: 1rem;
         }
-        .info-row:last-child { margin-bottom: 0; }
         .info-icon {
             width: 36px; height: 36px; flex-shrink: 0;
             background: rgba(245, 215, 154, 0.1);
             border: 1px solid rgba(245, 215, 154, 0.25);
             border-radius: var(--radius-sm);
             display: flex; align-items: center; justify-content: center;
-            font-size: 1rem;
         }
         .info-label {
             font-size: 0.65rem;
@@ -326,6 +324,11 @@
         .info-value { font-size: 0.9rem; color: var(--pastel-yellow); margin-top: 0.1rem; }
         .info-value a { color: var(--pastel-yellow); text-decoration: none; transition: color 0.2s; }
         .info-value a:hover { color: var(--pastel-orange); }
+        .contact-divider {
+            height: 1px;
+            background: rgba(245, 215, 154, 0.15);
+            margin: 1rem 0;
+        }
         .schedule-btn {
             display: block;
             text-align: center;
@@ -361,7 +364,7 @@
         }
         .qr-img-wrap img { width: 130px; height: 130px; display: block; }
 
-        /* ── Confetti animation (matches about.html) ── */
+        /* ── Confetti animation ── */
         @keyframes float {
             0%   { transform: translateY(0px) rotate(0deg);   opacity: 0.7; }
             50%  { transform: translateY(-30px) rotate(180deg); opacity: 1; }
@@ -412,7 +415,7 @@
         <div class="gold-divider"></div>
     </div>
 
-    <!-- Main layout: combined form + sidebar -->
+    <!-- Main layout: form + sidebar -->
     <div class="contact-layout">
 
         <!-- ═══ COMBINED FORM ═══ -->
@@ -428,11 +431,9 @@
 
             <form action="https://formspree.io/f/xpqykjkn" method="POST">
 
-                <!-- Hidden field: tracks which mode was selected -->
                 <input type="hidden" name="_subject" id="form-subject" value="New Message — Cancan's Corner">
                 <input type="hidden" name="form_purpose" id="form-purpose-field" value="Message">
 
-                <!-- ── ALWAYS VISIBLE: Basic contact info ── -->
                 <div class="form-section-label">Your Info</div>
 
                 <div class="form-row">
@@ -478,7 +479,7 @@
                     <textarea name="message" id="message-field" placeholder="What can Cancan's Corner do for you? Share your wrapping details — number of gifts, gift sizes, event date, and any special requests. The more you tell me the better I can help! 🎁" required></textarea>
                 </div>
 
-                <!-- ══ QUOTE-ONLY FIELDS (shown when "Get a Quote" is active) ══ -->
+                <!-- ══ QUOTE-ONLY FIELDS ══ -->
                 <div class="quote-fields" id="quote-fields">
 
                     <div class="form-section-label">Quote Details</div>
@@ -529,46 +530,71 @@
         <!-- ═══ SIDEBAR ═══ -->
         <div class="contact-sidebar">
 
+            <!-- Profile card -->
             <div class="side-card profile-block">
                 <img src="navlogo.png" alt="Cancan's Corner"/>
                 <h3>Candida Cook</h3>
                 <p>Cancan's Corner Gift Wrapping</p>
             </div>
 
+            <!-- ✅ MERGED: Contact Info + QR Code in one card, gold SVG icons -->
             <div class="side-card">
                 <div class="side-card-title">Contact Info</div>
+
+                <!-- Phone -->
                 <div class="info-row">
-                    <div class="info-icon">📞</div>
+                    <div class="info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                    </div>
                     <div>
                         <div class="info-label">Call or Text</div>
                         <div class="info-value"><a href="tel:9313044499">931-304-4499</a></div>
                     </div>
                 </div>
+
+                <!-- Email -->
                 <div class="info-row">
-                    <div class="info-icon">✉️</div>
+                    <div class="info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="16" x="2" y="4" rx="2"/>
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                        </svg>
+                    </div>
                     <div>
                         <div class="info-label">Email</div>
                         <div class="info-value"><a href="mailto:c34139087@gmail.com">c34139087@gmail.com</a></div>
                     </div>
                 </div>
-                <div class="info-row">
-                    <div class="info-icon">📍</div>
+
+                <!-- Location -->
+                <div class="info-row" style="margin-bottom: 0;">
+                    <div class="info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
                     <div>
                         <div class="info-label">Location</div>
                         <div class="info-value">Tennessee</div>
                     </div>
                 </div>
-                <a href="sms:9313044499" class="schedule-btn">📲 Text to Schedule</a>
-            </div>
 
-            <div class="side-card">
-                <div class="side-card-title">Save My Contact</div>
+                <!-- Divider -->
+                <div class="contact-divider"></div>
+
+                <!-- QR Code -->
                 <div class="qr-block">
+                    <div class="side-card-title" style="margin-bottom: 0.4rem;">Save My Contact</div>
                     <p>Scan to save me in your phone</p>
                     <div class="qr-img-wrap">
                         <img src="QR_Code.png" alt="QR Code to save Candida Cook contact"/>
                     </div>
                 </div>
+
+                <a href="sms:9313044499" class="schedule-btn">📲 Text to Schedule</a>
             </div>
 
         </div>
@@ -617,7 +643,6 @@
             dot.style.left   = Math.random() * 100 + '%';
             dot.style.top    = Math.random() * 100 + '%';
             dot.style.background = colors[Math.floor(Math.random() * colors.length)];
-            // Randomize each dot's speed and delay so they don't all move together
             dot.style.animationDuration = (Math.random() * 6 + 4) + 's';
             dot.style.animationDelay    = (Math.random() * 4) + 's';
             container.appendChild(dot);
@@ -636,19 +661,17 @@
             const btnQuote     = document.getElementById('btn-quote');
 
             if (mode === 'quote') {
-                // Show quote fields
                 quoteFields.classList.add('visible');
                 submitBtn.textContent    = '💬 Get My Quote';
                 subjectField.value       = 'Quote Request — Cancan\'s Corner';
                 purposeField.value       = 'Quote Request';
                 msgField.placeholder     = 'Any additional message or context for your quote request…';
-                msgField.removeAttribute('required');   // quote-desc handles required
+                msgField.removeAttribute('required');
                 quoteDesc.setAttribute('required', '');
                 quoteQty.setAttribute('required', '');
                 btnQuote.classList.add('active');
                 btnMsg.classList.remove('active');
             } else {
-                // Show message fields only
                 quoteFields.classList.remove('visible');
                 submitBtn.textContent    = '✉ Send Message';
                 subjectField.value       = 'New Message — Cancan\'s Corner';
