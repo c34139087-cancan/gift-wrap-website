@@ -1,35 +1,3 @@
-
-1774374639746_image.png
-
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Contact | Cancan's Corner Gift Wrapping</title> <link rel="stylesheet" href="styles.css"> <link href="https://fonts.googleapis.com/c
-
-pasted
-
-i need to change the dark purple text in my contact info to gold id also like to change the emoji on the text to schedule button to a gold one like the ones above it . here's the contact.html :
-
-12:52 PM
-
-
-You are out of free messages until 2:00 PM
-Upgrade
-
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Contact | Cancan's Corner Gift Wrapping</title> <link rel="stylesheet" href="styles.css"> <link href="https://fonts.googleapis.com/c
-
-pasted
-
-
-1774374639746_image.png
-
-i need to change the dark purple text in my contact info to gold id also like to change the emoji on the text to schedule button to a gold one like the ones above it . here's the contact.html :
-
-Claude is AI and can make mistakes. Please double-check responses.
-
-
-
-Pasted content
-28.76 KB •710 lines
-Formatting may be inconsistent from source
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -527,7 +495,7 @@ Formatting may be inconsistent from source
                 <!-- ── ALWAYS VISIBLE: Message/notes ── -->
                 <div class="form-group">
                     <label>Message <span class="req">*</span></label>
-                    <textarea name="message" id="message-field" placeholder="What can Cancan's Corner do for you? Share your wrapping details — number of gifts, gift sizes, event date, and any special requests. The more you tell me the better I can help! 🎁" required></textarea>
+                    <textarea name="message" id="message-field" placeholder="What can Cancan's Corner do for you? Share your wrapping details — number of gifts, gift sizes, event date, and any special requests. The more you tell me the better I can help! " required></textarea>
                 </div>
 
                 <!-- ══ QUOTE-ONLY FIELDS ══ -->
@@ -660,7 +628,7 @@ Formatting may be inconsistent from source
 
     <!-- ═══ BOOK AN APPOINTMENT (Calendly) ═══ -->
     <div class="contact-page-header" style="padding-top: 0;">
-        <h2>📅 Book an Appointment</h2>
+        <h2> Book an Appointment</h2>
         <p>Schedule your drop-off time — I'll be ready for you!</p>
         <div class="gold-divider"></div>
     </div>
@@ -670,11 +638,11 @@ Formatting may be inconsistent from source
             <h3>Ready to Book?</h3>
             <p class="form-subtitle">Pick a time that works for you — the calendar will show my real availability.</p>
             <p class="avail-note">
-                📅 Available <strong>Sunday–Saturday, 3:00 PM – 8:00 PM</strong><br>
+                 Available <strong>Sunday–Saturday, 3:00 PM – 8:00 PM</strong><br>
                 Drop off your gifts and I'll have them wrapped and ready for you!
             </p>
             <button onclick="Calendly.initPopupWidget({url: 'https://calendly.com/c34139087/30min'});return false;" class="cal-btn">
-                📅 Schedule My Drop Off
+                 Schedule My Drop Off
             </button>
             <p class="confirm-note">You'll receive a confirmation email automatically after booking.</p>
         </div>
@@ -717,7 +685,7 @@ Formatting may be inconsistent from source
 
             if (mode === 'quote') {
                 quoteFields.classList.add('visible');
-                submitBtn.textContent    = '💬 Get My Quote';
+                submitBtn.textContent    = 'Get My Quote';
                 subjectField.value       = 'Quote Request — Cancan\'s Corner';
                 purposeField.value       = 'Quote Request';
                 msgField.placeholder     = 'Any additional message or context for your quote request…';
@@ -731,7 +699,7 @@ Formatting may be inconsistent from source
                 submitBtn.textContent    = '✉ Send Message';
                 subjectField.value       = 'New Message — Cancan\'s Corner';
                 purposeField.value       = 'Message';
-                msgField.placeholder     = 'What can Cancan\'s Corner do for you? Share your wrapping details — number of gifts, gift sizes, event date, and any special requests. The more you tell me the better I can help! 🎁';
+                msgField.placeholder     = 'What can Cancan\'s Corner do for you? Share your wrapping details — number of gifts, gift sizes, event date, and any special requests. The more you tell me the better I can help! ';
                 msgField.setAttribute('required', '');
                 quoteDesc.removeAttribute('required');
                 quoteQty.removeAttribute('required');
