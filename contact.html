@@ -444,8 +444,10 @@
 
             <!-- Purpose toggle -->
             <div class="purpose-toggle" role="group" aria-label="Form purpose">
-                <button type="button" id="btn-message" class="active" onclick="setPurpose('message')">✉️ Send a Message</button>
-                <button type="button" id="btn-quote"   onclick="setPurpose('quote')">💬 Get a Quote</button>
+            <button type="button" id="btn-message" class="active" onclick="showForm('message')">Send a Message</button>
+<button type="button" id="btn-quote" onclick="showForm('quote')">Get a Quote</button>
+<button type="button" id="btn-book" onclick="showForm('book')">Book Drop-off</button>
+       
             </div>
 
             <form action="https://formspree.io/f/xpqykjkn" method="POST">
@@ -543,6 +545,13 @@
                 <button type="submit" class="send-btn" id="submit-btn">✉ Send Message</button>
 
             </form>
+            <!-- BOOKING SECTION -->
+<div id="booking-fields" style="display: none; padding-top: 1.5rem;">
+    <div class="form-section-label">Schedule Drop-off</div>
+    <!-- Replace YOUR_LINK with your real Calendly address -->
+    <div class="calendly-inline-widget" data-url="https://calendly.com" style="min-width:320px;height:650px;"></div>
+</div>
+
         </div>
         <!-- end form card -->
 
@@ -654,60 +663,42 @@
     </footer>
 
     <script>
-        // ── Confetti background dots with animation ──
-        const container = document.getElementById('confetti');
-        const colors = ['#f5d79a', '#ecdb9f', '#c39559', '#866e9f', '#785678'];
-        for (let i = 0; i < 25; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('confetti-dot');
-            const size = Math.random() * 8 + 4;
-            dot.style.width  = size + 'px';
-            dot.style.height = size + 'px';
-            dot.style.left   = Math.random() * 100 + '%';
-            dot.style.top    = Math.random() * 100 + '%';
-            dot.style.background = colors[Math.floor(Math.random() * colors.length)];
-            dot.style.animationDuration = (Math.random() * 6 + 4) + 's';
-            dot.style.animationDelay    = (Math.random() * 4) + 's';
-            container.appendChild(dot);
-        }
+    function setPurpose(mode) {
+        const quoteFields = document.querySelector('.quote-fields');
+        const bookingFields = document.getElementById('booking-fields');
+        const submitBtn = document.querySelector('.send-btn');
+        const contactForm = document.getElementById('contactForm'); // Make sure your <form> has id="contactForm"
+        const btnMsg = document.getElementById('btn-message');
+        const btnQuote = document.getElementById('btn-quote');
+        const btnBook = document.getElementById('btn-book');
 
-        // ── Purpose toggle logic ──
-        function setPurpose(mode) {
-            const quoteFields  = document.getElementById('quote-fields');
-            const submitBtn    = document.getElementById('submit-btn');
-            const subjectField = document.getElementById('form-subject');
-            const purposeField = document.getElementById('form-purpose-field');
-            const msgField     = document.getElementById('message-field');
-            const quoteDesc    = document.getElementById('quote-desc');
-            const quoteQty     = document.getElementById('quote-qty');
-            const btnMsg       = document.getElementById('btn-message');
-            const btnQuote     = document.getElementById('btn-quote');
+        // Reset visibility
+        quoteFields.classList.remove('visible');
+        bookingFields.style.display = 'none';
+        contactForm.style.display = 'block';
+        submitBtn.style.display = 'block';
 
-            if (mode === 'quote') {
-                quoteFields.classList.add('visible');
-                submitBtn.textContent    = 'Get My Quote';
-                subjectField.value       = 'Quote Request — Cancan\'s Corner';
-                purposeField.value       = 'Quote Request';
-                msgField.placeholder     = 'Any additional message or context for your quote request…';
-                msgField.removeAttribute('required');
-                quoteDesc.setAttribute('required', '');
-                quoteQty.setAttribute('required', '');
-                btnQuote.classList.add('active');
-                btnMsg.classList.remove('active');
-            } else {
-                quoteFields.classList.remove('visible');
-                submitBtn.textContent    = '✉ Send Message';
-                subjectField.value       = 'New Message — Cancan\'s Corner';
-                purposeField.value       = 'Message';
-                msgField.placeholder     = 'What can Cancan\'s Corner do for you? Share your wrapping details — number of gifts, gift sizes, event date, and any special requests. The more you tell me the better I can help! ';
-                msgField.setAttribute('required', '');
-                quoteDesc.removeAttribute('required');
-                quoteQty.removeAttribute('required');
-                btnMsg.classList.add('active');
-                btnQuote.classList.remove('active');
-            }
+        if (mode === 'quote') {
+            quoteFields.classList.add('visible');
+            submitBtn.textContent = 'Get My Quote';
+            btnQuote.classList.add('active');
+            btnMsg.classList.remove('active');
+            btnBook.classList.remove('active');
+        } else if (mode === 'book') {
+            contactForm.style.display = 'none';
+            bookingFields.style.display = 'block';
+            btnBook.classList.add('active');
+            btnMsg.classList.remove('active');
+            btnQuote.classList.remove('active');
+        } else {
+            submitBtn.textContent = 'Send Message';
+            btnMsg.classList.add('active');
+            btnQuote.classList.remove('active');
+            btnBook.classList.remove('active');
         }
-    </script>
+    }
+</script>
+
 
 </body>
 </html>
