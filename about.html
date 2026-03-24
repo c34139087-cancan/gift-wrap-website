@@ -29,16 +29,12 @@
             <li class="nav-item">
                 <a href="about.html" class="nav-link">About</a>
             </li>
-            <li class="nav-item dropdown">
-<a href="services.html" class="nav-link dropdown-toggle">Services</a>                    <li><a href="#luxury">Luxury Wrapping</a></li>
-                    <li><a href="#custom">Custom Designs</a></li>
-                    <li><a href="#events">Event Packages</a></li>
-                </ul>
+            <li class="nav-item">
+                <a href="services.html" class="nav-link">Services</a>
             </li>
-         <li class="nav-item">
+            <li class="nav-item">
                 <a href="gallery.html" class="nav-link">Gallery</a>
             </li>
-            
             <li class="nav-item">
                 <a href="contact.html" class="nav-link">Contact</a>
             </li>
@@ -86,7 +82,6 @@
     </footer>
 
     <script>
-        // Confetti animation
         const container = document.getElementById('confettiContainer');
         const colors = ['#f5d79a', '#ecdb9f', '#866e9f', '#c39559'];
         for (let i = 0; i < 30; i++) {
@@ -101,20 +96,10 @@
             container.appendChild(dot);
         }
 
-        // Mobile menu toggle
         document.getElementById('mobileToggle').addEventListener('click', function () {
             document.querySelector('.nav-menu').classList.toggle('active');
         });
     </script>
-
-<script>
-  const toggle = document.getElementById('mobileToggle');
-  const menu = document.querySelector('.nav-menu');
-  toggle.addEventListener('click', () => {
-    menu.classList.toggle('active');
-  });
-</script>
 </body>
 
 </html>
-
