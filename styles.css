@@ -961,3 +961,29 @@ body {
     }
 }
 .nav-link.active { color: #f5d79a !important; border-bottom: 2px solid #f5d79a; padding-bottom: 2px; }
+/* 1. Contact Info Labels (e.g., CALL OR TEXT, EMAIL) */
+.contact-info-item label {
+    color: var(--pastel-yellow) !important;
+    text-shadow: 0 0 5px rgba(236, 219, 159, 0.3);
+}
+
+/* 2. Contact Info Details (The actual phone number and email) */
+.contact-info-item a, 
+.contact-info-item span {
+    color: var(--pastel-orange) !important;
+    text-shadow: 0 0 8px rgba(245, 215, 154, 0.4);
+}
+
+/* 3. Text you type into the form */
+.form-group input,
+.form-group textarea,
+.form-group select {
+    color: var(--pastel-orange) !important;
+}
+
+/* 4. "Save My Contact" heading above the QR code */
+.qr-section p {
+    color: var(--pastel-orange) !important;
+    font-weight: 600;
+    text-shadow: 0 0 8px rgba(245, 215, 154, 0.4);
+}
