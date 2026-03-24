@@ -664,40 +664,42 @@
 
     <script>
     function setPurpose(mode) {
+        // 1. Get all the pieces (Fixed the typo on line 668)
         const quoteFields = document.querySelector('.quote-fields');
         const bookingFields = document.getElementById('booking-fields');
         const submitBtn = document.querySelector('.send-btn');
-        const contactForm = document.getElementById('contactForm'); // Make sure your <form> has id="contactForm"
+        const contactForm = document.getElementById('contact-form') || document.querySelector('form');
+        
         const btnMsg = document.getElementById('btn-message');
         const btnQuote = document.getElementById('btn-quote');
         const btnBook = document.getElementById('btn-book');
 
-        // Reset visibility
-        quoteFields.classList.remove('visible');
-        bookingFields.style.display = 'none';
-        contactForm.style.display = 'block';
-        submitBtn.style.display = 'block';
+        // 2. Reset visibility
+        if (quoteFields) quoteFields.classList.remove('visible');
+        if (bookingFields) bookingFields.style.display = 'none';
+        if (contactForm) contactForm.style.display = 'block';
+        if (submitBtn) submitBtn.style.display = 'block';
 
+        // 3. Logic for switching
         if (mode === 'quote') {
-            quoteFields.classList.add('visible');
-            submitBtn.textContent = 'Get My Quote';
-            btnQuote.classList.add('active');
-            btnMsg.classList.remove('active');
-            btnBook.classList.remove('active');
+            if (quoteFields) quoteFields.classList.add('visible');
+            if (submitBtn) submitBtn.textContent = 'Get My Quote';
         } else if (mode === 'book') {
-            contactForm.style.display = 'none';
-            bookingFields.style.display = 'block';
-            btnBook.classList.add('active');
-            btnMsg.classList.remove('active');
-            btnQuote.classList.remove('active');
+            if (contactForm) contactForm.style.display = 'none';
+            if (bookingFields) bookingFields.style.display = 'block';
         } else {
-            submitBtn.textContent = 'Send Message';
-            btnMsg.classList.add('active');
-            btnQuote.classList.remove('active');
-            btnBook.classList.remove('active');
+            if (submitBtn) submitBtn.textContent = 'Send Message';
         }
+
+        // 4. Update the gold active buttons
+        [btnMsg, btnQuote, btnBook].forEach(btn => {
+            if (btn) btn.classList.remove('active');
+        });
+        const activeBtn = document.getElementById('btn-' + mode);
+        if (activeBtn) activeBtn.classList.add('active');
     }
 </script>
+
 
 
 </body>
