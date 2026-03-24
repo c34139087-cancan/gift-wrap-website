@@ -194,6 +194,7 @@
     </style>
 </head>
 <body>
+    <div class="confetti-container" id="confetti"></div>
 
     <nav class="navbar">
         <div class="nav-brand">
@@ -283,6 +284,23 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeLightbox();
         });
+    </script>
+    <script>
+        const container = document.getElementById('confetti');
+        const colors = ['#f5d79a', '#ecdb9f', '#c39559', '#866e9f', '#785678'];
+        for (let i = 0; i < 25; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('confetti-dot');
+            const size = Math.random() * 8 + 4;
+            dot.style.width  = size + 'px';
+            dot.style.height = size + 'px';
+            dot.style.left   = Math.random() * 100 + '%';
+            dot.style.top    = Math.random() * 100 + '%';
+            dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+            dot.style.animationDuration = (Math.random() * 6 + 4) + 's';
+            dot.style.animationDelay    = (Math.random() * 4) + 's';
+            container.appendChild(dot);
+        }
     </script>
 
 </body>
