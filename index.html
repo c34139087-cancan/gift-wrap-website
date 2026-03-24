@@ -62,24 +62,24 @@
         toggle.addEventListener('click', () => {
             menu.classList.toggle('active');
         });
-    </script>
-    <script>
+    
         const container = document.getElementById('confetti');
         const colors = ['#f5d79a', '#ecdb9f', '#c39559', '#866e9f', '#785678'];
-        for (let i = 0; i < 25; i++) {
+        for (let i = 0; i < 30; i++) {
             const dot = document.createElement('div');
             dot.classList.add('confetti-dot');
             const size = Math.random() * 8 + 4;
             dot.style.width  = size + 'px';
             dot.style.height = size + 'px';
             dot.style.left   = Math.random() * 100 + '%';
-            dot.style.top    = Math.random() * 100 + '%';
+            dot.style.top    = '-20px';
             dot.style.background = colors[Math.floor(Math.random() * colors.length)];
-            dot.style.animationDuration = (Math.random() * 6 + 4) + 's';
-            dot.style.animationDelay    = (Math.random() * 4) + 's';
+            dot.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            dot.style.animationDelay    = (Math.random() * 5) + 's';
             container.appendChild(dot);
         }
     </script>
+
 </body>
 
 </html>
