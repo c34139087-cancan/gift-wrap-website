@@ -547,11 +547,48 @@
                 <button type="submit" class="send-btn" id="submit-btn">✉ Send Message</button>
 
             </form>
-            <!-- BOOKING SECTION -->
+   <!-- BOOKING SECTION -->
 <div id="booking-fields" style="display: none; padding-top: 1.5rem;">
-    <div class="form-section-label">Schedule Drop-off</div>
-    <!-- Replace YOUR_LINK with your real Calendly address -->
-    <div class="calendly-inline-widget" data-url=https://calendly.com/c34139087/drop-off?month=2026-03 style="min-width:320px;height:650px;"></div>
+    <div class="form-section-label">Book Your Drop-Off</div>
+
+    <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" name="dropoff_name" placeholder="Your full name" required>
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="dropoff_email" placeholder="Your email address" required>
+    </div>
+
+    <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" name="dropoff_phone" placeholder="Your phone number">
+    </div>
+
+    <div class="form-group">
+        <label>Number of Gifts</label>
+        <input type="number" name="dropoff_gifts" placeholder="How many gifts?" min="1">
+    </div>
+
+    <div class="form-group">
+        <label>Wrapping Style</label>
+        <select name="dropoff_style">
+            <option value="">Select a style...</option>
+            <option value="classic">Classic Elegant</option>
+            <option value="festive">Festive & Fun</option>
+            <option value="luxury">Luxury Premium</option>
+            <option value="custom">Custom / Not Sure</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Special Requests or Notes</label>
+        <textarea name="dropoff_notes" placeholder="Any special instructions?"></textarea>
+    </div>
+
+    <div class="form-section-label" style="margin-top: 1.5rem;">Now Pick Your Drop-Off Time</div>
+    <div class="calendly-inline-widget" data-url="https://calendly.co...
 </div>
 
         </div>
