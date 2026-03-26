@@ -679,7 +679,16 @@
         if (activeBtn) activeBtn.classList.add('active');
     }
 </script>
-
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const hash = window.location.hash;
+    if (hash === '#btn-quote') {
+      setPurpose('quote');
+    } else if (hash === '#btn-book') {
+      setPurpose('book');
+    }
+  });
+</script>
 
 <script>
     const container = document.getElementById('confetti');
