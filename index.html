@@ -14,26 +14,30 @@
 </head>
 
 <body>
+<div class="confetti-container" id="confetti"></div>
+
+<nav class="navbar">
+    <div class="nav-brand">
+        <a href="index.html">
+            <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
+        </a>
+        <div>
+            <p class="tagline">Cancan's Corner Gift Wrapping</p>
+        </div>
+    </div>
+
+    <ul class="nav-menu" id="navMenu">
+        <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
+        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+        <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+    </ul>
+
+    <button class="mobile-toggle" onclick="document.getElementById('navMenu').classList.toggle('active')">
+        <span></span><span></span><span></span><span></span>
+    </button>
 </nav>
-     <div class="nav-brand">
-    <a href="index.html">
-        <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
-    </a>
-    <p class="tagline">Cancan's Corner Gift Wrapping</p>
-</div>
-<ul class="nav-menu">
-            <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
-            <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
-            <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
-            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-        </ul>
-        <button class="mobile-toggle" id="mobileToggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </nav>
 
     <section class="hero" id="home">
         <div class="hero-content">
