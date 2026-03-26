@@ -1045,3 +1045,18 @@ body {
 .footer-nav a:hover {
   color: #d4af37;
 }
+/* CONTACT PAGE LAYOUT FIX */
+.contact-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.form-card {
+    flex: 2;
+}
+
+.contact-info-card {
+    flex: 1;
+}
