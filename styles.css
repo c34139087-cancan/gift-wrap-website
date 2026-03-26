@@ -1032,13 +1032,15 @@ body {
   margin-bottom: 16px;
 }
 
+
 .footer-nav a {
-  color: #e0d4f7;
+  color: #d4af37;  /* changed from #e0d4f7 to gold */
   text-decoration: none;
   font-size: 0.95rem;
   letter-spacing: 0.05em;
   transition: color 0.2s;
 }
+
 
 .footer-nav a:hover {
   color: #d4af37;
