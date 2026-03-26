@@ -1019,3 +1019,27 @@ body {
         opacity: 0;
     }
 }
+
+
+/* last line of your existing CSS above */
+
+/* ===== FOOTER NAV ===== */
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 28px;
+  margin-bottom: 16px;
+}
+
+.footer-nav a {
+  color: #e0d4f7;
+  text-decoration: none;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+
+.footer-nav a:hover {
+  color: #d4af37;
+}
