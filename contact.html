@@ -694,18 +694,20 @@ document.getElementById('contact-form').addEventListener('submit', async functio
         const activeBtn = document.getElementById('btn-' + mode);
         if (activeBtn) activeBtn.classList.add('active');
     }
-    </script>
+window.addEventListener('DOMContentLoaded', function () {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('tab');
+    const hash = window.location.hash;
 
-    <script>
-    window.addEventListener('DOMContentLoaded', function () {
-        const hash = window.location.hash;
-        if (hash === '#btn-quote') {
-            setPurpose('quote');
-        } else if (hash === '#btn-book') {
-            setPurpose('book');
-        }
-    });
-    </script>
+    if (tab === 'quote' || hash === '#btn-quote') {
+        setPurpose('quote');
+    } else if (tab === 'booking' || tab === 'book' || hash === '#btn-book') {
+        setPurpose('book');
+    } else {
+        setPurpose('message');
+    }
+});
+</script>
 
     <script>
     const container = document.getElementById('confetti');
