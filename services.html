@@ -1,283 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Services | Cancan's Corner Gift Wrapping</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
-    rel="stylesheet"
-  />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom, #2a0f4f, #4b2d68, #6b4c86);
-      color: #f6e7b8;
-    }
-
-    .services-page {
-      min-height: 100vh;
-    }
-
-    .services-hero {
-      text-align: center;
-      padding: 110px 20px 70px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .services-hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      margin-bottom: 18px;
-      color: #f6e7b8;
-    }
-
-    .services-hero p {
-      max-width: 700px;
-      margin: 0 auto;
-      font-size: 1.05rem;
-      line-height: 1.8;
-      color: #f9edc9;
-    }
-
-    .services-section {
-      padding: 20px 20px 80px;
-      text-align: center;
-    }
-
-    .services-section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.3rem;
-      margin-bottom: 12px;
-      color: #f6e7b8;
-    }
-
-    .services-section .section-subtext {
-      font-size: 1rem;
-      color: #f9edc9;
-      margin-bottom: 50px;
-    }
-
-    .service-cards {
-      display: flex;
-      justify-content: center;
-      gap: 28px;
-      flex-wrap: wrap;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .service-card {
-      background: rgba(255, 255, 255, 0.07);
-      border: 1.5px solid rgba(246, 231, 184, 0.45);
-      border-radius: 20px;
-      padding: 32px 24px;
-      width: 300px;
-      box-sizing: border-box;
-      backdrop-filter: blur(4px);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .service-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .service-card.featured {
-      border: 2px solid #f6e7b8;
-      transform: scale(1.03);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
-      position: relative;
-    }
-
-    .popular-badge {
-      position: absolute;
-      top: -14px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #f6e7b8;
-      color: #44225f;
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: 999px;
-      letter-spacing: 0.5px;
-    }
-
-    .service-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      margin-bottom: 14px;
-      color: #f6e7b8;
-    }
-
-    .service-card p {
-      font-size: 0.98rem;
-      line-height: 1.7;
-      color: #f9edc9;
-      margin-bottom: 18px;
-    }
-
-    .price {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      margin: 18px 0 8px;
-      color: #fff2c7;
-    }
-
-    .price-note {
-      font-size: 0.9rem;
-      margin-bottom: 20px;
-      color: #f9edc9;
-    }
-
-    .service-btn,
-    .cta-btn {
-      display: inline-block;
-      text-decoration: none;
-      background: transparent;
-      color: #f6e7b8;
-      border: 1.5px solid #f6e7b8;
-      padding: 12px 22px;
-      border-radius: 999px;
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-
-    .service-btn:hover,
-    .cta-btn:hover {
-      background: #f6e7b8;
-      color: #44225f;
-    }
-
-    .services-cta {
-      text-align: center;
-      padding: 30px 20px 90px;
-    }
-
-    .services-cta h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      margin-bottom: 14px;
-      color: #f6e7b8;
-    }
-
-    .services-cta p {
-      max-width: 600px;
-      margin: 0 auto 28px;
-      line-height: 1.7;
-      color: #f9edc9;
-    }
-
-    @media (max-width: 768px) {
-      .services-hero {
-        padding: 90px 20px 50px;
-      }
-
-      .services-hero h1 {
-        font-size: 2.3rem;
-      }
-
-      .services-section h2,
-      .services-cta h2 {
-        font-size: 1.9rem;
-      }
-
-      .service-card,
-      .service-card.featured {
-        width: 100%;
-        max-width: 360px;
-        transform: none;
-      }
-.confetti {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.5;
-}
-
-.services-page {
-  min-height: 100vh;
-  position: relative;
-  z-index: 2;
-}
-
-
-      </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | Cancan's Corner Gift Wrapping</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .services-hero {
+            padding: 80px 40px 40px;
+            text-align: center;
+        }
+        .services-hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            color: #ECDB9F;
+            margin-bottom: 16px;
+        }
+        .services-hero p {
+            color: rgba(255,255,255,0.75);
+            font-size: 1.1rem;
+            max-width: 580px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        .services-section {
+            padding: 20px 40px 60px;
+        }
+        .services-section .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .pricing-section {
+            padding: 60px 40px;
+            background: rgba(0,0,0,0.2);
+        }
+        .pricing-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: #ECDB9F;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .pricing-subtitle {
+            color: rgba(255,255,255,0.65);
+            text-align: center;
+            font-size: 1rem;
+            margin-bottom: 48px;
+        }
+        .pricing-grid {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .pricing-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(236,219,159,0.25);
+            border-radius: 16px;
+            padding: 36px 28px;
+            width: 280px;
+            text-align: center;
+            transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+            position: relative;
+        }
+        .pricing-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(236,219,159,0.6);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+        }
+        .pricing-card.featured {
+            border-color: #ECDB9F;
+            background: rgba(236,219,159,0.08);
+        }
+        .featured-badge {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ECDB9F;
+            color: #1A0E30;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 16px;
+            border-radius: 20px;
+        }
+        .card-icon-fa {
+            font-size: 2rem;
+            color: #ECDB9F;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .service-card .card-icon-fa {
+            font-size: 2rem;
+            color: #ECDB9F;
+            margin-bottom: 14px;
+            display: block;
+        }
+        .pricing-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: #ECDB9F;
+            margin-bottom: 10px;
+        }
+        .pricing-card p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            line-height: 1.65;
+            margin-bottom: 20px;
+        }
+        .pricing-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .pricing-note {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.45);
+            margin-bottom: 24px !important;
+        }
+        .pricing-btn {
+            display: inline-block;
+            padding: 10px 28px;
+            border: 1.5px solid #ECDB9F;
+            border-radius: 30px;
+            color: #ECDB9F;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            transition: background 0.2s, color 0.2s;
+        }
+        .pricing-btn:hover {
+            background: #ECDB9F;
+            color: #1A0E30;
+        }
+        .services-cta {
+            text-align: center;
+            padding: 60px 40px;
+        }
+        .services-cta p {
+            color: rgba(255,255,255,0.75);
+            font-size: 1.1rem;
+            margin-bottom: 24px;
+        }
+        @media (max-width: 640px) {
+            .services-hero,
+            .services-section,
+            .pricing-section,
+            .services-cta { padding-left: 20px; padding-right: 20px; }
+            .pricing-card { width: 100%; max-width: 340px; }
+        }
+    </style>
 </head>
 <body>
-    <div class="confetti"></div>
+    <div class="confetti-container" id="confetti"></div>
 
-  <main class="services-page">
-  <main class="services-page">
-    <section class="services-hero">
-      <h1>Gift Wrapping Services</h1>
-      <p>
-        From simple and elegant gift wrapping to custom presentation pieces,
-        Cancan’s Corner brings beauty, care, and a personal touch to every gift.
-        Whether you need one special package or wrapping for a larger event,
-        each detail is designed to make your gift feel unforgettable.
-      </p>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="index.html">
+  <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
+</a>
+            <h1></h1>
+            <p class="tagline">Cancan's Corner Gift Wrapping</p>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="services.html" class="nav-link active">Services</a></li>
+            <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        </ul>
+        <button class="mobile-toggle" id="mobileToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <div class="services-hero">
+        <h2>Gift Wrapping Services</h2>
+        <p>From a single special gift to full event packages — every wrap is crafted with care, artistry, and a personal touch.</p>
+    </div>
+
+    <section class="services-section" id="services">
+        <h3 class="section-title centered">What I Offer</h3>
+        <div class="services-grid">
+            <div class="service-card" id="luxury">
+                <i class="fa-solid fa-crown card-icon-fa"></i>
+                <h4>Luxury Wrapping</h4>
+                <p>Premium materials, exquisite finishes, and attention to every detail for your most special gifts.</p>
+            </div>
+            <div class="service-card" id="custom">
+                <i class="fa-solid fa-wand-magic-sparkles card-icon-fa"></i>
+                <h4>Custom Designs</h4>
+                <p>Personalized wrapping solutions tailored to your event, brand, or personal style.</p>
+            </div>
+            <div class="service-card" id="events">
+                <i class="fa-solid fa-champagne-glasses card-icon-fa"></i>
+                <h4>Event Packages</h4>
+                <p>Complete gift presentation services for weddings, corporate events, and celebrations.</p>
+            </div>
+        </div>
     </section>
 
-    <section class="services-section">
-      <h2>Choose Your Experience</h2>
-      <p class="section-subtext">
-        Beautiful wrapping options for every occasion and every level of gifting.
-      </p>
+    <section class="pricing-section">
+        <h3>What We Offer</h3>
+        <p class="pricing-subtitle">Simple, affordable pricing for every occasion</p>
 
-      <div class="service-cards">
-        <article class="service-card">
-          <h3>Standard Gift Wrapping</h3>
-          <p>
-            A simple, polished, and beautiful finish for everyday gifting.
-            Perfect for birthdays, holidays, thank-you gifts, and thoughtful surprises.
-          </p>
-          <div class="price">$3–$8</div>
-          <div class="price-note">per gift</div>
-          <a href="contact.html" class="service-btn">Book Now</a>
-        </article>
+        <div class="pricing-grid">
 
-        <article class="service-card featured">
-          <div class="popular-badge">MOST POPULAR</div>
-          <h3>Special Occasion Wrapping</h3>
-          <p>
-            Designed for baby showers, bridal gifts, anniversaries, collaborations,
-            and milestone moments. Includes upgraded paper, ribbon, and extra detail.
-          </p>
-          <div class="price">Starting at $10</div>
-          <div class="price-note">per gift</div>
-          <a href="contact.html" class="service-btn">Book Now</a>
-        </article>
+            <div class="pricing-card">
+<i class="fa-solid fa-gift card-icon-fa"></i>
 
-        <article class="service-card">
-          <h3>Large or Custom Items</h3>
-          <p>
-            For oversized, unusual, or one-of-a-kind items that need a custom approach.
-            Pricing is based on size, materials, and design details.
-          </p>
-          <div class="price">Custom Quote</div>
-          <div class="price-note">contact for pricing</div>
-          <a href="contact.html" class="service-btn">Get a Quote</a>
-        </article>
-      </div>
+                <h4>Standard Gift Wrapping</h4>
+                <p>Beautifully wrapped gifts with clean folds, crisp edges, and a finished ribbon.</p>
+                <div class="pricing-amount">$3 – $8</div>
+                <p class="pricing-note">per gift</p>
+                <a href="contact.html#get-in-touch" class="pricing-btn">Book Now</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <span class="featured-badge">Most Popular</span>
+                <i class="fa-solid fa-star card-icon-fa"></i>
+                <h4>Special Occasion Wrapping</h4>
+                <p>Perfect for holidays, birthdays, baby showers, and celebrations. Premium paper and extras included.</p>
+                <div class="pricing-amount">Starting at $10</div>
+                <p class="pricing-note">per gift</p>
+                <a href="contact.html#get-in-touch" class="pricing-btn">Book Now</a>
+            </div>
+
+            <div class="pricing-card">
+                <i class="fa-solid fa-box-open card-icon-fa"></i>
+                <h4>Large or Custom Items</h4>
+                <p>Oversized, unusual, or uniquely shaped gifts wrapped carefully with expert presentation.</p>
+                <div class="pricing-amount">Custom Quote</div>
+                <p class="pricing-note">contact for pricing</p>
+                <a href="contact.html#btn-quote" class="pricing-btn">Get a Quote</a>
+            </div>
+
+        </div>
     </section>
 
-    <section class="services-cta">
-      <h2>Ready to Make Your Gifts Unforgettable?</h2>
-      <p>
-        Let’s create something beautiful for your next celebration, surprise, or special moment.
-      </p>
-      <a href="contact.html" class="cta-btn">Get in Touch</a>
-    </section>
-  </main>
+    <div class="services-cta">
+        <p>Ready to make your gifts unforgettable?</p>
+        <a href="contact.html#get-in-touch" class="cta-button">Get In Touch</a>
+    </div>
+
+        
+     
+<footer class="footer">
+  <nav class="footer-nav">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About</a>
+  </nav>
+  <p>© 2026 Candida Cook | Cancan's Corner Gift Wrapping</p>
+  <p class="footer-note">"Pretty bows & tidy lines, Cancan's Corner always shines!"</p>
+</footer>
+
+    <script>
+        const toggle = document.getElementById('mobileToggle');
+        const menu = document.querySelector('.nav-menu');
+        toggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+    </script> 
+    <script>
+        const container = document.getElementById('confetti');
+        const colors = ['#f5d79a', '#ecdb9f', '#c39559', '#866e9f', '#785678'];
+        for (let i = 0; i < 25; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('confetti-dot');
+            const size = Math.random() * 8 + 4;
+            dot.style.width  = size + 'px';
+            dot.style.height = size + 'px';
+            dot.style.left   = Math.random() * 100 + '%';
+            dot.style.top    = Math.random() * 100 + '%';
+            dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+            dot.style.animationDuration = (Math.random() * 6 + 4) + 's';
+            dot.style.animationDelay    = (Math.random() * 4) + 's';
+            container.appendChild(dot);
+        }
+    </script>
 </body>
+
 </html>
