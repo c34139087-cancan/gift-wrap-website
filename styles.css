@@ -1104,7 +1104,7 @@ a:hover {
 /* ✨ PRIMARY BUTTON BASE STYLE */
 .primary-btn {
     background: linear-gradient(135deg, #ffd700, #c084fc);
-    color: white;
+    color: #20113c;
     border: none;
     padding: 12px 28px;
     font-weight: 600;
