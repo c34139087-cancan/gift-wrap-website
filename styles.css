@@ -1101,3 +1101,48 @@ a:hover {
     color: #ffd700;
     text-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
 }
+/* ✨ PRIMARY BUTTON BASE STYLE */
+.primary-btn {
+    background: linear-gradient(135deg, #ffd700, #c084fc);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* ✨ HOVER EFFECT (GLOW + LIFT) */
+.primary-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 0 15px #ffd700, 0 0 30px rgba(192, 132, 252, 0.6);
+}
+/* ✨ NAV LINK BASE */
+nav a {
+    position: relative;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+/* ✨ UNDERLINE (hidden by default) */
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background: linear-gradient(90deg, #ffd700, #c084fc);
+    transition: width 0.3s ease;
+}
+
+/* ✨ HOVER EFFECT */
+nav a:hover {
+    color: #ffd700;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
