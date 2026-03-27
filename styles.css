@@ -445,9 +445,12 @@ body {
 }
 
 .image-frame:hover {
-    transform: scale(1.05) rotate(-2deg);
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 0 8px rgba(245, 215, 154, 0.5), 0 0 0 16px rgba(134, 110, 159, 0.3);
+    transform: scale(1.03);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7),
+                0 0 8px rgba(255, 215, 0, 0.35),
+                0 0 18px rgba(192, 132, 252, 0.25);
 }
+    
 
 .profile-photo {
     width: 100%;
