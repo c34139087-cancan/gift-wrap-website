@@ -1060,3 +1060,25 @@ body {
 .contact-info-card {
     flex: 1;
 }
+.sparkle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    pointer-events: none;
+    background: radial-gradient(circle, #ffd700, #ffcc00, #fff8dc, transparent);
+    border-radius: 50%;
+    animation: sparkle-fade 0.8s ease-out forwards;
+    z-index: 9999;
+    box-shadow: 0 0 6px gold, 0 0 10px #ffd700;
+}
+
+@keyframes sparkle-fade {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.2) translateY(-10px);
+        opacity: 0;
+    }
+}
