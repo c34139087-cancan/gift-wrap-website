@@ -907,6 +907,36 @@ body {
     /* Makes the gold pop! */
 }
 
+/* Hide hamburger on desktop */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: var(--pastel-orange);
+    border-radius: 2px;
+    display: block;
+}
+@media (max-width: 768px) {
+    .hamburger { display: flex; }
+}
+
+/* Remove any oval/shape from hero */
+.hero {
+    background: none !important;
+    border-radius: 0 !important;
+    clip-path: none !important;
+}
+.hero::before, .hero::after {
+    display: none !important;
+}
+
 .nav-logo {
   height: 42px;
   width: 42px;
