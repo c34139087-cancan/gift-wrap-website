@@ -104,6 +104,12 @@ body {
     list-style: none;
     gap: 2rem;
     align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu li {
+    list-style: none;
 }
 
 .nav-item {
@@ -992,13 +998,14 @@ body {
 }
 
 /* --- Confetti Movement --- */
-.confetti-container {
+.confetti-container,
+#confetti {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -1; 
+    z-index: 1;
     pointer-events: none;
     overflow: hidden;
 }
