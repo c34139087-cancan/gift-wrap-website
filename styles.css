@@ -936,6 +936,12 @@ body {
 .hero::before, .hero::after {
     display: none !important;
 }
+.hero-content {
+    background: none !important;
+    border-radius: 0 !important;
+    clip-path: none !important;
+    box-shadow: none !important;
+}
 
 .nav-logo {
   height: 42px;
