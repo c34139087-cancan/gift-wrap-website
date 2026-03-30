@@ -1,109 +1,748 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Candida Cook | Cancan's Corner Gift Wrapping</title>
+    <title>Contact | Cancan's Corner Gift Wrapping Service</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Calendly -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <style>
+        /* ── Page header ── */
+        .contact-page-header {
+            text-align: center;
+            padding: 3rem 2rem 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+        .contact-page-header h2 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--pastel-orange);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+            margin-bottom: 0.5rem;
+        }
+        .contact-page-header p {
+            color: var(--pastel-orange);
+            font-size: 1rem;
+            font-style: italic;
+            text-shadow: 0 0 8px rgba(245, 215, 154, 0.4);
+        }
+        .gold-divider {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--pastel-orange), transparent);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* ── Two-column layout ── */
+        .contact-layout {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            align-items: start;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ── LEFT COLUMN: Form card ── */
+        .form-card {
+            background: rgba(32, 17, 60, 0.8);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--gray-lavender);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .form-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--pastel-orange);
+            margin-bottom: 0.3rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .form-card .form-subtitle {
+            color: var(--gray-lavender);
+            font-size: 0.88rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ── Purpose toggle ── */
+        .purpose-toggle {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2rem;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 2px solid var(--gray-lavender);
+        }
+        .purpose-toggle button {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            border: none;
+            color: var(--gray-lavender);
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .purpose-toggle button.active {
+            background: linear-gradient(135deg, var(--gray-orange) 0%, var(--pastel-orange) 100%);
+            color: #f5d79a;
+        }
+        .purpose-toggle button:not(.active):hover {
+            background: rgba(245, 215, 154, 0.1);
+            color: #f5d79a;
+        }
+
+        /* ── Form fields ── */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gray-lavender);
+            margin-bottom: 0.4rem;
+        }
+        .form-group label .req { color: var(--pastel-orange); }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.85rem 1.2rem;
+            background: rgba(104, 82, 129, 0.3);
+            border: 2px solid var(--gray-lavender);
+            border-radius: var(--radius-md);
+            color: #f5d79a;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        .form-group select option { background: var(--purple-deep); color: #f5d79a; }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: var(--gray-lavender); }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--pastel-orange);
+            background: rgba(104, 82, 129, 0.5);
+            box-shadow: 0 0 20px rgba(245, 215, 154, 0.2);
+        }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+
+        /* ── Quote-only fields (hidden by default) ── */
+        .quote-fields {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .quote-fields.visible { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Booking fields (hidden by default) ── */
+        #booking-fields {
+            display: none;
+        }
+
+        /* ── Section divider inside form ── */
+        .form-section-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--pastel-orange);
+            border-bottom: 1px solid rgba(245, 215, 154, 0.2);
+            padding-bottom: 0.4rem;
+            margin-bottom: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ── Submit button ── */
+        .send-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--gray-orange) 0%, var(--pastel-orange) 100%);
+            color: #20113c;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border: none;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(245, 215, 154, 0.3);
+        }
+        .send-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(245, 215, 154, 0.5);
+        }
+
+        /* ── RIGHT COLUMN: Sidebar ── */
+        .contact-info-card {
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem;
+        }
+        .side-card {
+            background: rgba(64, 41, 91, 0.6);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--gray-lavender);
+            border-radius: var(--radius-lg);
+            padding: 1.6rem;
+            transition: all 0.3s ease;
+        }
+        .side-card:hover {
+            border-color: var(--pastel-orange);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        .side-card-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--pastel-orange);
+            margin-bottom: 1.2rem;
+        }
+        .profile-block { text-align: center; }
+        .profile-block img {
+            width: 72px; height: 72px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 3px solid var(--pastel-orange);
+            margin-bottom: 0.7rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+        .profile-block h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--pastel-orange);
+        }
+        .profile-block p {
+            font-size: 0.78rem;
+            color: var(--gray-lavender);
+            font-style: italic;
+            margin-top: 0.2rem;
+        }
+        .info-row {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .info-icon {
+            width: 36px; height: 36px; flex-shrink: 0;
+            background: rgba(245, 215, 154, 0.1);
+            border: 1px solid rgba(245, 215, 154, 0.25);
+            border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .info-label {
+            font-size: 0.65rem;
+            color: var(--gray-lavender);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .info-value {
+            font-size: 0.9rem;
+            color: var(--pastel-orange);
+            margin-top: 0.1rem;
+        }
+        .info-value a {
+            color: var(--pastel-orange);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .contact-divider {
+            height: 1px;
+            background: rgba(245, 215, 154, 0.2);
+            margin: 1rem 0;
+        }
+        .schedule-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: rgba(245, 215, 154, 0.1);
+            border: 2px solid var(--gray-lavender);
+            border-radius: var(--radius-md);
+            color: var(--pastel-orange);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .schedule-btn:hover {
+            background: rgba(245, 215, 154, 0.2);
+            border-color: var(--pastel-orange);
+            transform: translateY(-2px);
+        }
+        .qr-block {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 0.7rem;
+        }
+        .qr-block p { font-size: 0.8rem; color: var(--gray-lavender); text-align: center; }
+        .qr-img-wrap {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            padding: 8px;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+        .qr-img-wrap img { width: 130px; height: 130px; display: block; }
+
+        /* ── Confetti animation ── */
+        .confetti-dot {
+            position: absolute;
+            border-radius: 50%;
+            animation: confetti-fall linear infinite;
+            pointer-events: none;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 720px) {
+            .contact-layout { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-
 <body>
-<div class="confetti-container" id="confetti"></div>
 
-<nav class="navbar">
-    <div class="nav-brand">
-        <a href="index.html">
-            <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
-        </a>
-        <div>
-            <p class="tagline">Cancan's Corner Gift Wrapping</p>
+    <div class="confetti-container" id="confetti"></div>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="index.html">
+                <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
+            </a>
+            <div>
+                <p class="tagline">Cancan's Corner Gift Wrapping</p>
+            </div>
         </div>
+        <ul class="nav-menu" id="navMenu">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+            <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link active">Contact</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        </ul>
+        <button class="mobile-toggle" onclick="document.getElementById('navMenu').classList.toggle('active')">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="contact-page-header" id="get-in-touch">
+        <h2>Get In Touch</h2>
+        <p>"Pretty bows &amp; tidy lines, Cancan's Corner always shines!"</p>
+        <div class="gold-divider"></div>
     </div>
 
-    <ul class="nav-menu" id="navMenu">
-        <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
-        <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
-        <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
-        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-    </ul>
+    <!-- ═══════════════════════════════════════════════
+         TWO-COLUMN LAYOUT
+         Left:  .form-card  (form + booking)
+         Right: .contact-info-card  (profile + info + QR)
+    ════════════════════════════════════════════════ -->
+    <div class="contact-layout">
 
-    <button class="mobile-toggle" onclick="document.getElementById('navMenu').classList.toggle('active')">
-        <span></span><span></span><span></span><span></span>
-    </button>
-</nav>
+        <!-- ═══ LEFT COLUMN: COMBINED FORM ═══ -->
+        <div class="form-card">
+            <h3>Send a Message, Get a Quote, or Book Your Drop-Off!</h3>
+            <p class="form-subtitle">Choose what you need below — I'll get back to you shortly! 🎀</p>
 
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h2 class="hero-title">Transform Every Gift Into a Masterpiece</h2>
-                <p class="hero-tagline">"Pretty bows & tidy lines, Cancan's Corner always shines!"</p>
-                <p class="hero-description">
-                    Where artistry meets celebration. Each wrap tells a story,
-                    each ribbon carries intention, and every package becomes an unforgettable experience.
-                </p>
-<a href="contact.html" class="primary-btn">Book Today</a>
+            <!-- Purpose toggle -->
+            <div class="purpose-toggle" role="group" aria-label="Form purpose">
+                <button type="button" id="btn-message" class="active" onclick="setPurpose('message')">Send a Message</button>
+                <button type="button" id="btn-quote" onclick="setPurpose('quote')">Get a Quote</button>
+                <button type="button" id="btn-book" onclick="setPurpose('book')">Book Drop-off</button>
             </div>
-            <img src="purple-gifts.jpg" alt="Purple and Gold Gifts" class="hero-image">
-        </div>
-    </section>
 
-    
-        <footer class="footer">
-  <nav class="footer-nav">
-    <a href="index.html">Home</a>
-    <a href="services.html">Services</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html">About</a>
-  </nav>
-  <p>© 2026 Candida Cook | Cancan's Corner Gift Wrapping</p>
-  <p class="footer-note">"Pretty bows & tidy lines, Cancan's Corner always shines!"</p>
-</footer>
+            <!-- ── MESSAGE / QUOTE FORM ── -->
+            <form id="contact-form" action="https://formspree.io/f/xpqykjkn" method="POST">
 
-    <script>
-        
-        
-    
-        const container = document.getElementById('confetti');
-        const colors = ['#f5d79a', '#ecdb9f', '#c39559', '#866e9f', '#785678'];
-        for (let i = 0; i < 30; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('confetti-dot');
-            const size = Math.random() * 8 + 4;
-            dot.style.width  = size + 'px';
-            dot.style.height = size + 'px';
-            dot.style.left   = Math.random() * 100 + '%';
-            dot.style.top    = '-20px';
-            dot.style.background = colors[Math.floor(Math.random() * colors.length)];
-            dot.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            dot.style.animationDelay    = (Math.random() * 5) + 's';
-            container.appendChild(dot);
-        }
-    </script>
-<script src="script.js"></script>
+                <input type="hidden" name="_subject" id="form-subject" value="New Message — Cancan's Corner">
+                <input type="hidden" name="form_purpose" id="form-purpose-field" value="Message">
+
+                <div class="form-section-label">Your Info</div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name <span class="req">*</span></label>
+                        <input type="text" name="name" placeholder="Your full name" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number <span class="req">*</span></label>
+                        <input type="tel" name="phone" placeholder="(555) 123-4567" required/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address <span class="req">*</span></label>
+                    <input type="email" name="email" placeholder="you@email.com" required/>
+                </div>
+
+                <div class="form-group">
+                    <label>Service Interested In</label>
+                    <select name="service">
+                        <option value="" disabled selected>Select a service…</option>
+                        <option>Standard Gift Wrapping</option>
+                        <option>Special Occasion Wrapping</option>
+                        <option>Large / Custom Items</option>
+                        <option>Other / Not Sure</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Preferred Contact Method</label>
+                    <select name="preferred_contact">
+                        <option value="" disabled selected>How should I reach you?</option>
+                        <option>Email</option>
+                        <option>Phone Call</option>
+                        <option>Text Message</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Message <span class="req">*</span></label>
+                    <textarea name="message" id="message-field" placeholder="What can Cancan's Corner do for you? Share your wrapping details — number of gifts, gift sizes, event date, and any special requests. The more you tell me the better I can help!" required></textarea>
+                </div>
+
+                <!-- ── QUOTE-ONLY FIELDS ── -->
+                <div class="quote-fields" id="quote-fields">
+                    <div class="form-section-label">Quote Details</div>
+
+                    <div class="form-group">
+                        <label>Description of Item(s) <span class="req">*</span></label>
+                        <textarea name="quote_description" id="quote-desc" placeholder="Describe your items — shape, material, anything unusual about them…"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Number of Items <span class="req">*</span></label>
+                            <input type="number" name="quote_quantity" id="quote-qty" placeholder="e.g. 3" min="1"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Gift Size / Dimensions</label>
+                            <input type="text" name="quote_size" placeholder="e.g. 24 inches wide"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Type of Event</label>
+                        <select name="quote_event">
+                            <option value="" disabled selected>Select event type…</option>
+                            <option>Birthday</option>
+                            <option>Holiday</option>
+                            <option>Baby Shower</option>
+                            <option>Wedding</option>
+                            <option>Anniversary</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Special Requests or Notes</label>
+                        <textarea name="quote_notes" placeholder="Anything else I should know about your items or the occasion…"></textarea>
+                    </div>
+                </div>
+                <!-- end quote-fields -->
+
+                <button type="submit" class="send-btn" id="submit-btn">✉ Send Message</button>
+
+            </form>
 <script>
-document.addEventListener("mousemove", function(e) {
-    const sparkle = document.createElement("div");
-    sparkle.className = "sparkle";
-    sparkle.style.left = e.clientX + "px";
-    sparkle.style.top = e.clientY + "px";
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+        });
+        if (response.ok) {
+            form.style.display = 'none';
+            document.querySelector('.purpose-toggle').style.display = 'none';
+            document.querySelector('.form-card').innerHTML += `
+                <div style="text-align:center; padding: 2rem;">
+                    <div style="font-size: 3rem;">🎀</div>
+                    <h3 style="color: #f5d79a; font-family: var(--font-display); margin: 1rem 0;">Message Sent!</h3>
+                    <p style="color: #c39559;">Thank you for reaching out! I'll get back to you shortly.</p>
+                    <p style="color: #866e9f; font-size: 0.85rem; margin-top: 0.5rem; font-style: italic;">"Pretty bows & tidy lines, Cancan's Corner always shines!"</p>
+                </div>`;
+        } else {
+            alert('Something went wrong. Please try again!');
+        }
+    } catch (error) {
+        alert('Something went wrong. Please try again!');
+    }
+});
+</script>
+            <!-- ── BOOKING FIELDS (shown when Book Drop-off is selected) ── -->
+            <div id="booking-fields">
+                <div class="form-section-label">Book Your Drop-Off</div>
 
-    document.body.appendChild(sparkle);
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="dropoff_name" placeholder="Your full name">
+                </div>
 
-    setTimeout(() => {
-        sparkle.remove();
-    }, 800);
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="dropoff_email" placeholder="Your email address">
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" name="dropoff_phone" placeholder="Your phone number">
+                </div>
+
+                <div class="form-group">
+                    <label>Number of Gifts</label>
+                    <input type="number" name="dropoff_gifts" placeholder="How many gifts?" min="1">
+                </div>
+
+                <div class="form-group">
+                    <label>Wrapping Style</label>
+                    <select name="dropoff_style">
+                        <option value="">Select a style...</option>
+                        <option value="classic">Classic Elegant</option>
+                        <option value="festive">Festive &amp; Fun</option>
+                        <option value="luxury">Luxury Premium</option>
+                        <option value="custom">Custom / Not Sure</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Special Requests or Notes</label>
+                    <textarea name="dropoff_notes" placeholder="Any special instructions?"></textarea>
+                </div>
+
+                <div class="form-section-label" style="margin-top: 1.5rem;">Now Pick Your Drop-Off Time</div>
+
+                <!-- Calendly inline widget -->
+                <div class="calendly-inline-widget"
+                     data-url="https://calendly.com/c34139087?background_color=f5f7fa&text_color=631eb1&primary_color=0d4fee"
+                     style="min-width:100%; height:500px;">
+                </div>
+                <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+                <!-- Calendly inline widget end -->
+            </div>
+            <!-- end booking-fields -->
+
+        </div>
+        <!-- ═══ END LEFT COLUMN ═══ -->
+
+        <!-- ═══ RIGHT COLUMN: SIDEBAR ═══ -->
+        <div class="contact-info-card">
+
+            <!-- Profile card -->
+            <div class="side-card profile-block">
+                <img src="navlogo.png" alt="Cancan's Corner"/>
+                <h3>Candida Cook</h3>
+                <p>Cancan's Corner Gift Wrapping</p>
+            </div>
+
+            <!-- Contact Info + QR Code -->
+            <div class="side-card">
+                <div class="side-card-title">Contact Info</div>
+
+                <!-- Phone -->
+                <div class="info-row">
+                    <div class="info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="info-label">Call or Text</div>
+                        <div class="info-value"><a href="tel:9313044499">931-304-4499</a></div>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="info-row">
+                    <div class="info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="16" x="2" y="4" rx="2"/>
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="info-label">Email</div>
+                        <div class="info-value"><a href="/cdn-cgi/l/email-protection#3152020500020801090671565c50585d1f525e5c"><span class="__cf_email__" data-cfemail="8eedbdbabfbdb7beb6b9cee9e3efe7e2a0ede1e3">[email&#160;protected]</span></a></div>
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <div class="info-row" style="margin-bottom: 0;">
+                    <div class="info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="info-label">Location</div>
+                        <div class="info-value">Tennessee</div>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="contact-divider"></div>
+
+                <!-- QR Code -->
+                <div class="qr-block">
+                    <div class="side-card-title" style="margin-bottom: 0.4rem;">Save My Contact</div>
+                    <p>Scan to save me in your phone</p>
+                    <div class="qr-img-wrap">
+                        <img src="QR_Code.png" alt="QR Code to save Candida Cook contact"/>
+                    </div>
+                </div>
+
+                <!-- Cash App -->
+                <div class="info-row" style="margin-top: 0.8rem;">
+                    <div class="info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="5" width="20" height="14" rx="2"/>
+                            <line x1="2" y1="10" x2="22" y2="10"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="info-label">Payment</div>
+                        <div class="info-value">
+                            <a href="https://cash.app/$Cancans92" target="_blank" rel="noopener noreferrer" style="color:#f5d79a;">Cash App: $Cancans92</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text to Schedule button -->
+                <a href="sms:9313044499" class="schedule-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                    Text to Schedule
+                </a>
+
+            </div>
+            <!-- end contact info card -->
+
+        </div>
+        <!-- ═══ END RIGHT COLUMN ═══ -->
+
+    </div>
+    <!-- end contact-layout -->
+
+    <footer class="footer">
+        <nav class="footer-nav">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
+            <a href="about.html">About</a>
+        </nav>
+        <p>&copy; 2026 Candida Cook | Cancan's Corner Gift Wrapping</p>
+        <p class="footer-note">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!"</p>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    function setPurpose(mode) {
+        const quoteFields  = document.querySelector('.quote-fields');
+        const bookingFields = document.getElementById('booking-fields');
+        const submitBtn    = document.querySelector('.send-btn');
+        const contactForm  = document.getElementById('contact-form');
+
+        const btnMsg   = document.getElementById('btn-message');
+        const btnQuote = document.getElementById('btn-quote');
+        const btnBook  = document.getElementById('btn-book');
+
+        // Reset everything
+        if (quoteFields)   quoteFields.classList.remove('visible');
+        if (bookingFields) bookingFields.style.display = 'none';
+        if (contactForm)   contactForm.style.display  = 'block';
+        if (submitBtn)     submitBtn.style.display     = 'block';
+
+        // Apply mode
+        if (mode === 'quote') {
+            if (quoteFields) quoteFields.classList.add('visible');
+            if (submitBtn)   submitBtn.textContent = '🎀 Get My Quote';
+        } else if (mode === 'book') {
+            if (contactForm)   contactForm.style.display   = 'none';
+            if (bookingFields) bookingFields.style.display = 'block';
+            if (submitBtn)     submitBtn.style.display      = 'none';
+        } else {
+            if (submitBtn) submitBtn.textContent = '✉ Send Message';
+        }
+
+        // Update active button highlight
+        [btnMsg, btnQuote, btnBook].forEach(btn => { if (btn) btn.classList.remove('active'); });
+        const activeBtn = document.getElementById('btn-' + mode);
+        if (activeBtn) activeBtn.classList.add('active');
+    }
+window.addEventListener('DOMContentLoaded', function () {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('tab');
+    const hash = window.location.hash;
+
+    if (tab === 'quote' || hash === '#btn-quote') {
+        setPurpose('quote');
+    } else if (tab === 'booking' || tab === 'book' || hash === '#btn-book') {
+        setPurpose('book');
+    } else {
+        setPurpose('message');
+    }
 });
 </script>
 
-</body>
-
-</html>
+    <script>
+    const container = document.getElementById('confetti');
+    const colors = ['#f5d79a', '#ecdb9f', '#c39559', '#866e9f', '#785678'];
+    for (let i = 0; i < 50; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('confetti-dot');
+        const size = Math.random() * 8 + 4;
+        dot.style.width      = size + 'px';
+        dot.style.height     = size + 'px';
+        dot.style.left       = Math.random() * 100 + '%';
+        dot.style.top        = '-20px';
+        dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+        dot.style.animationDuration = (Math.random() * 6 + 4) + 's';
+        dot.style.animationDelay   = (Math.random() * 5) + 's';
+        container.appendChild(dot);
+    }
+    </script>
+<script>
+document.addEventListener("mousemove", function(e) {
+    const sparkle = document.createElement("div");
+    sparkle.classNam
