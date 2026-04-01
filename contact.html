@@ -380,6 +380,26 @@
             <h3>Send a Message, Get a Quote, or Book Your Drop-Off!</h3>
             <p class="form-subtitle">Choose what you need below — I'll get back to you shortly! 🎀</p>
 
+            <!-- Payment notice -->
+            <div style="
+                background: rgba(195, 149, 89, 0.12);
+                border: 1.5px solid rgba(195, 149, 89, 0.45);
+                border-radius: var(--radius-md);
+                padding: 0.85rem 1.2rem;
+                margin-bottom: 1.5rem;
+                display: flex;
+                align-items: flex-start;
+                gap: 0.75rem;
+            ">
+                <span style="font-size: 1.2rem; flex-shrink: 0; margin-top: 1px;">💳</span>
+                <div>
+                    <div style="font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--pastel-orange); margin-bottom: 0.25rem;">Payment Info</div>
+                    <div style="font-size: 0.88rem; color: var(--pastel-yellow); line-height: 1.5;">
+                        Payment is due at drop-off — via <strong style="color: var(--pastel-orange);">Cash App <a href="https://cash.app/$Cancans92" target="_blank" rel="noopener noreferrer" style="color: var(--pastel-orange);">$Cancans92</a></strong> or <strong style="color: var(--pastel-orange);">cash in person</strong>. No payment is collected online.
+                    </div>
+                </div>
+            </div>
+
             <!-- Purpose toggle -->
             <div class="purpose-toggle" role="group" aria-label="Form purpose">
                 <button type="button" id="btn-message" class="active" onclick="setPurpose('message')">Send a Message</button>
@@ -632,19 +652,28 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                 </div>
 
                 <!-- Cash App -->
-                <div class="info-row" style="margin-top: 0.8rem;">
-                    <div class="info-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="5" width="20" height="14" rx="2"/>
-                            <line x1="2" y1="10" x2="22" y2="10"/>
-                        </svg>
+                <div style="margin-top: 0.8rem; background: rgba(195,149,89,0.1); border: 1.5px solid rgba(195,149,89,0.35); border-radius: var(--radius-md); padding: 1rem 1.1rem;">
+                    <div class="side-card-title" style="margin-bottom: 0.6rem;">Payment</div>
+                    <div style="font-size: 0.85rem; color: var(--pastel-yellow); line-height: 1.5; margin-bottom: 0.7rem;">
+                        Payment is due at <strong style="color:var(--pastel-orange);">drop-off</strong> — no online payment required.
                     </div>
-                    <div>
-                        <div class="info-label">Payment</div>
-                        <div class="info-value">
-                            <a href="https://cash.app/$Cancans92" target="_blank" rel="noopener noreferrer" style="color:#f5d79a;">Cash App: $Cancans92</a>
-                        </div>
-                    </div>
+                    <a href="https://cash.app/$Cancans92" target="_blank" rel="noopener noreferrer" style="
+                        display: flex; align-items: center; gap: 0.5rem;
+                        background: rgba(245,215,154,0.1);
+                        border: 1.5px solid rgba(245,215,154,0.35);
+                        border-radius: var(--radius-sm);
+                        padding: 0.55rem 0.9rem;
+                        color: var(--pastel-orange);
+                        font-weight: 700;
+                        font-size: 0.88rem;
+                        text-decoration: none;
+                        margin-bottom: 0.5rem;
+                        transition: background 0.2s;
+                    ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                        Cash App: $Cancans92
+                    </a>
+                    <div style="font-size: 0.78rem; color: var(--gray-lavender); font-style: italic;">Also accepted: cash in person</div>
                 </div>
 
                 <!-- Text to Schedule button -->
