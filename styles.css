@@ -248,6 +248,14 @@ body {
     transition: all 0.3s ease;
     box-shadow: 0 8px 20px rgba(245, 215, 154, 0.3);
 }
+.payment-note {
+    margin-top: 0.75rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    color: #ECDB9F;
+    text-align: center;
+    opacity: 0.9;
+}
 .cta-reassurance {
     margin-top: 1rem;
     font-family: 'Poppins', sans-serif;
@@ -1199,4 +1207,11 @@ nav a:hover {
 
 nav a:hover::after {
     width: 100%;
+}
+.payment-note {
+    margin-top: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    color: #ECDB9F;
+    text-align: center;
 }
