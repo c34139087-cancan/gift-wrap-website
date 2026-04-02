@@ -19,6 +19,7 @@
             position: relative;
             z-index: 10;
         }
+
         .how-it-works h2 {
             font-family: var(--font-display);
             font-size: 1.6rem;
@@ -27,17 +28,20 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
             margin-bottom: 0.5rem;
         }
+
         .how-it-works .section-subtitle {
             color: var(--gray-lavender);
             font-size: 1rem;
             font-style: italic;
             margin-bottom: 3rem;
         }
+
         .steps-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
         }
+
         .step-card {
             background: rgba(32, 17, 60, 0.75);
             border: 2px solid rgba(195, 149, 89, 0.3);
@@ -46,10 +50,12 @@
             backdrop-filter: blur(10px);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .step-card:hover {
             transform: translateY(-6px);
             box-shadow: 0 16px 40px rgba(0,0,0,0.4);
         }
+
         .step-number {
             width: 48px;
             height: 48px;
@@ -63,12 +69,14 @@
             justify-content: center;
             margin: 0 auto 1rem;
         }
+
         .step-card h3 {
             font-family: var(--font-display);
             font-size: 1.1rem;
             color: #f5d79a;
             margin-bottom: 0.5rem;
         }
+
         .step-card p {
             color: var(--gray-lavender);
             font-size: 0.9rem;
@@ -81,6 +89,7 @@
             transform: translateY(30px);
             transition: opacity 0.7s ease, transform 0.7s ease;
         }
+
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
@@ -119,7 +128,7 @@
                     each ribbon carries intention, and every package becomes an unforgettable experience.
                 </p>
                 <a href="contact.html" class="cta-button">Get In Touch</a>
-            <p class="cta-reassurance">Quick turnaround • Affordable pricing • Pay at drop-off</p>
+                <p class="cta-reassurance">Quick turnaround • Affordable pricing • Pay at drop-off</p>
             </div>
             <img src="purple-gifts.jpg" alt="Purple and Gold Gifts" class="hero-image">
         </div>
@@ -138,12 +147,35 @@
             <div class="step-card">
                 <div class="step-number">2</div>
                 <h3>Drop Off Your Gifts</h3>
-<p>Bring your unwrapped gifts to my Morrison, TN drop-off location. Quick, easy, and stress-free. Pay at drop-off with Cash App or cash.</p>
+                <p>Bring your unwrapped gifts to my Morrison, TN drop-off location. Quick, easy, and stress-free. Pay at drop-off with Cash App or cash.</p>
             </div>
             <div class="step-card">
                 <div class="step-number">3</div>
                 <h3>Pick Up &amp; Wow</h3>
                 <p>Your gifts come back looking stunning — wrapped with care, bows and all. Ready to impress!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE -->
+    <section class="why-choose fade-in">
+        <h2>Why Choose Cancan’s Corner?</h2>
+        <p class="section-subtitle">Beautiful gift wrapping with a personal, stress-free touch.</p>
+
+        <div class="why-grid">
+            <div class="why-card">
+                <h3>Affordable</h3>
+                <p>Simple pricing that helps you get beautiful gifts wrapped without overspending.</p>
+            </div>
+
+            <div class="why-card">
+                <h3>Personal</h3>
+                <p>Every gift is wrapped by the same person, with care and attention to detail each time.</p>
+            </div>
+
+            <div class="why-card">
+                <h3>Convenient</h3>
+                <p>Easy drop-off in Morrison, TN with quick turnaround and clear payment options.</p>
             </div>
         </div>
     </section>
@@ -162,7 +194,6 @@
 
     <script src="script.js"></script>
     <script>
-        // Hamburger menu
         const hamburger = document.getElementById('hamburger');
         const navMenu = document.getElementById('navMenu');
         hamburger.addEventListener('click', () => {
@@ -170,24 +201,22 @@
             hamburger.classList.toggle('active');
         });
 
-        // Confetti dots
         const container = document.getElementById('confetti');
         const colors = ['#f5d79a', '#ecdb9f', '#c39559', '#866e9f', '#785678'];
         for (let i = 0; i < 50; i++) {
             const dot = document.createElement('div');
             dot.classList.add('confetti-dot');
             const size = Math.random() * 8 + 4;
-            dot.style.width      = size + 'px';
-            dot.style.height     = size + 'px';
-            dot.style.left       = Math.random() * 100 + '%';
-            dot.style.top        = '-20px';
+            dot.style.width = size + 'px';
+            dot.style.height = size + 'px';
+            dot.style.left = Math.random() * 100 + '%';
+            dot.style.top = '-20px';
             dot.style.background = colors[Math.floor(Math.random() * colors.length)];
             dot.style.animationDuration = (Math.random() * 6 + 4) + 's';
-            dot.style.animationDelay   = (Math.random() * 5) + 's';
+            dot.style.animationDelay = (Math.random() * 5) + 's';
             container.appendChild(dot);
         }
 
-        // Scroll fade-in
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -195,6 +224,7 @@
                 }
             });
         }, { threshold: 0.15 });
+
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     </script>
 </body>

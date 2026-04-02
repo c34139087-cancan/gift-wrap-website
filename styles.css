@@ -1217,3 +1217,50 @@ nav a:hover::after {
     text-align: center;
     opacity: 0.9;
 }
+.why-choose {
+    padding: 4rem 2rem;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.why-choose h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: #ECDB9F;
+    margin-bottom: 1rem;
+}
+
+.why-choose .section-subtitle {
+    color: rgba(255,255,255,0.75);
+    font-size: 1.05rem;
+    margin-bottom: 2.5rem;
+}
+
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.why-card {
+    background: rgba(64, 41, 91, 0.6);
+    border: 1px solid rgba(236, 219, 159, 0.25);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.why-card h3 {
+    font-family: 'Playfair Display', serif;
+    color: #ECDB9F;
+    margin-bottom: 0.75rem;
+    font-size: 1.4rem;
+}
+
+.why-card p {
+    color: rgba(255,255,255,0.78);
+    line-height: 1.7;
+}
