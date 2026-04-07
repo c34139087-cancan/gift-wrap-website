@@ -49,7 +49,6 @@
             margin: 0 auto;
         }
 
-        /* Featured full-width photo */
         .gallery-featured {
             width: 100%;
             border-radius: 20px;
@@ -80,7 +79,6 @@
             transform: scale(1.03);
         }
 
-        /* 3-column row */
         .gallery-trio {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -141,7 +139,6 @@
             text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
         }
 
-        /* LIGHTBOX */
         .lightbox {
             display: none;
             position: fixed;
@@ -185,7 +182,6 @@
 
         .lightbox-close:hover { color: #fff; transform: scale(1.2); }
 
-        /* RESPONSIVE */
         @media (max-width: 768px) {
             .gallery-trio { grid-template-columns: 1fr; }
             .gallery-featured img { height: 280px; }
@@ -201,9 +197,7 @@
 
     <nav class="navbar">
         <div class="nav-brand" onclick="window.location='index.html'" style="cursor:pointer;">
-            <a href="index.html">
-                <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
-            </a>
+            <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
             <div>
                 <p class="tagline">Cancan's Corner Gift Wrapping</p>
             </div>
@@ -224,15 +218,14 @@
     </div>
 
     <section class="gallery-section">
-<!-- ── FEATURED TOP: aipresentsforsite6 ── -->
+
+        <!-- ── FEATURED TOP ── -->
         <div class="gallery-featured" onclick="openLightbox('aipresentsforsite6.png')">
             <img src="aipresentsforsite6.png" alt="Birthday gift wrapping collection by Cancan's Corner">
-            <div class="gallery-overlay">
-                <span class="overlay-text">Click to view</span>
-            </div>
+            <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
         </div>
 
-        <!-- ── ROW TOP: aipresentforsite6 | birthday_present | aianniversarygiftforsite ── -->
+        <!-- ── ROW 1 ── -->
         <div class="gallery-trio">
             <div class="gallery-item" onclick="openLightbox('aipresentforsite6.png')">
                 <img src="aipresentforsite6.png" alt="Birthday gift wrapping by Cancan's Corner">
@@ -242,69 +235,67 @@
                 <img src="aixmaschristmasgiftbags.png" alt="Christmas gift bags by Cancan's Corner">
                 <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
             </div>
-
-<!-- NEW IMAGES START HERE -->
-
-<div class="gallery-item" onclick="openLightbox('aichristmasgift.png')">
-    <img src="aichristmasgift.png">
-    <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
-</div>
-
-<div class="gallery-item" onclick="openLightbox('bridegroomfavors.png')">
-    <img src="bridegroomfavors.png">
-    <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
-</div>
-
-<div class="gallery-item" onclick="openLightbox('bridegroomfavors1.png')">
-    <img src="bridegroomfavors1.png">
-    <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
-</div>
-
-<div class="gallery-item" onclick="openLightbox('bridegroomfavors2.png')">
-    <img src="bridegroomfavors2.png">
-    <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
-</div>
-
-<div class="gallery-item" onclick="openLightbox('corpgifts1.png')">
-    <img src="corpgifts1.png">
-    <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
-</div>
-
-<div class="gallery-item" onclick="openLightbox('corpgifts2.png')">
-    <img src="corpgifts2.png">
-    <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
-</div>
-
-<div class="gallery-item" onclick="openLightbox('corpgifts3.png')">
-    <img src="corpgifts3.png">
-    <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
-</div>
-
-<div class="gallery-item" onclick="openLightbox('kidschristmasgifts.png')">
-    <img src="kidschristmasgifts.png">
-    <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
-</div>
-
-<div class="gallery-trio">
-    <div class="gallery-item" onclick="openLightbox('aianniversarygiftforsite.png')">
-        <img src="aianniversarygiftforsite.png" alt="Anniversary gift wrapping by Cancan's Corner">
-        <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
-    </div>
-    <div class="gallery-item" onclick="openLightbox('aixmaschristmasgiftbags.png')">
-        <img src="aixmaschristmasgiftbags.png" alt="Christmas gift bags by Cancan's Corner">
-        <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
-    </div>
-</div>
-
-        <!-- ── FEATURED: present4 (original) ── -->
-        <div class="gallery-featured" onclick="openLightbox('present4.jpg')">
-            <img src="present4.jpg" alt="Gift wrapping collection by Cancan's Corner">
-            <div class="gallery-overlay">
-                <span class="overlay-text">Click to view</span>
+            <div class="gallery-item" onclick="openLightbox('aichristmasgift.png')">
+                <img src="aichristmasgift.png" alt="Christmas gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
             </div>
         </div>
 
-        <!-- ── ROW 1: present2 | present1 | present3 (original) ── -->
+        <!-- ── ROW 2 ── -->
+        <div class="gallery-trio">
+            <div class="gallery-item" onclick="openLightbox('bridegroomfavors.png')">
+                <img src="bridegroomfavors.png" alt="Wedding favor gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('bridegroomfavors1.png')">
+                <img src="bridegroomfavors1.png" alt="Bridal gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('bridegroomfavors2.png')">
+                <img src="bridegroomfavors2.png" alt="Wedding gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+        </div>
+
+        <!-- ── ROW 3 ── -->
+        <div class="gallery-trio">
+            <div class="gallery-item" onclick="openLightbox('corpgifts1.png')">
+                <img src="corpgifts1.png" alt="Corporate gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('corpgifts2.png')">
+                <img src="corpgifts2.png" alt="Corporate gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('corpgifts3.png')">
+                <img src="corpgifts3.png" alt="Corporate gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+        </div>
+
+        <!-- ── ROW 4 ── -->
+        <div class="gallery-trio">
+            <div class="gallery-item" onclick="openLightbox('kidschristmasgifts.png')">
+                <img src="kidschristmasgifts.png" alt="Kids Christmas gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('aianniversarygiftforsite.png')">
+                <img src="aianniversarygiftforsite.png" alt="Anniversary gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('aigiftsforsite7.png')">
+                <img src="aigiftsforsite7.png" alt="Baby shower gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+        </div>
+
+        <!-- ── FEATURED: present4 ── -->
+        <div class="gallery-featured" onclick="openLightbox('present4.jpg')">
+            <img src="present4.jpg" alt="Gift wrapping collection by Cancan's Corner">
+            <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+        </div>
+
+        <!-- ── ROW 5 ── -->
         <div class="gallery-trio">
             <div class="gallery-item" onclick="openLightbox('present2.jpg')">
                 <img src="present2.jpg" alt="Gift wrapping by Cancan's Corner">
@@ -320,15 +311,13 @@
             </div>
         </div>
 
-        <!-- ── FEATURED 2: aigiftsforsite.png (new) ── -->
+        <!-- ── FEATURED 2: aigiftsforsite ── -->
         <div class="gallery-featured" onclick="openLightbox('aigiftsforsite.png')">
             <img src="aigiftsforsite.png" alt="Elegant holiday gift wrapping by Cancan's Corner">
-            <div class="gallery-overlay">
-                <span class="overlay-text">Click to view</span>
-            </div>
+            <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
         </div>
 
-        <!-- ── ROW 2: aigiftsforsite1 | aigiftsforsite2 | aigiftsforsite3 (new) ── -->
+        <!-- ── ROW 6 ── -->
         <div class="gallery-trio">
             <div class="gallery-item" onclick="openLightbox('aigiftsforsite1.png')">
                 <img src="aigiftsforsite1.png" alt="Spring gift wrapping by Cancan's Corner">
@@ -344,10 +333,10 @@
             </div>
         </div>
 
-        <!-- ── ROW 3:  | aigiftsforsite7 | | aigiftsforsite5 | aigiftsforsite6 (new) ── -->
+        <!-- ── ROW 7 ── -->
         <div class="gallery-trio">
-            <div class="gallery-item" onclick="openLightbox('aigiftsforsite7.png')">
-                <img src="aigiftsforsite7.png" alt="Baby shower gift wrapping by Cancan's Corner">
+            <div class="gallery-item" onclick="openLightbox('aigiftsforsite4.png')">
+                <img src="aigiftsforsite4.png" alt="Pink gift wrapping by Cancan's Corner">
                 <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
             </div>
             <div class="gallery-item" onclick="openLightbox('aigiftsforsite5.png')">
