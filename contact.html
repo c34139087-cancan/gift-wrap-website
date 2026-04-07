@@ -554,7 +554,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
 
                 <div class="form-group">
                     <label>Number of Gifts</label>
-                    <input type="number" name="dropoff_gifts" placeholder="How many gifts?" min="1">
+                    <input type="number" id="number-of-gifts" name="dropoff_gifts" placeholder="How many gifts?" min="1">
                 </div>
 
                 <div class="form-group">
@@ -567,7 +567,49 @@ document.getElementById('contact-form').addEventListener('submit', async functio
                         <option value="custom">Custom / Not Sure</option>
                     </select>
                 </div>
+<!-- 💰 PRICE CALCULATOR -->
 
+<div class="form-group">
+    <label>Gift Size</label>
+    <select id="gift-size">
+        <option value="">Select a size...</option>
+        <option value="4">Small ($4 each)</option>
+        <option value="6">Medium ($6 each)</option>
+        <option value="8">Large ($8 each)</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label>Add-Ons</label>
+
+    <label style="display:flex; align-items:center; gap:8px; margin-top:6px;">
+        <input type="checkbox" id="add-bow">
+        Decorative Bow (+$1 per gift)
+    </label>
+
+    <label style="display:flex; align-items:center; gap:8px; margin-top:6px;">
+        <input type="checkbox" id="rush-order">
+        Rush Order (+$5 flat)
+    </label>
+</div>
+
+<button type="button" id="calculate-total" class="send-btn">
+    💰 Calculate Total
+</button>
+
+<div id="price-result" style="
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(245,215,154,0.4);
+    background: rgba(245,215,154,0.08);
+    color: #f5d79a;
+    text-align: center;
+    display: none;
+    font-weight: 600;
+">
+    Estimated Total: $0
+</div>
                 <div class="form-group">
                     <label>Special Requests or Notes</label>
                     <textarea name="dropoff_notes" placeholder="Any special instructions?"></textarea>
@@ -776,5 +818,43 @@ window.addEventListener('DOMContentLoaded', function () {
     }
     </script>
     <script src="script.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const btn = document.getElementById("calculate-total");
+    const gifts = document.getElementById("number-of-gifts");
+    const size = document.getElementById("gift-size");
+    const bow = document.getElementById("add-bow");
+    const rush = document.getElementById("rush-order");
+    const result = document.getElementById("price-result");
+
+    if (btn) {
+        btn.addEventListener("click", function () {
+
+            const giftCount = parseInt(gifts.value) || 0;
+            const sizePrice = parseInt(size.value) || 0;
+
+            if (giftCount <= 0 || sizePrice <= 0) {
+                result.style.display = "block";
+                result.textContent = "Please enter number of gifts and select a size.";
+                return;
+            }
+
+            let total = giftCount * sizePrice;
+
+            if (bow.checked) {
+                total += giftCount * 1;
+            }
+
+            if (rush.checked) {
+                total += 5;
+            }
+
+            result.style.display = "block";
+            result.textContent = "Estimated Total: $" + total;
+        });
+    }
+});
+</script>
 </body>
 </html>
