@@ -586,18 +586,22 @@
 
         // ── DELETE: Confirm ──
         async function confirmDelete() {
-            if (!deleteTarget) return;
-            closeModal();
+    if (!deleteTarget) return;
 
-            const { error } = await db.from('clients').delete().eq('id', deleteTarget.id);
-            if (error) {
-                showStatus('❌ Delete failed: ' + error.message, 'error');
-            } else {
-                showStatus(`🗑 "${deleteTarget.name}" removed.`, 'success');
-                loadClients();
-            }
-            deleteTarget = null;
-        }
+    const targetId = deleteTarget.id;
+    const targetName = deleteTarget.name;
+
+    const { error } = await db.from('clients').delete().eq('id', targetId);
+
+    if (error) {
+        showStatus('❌ Delete failed: ' + error.message, 'error');
+        return;
+    }
+
+    closeModal();
+    showStatus(`🗑 "${targetName}" removed.`, 'success');
+    loadClients();
+}
 
         // Close modal on overlay click
         document.getElementById('delete-modal').addEventListener('click', function(e) {
