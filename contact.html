@@ -1021,5 +1021,60 @@
     </script>
 
     <script src="script.js"></script>
+
+    <!-- Back to Top Bow Button -->
+    <style>
+        #backToTop {
+            position: fixed;
+            bottom: 32px;
+            right: 28px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3a1a5a, #5a2a7a);
+            border: 2px solid #ECDB9F;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 99998;
+            opacity: 0;
+            transform: translateY(16px) scale(0.85);
+            transition: opacity 0.35s ease, transform 0.35s ease, box-shadow 0.25s ease;
+            text-decoration: none;
+        }
+        #backToTop.btt-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        #backToTop:hover {
+            box-shadow: 0 6px 24px rgba(236,219,159,0.35);
+            transform: translateY(-3px) scale(1.08);
+        }
+    </style>
+    <script>
+        (function () {
+            const btn = document.createElement("a");
+            btn.id = "backToTop";
+            btn.title = "Back to top";
+            btn.textContent = "🎀";
+            btn.href = "#";
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+            document.body.appendChild(btn);
+            window.addEventListener("scroll", function () {
+                if (window.scrollY > 300) {
+                    btn.classList.add("btt-visible");
+                } else {
+                    btn.classList.remove("btt-visible");
+                }
+            }, { passive: true });
+        })();
+    </script>
+
 </body>
 </html>
