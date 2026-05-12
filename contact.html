@@ -405,6 +405,47 @@
         }
         .cashapp-link:hover { background: rgba(245,215,154,0.2); }
 
+        /* ── Live Quote Estimator Card ── */
+        .quote-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.85rem;
+        }
+        .quote-label {
+            color: var(--gray-lavender);
+            flex: 1;
+        }
+        .quote-qty {
+            color: var(--gray-lavender);
+            font-size: 0.78rem;
+        }
+        .quote-dash {
+            color: rgba(245, 215, 154, 0.4);
+            flex: 0 0 auto;
+        }
+        .quote-price {
+            color: #f5d79a;
+            font-weight: 600;
+            text-align: right;
+            min-width: 60px;
+        }
+        .quote-total .quote-label {
+            color: #f5d79a;
+            font-weight: 700;
+        }
+        .quote-total .quote-price {
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        .quote-divider {
+            height: 1px;
+            background: rgba(245, 215, 154, 0.25);
+            margin: 0.6rem 0;
+        }
+
         /* ── Confetti ── */
         .confetti-dot {
             position: absolute;
@@ -611,6 +652,19 @@
                         updateGiftTotals();
                     })();
                     </script>
+
+                    <div class="form-group">
+                        <label>Add-Ons</label>
+                        <p style="color:#f5d79a;font-size:0.85rem;font-style:italic;margin-bottom:0.5rem;">A classic bow is included free with every wrap 🎀</p>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="quote_premium_bow" name="quote_premium_bow">
+                            Premium Bow Upgrade (+$1 per gift)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="quote_rush_order" name="quote_rush_order">
+                            Rush Order (+$5 flat)
+                        </label>
+                    </div>
 
                     <div class="form-group">
                         <label>Type of Event</label>
@@ -876,6 +930,34 @@
             </div>
             <!-- end side-card -->
 
+            <!-- Live Quote Estimator Card -->
+            <div class="side-card" id="quote-estimator-card" style="display: none;">
+                <div class="side-card-title">🎀 Estimated Quote</div>
+                
+                <div class="quote-line quote-total" style="margin-bottom: 1rem;">
+                    <span class="quote-label">Estimated Total</span>
+                    <span class="quote-dash">—</span>
+                    <span class="quote-price" id="est-total">—</span>
+                </div>
+                
+                <div class="quote-divider"></div>
+                
+                <div class="quote-line" id="est-bow-line" style="display: none;">
+                    <span class="quote-label">Premium Bow</span>
+                    <span class="quote-dash">+</span>
+                    <span class="quote-price" id="est-bow-price">—</span>
+                </div>
+                
+                <div class="quote-line" id="est-rush-line" style="display: none;">
+                    <span class="quote-label">Rush Order</span>
+                    <span class="quote-dash">+</span>
+                    <span class="quote-price">$5</span>
+                </div>
+                
+                <p style="color:#f5d79a;font-size:0.75rem;font-style:italic;text-align:center;margin-top:0.8rem;">Final price confirmed at drop-off</p>
+            </div>
+            <!-- end quote-estimator-card -->
+
         </div>
         <!-- ═══ END RIGHT COLUMN ═══ -->
 
@@ -1101,6 +1183,139 @@
             });
         }
     });
+
+    // ── Live Quote Estimator ──
+    (function () {
+        const card = document.getElementById('quote-estimator-card');
+        let currentMode = 'message';
+
+        // Get all input elements from both sections
+        const quoteSmall   = document.getElementById('quote-small');
+        const quoteMed     = document.getElementById('quote-medium');
+        const quoteLarge   = document.getElementById('quote-large');
+        const quotePremiumBow = document.getElementById('quote_premium_bow');
+        const quoteRushOrder = document.getElementById('quote_rush_order');
+
+        const dropoffSmall = document.getElementById('dropoff-small');
+        const dropoffMed   = document.getElementById('dropoff-medium');
+        const dropoffLarge = document.getElementById('dropoff-large');
+        const dropoffPremiumBow = document.getElementById('premium-bow');
+        const dropoffRushOrder = document.getElementById('rush-order');
+
+        // Override setPurpose to track mode changes
+        const originalSetPurpose = window.setPurpose;
+        window.setPurpose = function(mode) {
+            originalSetPurpose.call(this, mode);
+            currentMode = mode;
+            updateEstimator();
+        };
+
+        function updateEstimator() {
+            // Get current quantities and selections based on active mode
+            let small = 0, med = 0, large = 0, premiumBow = false, rushOrder = false, eventType = '';
+
+            if (currentMode === 'quote') {
+                small = parseInt(quoteSmall?.value || 0);
+                med = parseInt(quoteMed?.value || 0);
+                large = parseInt(quoteLarge?.value || 0);
+                premiumBow = quotePremiumBow?.checked || false;
+                rushOrder = quoteRushOrder?.checked || false;
+                const quoteEventSelect = document.querySelector('[name="quote_event"]');
+                eventType = quoteEventSelect?.value || '';
+            } else if (currentMode === 'book') {
+                small = parseInt(dropoffSmall?.value || 0);
+                med = parseInt(dropoffMed?.value || 0);
+                large = parseInt(dropoffLarge?.value || 0);
+                premiumBow = dropoffPremiumBow?.checked || false;
+                rushOrder = dropoffRushOrder?.checked || false;
+                const bookEventSelect = document.querySelector('[name="dropoff_style"]');
+                eventType = bookEventSelect?.value || '';
+            } else {
+                card.style.display = 'none';
+                return;
+            }
+
+            const totalGifts = small + med + large;
+
+            // Show/hide card based on whether any quantity > 0
+            if (totalGifts === 0) {
+                card.style.display = 'none';
+                return;
+            }
+
+            card.style.display = 'block';
+
+            // PRICING: Midpoint values
+            // Small: $4–$8 → $6 | Medium: $6–$10 → $8 | Large: $8–$12 → $10
+            const baseTotal = (small * 6) + (med * 8) + (large * 10);
+            
+            // MINIMUM ENFORCEMENT: $10 per item for bulk (qty >= 10) or special orders
+            const isBulk = totalGifts >= 10;
+            const isSpecial = eventType !== '' && eventType !== undefined;
+            const minimumRequired = (isBulk || isSpecial) ? totalGifts * 10 : 0;
+            let finalBase = Math.max(baseTotal, minimumRequired);
+
+            // Add Premium Bow if checked
+            let total = finalBase;
+            const bowAmount = premiumBow && totalGifts > 0 ? totalGifts * 1 : 0;
+            total += bowAmount;
+
+            // Add Rush Order if checked
+            let rushAmount = 0;
+            if (rushOrder) {
+                rushAmount = 5;
+                total += rushAmount;
+            }
+
+            // Update total display
+            document.getElementById('est-total').textContent = `$${total}`;
+
+            // Update Premium Bow line (show only if checked)
+            const bowLine = document.getElementById('est-bow-line');
+            if (premiumBow && totalGifts > 0) {
+                bowLine.style.display = 'flex';
+                document.getElementById('est-bow-price').textContent = `$${bowAmount}`;
+            } else {
+                bowLine.style.display = 'none';
+            }
+
+            // Update Rush Order line (show only if checked)
+            const rushLine = document.getElementById('est-rush-line');
+            if (rushOrder) {
+                rushLine.style.display = 'flex';
+            } else {
+                rushLine.style.display = 'none';
+            }
+        }
+
+        // Add event listeners to all quantity inputs in both sections
+        document.addEventListener('DOMContentLoaded', function () {
+            const inputs = [
+                quoteSmall, quoteMed, quoteLarge,
+                dropoffSmall, dropoffMed, dropoffLarge
+            ];
+
+            inputs.forEach(input => {
+                if (input) {
+                    input.addEventListener('input', updateEstimator);
+                }
+            });
+
+            // Wait a moment for checkboxes and event type selects to be available
+            setTimeout(function () {
+                if (quotePremiumBow) quotePremiumBow.addEventListener('change', updateEstimator);
+                if (quoteRushOrder) quoteRushOrder.addEventListener('change', updateEstimator);
+                if (dropoffPremiumBow) dropoffPremiumBow.addEventListener('change', updateEstimator);
+                if (dropoffRushOrder) dropoffRushOrder.addEventListener('change', updateEstimator);
+                
+                // Add listeners for event type selects (affects $10 minimum for special orders)
+                const quoteEventSelect = document.querySelector('[name="quote_event"]');
+                const bookEventSelect = document.querySelector('[name="dropoff_style"]');
+                if (quoteEventSelect) quoteEventSelect.addEventListener('change', updateEstimator);
+                if (bookEventSelect) bookEventSelect.addEventListener('change', updateEstimator);
+            }, 100);
+        });
+    })();
 
     // ── Confetti dots ──
     (function () {
