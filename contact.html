@@ -661,8 +661,51 @@
 
                 <div class="form-group">
                     <label>Number of Gifts</label>
-                    <input type="number" id="number-of-gifts" name="dropoff_gifts" placeholder="How many gifts?" min="1">
+                    <input type="number" id="number-of-gifts" name="dropoff_gifts" placeholder="0" min="0" value="0" readonly>
                 </div>
+
+                <div class="form-row" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="form-group">
+                        <label>Small (up to 12 inches)</label>
+                        <input type="number" name="dropoff_small" id="dropoff-small" placeholder="0" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Medium (12–20 inches)</label>
+                        <input type="number" name="dropoff_medium" id="dropoff-medium" placeholder="0" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Large (20+ inches)</label>
+                        <input type="number" name="dropoff_large" id="dropoff-large" placeholder="0" min="0" value="0">
+                    </div>
+                </div>
+
+                <p id="dropoff-total" style="color:#f5d79a;font-weight:700;margin-top:0.2rem;margin-bottom:1rem;">Total Gifts: 0</p>
+
+                <script>
+                (function () {
+                    const qtyField   = document.getElementById('number-of-gifts');
+                    const smallField = document.getElementById('dropoff-small');
+                    const medField   = document.getElementById('dropoff-medium');
+                    const largeField = document.getElementById('dropoff-large');
+                    const totalLine  = document.getElementById('dropoff-total');
+
+                    function updateGiftTotals() {
+                        const small  = parseInt(smallField.value, 10) || 0;
+                        const medium = parseInt(medField.value, 10) || 0;
+                        const large  = parseInt(largeField.value, 10) || 0;
+                        const total  = small + medium + large;
+
+                        qtyField.value = total;
+                        totalLine.textContent = 'Total Gifts: ' + total;
+                    }
+
+                    [smallField, medField, largeField].forEach(input => {
+                        input.addEventListener('input', updateGiftTotals);
+                    });
+
+                    updateGiftTotals();
+                })();
+                </script>
 
                 <div class="form-group">
                     <label>Wrapping Style</label>
@@ -675,28 +718,39 @@
                     </select>
                 </div>
 
-                <!-- Price Calculator -->
-                <div class="form-group">
-                    <label>Gift Size</label>
-                    <select id="gift-size">
-                        <option value="">Select a size...</option>
-                        <option value="4">Small ($4 each)</option>
-                        <option value="6">Medium ($6 each)</option>
-                        <option value="8">Large ($8 each)</option>
-                    </select>
-                </div>
-
                 <div class="form-group">
                     <label>Add-Ons</label>
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="add-bow">
-                        Decorative Bow (+$1 per gift)
-                    </label>
+                    <p style="color:#f5d79a;font-size:0.85rem;font-style:italic;margin-bottom:0.5rem;">A classic bow is included free with every wrap 🎀</p>
                     <label class="checkbox-label">
                         <input type="checkbox" id="rush-order">
                         Rush Order (+$5 flat)
                     </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="premium-bow">
+                        Premium Bow Upgrade (+$1 per gift)
+                    </label>
                 </div>
+
+                <div class="form-group">
+                    <label>Gift Tag Message</label>
+                    <input type="text" name="gift_tag_message" id="gift-tag-message" placeholder="e.g. Happy Birthday Sarah! Love, Mom" maxlength="100">
+                    <p id="char-counter" style="color:#f5d79a;font-size:0.75rem;margin-top:0.2rem;">0/100 characters</p>
+                </div>
+
+                <script>
+                (function () {
+                    const textarea = document.getElementById('gift-tag-message');
+                    const counter  = document.getElementById('char-counter');
+
+                    function updateCounter() {
+                        const length = textarea.value.length;
+                        counter.textContent = length + '/100 characters';
+                    }
+
+                    textarea.addEventListener('input', updateCounter);
+                    updateCounter();
+                })();
+                </script>
 
                 <button type="button" id="calculate-total" class="send-btn">🎀 Get My Price</button>
 
@@ -950,27 +1004,30 @@
     // ── Price calculator ──
     document.addEventListener('DOMContentLoaded', function () {
         const calcBtn    = document.getElementById('calculate-total');
-        const giftsInput = document.getElementById('number-of-gifts');
-        const sizeSelect = document.getElementById('gift-size');
-        const bowCheck   = document.getElementById('add-bow');
+        const smallInput = document.getElementById('dropoff-small');
+        const medInput   = document.getElementById('dropoff-medium');
+        const largeInput = document.getElementById('dropoff-large');
+        const premiumBowCheck = document.getElementById('premium-bow');
         const rushCheck  = document.getElementById('rush-order');
         const resultBox  = document.getElementById('price-result');
         const hiddenTotal = document.getElementById('estimated-total');
 
         if (calcBtn) {
             calcBtn.addEventListener('click', function () {
-                const giftCount = parseInt(giftsInput.value) || 0;
-                const sizePrice = parseInt(sizeSelect.value) || 0;
+                const smallCount = parseInt(smallInput.value) || 0;
+                const medCount   = parseInt(medInput.value) || 0;
+                const largeCount = parseInt(largeInput.value) || 0;
+                const totalGifts = smallCount + medCount + largeCount;
 
-                if (giftCount <= 0 || sizePrice <= 0) {
+                if (totalGifts <= 0) {
                     resultBox.style.display = 'block';
-                    resultBox.textContent   = 'Please enter number of gifts and select a size.';
+                    resultBox.textContent   = 'Please enter the number of gifts by size.';
                     hiddenTotal.value       = '';
                     return;
                 }
 
-                let total = giftCount * sizePrice;
-                if (bowCheck.checked)  total += giftCount * 1;
+                let total = (smallCount * 4) + (medCount * 6) + (largeCount * 8);
+                if (premiumBowCheck.checked) total += totalGifts * 1;
                 if (rushCheck.checked) total += 5;
 
                 resultBox.style.display = 'block';
@@ -994,9 +1051,12 @@
                 const giftCount     = bookingForm.querySelector('[name="dropoff_gifts"]').value;
                 const wrappingStyle = bookingForm.querySelector('[name="dropoff_style"]').value;
                 const notes         = bookingForm.querySelector('[name="dropoff_notes"]').value.trim();
-                const giftSize      = document.getElementById('gift-size').value;
-                const addBow        = document.getElementById('add-bow').checked;
+                const smallCount    = parseInt(document.getElementById('dropoff-small').value) || 0;
+                const medCount      = parseInt(document.getElementById('dropoff-medium').value) || 0;
+                const largeCount    = parseInt(document.getElementById('dropoff-large').value) || 0;
+                const premiumBow    = document.getElementById('premium-bow').checked;
                 const rushOrder     = document.getElementById('rush-order').checked;
+                const giftTagMessage = document.getElementById('gift-tag-message').value.trim();
                 const estTotal      = document.getElementById('estimated-total').value;
 
                 const { error } = await supabaseClient
@@ -1006,10 +1066,13 @@
                         phone:           phone,
                         email:           email,
                         gift_count:      giftCount ? parseInt(giftCount) : null,
-                        gift_size:       giftSize,
+                        small_count:     smallCount,
+                        medium_count:    medCount,
+                        large_count:     largeCount,
                         wrapping_style:  wrappingStyle,
-                        add_bow:         addBow,
+                        premium_bow:     premiumBow,
                         rush_order:      rushOrder,
+                        gift_tag_message: giftTagMessage || null,
                         estimated_total: estTotal ? '$' + estTotal : null,
                         status:          'Received'
                     }]);
