@@ -697,143 +697,83 @@
 
                 <div class="form-section-label">Book Your Drop-Off</div>
 
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" name="dropoff_name" placeholder="Your full name">
-                </div>
-
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="dropoff_email" placeholder="Your email address">
-                </div>
-
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="tel" name="dropoff_phone" placeholder="Your phone number">
-                </div>
-
-                <div class="form-group">
-                    <label>Number of Gifts</label>
-                    <input type="number" id="number-of-gifts" name="dropoff_gifts" placeholder="0" min="0" value="0" readonly>
-                </div>
-
-                <div class="form-row" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="form-row">
                     <div class="form-group">
-                        <label>Small (up to 12 inches)</label>
-                        <input type="number" name="dropoff_small" id="dropoff-small" placeholder="0" min="0" value="0">
+                        <label>Full Name <span class="req">*</span></label>
+                        <input type="text" id="booking-name" name="dropoff_name" placeholder="Your full name" required>
                     </div>
                     <div class="form-group">
-                        <label>Medium (12–20 inches)</label>
-                        <input type="number" name="dropoff_medium" id="dropoff-medium" placeholder="0" min="0" value="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Large (20+ inches)</label>
-                        <input type="number" name="dropoff_large" id="dropoff-large" placeholder="0" min="0" value="0">
+                        <label>Phone Number <span class="req">*</span></label>
+                        <input type="tel" id="booking-phone" name="dropoff_phone" placeholder="(555) 123-4567" required>
                     </div>
                 </div>
 
-                <p id="dropoff-total" style="color:#f5d79a;font-weight:700;margin-top:0.2rem;margin-bottom:1rem;">Total Gifts: 0</p>
-
-                <script>
-                (function () {
-                    const qtyField   = document.getElementById('number-of-gifts');
-                    const smallField = document.getElementById('dropoff-small');
-                    const medField   = document.getElementById('dropoff-medium');
-                    const largeField = document.getElementById('dropoff-large');
-                    const totalLine  = document.getElementById('dropoff-total');
-
-                    function updateGiftTotals() {
-                        const small  = parseInt(smallField.value, 10) || 0;
-                        const medium = parseInt(medField.value, 10) || 0;
-                        const large  = parseInt(largeField.value, 10) || 0;
-                        const total  = small + medium + large;
-
-                        qtyField.value = total;
-                        totalLine.textContent = 'Total Gifts: ' + total;
-                    }
-
-                    [smallField, medField, largeField].forEach(input => {
-                        input.addEventListener('input', updateGiftTotals);
-                    });
-
-                    updateGiftTotals();
-                })();
-                </script>
+                <div class="form-group">
+                    <label>Email Address <span class="req">*</span></label>
+                    <input type="email" id="booking-email" name="dropoff_email" placeholder="you@email.com" required>
+                </div>
 
                 <div class="form-group">
-                    <label>Wrapping Style</label>
-                    <select name="dropoff_style">
-                        <option value="">Select a style...</option>
+                    <label>Service</label>
+                    <select id="booking-style" name="dropoff_style" required>
+                        <option value="" disabled selected>Select a service…</option>
                         <option value="basic">Basic Gift Wrapping</option>
                         <option value="bulk">Bulk Orders (10+ gifts)</option>
-                        <option value="custom">Custom / Not Sure</option>
+                    </select>
+                </div>
+
+                <div class="form-row" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Gift Size</label>
+                        <select id="booking-size" name="dropoff_size" required>
+                            <option value="" disabled selected>Select size…</option>
+                            <option value="small">Small</option>
+                            <option value="medium">Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity <span class="req">*</span></label>
+                        <input type="number" id="booking-quantity" name="dropoff_gifts" placeholder="0" min="1" value="1" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Add a Bow</label>
+                    <select id="booking-bow" name="add_bow">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label>Add-Ons</label>
-                    <p style="color:#f5d79a;font-size:0.85rem;font-style:italic;margin-bottom:0.5rem;">A classic bow is included free with every wrap 🎀</p>
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="rush-order">
-                        Rush Order (+$5 flat)
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="premium-bow">
-                        Premium Bow Upgrade (+$1 per gift)
-                    </label>
+                    <label>Rush Order</label>
+                    <select id="booking-rush" name="rush_order">
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
                 </div>
 
-                <div class="form-group">
-                    <label>Gift Tag Message</label>
-                    <input type="text" name="gift_tag_message" id="gift-tag-message" placeholder="e.g. Happy Birthday Sarah! Love, Mom" maxlength="100">
-                    <p id="char-counter" style="color:#f5d79a;font-size:0.75rem;margin-top:0.2rem;">0/100 characters</p>
-                </div>
-
-                <script>
-                (function () {
-                    const textarea = document.getElementById('gift-tag-message');
-                    const counter  = document.getElementById('char-counter');
-
-                    function updateCounter() {
-                        const length = textarea.value.length;
-                        counter.textContent = length + '/100 characters';
-                    }
-
-                    textarea.addEventListener('input', updateCounter);
-                    updateCounter();
-                })();
-                </script>
-
-                <button type="button" id="calculate-total" class="send-btn">🎀 Get My Price</button>
+                <button type="button" id="calculate-total" class="send-btn">🎀 Calculate Total</button>
 
                 <div id="price-result">Estimated Total: $0</div>
-                <input type="hidden" id="estimated-total" name="estimated_total" value="">
+                <input type="hidden" id="estimated-total" name="estimated_total" value="0">
 
                 <div class="form-group" style="margin-top: 1.2rem;">
                     <label>Special Requests or Notes</label>
-                    <textarea name="dropoff_notes" placeholder="Any special instructions?"></textarea>
+                    <textarea id="booking-notes" placeholder="Any special instructions?"></textarea>
                 </div>
 
-                <div class="form-section-label" style="margin-top: 1.5rem;">Now Pick Your Drop-Off Time</div>
+                <button type="submit" class="send-btn" style="margin-top: 1.5rem;">🎀 Save My Booking</button>
 
-                <!-- Calendly inline widget -->
-                <div class="calendly-inline-widget"
-                     data-url="https://calendly.com/c34139087?background_color=f5f7fa&text_color=631eb1&primary_color=0d4fee"
-                     style="min-width:100%; height:500px;">
+                <div id="booking-success" class="success-message" style="display:none;">
+                    <div class="success-icon">✨</div>
+                    <h3>Booking Received!</h3>
+                    <p>Thanks for choosing Cancan's Corner. Your order has been sent and marked as <strong>Received</strong>.</p>
+                    <p class="success-tagline">I’ll follow up soon with drop-off details.</p>
                 </div>
-                <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-                <!-- end Calendly -->
-
-                <button type="submit" class="send-btn" style="margin-top: 1.5rem;">🎀 Send Booking Request</button>
-
             </form>
             <!-- end #booking-fields -->
-
-        </div>
-        <!-- ═══ END LEFT COLUMN ═══ -->
-
-        <!-- ═══ RIGHT COLUMN: SIDEBAR ═══ -->
-        <div class="contact-info-card">
 
             <!-- Profile card -->
             <div class="side-card profile-block">
@@ -994,7 +934,7 @@
     // ── Supabase client ──
    const supabaseClient = supabase.createClient(
   "https://umfheobuqegcluwedxwm.supabase.co",
-  "sb_publishable_U4HM6QUZS4TPsi25qKXNMw_2BClzrYd"
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtZmhlb2J1cWVnY2x1d2VkeHdtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1OTUzODMsImV4cCI6MjA5MTE3MTM4M30.6ejuz6sJJw9kLBRf3XLTd7Cf5OP9UWu60hGEv4TKDZY"
 ); 
 
     // ── Tab switcher ──
@@ -1084,100 +1024,108 @@
     // ── Price calculator ──
     document.addEventListener('DOMContentLoaded', function () {
         const calcBtn    = document.getElementById('calculate-total');
-        const smallInput = document.getElementById('dropoff-small');
-        const medInput   = document.getElementById('dropoff-medium');
-        const largeInput = document.getElementById('dropoff-large');
-        const premiumBowCheck = document.getElementById('premium-bow');
-        const rushCheck  = document.getElementById('rush-order');
-        const resultBox  = document.getElementById('price-result');
-        const hiddenTotal = document.getElementById('estimated-total');
+        const serviceField = document.getElementById('booking-style');
+        const sizeField    = document.getElementById('booking-size');
+        const quantityField= document.getElementById('booking-quantity');
+        const bowField     = document.getElementById('booking-bow');
+        const rushField    = document.getElementById('booking-rush');
+        const resultBox    = document.getElementById('price-result');
+        const hiddenTotal  = document.getElementById('estimated-total');
+
+        function calculateBookingTotal() {
+            const service = serviceField?.value;
+            const size    = sizeField?.value;
+            const quantity= parseInt(quantityField?.value, 10) || 0;
+            const addBow  = bowField?.value === 'yes';
+            const rush    = rushField?.value === 'true';
+
+            if (!service || !size || quantity < 1) {
+                resultBox.style.display = 'block';
+                resultBox.textContent = 'Please choose a service, size, and quantity to see a price.';
+                hiddenTotal.value = '0';
+                return null;
+            }
+
+            let unitPrice = 0;
+            if (service === 'basic') {
+                if (size === 'small') unitPrice = 4;
+                if (size === 'medium') unitPrice = 6;
+                if (size === 'large') unitPrice = 8;
+            } else if (service === 'bulk') {
+                unitPrice = 10;
+            }
+
+            let total = quantity * unitPrice;
+            if (addBow) total += quantity * 1;
+            if (rush) total += 5;
+
+            resultBox.style.display = 'block';
+            resultBox.textContent = 'Estimated Total: $' + total.toFixed(2);
+            hiddenTotal.value = total.toFixed(2);
+            return total;
+        }
 
         if (calcBtn) {
-            calcBtn.addEventListener('click', function () {
-                const smallCount = parseInt(smallInput.value) || 0;
-                const medCount   = parseInt(medInput.value) || 0;
-                const largeCount = parseInt(largeInput.value) || 0;
-                const totalGifts = smallCount + medCount + largeCount;
-
-                if (totalGifts <= 0) {
-                    resultBox.style.display = 'block';
-                    resultBox.textContent   = 'Please enter the number of gifts by size.';
-                    hiddenTotal.value       = '';
-                    return;
-                }
-
-                let total = (smallCount * 4) + (medCount * 6) + (largeCount * 8);
-                if (premiumBowCheck.checked) total += totalGifts * 1;
-                if (rushCheck.checked) total += 5;
-
-                resultBox.style.display = 'block';
-                resultBox.textContent   = 'Estimated Total: $' + total + ' (due at drop-off)';
-                hiddenTotal.value       = total;
-            });
+            calcBtn.addEventListener('click', calculateBookingTotal);
         }
-    });
 
-    // ── Booking form submit (Supabase) ──
-    document.addEventListener('DOMContentLoaded', function () {
         const bookingForm = document.getElementById('booking-fields');
-
         if (bookingForm) {
             bookingForm.addEventListener('submit', async function (e) {
                 e.preventDefault();
 
-                const name          = bookingForm.querySelector('[name="dropoff_name"]').value.trim();
-                const email         = bookingForm.querySelector('[name="dropoff_email"]').value.trim();
-                const phone         = bookingForm.querySelector('[name="dropoff_phone"]').value.trim();
-                const giftCount     = bookingForm.querySelector('[name="dropoff_gifts"]').value;
-                const wrappingStyle = bookingForm.querySelector('[name="dropoff_style"]').value;
-                const notes         = bookingForm.querySelector('[name="dropoff_notes"]').value.trim();
-                const smallCount    = parseInt(document.getElementById('dropoff-small').value) || 0;
-                const medCount      = parseInt(document.getElementById('dropoff-medium').value) || 0;
-                const largeCount    = parseInt(document.getElementById('dropoff-large').value) || 0;
-                const premiumBow    = document.getElementById('premium-bow').checked;
-                const rushOrder     = document.getElementById('rush-order').checked;
-                const giftTagMessage = document.getElementById('gift-tag-message').value.trim();
-                const estTotal      = document.getElementById('estimated-total').value;
+                const name      = document.getElementById('booking-name').value.trim();
+                const phone     = document.getElementById('booking-phone').value.trim();
+                const email     = document.getElementById('booking-email').value.trim();
+                const service   = document.getElementById('booking-style').value;
+                const size      = document.getElementById('booking-size').value;
+                const quantity  = parseInt(document.getElementById('booking-quantity').value, 10) || 0;
+                const addBow    = document.getElementById('booking-bow').value === 'yes';
+                const rushOrder = document.getElementById('booking-rush').value === 'true';
+                const total     = parseFloat(document.getElementById('estimated-total').value) || 0;
 
-                const { error } = await supabaseClient
-                    .from('orders')
-                    .insert([{
-                        customer_name:   name,
-                        phone:           phone,
-                        email:           email,
-                        gift_count:      giftCount ? parseInt(giftCount) : null,
-                        small_count:     smallCount,
-                        medium_count:    medCount,
-                        large_count:     largeCount,
-                        wrapping_style:  wrappingStyle,
-                        premium_bow:     premiumBow,
-                        rush_order:      rushOrder,
-                        gift_tag_message: giftTagMessage || null,
-                        estimated_total: estTotal ? '$' + estTotal : null,
-                        status:          'Received'
-                    }]);
+                if (!name || !phone || !email || !service || !size || quantity < 1) {
+                    resultBox.style.display = 'block';
+                    resultBox.textContent = 'Please fill in all required fields and calculate your total before submitting.';
+                    return;
+                }
+
+                const calculated = calculateBookingTotal();
+                if (calculated === null) return;
+
+                const { error } = await supabaseClient.from('orders').insert([{
+                    customer_name: name,
+                    phone: phone,
+                    email: email,
+                    gift_count: quantity,
+                    gift_size: size,
+                    wrapping_style: service,
+                    add_bow: addBow,
+                    estimated_total: total,
+                    status: 'Received',
+                    rush_order: rushOrder
+                }]);
 
                 if (error) {
                     console.error('Supabase error:', error);
-                    alert('Booking could not be saved. Please try again or text me directly!');
-                } else {
-                    bookingForm.reset();
-                    document.getElementById('price-result').style.display = 'none';
-
-                    // Show success inside the form card
-                    bookingForm.style.display = 'none';
-                    document.querySelector('.purpose-toggle').style.display = 'none';
-                    const card = document.querySelector('.form-card');
-                    const msg  = document.createElement('div');
-                    msg.className = 'success-message';
-                    msg.innerHTML = `
-                        <div class="success-icon">🎀</div>
-                        <h3>Booking Request Sent!</h3>
-                        <p>I'll reach out shortly to confirm your drop-off time.</p>
-                        <p class="success-tagline">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!"</p>
-                    `;
-                    card.appendChild(msg);
+                    resultBox.style.display = 'block';
+                    resultBox.textContent = 'Booking could not be saved. Please try again or contact me directly.';
+                    return;
                 }
+
+                bookingForm.reset();
+                hiddenTotal.value = '0';
+                resultBox.style.display = 'none';
+
+                const successWrapper = document.getElementById('booking-success');
+                if (successWrapper) {
+                    successWrapper.style.display = 'block';
+                    bookingForm.querySelectorAll('input, select, textarea, button').forEach(el => {
+                        if (el.type !== 'button' && el.type !== 'submit') el.disabled = false;
+                    });
+                }
+
+                window.scrollTo({ top: bookingForm.offsetTop, behavior: 'smooth' });
             });
         }
     });
