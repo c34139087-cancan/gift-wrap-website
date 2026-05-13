@@ -538,7 +538,6 @@
             <!-- Purpose toggle -->
             <div class="purpose-toggle" role="group" aria-label="Form purpose">
                 <button type="button" id="btn-message" class="active" onclick="setPurpose('message')">Send a Message</button>
-                <button type="button" id="btn-quote"   onclick="setPurpose('quote')">Get a Quote</button>
                 <button type="button" id="btn-book"    onclick="setPurpose('book')">Book Drop-off</button>
             </div>
 
@@ -593,97 +592,6 @@
                     <textarea name="message" id="message-field" placeholder="What can Cancan's Corner do for you? Share your wrapping details — number of gifts, gift sizes, event date, and any special requests. The more you tell me the better I can help!" required></textarea>
                 </div>
 
-                <!-- ── QUOTE-ONLY FIELDS ── -->
-                <div class="quote-fields" id="quote-fields">
-                    <div class="form-section-label">Quote Details</div>
-
-                    <div class="form-group">
-                        <label>Description of Item(s) <span class="req">*</span></label>
-                        <textarea name="quote_description" id="quote-desc" placeholder="Describe your items — shape, material, anything unusual about them…"></textarea>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Number of Items <span class="req">*</span></label>
-                            <input type="number" name="quote_quantity" id="quote-qty" placeholder="0" min="0" value="0" readonly>
-                        </div>
-                    </div>
-
-                    <div class="form-row" style="grid-template-columns: repeat(3, 1fr);">
-                        <div class="form-group">
-                            <label>Small (up to 12 inches)</label>
-                            <input type="number" name="quote_small" id="quote-small" placeholder="0" min="0" value="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Medium (12–20 inches)</label>
-                            <input type="number" name="quote_medium" id="quote-medium" placeholder="0" min="0" value="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Large (20+ inches)</label>
-                            <input type="number" name="quote_large" id="quote-large" placeholder="0" min="0" value="0">
-                        </div>
-                    </div>
-
-                    <p id="quote-total" style="color:#f5d79a;font-weight:700;margin-top:0.2rem;margin-bottom:1rem;">Total Gifts: 0</p>
-
-                    <script>
-                    (function () {
-                        const qtyField   = document.getElementById('quote-qty');
-                        const smallField = document.getElementById('quote-small');
-                        const medField   = document.getElementById('quote-medium');
-                        const largeField = document.getElementById('quote-large');
-                        const totalLine  = document.getElementById('quote-total');
-
-                        function updateGiftTotals() {
-                            const small  = parseInt(smallField.value, 10) || 0;
-                            const medium = parseInt(medField.value, 10) || 0;
-                            const large  = parseInt(largeField.value, 10) || 0;
-                            const total  = small + medium + large;
-
-                            qtyField.value = total;
-                            totalLine.textContent = 'Total Gifts: ' + total;
-                        }
-
-                        [smallField, medField, largeField].forEach(input => {
-                            input.addEventListener('input', updateGiftTotals);
-                        });
-
-                        updateGiftTotals();
-                    })();
-                    </script>
-
-                    <div class="form-group">
-                        <label>Add-Ons</label>
-                        <p style="color:#f5d79a;font-size:0.85rem;font-style:italic;margin-bottom:0.5rem;">A classic bow is included free with every wrap 🎀</p>
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="quote_premium_bow" name="quote_premium_bow">
-                            Premium Bow Upgrade (+$1 per gift)
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="quote_rush_order" name="quote_rush_order">
-                            Rush Order (+$5 flat)
-                        </label>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Type of Event</label>
-                        <select name="quote_event">
-                            <option value="" disabled selected>Select event type…</option>
-                            <option>Birthday</option>
-                            <option>Holiday</option>
-                            <option>Baby Shower</option>
-                            <option>Wedding</option>
-                            <option>Anniversary</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Special Requests or Notes</label>
-                        <textarea name="quote_notes" placeholder="Anything else I should know about your items or the occasion…"></textarea>
-                    </div>
-                </div>
-                <!-- end quote-fields -->
 
                 <button type="submit" class="send-btn" id="submit-btn">✉ Send Message</button>
 
@@ -695,7 +603,7 @@
             ════════════════════════════════ -->
             <form id="booking-fields">
 
-                <div class="form-section-label">Book Your Drop-Off</div>
+                <div class="form-section-label">Your Info</div>
 
                 <div class="form-row">
                     <div class="form-group">
@@ -713,67 +621,75 @@
                     <input type="email" id="booking-email" name="dropoff_email" placeholder="you@email.com" required>
                 </div>
 
-                <div class="form-group">
-                    <label>Service</label>
-                    <select id="booking-style" name="dropoff_style" required>
-                        <option value="" disabled selected>Select a service…</option>
-                        <option value="basic">Basic Gift Wrapping</option>
-                        <option value="bulk">Bulk Orders (10+ gifts)</option>
-                    </select>
-                </div>
+                <div class="form-section-label" style="margin-top:1rem;">Gift Details</div>
 
-                <div class="form-row" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
+                    <strong>Basic:</strong> Small $4 &middot; Medium $6 &middot; Large $8 &nbsp;|&nbsp; <strong>Bulk (10+ gifts):</strong> $10 each
+                </p>
+
+                <div class="form-row" style="grid-template-columns:repeat(3,1fr);">
                     <div class="form-group">
-                        <label>Gift Size</label>
-                        <select id="booking-size" name="dropoff_size" required>
-                            <option value="" disabled selected>Select size…</option>
-                            <option value="small">Small</option>
-                            <option value="medium">Medium</option>
-                            <option value="large">Large</option>
-                        </select>
+                        <label>Small &mdash; $4 each</label>
+                        <input type="number" id="book-small" placeholder="0" min="0" value="0">
                     </div>
                     <div class="form-group">
-                        <label>Quantity <span class="req">*</span></label>
-                        <input type="number" id="booking-quantity" name="dropoff_gifts" placeholder="0" min="1" value="1" required>
+                        <label>Medium &mdash; $6 each</label>
+                        <input type="number" id="book-medium" placeholder="0" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Large &mdash; $8 each</label>
+                        <input type="number" id="book-large" placeholder="0" min="0" value="0">
                     </div>
                 </div>
 
+                <p id="book-gift-total" style="color:#f5d79a;font-weight:700;margin-bottom:1.2rem;">Total Gifts: 0</p>
+
+                <div class="form-section-label">Add-Ons</div>
+                <p style="color:#f5d79a;font-size:0.85rem;font-style:italic;margin-bottom:0.6rem;">A classic bow is included free with every wrap 🎀</p>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" id="book-premium-bow">
+                    Premium Bow Upgrade (+$1 per gift)
+                </label>
+                <label class="checkbox-label" style="margin-top:0.5rem;margin-bottom:1.2rem;">
+                    <input type="checkbox" id="book-rush">
+                    Rush Order (+$5 flat)
+                </label>
+
                 <div class="form-group">
-                    <label>Add a Bow</label>
-                    <select id="booking-bow" name="add_bow">
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                    </select>
+                    <label>Special Requests or Notes</label>
+                    <textarea id="booking-notes" name="dropoff_notes" placeholder="Ribbon color, theme, occasion, anything special…"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label>Rush Order</label>
-                    <select id="booking-rush" name="rush_order">
-                        <option value="false">No</option>
-                        <option value="true">Yes</option>
-                    </select>
+                    <label>🏷️ Gift Tag Message</label>
+                    <textarea name="gift_tag" placeholder='e.g. "To: Mom, From: The Kids — Happy Birthday! 🎉" — leave blank if no tag needed' style="min-height:80px;"></textarea>
                 </div>
 
-                <button type="button" id="calculate-total" class="send-btn">🎀 Calculate Total</button>
-
-                <div id="price-result">Estimated Total: $0</div>
+                <!-- Hidden fields populated by JS -->
+                <input type="hidden" id="booking-gift-count" name="dropoff_gifts" value="0">
+                <input type="hidden" id="booking-style" name="dropoff_style" value="basic">
+                <input type="hidden" id="booking-gift-size" name="dropoff_size" value="mixed">
+                <input type="hidden" id="book-add-bow-hidden" name="add_bow" value="false">
+                <input type="hidden" id="book-rush-hidden" name="rush_order" value="false">
                 <input type="hidden" id="estimated-total" name="estimated_total" value="0">
 
-                <div class="form-group" style="margin-top: 1.2rem;">
-                    <label>Special Requests or Notes</label>
-                    <textarea id="booking-notes" placeholder="Any special instructions?"></textarea>
-                </div>
-
-                <button type="submit" class="send-btn" style="margin-top: 1.5rem;">🎀 Save My Booking</button>
+                <button type="submit" class="send-btn" style="margin-top:1.5rem;">🎀 Save My Booking</button>
 
                 <div id="booking-success" class="success-message" style="display:none;">
                     <div class="success-icon">✨</div>
                     <h3>Booking Received!</h3>
                     <p>Thanks for choosing Cancan's Corner. Your order has been sent and marked as <strong>Received</strong>.</p>
-                    <p class="success-tagline">I’ll follow up soon with drop-off details.</p>
+                    <p class="success-tagline">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!"</p>
                 </div>
             </form>
             <!-- end #booking-fields -->
+
+        </div>
+        <!-- ═══ END LEFT COLUMN ═══ -->
+
+        <!-- ═══ RIGHT COLUMN: SIDEBAR ═══ -->
+        <div class="contact-info-card">
 
             <!-- Profile card -->
             <div class="side-card profile-block">
@@ -939,27 +855,19 @@
 
     // ── Tab switcher ──
     function setPurpose(mode) {
-        const quoteFields   = document.getElementById('quote-fields');
         const bookingFields = document.getElementById('booking-fields');
         const contactForm   = document.getElementById('contact-form');
         const submitBtn     = document.getElementById('submit-btn');
 
         const btnMsg   = document.getElementById('btn-message');
-        const btnQuote = document.getElementById('btn-quote');
         const btnBook  = document.getElementById('btn-book');
 
         // Reset
-        quoteFields.classList.remove('visible');
         bookingFields.style.display = 'none';
         contactForm.style.display   = 'block';
         submitBtn.style.display     = 'block';
 
-        if (mode === 'quote') {
-            quoteFields.classList.add('visible');
-            submitBtn.textContent = '🎀 Get My Quote';
-            document.getElementById('form-subject').value      = 'Quote Request — Cancan\'s Corner';
-            document.getElementById('form-purpose-field').value = 'Quote';
-        } else if (mode === 'book') {
+        if (mode === 'book') {
             contactForm.style.display   = 'none';
             bookingFields.style.display = 'block';
             submitBtn.style.display     = 'none';
@@ -969,7 +877,7 @@
             document.getElementById('form-purpose-field').value = 'Message';
         }
 
-        [btnMsg, btnQuote, btnBook].forEach(btn => btn && btn.classList.remove('active'));
+        [btnMsg, btnBook].forEach(btn => btn && btn.classList.remove('active'));
         const activeBtn = document.getElementById('btn-' + mode);
         if (activeBtn) activeBtn.classList.add('active');
     }
@@ -980,9 +888,7 @@
         const tab    = params.get('tab');
         const hash   = window.location.hash;
 
-        if (tab === 'quote' || hash === '#btn-quote') {
-            setPurpose('quote');
-        } else if (tab === 'booking' || tab === 'book' || hash === '#btn-book') {
+        if (tab === 'booking' || tab === 'book' || hash === '#btn-book') {
             setPurpose('book');
         } else {
             setPurpose('message');
@@ -1021,246 +927,142 @@
         }
     });
 
-    // ── Price calculator ──
-    document.addEventListener('DOMContentLoaded', function () {
-        const calcBtn    = document.getElementById('calculate-total');
-        const serviceField = document.getElementById('booking-style');
-        const sizeField    = document.getElementById('booking-size');
-        const quantityField= document.getElementById('booking-quantity');
-        const bowField     = document.getElementById('booking-bow');
-        const rushField    = document.getElementById('booking-rush');
-        const resultBox    = document.getElementById('price-result');
-        const hiddenTotal  = document.getElementById('estimated-total');
+    // ── Live Booking Calculator ──
+    (function () {
+        const card        = document.getElementById('quote-estimator-card');
+        const giftTotal   = document.getElementById('book-gift-total');
+        const estTotal    = document.getElementById('est-total');
+        const estBowLine  = document.getElementById('est-bow-line');
+        const estBowPrice = document.getElementById('est-bow-price');
+        const estRushLine = document.getElementById('est-rush-line');
+        const hiddenTotal = document.getElementById('estimated-total');
+        const hiddenCount = document.getElementById('booking-gift-count');
+        const hiddenStyle = document.getElementById('booking-style');
+        const hiddenBow   = document.getElementById('book-add-bow-hidden');
+        const hiddenRush  = document.getElementById('book-rush-hidden');
 
-        function calculateBookingTotal() {
-            const service = serviceField?.value;
-            const size    = sizeField?.value;
-            const quantity= parseInt(quantityField?.value, 10) || 0;
-            const addBow  = bowField?.value === 'yes';
-            const rush    = rushField?.value === 'true';
+        function recalc() {
+            const small  = parseInt(document.getElementById('book-small')?.value, 10)  || 0;
+            const medium = parseInt(document.getElementById('book-medium')?.value, 10) || 0;
+            const large  = parseInt(document.getElementById('book-large')?.value, 10)  || 0;
+            const total  = small + medium + large;
+            const premBow = document.getElementById('book-premium-bow')?.checked || false;
+            const rush    = document.getElementById('book-rush')?.checked || false;
 
-            if (!service || !size || quantity < 1) {
-                resultBox.style.display = 'block';
-                resultBox.textContent = 'Please choose a service, size, and quantity to see a price.';
-                hiddenTotal.value = '0';
-                return null;
+            // Update gift total label
+            if (giftTotal) giftTotal.textContent = 'Total Gifts: ' + total;
+
+            // Update hidden count
+            if (hiddenCount) hiddenCount.value = total;
+
+            // Determine service type (bulk if 10+)
+            const isBulk = total >= 10;
+            if (hiddenStyle) hiddenStyle.value = isBulk ? 'bulk' : 'basic';
+
+            // Update bow/rush hidden fields
+            if (hiddenBow) hiddenBow.value = premBow ? 'true' : 'false';
+            if (hiddenRush) hiddenRush.value = rush ? 'true' : 'false';
+
+            if (total === 0) {
+                if (card) card.style.display = 'none';
+                if (hiddenTotal) hiddenTotal.value = '0';
+                return;
             }
 
-            let unitPrice = 0;
-            if (service === 'basic') {
-                if (size === 'small') unitPrice = 4;
-                if (size === 'medium') unitPrice = 6;
-                if (size === 'large') unitPrice = 8;
-            } else if (service === 'bulk') {
-                unitPrice = 10;
+            // Pricing
+            let base = 0;
+            if (isBulk) {
+                base = total * 10;
+            } else {
+                base = (small * 4) + (medium * 6) + (large * 8);
             }
+            const bowAmt  = premBow ? total * 1 : 0;
+            const rushAmt = rush ? 5 : 0;
+            const grand   = base + bowAmt + rushAmt;
 
-            let total = quantity * unitPrice;
-            if (addBow) total += quantity * 1;
-            if (rush) total += 5;
+            // Update hidden total
+            if (hiddenTotal) hiddenTotal.value = grand.toFixed(2);
 
-            resultBox.style.display = 'block';
-            resultBox.textContent = 'Estimated Total: $' + total.toFixed(2);
-            hiddenTotal.value = total.toFixed(2);
-            return total;
+            // Show estimator card in sidebar
+            if (card) card.style.display = 'block';
+            if (estTotal) estTotal.textContent = '$' + grand.toFixed(2);
+
+            if (estBowLine) {
+                estBowLine.style.display = premBow ? 'flex' : 'none';
+                if (estBowPrice) estBowPrice.textContent = '$' + bowAmt.toFixed(2);
+            }
+            if (estRushLine) estRushLine.style.display = rush ? 'flex' : 'none';
         }
 
-        if (calcBtn) {
-            calcBtn.addEventListener('click', calculateBookingTotal);
-        }
+        document.addEventListener('DOMContentLoaded', function () {
+            ['book-small','book-medium','book-large'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', recalc);
+            });
+            ['book-premium-bow','book-rush'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('change', recalc);
+            });
+            recalc();
+        });
 
+        // ── Booking form Supabase submit ──
         const bookingForm = document.getElementById('booking-fields');
         if (bookingForm) {
             bookingForm.addEventListener('submit', async function (e) {
                 e.preventDefault();
+                const name     = document.getElementById('booking-name')?.value.trim();
+                const phone    = document.getElementById('booking-phone')?.value.trim();
+                const email    = document.getElementById('booking-email')?.value.trim();
+                const count    = parseInt(hiddenCount?.value, 10) || 0;
+                const style    = hiddenStyle?.value || 'basic';
+                const addBow   = hiddenBow?.value === 'true';
+                const rushOrd  = hiddenRush?.value === 'true';
+                const total    = parseFloat(hiddenTotal?.value) || 0;
+                const notes    = document.getElementById('booking-notes')?.value.trim() || '';
 
-                const name      = document.getElementById('booking-name').value.trim();
-                const phone     = document.getElementById('booking-phone').value.trim();
-                const email     = document.getElementById('booking-email').value.trim();
-                const service   = document.getElementById('booking-style').value;
-                const size      = document.getElementById('booking-size').value;
-                const quantity  = parseInt(document.getElementById('booking-quantity').value, 10) || 0;
-                const addBow    = document.getElementById('booking-bow').value === 'yes';
-                const rushOrder = document.getElementById('booking-rush').value === 'true';
-                const total     = parseFloat(document.getElementById('estimated-total').value) || 0;
-
-                if (!name || !phone || !email || !service || !size || quantity < 1) {
-                    resultBox.style.display = 'block';
-                    resultBox.textContent = 'Please fill in all required fields and calculate your total before submitting.';
+                if (!name || !phone || !email || count < 1) {
+                    alert('Please fill in your name, phone, email, and at least one gift quantity.');
                     return;
                 }
 
-                const calculated = calculateBookingTotal();
-                if (calculated === null) return;
-
                 const { error } = await supabaseClient.from('orders').insert([{
-                    customer_name: name,
-                    phone: phone,
-                    email: email,
-                    gift_count: quantity,
-                    gift_size: size,
-                    wrapping_style: service,
-                    add_bow: addBow,
-                    estimated_total: total,
-                    status: 'Received',
-                    rush_order: rushOrder
+                    customer_name:   name,
+                    phone:           phone,
+                    email:           email,
+                    gift_count:      count,
+                    gift_size:       'mixed',
+                    wrapping_style:  style,
+                    add_bow:         addBow,
+                    estimated_total: '$' + total.toFixed(2),
+                    status:          'Received',
+                    rush_order:      rushOrd
                 }]);
 
                 if (error) {
                     console.error('Supabase error:', error);
-                    resultBox.style.display = 'block';
-                    resultBox.textContent = 'Booking could not be saved. Please try again or contact me directly.';
+                    alert('Booking could not be saved. Please try again or contact me directly.');
                     return;
                 }
 
                 bookingForm.reset();
-                hiddenTotal.value = '0';
-                resultBox.style.display = 'none';
+                if (hiddenTotal) hiddenTotal.value = '0';
+                if (card) card.style.display = 'none';
+                if (giftTotal) giftTotal.textContent = 'Total Gifts: 0';
 
-                const successWrapper = document.getElementById('booking-success');
-                if (successWrapper) {
-                    successWrapper.style.display = 'block';
-                    bookingForm.querySelectorAll('input, select, textarea, button').forEach(el => {
-                        if (el.type !== 'button' && el.type !== 'submit') el.disabled = false;
-                    });
-                }
-
-                window.scrollTo({ top: bookingForm.offsetTop, behavior: 'smooth' });
+                const successBox = document.getElementById('booking-success');
+                if (successBox) successBox.style.display = 'block';
+                window.scrollTo({ top: bookingForm.offsetTop - 20, behavior: 'smooth' });
             });
         }
-    });
 
-    // ── Live Quote Estimator ──
-    (function () {
-        const card = document.getElementById('quote-estimator-card');
-        let currentMode = 'message';
-
-        // Get all input elements from both sections
-        const quoteSmall   = document.getElementById('quote-small');
-        const quoteMed     = document.getElementById('quote-medium');
-        const quoteLarge   = document.getElementById('quote-large');
-        const quotePremiumBow = document.getElementById('quote_premium_bow');
-        const quoteRushOrder = document.getElementById('quote_rush_order');
-
-        const dropoffSmall = document.getElementById('dropoff-small');
-        const dropoffMed   = document.getElementById('dropoff-medium');
-        const dropoffLarge = document.getElementById('dropoff-large');
-        const dropoffPremiumBow = document.getElementById('premium-bow');
-        const dropoffRushOrder = document.getElementById('rush-order');
-
-        // Override setPurpose to track mode changes
-        const originalSetPurpose = window.setPurpose;
+        // ── Override setPurpose to show/hide estimator card ──
+        const origSetPurpose = window.setPurpose;
         window.setPurpose = function(mode) {
-            originalSetPurpose.call(this, mode);
-            currentMode = mode;
-            updateEstimator();
+            origSetPurpose.call(this, mode);
+            if (mode !== 'book' && card) card.style.display = 'none';
+            else recalc();
         };
-
-        function updateEstimator() {
-            // Get current quantities and selections based on active mode
-            let small = 0, med = 0, large = 0, premiumBow = false, rushOrder = false, eventType = '';
-
-            if (currentMode === 'quote') {
-                small = parseInt(quoteSmall?.value || 0);
-                med = parseInt(quoteMed?.value || 0);
-                large = parseInt(quoteLarge?.value || 0);
-                premiumBow = quotePremiumBow?.checked || false;
-                rushOrder = quoteRushOrder?.checked || false;
-                const quoteEventSelect = document.querySelector('[name="quote_event"]');
-                eventType = quoteEventSelect?.value || '';
-            } else if (currentMode === 'book') {
-                small = parseInt(dropoffSmall?.value || 0);
-                med = parseInt(dropoffMed?.value || 0);
-                large = parseInt(dropoffLarge?.value || 0);
-                premiumBow = dropoffPremiumBow?.checked || false;
-                rushOrder = dropoffRushOrder?.checked || false;
-                const bookEventSelect = document.querySelector('[name="dropoff_style"]');
-                eventType = bookEventSelect?.value || '';
-            } else {
-                card.style.display = 'none';
-                return;
-            }
-
-            const totalGifts = small + med + large;
-
-            // Show/hide card based on whether any quantity > 0
-            if (totalGifts === 0) {
-                card.style.display = 'none';
-                return;
-            }
-
-            card.style.display = 'block';
-
-            // PRICING: Midpoint values
-            // Small: $4–$8 → $6 | Medium: $6–$10 → $8 | Large: $8–$12 → $10
-            const baseTotal = (small * 6) + (med * 8) + (large * 10);
-            
-            // MINIMUM ENFORCEMENT: $10 per item for bulk (qty >= 10) or special orders
-            const isBulk = totalGifts >= 10;
-            const isSpecial = eventType !== '' && eventType !== undefined;
-            const minimumRequired = (isBulk || isSpecial) ? totalGifts * 10 : 0;
-            let finalBase = Math.max(baseTotal, minimumRequired);
-
-            // Add Premium Bow if checked
-            let total = finalBase;
-            const bowAmount = premiumBow && totalGifts > 0 ? totalGifts * 1 : 0;
-            total += bowAmount;
-
-            // Add Rush Order if checked
-            let rushAmount = 0;
-            if (rushOrder) {
-                rushAmount = 5;
-                total += rushAmount;
-            }
-
-            // Update total display
-            document.getElementById('est-total').textContent = `$${total}`;
-
-            // Update Premium Bow line (show only if checked)
-            const bowLine = document.getElementById('est-bow-line');
-            if (premiumBow && totalGifts > 0) {
-                bowLine.style.display = 'flex';
-                document.getElementById('est-bow-price').textContent = `$${bowAmount}`;
-            } else {
-                bowLine.style.display = 'none';
-            }
-
-            // Update Rush Order line (show only if checked)
-            const rushLine = document.getElementById('est-rush-line');
-            if (rushOrder) {
-                rushLine.style.display = 'flex';
-            } else {
-                rushLine.style.display = 'none';
-            }
-        }
-
-        // Add event listeners to all quantity inputs in both sections
-        document.addEventListener('DOMContentLoaded', function () {
-            const inputs = [
-                quoteSmall, quoteMed, quoteLarge,
-                dropoffSmall, dropoffMed, dropoffLarge
-            ];
-
-            inputs.forEach(input => {
-                if (input) {
-                    input.addEventListener('input', updateEstimator);
-                }
-            });
-
-            // Wait a moment for checkboxes and event type selects to be available
-            setTimeout(function () {
-                if (quotePremiumBow) quotePremiumBow.addEventListener('change', updateEstimator);
-                if (quoteRushOrder) quoteRushOrder.addEventListener('change', updateEstimator);
-                if (dropoffPremiumBow) dropoffPremiumBow.addEventListener('change', updateEstimator);
-                if (dropoffRushOrder) dropoffRushOrder.addEventListener('change', updateEstimator);
-                
-                // Add listeners for event type selects (affects $10 minimum for special orders)
-                const quoteEventSelect = document.querySelector('[name="quote_event"]');
-                const bookEventSelect = document.querySelector('[name="dropoff_style"]');
-                if (quoteEventSelect) quoteEventSelect.addEventListener('change', updateEstimator);
-                if (bookEventSelect) bookEventSelect.addEventListener('change', updateEstimator);
-            }, 100);
-        });
     })();
 
     // ── Confetti dots ──
