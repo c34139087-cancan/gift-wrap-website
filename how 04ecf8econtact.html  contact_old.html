@@ -13,9 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <!-- Calendly -->
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <!-- EmailJS -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script>emailjs.init("DTeGExk8u7OV6kNCT");</script>
     <style>
         /* ── Page header ── */
         .contact-page-header {
@@ -202,6 +199,17 @@
             accent-color: var(--pastel-orange);
         }
 
+        /* ── Quote-only fields (hidden by default) ── */
+        .quote-fields {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .quote-fields.visible { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
         /* ── Booking fields (hidden by default) ── */
         #booking-fields { display: none; }
 
@@ -216,6 +224,19 @@
             padding-bottom: 0.4rem;
             margin-bottom: 1.2rem;
             margin-top: 0.5rem;
+        }
+
+        /* ── Price result box ── */
+        #price-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(245,215,154,0.4);
+            background: rgba(245,215,154,0.08);
+            color: #f5d79a;
+            text-align: center;
+            display: none;
+            font-weight: 600;
         }
 
         /* ── Submit / action buttons ── */
@@ -236,11 +257,17 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(245, 215, 154, 0.3);
         }
-        .send-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(245, 215, 154, 0.5); }
-        .send-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .send-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(245, 215, 154, 0.5);
+        }
 
         /* ── RIGHT COLUMN: Sidebar ── */
-        .contact-info-card { display: flex; flex-direction: column; gap: 1.4rem; }
+        .contact-info-card {
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem;
+        }
         .side-card {
             background: rgba(64, 41, 91, 0.6);
             backdrop-filter: blur(10px);
@@ -249,69 +276,202 @@
             padding: 1.6rem;
             transition: all 0.3s ease;
         }
-        .side-card:hover { border-color: var(--pastel-orange); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        .side-card:hover {
+            border-color: var(--pastel-orange);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
         .side-card-title {
-            font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
-            text-transform: uppercase; color: var(--pastel-orange); margin-bottom: 1.2rem;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--pastel-orange);
+            margin-bottom: 1.2rem;
         }
         .profile-block { text-align: center; }
         .profile-block img {
-            width: 72px; height: 72px; border-radius: 12px; object-fit: cover;
-            border: 3px solid var(--pastel-orange); margin-bottom: 0.7rem; box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            width: 72px; height: 72px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 3px solid var(--pastel-orange);
+            margin-bottom: 0.7rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
         }
-        .profile-block h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--pastel-orange); }
-        .profile-block p { font-size: 0.78rem; color: var(--gray-lavender); font-style: italic; margin-top: 0.2rem; }
-        .info-row { display: flex; gap: 0.8rem; align-items: center; margin-bottom: 1rem; }
+        .profile-block h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--pastel-orange);
+        }
+        .profile-block p {
+            font-size: 0.78rem;
+            color: var(--gray-lavender);
+            font-style: italic;
+            margin-top: 0.2rem;
+        }
+        .info-row {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
         .info-icon {
             width: 36px; height: 36px; flex-shrink: 0;
-            background: rgba(245, 215, 154, 0.1); border: 1px solid rgba(245, 215, 154, 0.25);
-            border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
+            background: rgba(245, 215, 154, 0.1);
+            border: 1px solid rgba(245, 215, 154, 0.25);
+            border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
         }
-        .info-label { font-size: 0.65rem; color: var(--gray-lavender); text-transform: uppercase; letter-spacing: 0.08em; }
-        .info-value { font-size: 0.9rem; color: var(--pastel-orange); margin-top: 0.1rem; }
-        .info-value a { color: var(--pastel-orange); text-decoration: none; transition: color 0.2s; }
-        .contact-divider { height: 1px; background: rgba(245, 215, 154, 0.2); margin: 1rem 0; }
+        .info-label {
+            font-size: 0.65rem;
+            color: var(--gray-lavender);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .info-value {
+            font-size: 0.9rem;
+            color: var(--pastel-orange);
+            margin-top: 0.1rem;
+        }
+        .info-value a {
+            color: var(--pastel-orange);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .contact-divider {
+            height: 1px;
+            background: rgba(245, 215, 154, 0.2);
+            margin: 1rem 0;
+        }
         .schedule-btn {
-            display: flex; align-items: center; justify-content: center; text-align: center;
-            margin-top: 1rem; padding: 0.75rem;
-            background: rgba(245, 215, 154, 0.1); border: 2px solid var(--gray-lavender);
-            border-radius: var(--radius-md); color: var(--pastel-orange);
-            font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em;
-            text-decoration: none; text-transform: uppercase; transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: rgba(245, 215, 154, 0.1);
+            border: 2px solid var(--gray-lavender);
+            border-radius: var(--radius-md);
+            color: var(--pastel-orange);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
         }
-        .schedule-btn:hover { background: rgba(245, 215, 154, 0.2); border-color: var(--pastel-orange); transform: translateY(-2px); }
-        .qr-block { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; }
+        .schedule-btn:hover {
+            background: rgba(245, 215, 154, 0.2);
+            border-color: var(--pastel-orange);
+            transform: translateY(-2px);
+        }
+        .qr-block {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 0.7rem;
+        }
         .qr-block p { font-size: 0.8rem; color: var(--gray-lavender); text-align: center; }
-        .qr-img-wrap { background: #fff; border-radius: var(--radius-sm); padding: 8px; display: inline-block; box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
+        .qr-img-wrap {
+            background: #fff;
+            border-radius: var(--radius-sm);
+            padding: 8px;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
         .qr-img-wrap img { width: 130px; height: 130px; display: block; }
-        .payment-side-card { margin-top: 0.8rem; background: rgba(195,149,89,0.1); border: 1.5px solid rgba(195,149,89,0.35); border-radius: var(--radius-md); padding: 1rem 1.1rem; }
+
+        /* ── Payment sidebar card ── */
+        .payment-side-card {
+            margin-top: 0.8rem;
+            background: rgba(195,149,89,0.1);
+            border: 1.5px solid rgba(195,149,89,0.35);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.1rem;
+        }
         .cashapp-link {
-            display: flex; align-items: center; gap: 0.5rem;
-            background: rgba(245,215,154,0.1); border: 1.5px solid rgba(245,215,154,0.35);
-            border-radius: var(--radius-sm); padding: 0.55rem 0.9rem;
-            color: var(--pastel-orange); font-weight: 700; font-size: 0.88rem;
-            text-decoration: none; margin-bottom: 0.5rem; transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(245,215,154,0.1);
+            border: 1.5px solid rgba(245,215,154,0.35);
+            border-radius: var(--radius-sm);
+            padding: 0.55rem 0.9rem;
+            color: var(--pastel-orange);
+            font-weight: 700;
+            font-size: 0.88rem;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: background 0.2s;
         }
         .cashapp-link:hover { background: rgba(245,215,154,0.2); }
 
-        /* ── Live Quote Estimator ── */
-        .quote-line { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.6rem; font-size: 0.85rem; }
-        .quote-label { color: var(--gray-lavender); flex: 1; }
-        .quote-dash  { color: rgba(245, 215, 154, 0.4); flex: 0 0 auto; }
-        .quote-price { color: #f5d79a; font-weight: 600; text-align: right; min-width: 60px; }
-        .quote-total .quote-label { color: #f5d79a; font-weight: 700; }
-        .quote-total .quote-price { font-weight: 700; font-size: 0.95rem; }
-        .quote-divider { height: 1px; background: rgba(245, 215, 154, 0.25); margin: 0.6rem 0; }
+        /* ── Live Quote Estimator Card ── */
+        .quote-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.85rem;
+        }
+        .quote-label {
+            color: var(--gray-lavender);
+            flex: 1;
+        }
+        .quote-qty {
+            color: var(--gray-lavender);
+            font-size: 0.78rem;
+        }
+        .quote-dash {
+            color: rgba(245, 215, 154, 0.4);
+            flex: 0 0 auto;
+        }
+        .quote-price {
+            color: #f5d79a;
+            font-weight: 600;
+            text-align: right;
+            min-width: 60px;
+        }
+        .quote-total .quote-label {
+            color: #f5d79a;
+            font-weight: 700;
+        }
+        .quote-total .quote-price {
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        .quote-divider {
+            height: 1px;
+            background: rgba(245, 215, 154, 0.25);
+            margin: 0.6rem 0;
+        }
 
         /* ── Confetti ── */
-        .confetti-dot { position: absolute; border-radius: 50%; animation: confetti-fall linear infinite; pointer-events: none; }
+        .confetti-dot {
+            position: absolute;
+            border-radius: 50%;
+            animation: confetti-fall linear infinite;
+            pointer-events: none;
+        }
 
         /* ── Success message ── */
-        .success-message { text-align: center; padding: 2rem; }
+        .success-message {
+            text-align: center;
+            padding: 2rem;
+        }
         .success-message .success-icon { font-size: 3rem; }
-        .success-message h3 { color: #f5d79a; font-family: var(--font-display); margin: 1rem 0; }
+        .success-message h3 {
+            color: #f5d79a;
+            font-family: var(--font-display);
+            margin: 1rem 0;
+        }
         .success-message p { color: #c39559; }
-        .success-message .success-tagline { color: #866e9f; font-size: 0.85rem; margin-top: 0.5rem; font-style: italic; }
+        .success-message .success-tagline {
+            color: #866e9f;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
 
         /* ── Responsive ── */
         @media (max-width: 720px) {
@@ -345,12 +505,18 @@
         </button>
     </nav>
 
+    <!-- ── Page Header ── -->
     <div class="contact-page-header" id="get-in-touch">
         <h2>Get In Touch</h2>
         <p>"Pretty bows &amp; tidy lines, Cancan's Corner always shines!"</p>
         <div class="gold-divider"></div>
     </div>
 
+    <!-- ══════════════════════════════════════════
+         TWO-COLUMN LAYOUT
+         Left:  .form-card  (message / quote / booking)
+         Right: .contact-info-card  (profile + info + QR)
+    ══════════════════════════════════════════ -->
     <div class="contact-layout">
 
         <!-- ═══ LEFT COLUMN ═══ -->
@@ -358,6 +524,7 @@
             <h3>Send a Message, Get a Quote, or Book Your Drop-Off!</h3>
             <p class="form-subtitle">Choose what you need below — I'll get back to you shortly! 🎀</p>
 
+            <!-- Payment notice -->
             <div class="payment-notice">
                 <span class="payment-notice-icon">💳</span>
                 <div>
@@ -368,17 +535,22 @@
                 </div>
             </div>
 
+            <!-- Purpose toggle -->
             <div class="purpose-toggle" role="group" aria-label="Form purpose">
                 <button type="button" id="btn-message" class="active" onclick="setPurpose('message')">Send a Message</button>
                 <button type="button" id="btn-book"    onclick="setPurpose('book')">Book Drop-off</button>
             </div>
 
-            <!-- MESSAGE FORM -->
+            <!-- ════════════════════════════════
+                 MESSAGE / QUOTE FORM
+            ════════════════════════════════ -->
             <form id="contact-form" action="https://formspree.io/f/xpqykjkn" method="POST">
-                <input type="hidden" name="_subject"     id="form-subject"       value="New Message — Cancan's Corner">
-                <input type="hidden" name="form_purpose" id="form-purpose-field" value="Message">
+
+                <input type="hidden" name="_subject"      id="form-subject"       value="New Message — Cancan's Corner">
+                <input type="hidden" name="form_purpose"  id="form-purpose-field" value="Message">
 
                 <div class="form-section-label">Your Info</div>
+
                 <div class="form-row">
                     <div class="form-group">
                         <label>Full Name <span class="req">*</span></label>
@@ -389,10 +561,12 @@
                         <input type="tel" name="phone" placeholder="(555) 123-4567" required>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label>Email Address <span class="req">*</span></label>
                     <input type="email" name="email" placeholder="you@email.com" required>
                 </div>
+
                 <div class="form-group">
                     <label>Service Interested In</label>
                     <select name="service">
@@ -402,6 +576,7 @@
                         <option>Other / Not Sure</option>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label>Preferred Contact Method</label>
                     <select name="preferred_contact">
@@ -411,16 +586,25 @@
                         <option>Text Message</option>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label>Message <span class="req">*</span></label>
                     <textarea name="message" id="message-field" placeholder="What can Cancan's Corner do for you? Share your wrapping details — number of gifts, gift sizes, event date, and any special requests. The more you tell me the better I can help!" required></textarea>
                 </div>
-                <button type="submit" class="send-btn" id="submit-btn">✉ Send Message</button>
-            </form>
 
-            <!-- BOOKING FORM -->
+
+                <button type="submit" class="send-btn" id="submit-btn">✉ Send Message</button>
+
+            </form>
+            <!-- end #contact-form -->
+
+            <!-- ════════════════════════════════
+                 BOOKING FORM (Supabase)
+            ════════════════════════════════ -->
             <form id="booking-fields">
+
                 <div class="form-section-label">Your Info</div>
+
                 <div class="form-row">
                     <div class="form-group">
                         <label>Full Name <span class="req">*</span></label>
@@ -431,15 +615,18 @@
                         <input type="tel" id="booking-phone" name="dropoff_phone" placeholder="(555) 123-4567" required>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label>Email Address <span class="req">*</span></label>
                     <input type="email" id="booking-email" name="dropoff_email" placeholder="you@email.com" required>
                 </div>
 
                 <div class="form-section-label" style="margin-top:1rem;">Gift Details</div>
+
                 <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
                     <strong>Basic:</strong> Small $4 &middot; Medium $6 &middot; Large $8 &nbsp;|&nbsp; <strong>Bulk (10+ gifts):</strong> $10 each
                 </p>
+
                 <div class="form-row" style="grid-template-columns:repeat(3,1fr);">
                     <div class="form-group">
                         <label>Small &mdash; $4 each</label>
@@ -454,10 +641,12 @@
                         <input type="number" id="book-large" placeholder="0" min="0" value="0">
                     </div>
                 </div>
+
                 <p id="book-gift-total" style="color:#f5d79a;font-weight:700;margin-bottom:1.2rem;">Total Gifts: 0</p>
 
                 <div class="form-section-label">Add-Ons</div>
                 <p style="color:#f5d79a;font-size:0.85rem;font-style:italic;margin-bottom:0.6rem;">A classic bow is included free with every wrap 🎀</p>
+
                 <label class="checkbox-label">
                     <input type="checkbox" id="book-premium-bow">
                     Premium Bow Upgrade (+$1 per gift)
@@ -471,20 +660,21 @@
                     <label>Special Requests or Notes</label>
                     <textarea id="booking-notes" name="dropoff_notes" placeholder="Ribbon color, theme, occasion, anything special…"></textarea>
                 </div>
+
                 <div class="form-group">
                     <label>🏷️ Gift Tag Message</label>
-                    <textarea id="booking-gift-tag" name="gift_tag" placeholder='e.g. "To: Mom, From: The Kids — Happy Birthday! 🎉" — leave blank if no tag needed' style="min-height:80px;"></textarea>
+                    <textarea name="gift_tag" placeholder='e.g. "To: Mom, From: The Kids — Happy Birthday! 🎉" — leave blank if no tag needed' style="min-height:80px;"></textarea>
                 </div>
 
-                <!-- Hidden fields -->
-                <input type="hidden" id="booking-gift-count" name="dropoff_gifts"   value="0">
-                <input type="hidden" id="booking-style"       name="dropoff_style"   value="basic">
-                <input type="hidden" id="booking-gift-size"   name="dropoff_size"    value="mixed">
-                <input type="hidden" id="book-add-bow-hidden" name="add_bow"         value="false">
-                <input type="hidden" id="book-rush-hidden"    name="rush_order"      value="false">
-                <input type="hidden" id="estimated-total"     name="estimated_total" value="0">
+                <!-- Hidden fields populated by JS -->
+                <input type="hidden" id="booking-gift-count" name="dropoff_gifts" value="0">
+                <input type="hidden" id="booking-style" name="dropoff_style" value="basic">
+                <input type="hidden" id="booking-gift-size" name="dropoff_size" value="mixed">
+                <input type="hidden" id="book-add-bow-hidden" name="add_bow" value="false">
+                <input type="hidden" id="book-rush-hidden" name="rush_order" value="false">
+                <input type="hidden" id="estimated-total" name="estimated_total" value="0">
 
-                <button type="submit" class="send-btn" id="booking-submit-btn" style="margin-top:1.5rem;">🎀 Save My Booking</button>
+                <button type="submit" class="send-btn" style="margin-top:1.5rem;">🎀 Save My Booking</button>
 
                 <div id="booking-success" class="success-message" style="display:none;">
                     <div class="success-icon">✨</div>
@@ -493,22 +683,26 @@
                     <p class="success-tagline">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!"</p>
                 </div>
             </form>
+            <!-- end #booking-fields -->
 
         </div>
         <!-- ═══ END LEFT COLUMN ═══ -->
 
-        <!-- ═══ RIGHT COLUMN ═══ -->
+        <!-- ═══ RIGHT COLUMN: SIDEBAR ═══ -->
         <div class="contact-info-card">
 
+            <!-- Profile card -->
             <div class="side-card profile-block">
                 <img src="navlogo.png" alt="Cancan's Corner">
                 <h3>Candida Cook</h3>
                 <p>Cancan's Corner Gift Wrapping</p>
             </div>
 
+            <!-- Contact Info + QR Code -->
             <div class="side-card">
                 <div class="side-card-title">Contact Info</div>
 
+                <!-- Phone -->
                 <div class="info-row">
                     <div class="info-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -521,6 +715,7 @@
                     </div>
                 </div>
 
+                <!-- Email -->
                 <div class="info-row">
                     <div class="info-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -530,10 +725,13 @@
                     </div>
                     <div>
                         <div class="info-label">Email</div>
-                        <div class="info-value"><a href="mailto:cancans.corner92@gmail.com">cancans.corner92@gmail.com</a></div>
+                        <div class="info-value">
+                            <a href="mailto:cancans.corner92@gmail.com">cancans.corner92@gmail.com</a>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Location -->
                 <div class="info-row" style="margin-bottom: 0;">
                     <div class="info-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -547,8 +745,10 @@
                     </div>
                 </div>
 
+                <!-- Divider -->
                 <div class="contact-divider"></div>
 
+                <!-- QR Code -->
                 <div class="qr-block">
                     <div class="side-card-title" style="margin-bottom: 0.4rem;">Save My Contact</div>
                     <p>Scan to save me in your phone</p>
@@ -557,6 +757,7 @@
                     </div>
                 </div>
 
+                <!-- Payment / Cash App -->
                 <div class="payment-side-card">
                     <div class="side-card-title" style="margin-bottom: 0.6rem;">Payment</div>
                     <div style="font-size: 0.85rem; color: var(--pastel-yellow); line-height: 1.5; margin-bottom: 0.7rem;">
@@ -572,92 +773,107 @@
                     <div style="font-size: 0.78rem; color: var(--gray-lavender); font-style: italic;">Also accepted: cash in person</div>
                 </div>
 
+                <!-- Text to Schedule -->
                 <a href="sms:9313044499" class="schedule-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;">
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
                     </svg>
                     Text to Schedule
                 </a>
+
             </div>
+            <!-- end side-card -->
 
             <!-- Live Quote Estimator Card -->
             <div class="side-card" id="quote-estimator-card" style="display: none;">
                 <div class="side-card-title">🎀 Estimated Quote</div>
+                
                 <div class="quote-line quote-total" style="margin-bottom: 1rem;">
                     <span class="quote-label">Estimated Total</span>
                     <span class="quote-dash">—</span>
                     <span class="quote-price" id="est-total">—</span>
                 </div>
+                
                 <div class="quote-divider"></div>
+                
                 <div class="quote-line" id="est-bow-line" style="display: none;">
                     <span class="quote-label">Premium Bow</span>
                     <span class="quote-dash">+</span>
                     <span class="quote-price" id="est-bow-price">—</span>
                 </div>
+                
                 <div class="quote-line" id="est-rush-line" style="display: none;">
                     <span class="quote-label">Rush Order</span>
                     <span class="quote-dash">+</span>
                     <span class="quote-price">$5</span>
                 </div>
+                
                 <p style="color:#f5d79a;font-size:0.75rem;font-style:italic;text-align:center;margin-top:0.8rem;">Final price confirmed at drop-off</p>
             </div>
+            <!-- end quote-estimator-card -->
 
         </div>
         <!-- ═══ END RIGHT COLUMN ═══ -->
 
     </div>
+    <!-- end .contact-layout -->
 
-    <footer class="footer">
-        <nav class="footer-nav">
-            <a href="index.html">Home</a>
-            <a href="services.html">Services</a>
-            <a href="gallery.html">Gallery</a>
-            <a href="contact.html">Contact</a>
-            <a href="about.html">About</a>
-        </nav>
-        <p>&copy; 2026 Candida Cook | Cancan's Corner Gift Wrapping <span id="secret-bow" style="cursor:default;user-select:none;">🎀</span></p>
-        <p class="footer-note">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!" <a href="inventory.html" style="text-decoration:none; cursor:default;" title="Inventory">🎁</a></p>
-    </footer>
+  <footer class="footer">
+  <nav class="footer-nav">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About</a>
+  </nav>
+  <p>© 2026 Candida Cook | Cancan's Corner Gift Wrapping <span id="secret-bow" style="cursor:default;user-select:none;">🎀</span></p>
+<p class="footer-note">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!" <a href="inventory.html" style="text-decoration:none; cursor:default;" title="Inventory">🎁</a></p>
+</footer>
 
-    <script>
-        document.getElementById('secret-bow').addEventListener('click', function() {
-            const pw = prompt('Enter password:');
-            if (pw === 'Cookcandida5') window.location.href = 'clients.html';
-        });
-    </script>
+<script>
+  document.getElementById('secret-bow').addEventListener('click', function() {
+    const pw = prompt('Enter password:');
+    if (pw === 'Cookcandida5') {
+      window.location.href = 'clients.html';
+    }
+  });
+</script>
 
-    <!-- Supabase -->
+    <!-- ══════════════════════════════════════════
+         SCRIPTS
+    ══════════════════════════════════════════ -->
+
+    <!-- Supabase (versioned CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
     // ── Supabase client ──
-    const supabaseClient = supabase.createClient(
-        "https://umfheobuqegcluwedxwm.supabase.co",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtZmhlb2J1cWVnY2x1d2VkeHdtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1OTUzODMsImV4cCI6MjA5MTE3MTM4M30.6ejuz6sJJw9kLBRf3XLTd7Cf5OP9UWu60hGEv4TKDZY"
-    );
+   const supabaseClient = supabase.createClient(
+  "https://umfheobuqegcluwedxwm.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtZmhlb2J1cWVnY2x1d2VkeHdtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1OTUzODMsImV4cCI6MjA5MTE3MTM4M30.6ejuz6sJJw9kLBRf3XLTd7Cf5OP9UWu60hGEv4TKDZY"
+); 
 
     // ── Tab switcher ──
     function setPurpose(mode) {
         const bookingFields = document.getElementById('booking-fields');
         const contactForm   = document.getElementById('contact-form');
         const submitBtn     = document.getElementById('submit-btn');
-        const btnMsg        = document.getElementById('btn-message');
-        const btnBook       = document.getElementById('btn-book');
-        const card          = document.getElementById('quote-estimator-card');
 
+        const btnMsg   = document.getElementById('btn-message');
+        const btnBook  = document.getElementById('btn-book');
+
+        // Reset
         bookingFields.style.display = 'none';
         contactForm.style.display   = 'block';
         submitBtn.style.display     = 'block';
-        if (card) card.style.display = 'none';
 
         if (mode === 'book') {
             contactForm.style.display   = 'none';
             bookingFields.style.display = 'block';
             submitBtn.style.display     = 'none';
-            recalc();
         } else {
             submitBtn.textContent = '✉ Send Message';
-            document.getElementById('form-subject').value       = "New Message — Cancan's Corner";
+            document.getElementById('form-subject').value      = 'New Message — Cancan\'s Corner';
             document.getElementById('form-purpose-field').value = 'Message';
         }
 
@@ -666,11 +882,12 @@
         if (activeBtn) activeBtn.classList.add('active');
     }
 
-    // ── Auto-activate tab from URL ──
+    // ── Auto-activate tab from URL hash or query param ──
     window.addEventListener('DOMContentLoaded', function () {
         const params = new URLSearchParams(window.location.search);
         const tab    = params.get('tab');
         const hash   = window.location.hash;
+
         if (tab === 'booking' || tab === 'book' || hash === '#btn-book') {
             setPurpose('book');
         } else {
@@ -678,20 +895,22 @@
         }
     });
 
-    // ── Message form submit (Formspree) ──
+    // ── Message / Quote form submit (Formspree) ──
     document.getElementById('contact-form').addEventListener('submit', async function (e) {
         e.preventDefault();
         const form = e.target;
+        const data = new FormData(form);
         try {
             const response = await fetch(form.action, {
                 method: 'POST',
-                body: new FormData(form),
+                body: data,
                 headers: { 'Accept': 'application/json' }
             });
             if (response.ok) {
                 form.style.display = 'none';
                 document.querySelector('.purpose-toggle').style.display = 'none';
-                const msg = document.createElement('div');
+                const card = document.querySelector('.form-card');
+                const msg  = document.createElement('div');
                 msg.className = 'success-message';
                 msg.innerHTML = `
                     <div class="success-icon">🎀</div>
@@ -699,7 +918,7 @@
                     <p>Thank you for reaching out! I'll get back to you shortly.</p>
                     <p class="success-tagline">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!"</p>
                 `;
-                document.querySelector('.form-card').appendChild(msg);
+                card.appendChild(msg);
             } else {
                 alert('Something went wrong. Please try again!');
             }
@@ -708,137 +927,145 @@
         }
     });
 
-    // ── Live Calculator ──
-    const card        = document.getElementById('quote-estimator-card');
-    const giftTotal   = document.getElementById('book-gift-total');
-    const estTotal    = document.getElementById('est-total');
-    const estBowLine  = document.getElementById('est-bow-line');
-    const estBowPrice = document.getElementById('est-bow-price');
-    const estRushLine = document.getElementById('est-rush-line');
-    const hiddenTotal = document.getElementById('estimated-total');
-    const hiddenCount = document.getElementById('booking-gift-count');
-    const hiddenStyle = document.getElementById('booking-style');
-    const hiddenBow   = document.getElementById('book-add-bow-hidden');
-    const hiddenRush  = document.getElementById('book-rush-hidden');
+    // ── Live Booking Calculator ──
+    (function () {
+        const card        = document.getElementById('quote-estimator-card');
+        const giftTotal   = document.getElementById('book-gift-total');
+        const estTotal    = document.getElementById('est-total');
+        const estBowLine  = document.getElementById('est-bow-line');
+        const estBowPrice = document.getElementById('est-bow-price');
+        const estRushLine = document.getElementById('est-rush-line');
+        const hiddenTotal = document.getElementById('estimated-total');
+        const hiddenCount = document.getElementById('booking-gift-count');
+        const hiddenStyle = document.getElementById('booking-style');
+        const hiddenBow   = document.getElementById('book-add-bow-hidden');
+        const hiddenRush  = document.getElementById('book-rush-hidden');
 
-    function recalc() {
-        const small   = parseInt(document.getElementById('book-small')?.value, 10)  || 0;
-        const medium  = parseInt(document.getElementById('book-medium')?.value, 10) || 0;
-        const large   = parseInt(document.getElementById('book-large')?.value, 10)  || 0;
-        const total   = small + medium + large;
-        const premBow = document.getElementById('book-premium-bow')?.checked || false;
-        const rush    = document.getElementById('book-rush')?.checked || false;
+        function recalc() {
+            const small  = parseInt(document.getElementById('book-small')?.value, 10)  || 0;
+            const medium = parseInt(document.getElementById('book-medium')?.value, 10) || 0;
+            const large  = parseInt(document.getElementById('book-large')?.value, 10)  || 0;
+            const total  = small + medium + large;
+            const premBow = document.getElementById('book-premium-bow')?.checked || false;
+            const rush    = document.getElementById('book-rush')?.checked || false;
 
-        if (giftTotal)   giftTotal.textContent = 'Total Gifts: ' + total;
-        if (hiddenCount) hiddenCount.value = total;
+            // Update gift total label
+            if (giftTotal) giftTotal.textContent = 'Total Gifts: ' + total;
 
-        const isBulk = total >= 10;
-        if (hiddenStyle) hiddenStyle.value = isBulk ? 'bulk' : 'basic';
-        if (hiddenBow)   hiddenBow.value   = premBow ? 'true' : 'false';
-        if (hiddenRush)  hiddenRush.value  = rush    ? 'true' : 'false';
+            // Update hidden count
+            if (hiddenCount) hiddenCount.value = total;
 
-        if (total === 0) {
-            if (card) card.style.display = 'none';
-            if (hiddenTotal) hiddenTotal.value = '0';
-            return;
+            // Determine service type (bulk if 10+)
+            const isBulk = total >= 10;
+            if (hiddenStyle) hiddenStyle.value = isBulk ? 'bulk' : 'basic';
+
+            // Update bow/rush hidden fields
+            if (hiddenBow) hiddenBow.value = premBow ? 'true' : 'false';
+            if (hiddenRush) hiddenRush.value = rush ? 'true' : 'false';
+
+            if (total === 0) {
+                if (card) card.style.display = 'none';
+                if (hiddenTotal) hiddenTotal.value = '0';
+                return;
+            }
+
+            // Pricing
+            let base = 0;
+            if (isBulk) {
+                base = total * 10;
+            } else {
+                base = (small * 4) + (medium * 6) + (large * 8);
+            }
+            const bowAmt  = premBow ? total * 1 : 0;
+            const rushAmt = rush ? 5 : 0;
+            const grand   = base + bowAmt + rushAmt;
+
+            // Update hidden total
+            if (hiddenTotal) hiddenTotal.value = grand.toFixed(2);
+
+            // Show estimator card in sidebar
+            if (card) card.style.display = 'block';
+            if (estTotal) estTotal.textContent = '$' + grand.toFixed(2);
+
+            if (estBowLine) {
+                estBowLine.style.display = premBow ? 'flex' : 'none';
+                if (estBowPrice) estBowPrice.textContent = '$' + bowAmt.toFixed(2);
+            }
+            if (estRushLine) estRushLine.style.display = rush ? 'flex' : 'none';
         }
 
-        const base    = isBulk ? total * 10 : (small * 4) + (medium * 6) + (large * 8);
-        const bowAmt  = premBow ? total : 0;
-        const rushAmt = rush ? 5 : 0;
-        const grand   = base + bowAmt + rushAmt;
-
-        if (hiddenTotal) hiddenTotal.value = grand.toFixed(2);
-        if (card)        card.style.display = 'block';
-        if (estTotal)    estTotal.textContent = '$' + grand.toFixed(2);
-        if (estBowLine)  { estBowLine.style.display  = premBow ? 'flex' : 'none'; if (estBowPrice) estBowPrice.textContent = '$' + bowAmt.toFixed(2); }
-        if (estRushLine)   estRushLine.style.display  = rush    ? 'flex' : 'none';
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        ['book-small','book-medium','book-large'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.addEventListener('input', recalc);
-        });
-        ['book-premium-bow','book-rush'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.addEventListener('change', recalc);
-        });
-        recalc();
-    });
-
-    // ── Booking form submit (Supabase + EmailJS notification) ──
-    document.getElementById('booking-fields').addEventListener('submit', async function (e) {
-        e.preventDefault();
-
-        const name    = document.getElementById('booking-name')?.value.trim();
-        const phone   = document.getElementById('booking-phone')?.value.trim();
-        const email   = document.getElementById('booking-email')?.value.trim();
-        const count   = parseInt(hiddenCount?.value, 10) || 0;
-        const style   = hiddenStyle?.value || 'basic';
-        const addBow  = hiddenBow?.value === 'true';
-        const rushOrd = hiddenRush?.value === 'true';
-        const total   = parseFloat(hiddenTotal?.value) || 0;
-        const notes   = document.getElementById('booking-notes')?.value.trim() || '';
-        const giftTag = document.getElementById('booking-gift-tag')?.value.trim() || '';
-        const btn     = document.getElementById('booking-submit-btn');
-
-        if (!name || !phone || !email || count < 1) {
-            alert('Please fill in your name, phone, email, and at least one gift quantity.');
-            return;
-        }
-
-        btn.disabled    = true;
-        btn.textContent = 'Sending…';
-
-        // Save to Supabase
-        const { error } = await supabaseClient.from('orders').insert([{
-            customer_name:   name,
-            phone:           phone,
-            email:           email,
-            gift_count:      count,
-            gift_size:       'mixed',
-            wrapping_style:  style,
-            add_bow:         addBow,
-            estimated_total: '$' + total.toFixed(2),
-            status:          'Received',
-            rush_order:      rushOrd
-        }]);
-
-        if (error) {
-            console.error('Supabase error:', error);
-            alert('Booking could not be saved. Please try again or contact me directly.');
-            btn.disabled    = false;
-            btn.textContent = '🎀 Save My Booking';
-            return;
-        }
-
-        // Send email notification via EmailJS
-        try {
-            await emailjs.send("service_z061ixa", "template_fealdeg", {
-                customer_name: name,
-                phone:         phone,
-                email:         email,
-                gift_count:    String(count),
-                dropoff_style: style + (addBow ? ' + Premium Bow' : '') + (rushOrd ? ' + Rush Order' : ''),
-                notes:         (notes || 'None') + (giftTag ? '\n\nGift Tag: ' + giftTag : '')
+        document.addEventListener('DOMContentLoaded', function () {
+            ['book-small','book-medium','book-large'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', recalc);
             });
-        } catch (emailErr) {
-            console.warn('EmailJS error (order still saved to Supabase):', emailErr);
+            ['book-premium-bow','book-rush'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('change', recalc);
+            });
+            recalc();
+        });
+
+        // ── Booking form Supabase submit ──
+        const bookingForm = document.getElementById('booking-fields');
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const name     = document.getElementById('booking-name')?.value.trim();
+                const phone    = document.getElementById('booking-phone')?.value.trim();
+                const email    = document.getElementById('booking-email')?.value.trim();
+                const count    = parseInt(hiddenCount?.value, 10) || 0;
+                const style    = hiddenStyle?.value || 'basic';
+                const addBow   = hiddenBow?.value === 'true';
+                const rushOrd  = hiddenRush?.value === 'true';
+                const total    = parseFloat(hiddenTotal?.value) || 0;
+                const notes    = document.getElementById('booking-notes')?.value.trim() || '';
+
+                if (!name || !phone || !email || count < 1) {
+                    alert('Please fill in your name, phone, email, and at least one gift quantity.');
+                    return;
+                }
+
+                const { error } = await supabaseClient.from('orders').insert([{
+                    customer_name:   name,
+                    phone:           phone,
+                    email:           email,
+                    gift_count:      count,
+                    gift_size:       'mixed',
+                    wrapping_style:  style,
+                    add_bow:         addBow,
+                    estimated_total: '$' + total.toFixed(2),
+                    status:          'Received',
+                    rush_order:      rushOrd
+                }]);
+
+                if (error) {
+                    console.error('Supabase error:', error);
+                    alert('Booking could not be saved. Please try again or contact me directly.');
+                    return;
+                }
+
+                bookingForm.reset();
+                if (hiddenTotal) hiddenTotal.value = '0';
+                if (card) card.style.display = 'none';
+                if (giftTotal) giftTotal.textContent = 'Total Gifts: 0';
+
+                const successBox = document.getElementById('booking-success');
+                if (successBox) successBox.style.display = 'block';
+                window.scrollTo({ top: bookingForm.offsetTop - 20, behavior: 'smooth' });
+            });
         }
 
-        // Reset and show success
-        this.reset();
-        if (hiddenTotal) hiddenTotal.value = '0';
-        if (card)        card.style.display = 'none';
-        if (giftTotal)   giftTotal.textContent = 'Total Gifts: 0';
+        // ── Override setPurpose to show/hide estimator card ──
+        const origSetPurpose = window.setPurpose;
+        window.setPurpose = function(mode) {
+            origSetPurpose.call(this, mode);
+            if (mode !== 'book' && card) card.style.display = 'none';
+            else recalc();
+        };
+    })();
 
-        const successBox = document.getElementById('booking-success');
-        if (successBox) successBox.style.display = 'block';
-        window.scrollTo({ top: this.offsetTop - 20, behavior: 'smooth' });
-    });
-
-    // ── Confetti ──
+    // ── Confetti dots ──
     (function () {
         const container = document.getElementById('confetti');
         const colors    = ['#f5d79a', '#ecdb9f', '#c39559', '#866e9f', '#785678'];
@@ -863,28 +1090,54 @@
     <!-- Back to Top Bow Button -->
     <style>
         #backToTop {
-            position: fixed; bottom: 32px; right: 28px;
-            width: 48px; height: 48px; border-radius: 50%;
+            position: fixed;
+            bottom: 32px;
+            right: 28px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
             background: linear-gradient(135deg, #3a1a5a, #5a2a7a);
             border: 2px solid #ECDB9F;
             box-shadow: 0 4px 18px rgba(0,0,0,0.4);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 22px; cursor: pointer; z-index: 99998;
-            opacity: 0; transform: translateY(16px) scale(0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 99998;
+            opacity: 0;
+            transform: translateY(16px) scale(0.85);
             transition: opacity 0.35s ease, transform 0.35s ease, box-shadow 0.25s ease;
             text-decoration: none;
         }
-        #backToTop.btt-visible { opacity: 1; transform: translateY(0) scale(1); }
-        #backToTop:hover { box-shadow: 0 6px 24px rgba(236,219,159,0.35); transform: translateY(-3px) scale(1.08); }
+        #backToTop.btt-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        #backToTop:hover {
+            box-shadow: 0 6px 24px rgba(236,219,159,0.35);
+            transform: translateY(-3px) scale(1.08);
+        }
     </style>
     <script>
         (function () {
             const btn = document.createElement("a");
-            btn.id = "backToTop"; btn.title = "Back to top";
-            btn.textContent = "🎀"; btn.href = "#";
-            btn.addEventListener("click", function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); });
+            btn.id = "backToTop";
+            btn.title = "Back to top";
+            btn.textContent = "🎀";
+            btn.href = "#";
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
             document.body.appendChild(btn);
-            window.addEventListener("scroll", function () { btn.classList.toggle("btt-visible", window.scrollY > 300); }, { passive: true });
+            window.addEventListener("scroll", function () {
+                if (window.scrollY > 300) {
+                    btn.classList.add("btt-visible");
+                } else {
+                    btn.classList.remove("btt-visible");
+                }
+            }, { passive: true });
         })();
     </script>
 
