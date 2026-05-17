@@ -355,7 +355,7 @@
 
         <!-- ═══ LEFT COLUMN ═══ -->
         <div class="form-card">
-            <h3>Send a Message, Get a Quote, or Book Your Drop-Off!</h3>
+            <h3>Send a Message or Book Your Drop-Off!</h3>
             <p class="form-subtitle">Choose what you need below — I'll get back to you shortly! 🎀</p>
 
             <div class="payment-notice">
@@ -438,19 +438,19 @@
 
                 <div class="form-section-label" style="margin-top:1rem;">Gift Details</div>
                 <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
-                    <strong>Basic:</strong> Small $4 &middot; Medium $6 &middot; Large $8 &nbsp;|&nbsp; <strong>Bulk (10+ gifts):</strong> $10 each
+                    <strong>Basic:</strong> Small $6 &middot; Medium $9 &middot; Large $12 &nbsp;|&nbsp; <strong>Bulk (10+ gifts):</strong> Small $5 &middot; Medium $8 &middot; Large $10
                 </p>
                 <div class="form-row" style="grid-template-columns:repeat(3,1fr);">
                     <div class="form-group">
-                        <label>Small &mdash; $4 each</label>
+                        <label>Small &mdash; $6 each</label>
                         <input type="number" id="book-small" placeholder="0" min="0" value="0">
                     </div>
                     <div class="form-group">
-                        <label>Medium &mdash; $6 each</label>
+                        <label>Medium &mdash; $9 each</label>
                         <input type="number" id="book-medium" placeholder="0" min="0" value="0">
                     </div>
                     <div class="form-group">
-                        <label>Large &mdash; $8 each</label>
+                        <label>Large &mdash; $12 each</label>
                         <input type="number" id="book-large" placeholder="0" min="0" value="0">
                     </div>
                 </div>
@@ -460,11 +460,11 @@
                 <p style="color:#f5d79a;font-size:0.85rem;font-style:italic;margin-bottom:0.6rem;">A classic bow is included free with every wrap 🎀</p>
                 <label class="checkbox-label">
                     <input type="checkbox" id="book-premium-bow">
-                    Premium Bow Upgrade (+$1 per gift)
+                    Premium Bow Upgrade (+$3 per gift)
                 </label>
                 <label class="checkbox-label" style="margin-top:0.5rem;margin-bottom:1.2rem;">
                     <input type="checkbox" id="book-rush">
-                    Rush Order (+$5 flat)
+                    Rush Order (+$10 flat)
                 </label>
 
                 <div class="form-group">
@@ -597,7 +597,7 @@
                 <div class="quote-line" id="est-rush-line" style="display: none;">
                     <span class="quote-label">Rush Order</span>
                     <span class="quote-dash">+</span>
-                    <span class="quote-price">$5</span>
+                    <span class="quote-price">$10</span>
                 </div>
                 <p style="color:#f5d79a;font-size:0.75rem;font-style:italic;text-align:center;margin-top:0.8rem;">Final price confirmed at drop-off</p>
             </div>
@@ -743,10 +743,15 @@
             return;
         }
 
-        const base    = isBulk ? total * 10 : (small * 4) + (medium * 6) + (large * 8);
-        const bowAmt  = premBow ? total : 0;
-        const rushAmt = rush ? 5 : 0;
-        const grand   = base + bowAmt + rushAmt;
+        // Pricing: Basic = $6 / $9 / $12 | Bulk (10+) = $5 / $8 / $10
+        const base = isBulk
+            ? (small * 5) + (medium * 8) + (large * 10)
+            : (small * 6) + (medium * 9) + (large * 12);
+
+        const bowAmt  = premBow ? total * 3 : 0;   // $3 per gift
+        const rushAmt = rush ? 10 : 0;              // $10 flat
+
+        const grand = base + bowAmt + rushAmt;
 
         if (hiddenTotal) hiddenTotal.value = grand.toFixed(2);
         if (card)        card.style.display = 'block';

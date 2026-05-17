@@ -376,7 +376,6 @@
         }
         .faq-cta-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
-        /* confetti canvas for FAQ bursts */
         #faqConfettiCanvas {
             position: fixed;
             top: 0; left: 0;
@@ -402,8 +401,8 @@
     <nav class="navbar">
         <div class="nav-brand" onclick="window.location='index.html'" style="cursor:pointer;">
             <a href="index.html">
-  <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
-</a>
+                <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
+            </a>
             <h1></h1>
             <p class="tagline">Cancan's Corner Gift Wrapping</p>
         </div>
@@ -437,7 +436,7 @@
             <div class="service-card" id="bulk">
                 <i class="fa-solid fa-box-open card-icon-fa"></i>
                 <h4>Bulk Orders</h4>
-                <p>For 10 or more gifts or coordinated themed orders. Ideal for events, corporate gifting, parties, and matching sets.</p>
+                <p>For 10 or more gifts — same size-based pricing with a discount for ordering in bulk. Ideal for events, corporate gifting, parties, and matching sets.</p>
             </div>
         </div>
     </section>
@@ -453,17 +452,17 @@
                 <i class="fa-solid fa-gift card-icon-fa"></i>
                 <h4>Basic Gift Wrapping</h4>
                 <p>Clean, polished wrapping for everyday gifts. May include simple or lightly styled presentation.</p>
-                <div class="pricing-amount">Small $4 · Medium $6 · Large $8</div>
+                <div class="pricing-amount">Small $6 · Medium $9 · Large $12</div>
                 <p class="pricing-note">per gift</p>
                 <a href="contact.html#get-in-touch" class="pricing-btn">Book Now</a>
             </div>
 
             <div class="pricing-card">
                 <i class="fa-solid fa-box-open card-icon-fa"></i>
-                <h4>Bulk Orders</h4>
-                <p>For 10 or more gifts or coordinated themed orders. Ideal for events, corporate gifting, parties, and matching sets.</p>
-                <div class="pricing-amount">Starting at $10</div>
-                <p class="pricing-note">per item</p>
+                <h4>Bulk Orders (10+ gifts)</h4>
+                <p>Same size-based pricing with a bulk discount — the more you bring, the more you save! Ideal for events, corporate gifting, and parties.</p>
+                <div class="pricing-amount">Small $5 · Medium $8 · Large $10</div>
+                <p class="pricing-note">per gift — bulk discount applied at 10+</p>
                 <a href="contact.html#get-in-touch" class="pricing-btn">Book Now</a>
             </div>
 
@@ -533,7 +532,7 @@
                         <span class="faq-q-text">How much does gift wrapping cost?</span>
                         <div class="faq-icon">+</div>
                     </div>
-                    <div class="faq-a"><p>Basic wrapping starts at $4–$8 depending on gift size, and Bulk Orders start at $10 per item for 10 or more gifts. Check out the pricing cards above for details on what's included in each option!</p></div>
+                    <div class="faq-a"><p>Basic wrapping is $6 (small), $9 (medium), or $12 (large) per gift. Bulk orders of 10 or more gifts get a discount — $5 (small), $8 (medium), or $10 (large) per gift. The more you bring, the more you save! Check out the pricing cards above for full details.</p></div>
                 </div>
 
                 <div class="faq-item" data-q="how do i pay payment cash app">
@@ -624,7 +623,7 @@
             <a href="about.html">About</a>
         </nav>
         <p>© 2026 Candida Cook | Cancan's Corner Gift Wrapping <span id="secret-bow" style="cursor:default;user-select:none;">🎀</span></p>
-    <p class="footer-note">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!" <a href="inventory.html" style="text-decoration:none; cursor:default;" title="Inventory">🎁</a></p>
+        <p class="footer-note">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!" <a href="inventory.html" style="text-decoration:none; cursor:default;" title="Inventory">🎁</a></p>
     </footer>
 
     <canvas id="faqConfettiCanvas"></canvas>
@@ -699,7 +698,6 @@
 
     <!-- ── FAQ JavaScript ── -->
     <script>
-        /* ---- Confetti burst ---- */
         const faqCanvas  = document.getElementById('faqConfettiCanvas');
         const faqCtx     = faqCanvas.getContext('2d');
         const faqColors  = ['#ECDB9F', '#c9b8e8', '#9b59b6', '#ffffff', '#e8a0d0', '#f5d79a'];
@@ -746,18 +744,14 @@
             }
         }
 
-        /* ---- Accordion toggle ---- */
         function faqToggle(btn) {
             const item   = btn.closest('.faq-item');
             const ans    = item.querySelector('.faq-a');
             const isOpen = item.classList.contains('faq-open');
-
-            // close all open items first
             document.querySelectorAll('.faq-item.faq-open').forEach(el => {
                 el.classList.remove('faq-open');
                 el.querySelector('.faq-a').classList.remove('faq-open');
             });
-
             if (!isOpen) {
                 item.classList.add('faq-open');
                 ans.classList.add('faq-open');
@@ -767,7 +761,6 @@
             faqUpdateToggleBtn();
         }
 
-        /* ---- Open all / Close all ---- */
         function faqToggleAll() {
             const visible = document.querySelectorAll('.faq-item:not(.faq-hidden)');
             const anyOpen = document.querySelector('.faq-item.faq-open');
@@ -785,17 +778,15 @@
         }
 
         function faqUpdateToggleBtn() {
-            const btn    = document.getElementById('faqToggleAllBtn');
+            const btn     = document.getElementById('faqToggleAllBtn');
             const anyOpen = document.querySelector('.faq-item.faq-open');
             btn.textContent = anyOpen ? 'Close all' : 'Open all';
         }
 
-        /* ---- Search / filter ---- */
         function faqFilter() {
             const val   = document.getElementById('faqSearch').value.toLowerCase().trim();
             const items = document.querySelectorAll('.faq-item');
             let anyVisible = false;
-
             items.forEach(item => {
                 const keywords = (item.getAttribute('data-q') || '').toLowerCase();
                 const label    = item.querySelector('.faq-q-text').textContent.toLowerCase();
@@ -803,17 +794,14 @@
                 item.classList.toggle('faq-hidden', !match);
                 if (match) anyVisible = true;
             });
-
             document.querySelectorAll('.faq-cat-block').forEach(block => {
                 const hasVisible = block.querySelectorAll('.faq-item:not(.faq-hidden)').length > 0;
                 block.style.display = hasVisible ? '' : 'none';
             });
-
             document.getElementById('faqNoResults').style.display = anyVisible ? 'none' : 'block';
             faqUpdateToggleBtn();
         }
     </script>
-
 
     <!-- ── Back to Top Bow Button ── -->
     <style>
@@ -838,14 +826,8 @@
             transition: opacity 0.35s ease, transform 0.35s ease, box-shadow 0.25s ease;
             text-decoration: none;
         }
-        #backToTop.btt-visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-        #backToTop:hover {
-            box-shadow: 0 6px 24px rgba(236,219,159,0.35);
-            transform: translateY(-3px) scale(1.08);
-        }
+        #backToTop.btt-visible { opacity: 1; transform: translateY(0) scale(1); }
+        #backToTop:hover { box-shadow: 0 6px 24px rgba(236,219,159,0.35); transform: translateY(-3px) scale(1.08); }
     </style>
     <script>
         (function () {
