@@ -489,8 +489,6 @@
                      style="min-width:280px;height:650px;border-radius:16px;overflow:hidden;margin-bottom:1.5rem;">
                 </div>
 
-                <button type="submit" class="send-btn" id="booking-submit-btn" style="margin-top:1.5rem;">🎀 Save My Booking</button>
-
                 <div id="booking-success" class="success-message" style="display:none;">
                     <div class="success-icon">✨</div>
                     <h3>Booking Received!</h3>
@@ -777,61 +775,56 @@
         recalc();
     });
 
-    // ── Booking form submit (Supabase booking save) ──
-    document.getElementById('booking-fields').addEventListener('submit', async function (e) {
-        e.preventDefault();
+    // ── Calendly event listener — auto-saves to Supabase when booking confirmed ──
+    window.addEventListener('message', async function (e) {
+        if (e.data.event && e.data.event === 'calendly.event_scheduled') {
 
-        const name    = document.getElementById('booking-name')?.value.trim();
-        const phone   = document.getElementById('booking-phone')?.value.trim();
-        const email   = document.getElementById('booking-email')?.value.trim();
-        const count   = parseInt(hiddenCount?.value, 10) || 0;
-        const style   = hiddenStyle?.value || 'basic';
-        const addBow  = hiddenBow?.value === 'true';
-        const rushOrd = hiddenRush?.value === 'true';
-        const total   = parseFloat(hiddenTotal?.value) || 0;
-        const notes   = document.getElementById('booking-notes')?.value.trim() || '';
-        const giftTag = document.getElementById('booking-gift-tag')?.value.trim() || '';
-        const btn     = document.getElementById('booking-submit-btn');
+            const name    = document.getElementById('booking-name')?.value.trim();
+            const phone   = document.getElementById('booking-phone')?.value.trim();
+            const email   = document.getElementById('booking-email')?.value.trim();
+            const count   = parseInt(hiddenCount?.value, 10) || 0;
+            const style   = hiddenStyle?.value || 'basic';
+            const addBow  = hiddenBow?.value === 'true';
+            const rushOrd = hiddenRush?.value === 'true';
+            const total   = parseFloat(hiddenTotal?.value) || 0;
+            const notes   = document.getElementById('booking-notes')?.value.trim() || '';
+            const giftTag = document.getElementById('booking-gift-tag')?.value.trim() || '';
 
-        if (!name || !phone || !email || count < 1) {
-            alert('Please fill in your name, phone, email, and at least one gift quantity.');
-            return;
+            if (!name || !phone || !email || count < 1) {
+                alert('Almost done! Please make sure your name, phone, email, and at least one gift quantity are filled in.');
+                return;
+            }
+
+            // Save to Supabase
+            const { error } = await supabaseClient.from('orders').insert([{
+                customer_name:   name,
+                phone:           phone,
+                email:           email,
+                gift_count:      count,
+                gift_size:       'mixed',
+                wrapping_style:  style,
+                add_bow:         addBow,
+                estimated_total: '$' + total.toFixed(2),
+                status:          'Received',
+                rush_order:      rushOrd
+            }]);
+
+            if (error) {
+                console.error('Supabase error:', error);
+                alert('Your drop-off time is booked! There was an issue saving your details — please text me at 931-304-4499.');
+                return;
+            }
+
+            // Reset form and show success
+            document.getElementById('booking-fields').reset();
+            if (hiddenTotal) hiddenTotal.value = '0';
+            if (card)        card.style.display = 'none';
+            if (giftTotal)   giftTotal.textContent = 'Total Gifts: 0';
+
+            const successBox = document.getElementById('booking-success');
+            if (successBox) successBox.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        btn.disabled    = true;
-        btn.textContent = 'Sending…';
-
-        // Save to Supabase
-        const { error } = await supabaseClient.from('orders').insert([{
-            customer_name:   name,
-            phone:           phone,
-            email:           email,
-            gift_count:      count,
-            gift_size:       'mixed',
-            wrapping_style:  style,
-            add_bow:         addBow,
-            estimated_total: '$' + total.toFixed(2),
-            status:          'Received',
-            rush_order:      rushOrd
-        }]);
-
-        if (error) {
-            console.error('Supabase error:', error);
-            alert('Booking could not be saved. Please try again or contact me directly.');
-            btn.disabled    = false;
-            btn.textContent = '🎀 Save My Booking';
-            return;
-        }
-
-        // Reset and show success
-        this.reset();
-        if (hiddenTotal) hiddenTotal.value = '0';
-        if (card)        card.style.display = 'none';
-        if (giftTotal)   giftTotal.textContent = 'Total Gifts: 0';
-
-        const successBox = document.getElementById('booking-success');
-        if (successBox) successBox.style.display = 'block';
-        window.scrollTo({ top: this.offsetTop - 20, behavior: 'smooth' });
     });
 
     // ── Confetti ──
