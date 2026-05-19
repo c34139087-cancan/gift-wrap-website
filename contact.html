@@ -13,9 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <!-- Calendly -->
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <!-- EmailJS -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script>emailjs.init("DTeGExk8u7OV6kNCT");</script>
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <style>
         /* ── Page header ── */
         .contact-page-header {
@@ -484,6 +482,13 @@
                 <input type="hidden" id="book-rush-hidden"    name="rush_order"      value="false">
                 <input type="hidden" id="estimated-total"     name="estimated_total" value="0">
 
+                <div class="form-section-label" style="margin-top:1rem;">Pick Your Drop-Off Time</div>
+                <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">Select a time slot below — you'll get a confirmation email automatically 🎀</p>
+                <div class="calendly-inline-widget" 
+                     data-url="https://calendly.com/c34139087/drop-off?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=20113c&text_color=f5d79a&primary_color=c39559" 
+                     style="min-width:280px;height:650px;border-radius:16px;overflow:hidden;margin-bottom:1.5rem;">
+                </div>
+
                 <button type="submit" class="send-btn" id="booking-submit-btn" style="margin-top:1.5rem;">🎀 Save My Booking</button>
 
                 <div id="booking-success" class="success-message" style="display:none;">
@@ -772,7 +777,7 @@
         recalc();
     });
 
-    // ── Booking form submit (Supabase + EmailJS notification) ──
+    // ── Booking form submit (Supabase booking save) ──
     document.getElementById('booking-fields').addEventListener('submit', async function (e) {
         e.preventDefault();
 
@@ -816,20 +821,6 @@
             btn.disabled    = false;
             btn.textContent = '🎀 Save My Booking';
             return;
-        }
-
-        // Send email notification via EmailJS
-        try {
-            await emailjs.send("service_z061ixa", "template_fealdeg", {
-                customer_name: name,
-                phone:         phone,
-                email:         email,
-                gift_count:    String(count),
-                dropoff_style: style + (addBow ? ' + Premium Bow' : '') + (rushOrd ? ' + Rush Order' : ''),
-                notes:         (notes || 'None') + (giftTag ? '\n\nGift Tag: ' + giftTag : '')
-            });
-        } catch (emailErr) {
-            console.warn('EmailJS error (order still saved to Supabase):', emailErr);
         }
 
         // Reset and show success
