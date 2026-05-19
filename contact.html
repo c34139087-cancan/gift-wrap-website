@@ -301,6 +301,45 @@
         .quote-total .quote-price { font-weight: 700; font-size: 0.95rem; }
         .quote-divider { height: 1px; background: rgba(245, 215, 154, 0.25); margin: 0.6rem 0; }
 
+        /* ── Bulk Discount Styles ── */
+        /* This section contains new styles for the bulk pricing feature */
+        
+        /* Subtotal line - shown before discount is applied */
+        .quote-subtotal .quote-price { color: rgba(245, 215, 154, 0.7); font-weight: 600; }
+        
+        /* Discount badge - appears when 10+ gifts are selected */
+        .bulk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #52c27a 0%, #42b66d 100%);
+            color: #ffffff;
+            padding: 0.3rem 0.7rem;
+            border-radius: 0.3rem;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-left: 0.5rem;
+        }
+        
+        /* Discount savings shown in green - visually distinct from other prices */
+        .quote-discount .quote-price { 
+            color: #52c27a;
+            font-weight: 700;
+        }
+        
+        /* Message showing how many more gifts needed for bulk pricing */
+        .bulk-unlock-message {
+            background: rgba(82, 194, 122, 0.08);
+            border-left: 3px solid #52c27a;
+            padding: 0.6rem 0.8rem;
+            border-radius: 0.3rem;
+            font-size: 0.8rem;
+            color: #52c27a;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
         /* ── Confetti ── */
         .confetti-dot { position: absolute; border-radius: 50%; animation: confetti-fall linear infinite; pointer-events: none; }
 
@@ -586,22 +625,54 @@
             <!-- Live Quote Estimator Card -->
             <div class="side-card" id="quote-estimator-card" style="display: none;">
                 <div class="side-card-title">🎀 Estimated Quote</div>
+
+                <!-- ── SUBTOTAL (before discount) ── -->
+                <div class="quote-line quote-subtotal" id="est-subtotal-line" style="display: none;">
+                    <span class="quote-label">Subtotal</span>
+                    <span class="quote-dash">—</span>
+                    <span class="quote-price" id="est-subtotal">—</span>
+                </div>
+
+                <!-- ── DISCOUNT SAVINGS (shows in green when 10+ gifts) ── -->
+                <div class="quote-line quote-discount" id="est-discount-line" style="display: none;">
+                    <span class="quote-label">
+                        Bulk Discount
+                        <span class="bulk-badge" id="bulk-badge-text">BULK 20%</span>
+                    </span>
+                    <span class="quote-dash">-</span>
+                    <span class="quote-price" id="est-discount">-$0.00</span>
+                </div>
+
+                <!-- ── UNLOCK MESSAGE (shows when under 10 gifts) ── -->
+                <div class="bulk-unlock-message" id="bulk-unlock-message" style="display: none;">
+                    Add <span id="gifts-needed">10</span> more gift<span id="gifts-needed-plural">s</span> to unlock bulk pricing! 🎀
+                </div>
+
+                <div class="quote-divider" id="est-divider" style="display: none;"></div>
+
+                <!-- ── FINAL TOTAL (after all discounts & add-ons) ── -->
                 <div class="quote-line quote-total" style="margin-bottom: 1rem;">
                     <span class="quote-label">Estimated Total</span>
                     <span class="quote-dash">—</span>
                     <span class="quote-price" id="est-total">—</span>
                 </div>
+
                 <div class="quote-divider"></div>
+
+                <!-- ── PREMIUM BOW ADD-ON ── -->
                 <div class="quote-line" id="est-bow-line" style="display: none;">
                     <span class="quote-label">Premium Bow</span>
                     <span class="quote-dash">+</span>
                     <span class="quote-price" id="est-bow-price">—</span>
                 </div>
+
+                <!-- ── RUSH ORDER ADD-ON ── -->
                 <div class="quote-line" id="est-rush-line" style="display: none;">
                     <span class="quote-label">Rush Order</span>
                     <span class="quote-dash">+</span>
                     <span class="quote-price">$10</span>
                 </div>
+
                 <p style="color:#f5d79a;font-size:0.75rem;font-style:italic;text-align:center;margin-top:0.8rem;">Final price confirmed at drop-off</p>
             </div>
 
@@ -712,66 +783,171 @@
     });
 
     // ── Live Calculator ──
-    const card        = document.getElementById('quote-estimator-card');
-    const giftTotal   = document.getElementById('book-gift-total');
-    const estTotal    = document.getElementById('est-total');
-    const estBowLine  = document.getElementById('est-bow-line');
-    const estBowPrice = document.getElementById('est-bow-price');
-    const estRushLine = document.getElementById('est-rush-line');
-    const hiddenTotal = document.getElementById('estimated-total');
-    const hiddenCount = document.getElementById('booking-gift-count');
-    const hiddenStyle = document.getElementById('booking-style');
-    const hiddenBow   = document.getElementById('book-add-bow-hidden');
-    const hiddenRush  = document.getElementById('book-rush-hidden');
+    // This calculator automatically updates prices and shows bulk discount savings
+    
+    const card               = document.getElementById('quote-estimator-card');
+    const giftTotal          = document.getElementById('book-gift-total');
+    const estTotal           = document.getElementById('est-total');
+    const estSubtotalLine    = document.getElementById('est-subtotal-line');
+    const estSubtotal        = document.getElementById('est-subtotal');
+    const estDiscountLine    = document.getElementById('est-discount-line');
+    const estDiscount        = document.getElementById('est-discount');
+    const estDivider         = document.getElementById('est-divider');
+    const bulkBadgeText      = document.getElementById('bulk-badge-text');
+    const bulkUnlockMessage  = document.getElementById('bulk-unlock-message');
+    const giftsNeeded        = document.getElementById('gifts-needed');
+    const giftsNeededPlural  = document.getElementById('gifts-needed-plural');
+    const estBowLine         = document.getElementById('est-bow-line');
+    const estBowPrice        = document.getElementById('est-bow-price');
+    const estRushLine        = document.getElementById('est-rush-line');
+    const hiddenTotal        = document.getElementById('estimated-total');
+    const hiddenCount        = document.getElementById('booking-gift-count');
+    const hiddenStyle        = document.getElementById('booking-style');
+    const hiddenBow          = document.getElementById('book-add-bow-hidden');
+    const hiddenRush         = document.getElementById('book-rush-hidden');
 
     function recalc() {
+        // Step 1: Get the quantities from input fields
+        // parseInt() converts text to numbers, || 0 means "use 0 if empty"
         const small   = parseInt(document.getElementById('book-small')?.value, 10)  || 0;
         const medium  = parseInt(document.getElementById('book-medium')?.value, 10) || 0;
         const large   = parseInt(document.getElementById('book-large')?.value, 10)  || 0;
-        const total   = small + medium + large;
+        const total   = small + medium + large; // Total number of gifts
+        
+        // Step 2: Get add-on options
         const premBow = document.getElementById('book-premium-bow')?.checked || false;
         const rush    = document.getElementById('book-rush')?.checked || false;
 
-        if (giftTotal)   giftTotal.textContent = 'Total Gifts: ' + total;
+        // Step 3: Update the "Total Gifts" display
+        if (giftTotal) giftTotal.textContent = 'Total Gifts: ' + total;
         if (hiddenCount) hiddenCount.value = total;
 
+        // Step 4: Determine if bulk pricing applies (10 or more gifts)
         const isBulk = total >= 10;
+        
+        // Step 5: Update hidden form fields for tracking
         if (hiddenStyle) hiddenStyle.value = isBulk ? 'bulk' : 'basic';
         if (hiddenBow)   hiddenBow.value   = premBow ? 'true' : 'false';
         if (hiddenRush)  hiddenRush.value  = rush    ? 'true' : 'false';
 
+        // Step 6: If no gifts selected, hide the quote card
         if (total === 0) {
             if (card) card.style.display = 'none';
             if (hiddenTotal) hiddenTotal.value = '0';
-            return;
+            return; // Exit function early - nothing else to calculate
         }
 
-        // Pricing: Basic = $6 / $9 / $12 | Bulk (10+) = $5 / $8 / $10
-        const base = isBulk
-            ? (small * 5) + (medium * 8) + (large * 10)
-            : (small * 6) + (medium * 9) + (large * 12);
+        // ═══════════════════════════════════════════════════════════
+        // PRICING CALCULATION LOGIC
+        // ═══════════════════════════════════════════════════════════
+        
+        // Basic pricing: $6/$9/$12 per gift
+        // Bulk pricing (10+): $5/$8/$10 per gift
+        const basicPrice = (small * 6) + (medium * 9) + (large * 12);
+        const bulkPrice  = (small * 5) + (medium * 8) + (large * 10);
+        
+        // Determine which price applies
+        const base = isBulk ? bulkPrice : basicPrice;
+        
+        // Step 7: Calculate discount amount (only if bulk pricing applies)
+        let discountAmount = 0;
+        let discountPercent = 0;
+        
+        if (isBulk) {
+            // Discount = basic price - bulk price = how much you save
+            discountAmount = basicPrice - bulkPrice;
+            // Calculate percentage: (savings / original price) * 100
+            discountPercent = ((discountAmount / basicPrice) * 100).toFixed(0);
+        }
+        
+        // Step 8: Calculate add-on costs
+        const bowAmt  = premBow ? total * 3 : 0;   // $3 per gift for premium bow
+        const rushAmt = rush ? 10 : 0;              // $10 flat for rush order
 
-        const bowAmt  = premBow ? total * 3 : 0;   // $3 per gift
-        const rushAmt = rush ? 10 : 0;              // $10 flat
-
+        // Step 9: Calculate final total
         const grand = base + bowAmt + rushAmt;
 
+        // ═══════════════════════════════════════════════════════════
+        // UPDATE UI DISPLAY
+        // ═══════════════════════════════════════════════════════════
+        
+        // Show the quote card
+        if (card) card.style.display = 'block';
+        
+        // Step 10: Show/hide subtotal and discount sections
+        if (isBulk) {
+            // BULK PRICING ACTIVE - show subtotal and discount breakdown
+            
+            // Show subtotal line with original price
+            if (estSubtotalLine) estSubtotalLine.style.display = 'flex';
+            if (estSubtotal) estSubtotal.textContent = '$' + basicPrice.toFixed(2);
+            
+            // Show discount line with savings in green
+            if (estDiscountLine) estDiscountLine.style.display = 'flex';
+            if (estDiscount) estDiscount.textContent = '-$' + discountAmount.toFixed(2);
+            
+            // Update badge with discount percentage
+            if (bulkBadgeText) bulkBadgeText.textContent = 'BULK ' + discountPercent + '%';
+            
+            // Hide unlock message (not needed - bulk pricing already active)
+            if (bulkUnlockMessage) bulkUnlockMessage.style.display = 'none';
+            
+            // Show divider line before total
+            if (estDivider) estDivider.style.display = 'block';
+            
+        } else {
+            // BULK PRICING NOT ACTIVE - show message about how many more gifts needed
+            
+            // Hide subtotal and discount lines
+            if (estSubtotalLine) estSubtotalLine.style.display = 'none';
+            if (estDiscountLine) estDiscountLine.style.display = 'none';
+            if (estDivider) estDivider.style.display = 'none';
+            
+            // Show unlock message
+            if (bulkUnlockMessage) {
+                bulkUnlockMessage.style.display = 'block';
+                
+                // Calculate how many more gifts needed
+                const needed = 10 - total;
+                if (giftsNeeded) giftsNeeded.textContent = needed;
+                
+                // Fix grammar: "1 more gift" vs "2 more gifts"
+                if (giftsNeededPlural) {
+                    giftsNeededPlural.textContent = needed === 1 ? '' : 's';
+                }
+            }
+        }
+        
+        // Step 11: Update final total and hide/show add-ons
         if (hiddenTotal) hiddenTotal.value = grand.toFixed(2);
-        if (card)        card.style.display = 'block';
-        if (estTotal)    estTotal.textContent = '$' + grand.toFixed(2);
-        if (estBowLine)  { estBowLine.style.display  = premBow ? 'flex' : 'none'; if (estBowPrice) estBowPrice.textContent = '$' + bowAmt.toFixed(2); }
-        if (estRushLine)   estRushLine.style.display  = rush    ? 'flex' : 'none';
+        if (estTotal) estTotal.textContent = '$' + grand.toFixed(2);
+        
+        // Show/hide premium bow line based on checkbox
+        if (estBowLine) { 
+            estBowLine.style.display = premBow ? 'flex' : 'none';
+            if (estBowPrice) estBowPrice.textContent = '$' + bowAmt.toFixed(2);
+        }
+        
+        // Show/hide rush order line based on checkbox
+        if (estRushLine) estRushLine.style.display = rush ? 'flex' : 'none';
     }
 
     document.addEventListener('DOMContentLoaded', function () {
+        // When page loads, attach the calculator function to input changes
+        
+        // Listen for changes to gift quantity inputs
         ['book-small','book-medium','book-large'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.addEventListener('input', recalc);
         });
+        
+        // Listen for changes to add-on checkboxes
         ['book-premium-bow','book-rush'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.addEventListener('change', recalc);
         });
+        
+        // Run the calculator once on page load
         recalc();
     });
 
