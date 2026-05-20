@@ -436,6 +436,21 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeLightbox();
         });
+        // Open a specific image via URL query param, e.g. gallery.html?img=filename.png
+        (function(){
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const img = params.get('img');
+                if (img) {
+                    // wait a tick to ensure elements are present
+                    setTimeout(() => {
+                        openLightbox(img);
+                        // remove query param for cleanliness
+                        if (history && history.replaceState) history.replaceState(null, '', window.location.pathname + window.location.hash);
+                    }, 50);
+                }
+            } catch (e) { /* ignore */ }
+        })();
     </script>
     <script>
         const container = document.getElementById('confetti');
