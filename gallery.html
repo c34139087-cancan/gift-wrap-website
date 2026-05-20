@@ -202,13 +202,16 @@
                 <p class="tagline">Cancan's Corner Gift Wrapping</p>
             </div>
         </div>
-        <ul class="nav-menu">
+        <ul class="nav-menu" id="navMenu">
             <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
             <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
             <li class="nav-item"><a href="gallery.html" class="nav-link active">Gallery</a></li>
             <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
             <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
         </ul>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
     </nav>
 
     <div class="gallery-hero">
@@ -522,6 +525,20 @@
                     btn.classList.remove("btt-visible");
                 }
             }, { passive: true });
+        })();
+    </script>
+
+    <script>
+        // Mobile hamburger toggle (same behavior as other pages)
+        (function(){
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    hamburger.classList.toggle('active');
+                });
+            }
         })();
     </script>
 
