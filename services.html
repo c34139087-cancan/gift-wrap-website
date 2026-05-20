@@ -626,11 +626,55 @@
     <canvas id="faqConfettiCanvas"></canvas>
 
     <script>
-        document.getElementById('secret-bow').addEventListener('click', function() {
-            const pw = prompt('Enter password:');
-            if (pw === 'Cookcandida5') {
-                window.location.href = 'clients.html';
+        function showAdminPasswordModal(redirectUrl) {
+            let modal = document.getElementById('admin-password-modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'admin-password-modal';
+                modal.style.cssText = 'position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.82);z-index:9999;';
+                modal.innerHTML = `
+                    <div style="width:min(100%,400px);background:#20113c;color:#f5d79a;padding:2rem;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,0.45);font-family:Poppins,sans-serif;">
+                        <h2 style="margin:0 0 0.75rem;font-size:1.3rem;">Admin Access</h2>
+                        <p style="margin:0 0 1.25rem;color:#d8c49f;">Enter the password to continue.</p>
+                        <input id="admin-password-input" type="password" autocomplete="current-password" placeholder="Password" style="width:100%;padding:0.85rem 1rem;border-radius:14px;border:2px solid #866e9f;background:#2d1f52;color:#f5d79a;font-size:0.95rem;"/>
+                        <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1rem;">
+                            <button id="admin-password-cancel" type="button" style="padding:0.75rem 1.1rem;border:none;border-radius:14px;background:rgba(255,255,255,0.08);color:#f5d79a;cursor:pointer;">Cancel</button>
+                            <button id="admin-password-submit" type="button" style="padding:0.75rem 1.1rem;border:none;border-radius:14px;background:linear-gradient(135deg,#c39559,#f5d79a);color:#20113c;cursor:pointer;font-weight:700;">Enter</button>
+                        </div>
+                        <p id="admin-password-feedback" style="margin-top:1rem;color:#f08080;min-height:1.2rem;font-size:0.92rem;"></p>
+                    </div>`;
+                document.body.appendChild(modal);
+                const input = modal.querySelector('#admin-password-input');
+                const feedback = modal.querySelector('#admin-password-feedback');
+                const cancel = modal.querySelector('#admin-password-cancel');
+                const submit = modal.querySelector('#admin-password-submit');
+                function closeModal() {
+                    modal.style.display = 'none';
+                    input.value = '';
+                    feedback.textContent = '';
+                }
+                cancel.addEventListener('click', closeModal);
+                submit.addEventListener('click', () => {
+                    if (input.value === 'Cookcandida5') {
+                        closeModal();
+                        if (redirectUrl) window.location.href = redirectUrl;
+                    } else {
+                        feedback.textContent = 'Incorrect password. Please try again.';
+                        input.value = '';
+                        input.focus();
+                    }
+                });
+                input.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter') submit.click();
+                    if (event.key === 'Escape') closeModal();
+                });
             }
+            modal.style.display = 'flex';
+            const input = modal.querySelector('#admin-password-input');
+            input.focus();
+        }
+        document.getElementById('secret-bow').addEventListener('click', function() {
+            showAdminPasswordModal('clients.html');
         });
     </script>
 

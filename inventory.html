@@ -330,14 +330,50 @@
 </head>
 <body>
 
+<div id="inventory-password-modal" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.88);z-index:9999;">
+    <div style="width:min(100%,400px);background:#20113c;color:#f5d79a;padding:2rem;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,0.45);font-family:Poppins,sans-serif;">
+        <h2 style="margin:0 0 1rem;font-size:1.4rem;">Inventory Access</h2>
+        <p style="margin:0 0 1.25rem;color:#d8c49f;">Enter the admin password to view the inventory.</p>
+        <input id="inventory-password-input" type="password" autocomplete="current-password" placeholder="Password" style="width:100%;padding:0.85rem 1rem;border-radius:14px;border:2px solid #866e9f;background:#2d1f52;color:#f5d79a;font-size:0.95rem;" />
+        <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1rem;">
+            <button id="inventory-password-cancel" type="button" style="padding:0.75rem 1.1rem;border:none;border-radius:14px;background:rgba(255,255,255,0.08);color:#f5d79a;cursor:pointer;">Back</button>
+            <button id="inventory-password-submit" type="button" style="padding:0.75rem 1.1rem;border:none;border-radius:14px;background:linear-gradient(135deg,#c39559,#f5d79a);color:#20113c;cursor:pointer;font-weight:700;">Unlock</button>
+        </div>
+        <p id="inventory-password-feedback" style="margin-top:1rem;color:#f08080;min-height:1.2rem;font-size:0.92rem;"></p>
+    </div>
+</div>
+
 <script>
-(function() {
-    const pwd = prompt('🎁 Enter password to access Inventory:');
-    if (pwd !== 'Cookcandida5') {
-        document.write('<div style="background:#20113c;color:#f5d79a;font-family:Poppins,sans-serif;height:100vh;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">🔒 Access Denied</div>');
-        document.close();
+  const inventoryModal = document.getElementById('inventory-password-modal');
+  const inventoryInput = document.getElementById('inventory-password-input');
+  const inventoryFeedback = document.getElementById('inventory-password-feedback');
+  const inventorySubmit = document.getElementById('inventory-password-submit');
+  const inventoryCancel = document.getElementById('inventory-password-cancel');
+
+  function unlockInventory() {
+    if (inventoryInput.value === 'Cookcandida5') {
+      inventoryModal.style.display = 'none';
+      inventoryFeedback.textContent = '';
+      inventoryInput.value = '';
+      loadInventory();
+    } else {
+      inventoryFeedback.textContent = 'Incorrect password. Access denied.';
+      inventoryInput.value = '';
+      inventoryInput.focus();
     }
-})();
+  }
+
+  inventorySubmit.addEventListener('click', unlockInventory);
+  inventoryInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') unlockInventory();
+  });
+  inventoryCancel.addEventListener('click', function() {
+    window.location.href = 'index.html';
+  });
+
+  window.addEventListener('load', function() {
+    inventoryInput.focus();
+  });
 </script>
 
 <div class="confetti-container" id="confetti"></div>
@@ -647,7 +683,7 @@ document.addEventListener('mousemove', function(e) {
 });
 
 // ── INIT ──
-loadInventory();
+// Inventory data will load after successful password entry.
 </script>
 
 </body>
