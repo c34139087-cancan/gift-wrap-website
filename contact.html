@@ -299,10 +299,7 @@
             text-transform: uppercase;
             margin-left: 0.5rem;
         }
-        .quote-discount .quote-price {
-            color: #52c27a;
-            font-weight: 700;
-        }
+        .quote-discount .quote-price { color: #52c27a; font-weight: 700; }
         .bulk-unlock-message {
             background: rgba(82, 194, 122, 0.08);
             border-left: 3px solid #52c27a;
@@ -324,6 +321,62 @@
         .success-message h3 { color: #f5d79a; font-family: var(--font-display); margin: 1rem 0; }
         .success-message p { color: #c39559; }
         .success-message .success-tagline { color: #866e9f; font-size: 0.85rem; margin-top: 0.5rem; font-style: italic; }
+
+        /* ── Calendly gate placeholder ── */
+        #calendly-gate {
+            background: rgba(104, 82, 129, 0.2);
+            border: 2px dashed rgba(195, 149, 89, 0.4);
+            border-radius: 16px;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        #calendly-gate .gate-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+        #calendly-gate h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--pastel-orange);
+            margin-bottom: 0.5rem;
+        }
+        #calendly-gate p {
+            font-size: 0.85rem;
+            color: var(--gray-lavender);
+            line-height: 1.6;
+        }
+        #calendly-gate .gate-fields-needed {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        #calendly-gate .gate-chip {
+            padding: 0.3rem 0.85rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1.5px solid rgba(195, 149, 89, 0.4);
+            color: var(--gray-lavender);
+            transition: all 0.25s ease;
+        }
+        #calendly-gate .gate-chip.done {
+            border-color: #52c27a;
+            color: #52c27a;
+            background: rgba(82, 194, 122, 0.1);
+        }
+
+        /* ── Calendly widget wrapper ── */
+        #calendly-widget-wrap {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            margin-bottom: 1.5rem;
+        }
+        #calendly-widget-wrap.visible {
+            display: block;
+            opacity: 1;
+        }
 
         /* ── Responsive ── */
         @media (max-width: 720px) {
@@ -432,6 +485,7 @@
 
             <!-- BOOKING FORM -->
             <form id="booking-fields">
+
                 <div class="form-section-label">Your Info</div>
                 <div class="form-row">
                     <div class="form-group">
@@ -491,19 +545,39 @@
                 <input type="hidden" id="book-rush-hidden"    name="rush_order"      value="false">
                 <input type="hidden" id="estimated-total"     name="estimated_total" value="0">
 
+                <!-- ── CALENDLY SECTION ── -->
                 <div class="form-section-label" style="margin-top:1rem;">Pick Your Drop-Off Time</div>
-                <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">Select a time slot below — you'll get a confirmation email automatically 🎀</p>
-                <div class="calendly-inline-widget"
-                     data-url="https://calendly.com/c34139087/drop-off?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=20113c&text_color=f5d79a&primary_color=c39559"
-                     style="min-width:280px;height:650px;border-radius:16px;overflow:hidden;margin-bottom:1.5rem;">
+                <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
+                    Select a time slot below — you'll get a confirmation email automatically 🎀
+                </p>
+
+                <!-- GATE — shown until name/phone/email are filled -->
+                <div id="calendly-gate">
+                    <div class="gate-icon">🗓️</div>
+                    <h4>Fill In Your Info First</h4>
+                    <p>Complete your name, phone, and email above and the booking calendar will appear right here.</p>
+                    <div class="gate-fields-needed">
+                        <span class="gate-chip" id="chip-name">✦ Name</span>
+                        <span class="gate-chip" id="chip-phone">✦ Phone</span>
+                        <span class="gate-chip" id="chip-email">✦ Email</span>
+                    </div>
+                </div>
+
+                <!-- CALENDLY WIDGET — hidden until gate clears -->
+                <div id="calendly-widget-wrap">
+                    <div class="calendly-inline-widget"
+                         data-url="https://calendly.com/c34139087/drop-off"
+                         style="min-width:280px;height:650px;border-radius:16px;overflow:hidden;">
+                    </div>
                 </div>
 
                 <div id="booking-success" class="success-message" style="display:none;">
                     <div class="success-icon">✨</div>
                     <h3>Booking Received!</h3>
-                    <p>Thanks for choosing Cancan's Corner. Your order has been sent and marked as <strong>Received</strong>.</p>
+                    <p>Thanks for choosing Cancan's Corner. Your order has been saved and marked as <strong>Received</strong>.</p>
                     <p class="success-tagline">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!"</p>
                 </div>
+
             </form>
 
         </div>
@@ -649,11 +723,13 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
+    // ── Supabase client ──
     const supabaseClient = supabase.createClient(
         "https://umfheobuqegcluwedxwm.supabase.co",
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtZmhlb2J1cWVnY2x1d2VkeHdtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1OTUzODMsImV4cCI6MjA5MTE3MTM4M30.6ejuz6sJJw9kLBRf3XLTd7Cf5OP9UWu60hGEv4TKDZY"
     );
 
+    // ── Tab switcher ──
     function setPurpose(mode) {
         const bookingFields = document.getElementById('booking-fields');
         const contactForm   = document.getElementById('contact-form');
@@ -672,6 +748,7 @@
             bookingFields.style.display = 'block';
             submitBtn.style.display     = 'none';
             recalc();
+            checkInfoReady(); // run gate check when tab opens
         } else {
             submitBtn.textContent = '✉ Send Message';
             document.getElementById('form-subject').value       = "New Message — Cancan's Corner";
@@ -683,6 +760,7 @@
         if (activeBtn) activeBtn.classList.add('active');
     }
 
+    // ── Auto-activate tab from URL ──
     window.addEventListener('DOMContentLoaded', function () {
         const params = new URLSearchParams(window.location.search);
         const tab    = params.get('tab');
@@ -692,8 +770,64 @@
         } else {
             setPurpose('message');
         }
+
+        // Attach gate listeners
+        ['booking-name', 'booking-phone', 'booking-email'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', checkInfoReady);
+        });
+
+        // Attach calculator listeners
+        ['book-small','book-medium','book-large'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', recalc);
+        });
+        document.getElementById('book-rush')?.addEventListener('change', recalc);
+        recalc();
     });
 
+    // ── Calendly gate logic ──
+    function checkInfoReady() {
+        const name  = document.getElementById('booking-name')?.value.trim()  || '';
+        const phone = document.getElementById('booking-phone')?.value.trim() || '';
+        const email = document.getElementById('booking-email')?.value.trim() || '';
+
+        const nameOk  = name.length > 0;
+        const phoneOk = phone.length > 0;
+        const emailOk = email.includes('@') && email.includes('.');
+
+        // Update chips
+        document.getElementById('chip-name').classList.toggle('done',  nameOk);
+        document.getElementById('chip-phone').classList.toggle('done', phoneOk);
+        document.getElementById('chip-email').classList.toggle('done', emailOk);
+
+        // Update chip labels
+        document.getElementById('chip-name').textContent  = nameOk  ? '✓ Name'  : '✦ Name';
+        document.getElementById('chip-phone').textContent = phoneOk ? '✓ Phone' : '✦ Phone';
+        document.getElementById('chip-email').textContent = emailOk ? '✓ Email' : '✦ Email';
+
+        const allReady = nameOk && phoneOk && emailOk;
+        const gate     = document.getElementById('calendly-gate');
+        const wrap     = document.getElementById('calendly-widget-wrap');
+
+        if (allReady) {
+            gate.style.display = 'none';
+            wrap.style.display = 'block';
+            // Small delay so display:block takes effect before opacity transition
+            setTimeout(() => wrap.classList.add('visible'), 20);
+        } else {
+            wrap.classList.remove('visible');
+            // Wait for fade-out before hiding
+            setTimeout(() => {
+                if (!wrap.classList.contains('visible')) {
+                    wrap.style.display = 'none';
+                }
+            }, 420);
+            gate.style.display = 'block';
+        }
+    }
+
+    // ── Message form submit (Formspree) ──
     document.getElementById('contact-form').addEventListener('submit', async function (e) {
         e.preventDefault();
         const form = e.target;
@@ -749,7 +883,7 @@
         const total  = small + medium + large;
         const rush   = document.getElementById('book-rush')?.checked || false;
 
-        if (giftTotal)  giftTotal.textContent = 'Total Gifts: ' + total;
+        if (giftTotal)   giftTotal.textContent = 'Total Gifts: ' + total;
         if (hiddenCount) hiddenCount.value = total;
 
         const isBulk = total >= 10;
@@ -787,9 +921,9 @@
             if (bulkUnlockMessage) bulkUnlockMessage.style.display = 'none';
             if (estDivider)      estDivider.style.display = 'block';
         } else {
-            if (estSubtotalLine)  estSubtotalLine.style.display = 'none';
-            if (estDiscountLine)  estDiscountLine.style.display = 'none';
-            if (estDivider)       estDivider.style.display = 'none';
+            if (estSubtotalLine)   estSubtotalLine.style.display = 'none';
+            if (estDiscountLine)   estDiscountLine.style.display = 'none';
+            if (estDivider)        estDivider.style.display = 'none';
             if (bulkUnlockMessage) {
                 bulkUnlockMessage.style.display = 'block';
                 const needed = 10 - total;
@@ -803,15 +937,6 @@
         if (estRushLine) estRushLine.style.display = rush ? 'flex' : 'none';
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
-        ['book-small','book-medium','book-large'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.addEventListener('input', recalc);
-        });
-        document.getElementById('book-rush')?.addEventListener('change', recalc);
-        recalc();
-    });
-
     // ── Calendly event listener — saves to Supabase on booking confirmed ──
     window.addEventListener('message', async function (e) {
         if (e.data.event && e.data.event === 'calendly.event_scheduled') {
@@ -823,9 +948,12 @@
             const style   = hiddenStyle?.value || 'basic';
             const rushOrd = hiddenRush?.value === 'true';
             const total   = parseFloat(hiddenTotal?.value) || 0;
+            const notes   = document.getElementById('booking-notes')?.value.trim()    || '';
+            const giftTag = document.getElementById('booking-gift-tag')?.value.trim() || '';
 
-            if (!name || !phone || !email || count < 1) {
-                alert('Almost done! Please make sure your name, phone, email, and at least one gift quantity are filled in.');
+            // Safety net — should never fire now due to gate, but just in case
+            if (!name || !phone || !email) {
+                alert('Your time slot is booked! Please fill in your name, phone, and email above so I can save your order, then text me at 931-304-4499.');
                 return;
             }
 
@@ -847,11 +975,29 @@
                 return;
             }
 
+            // Reset form
             document.getElementById('booking-fields').reset();
             if (hiddenTotal) hiddenTotal.value = '0';
             if (card)        card.style.display = 'none';
             if (giftTotal)   giftTotal.textContent = 'Total Gifts: 0';
 
+            // Hide Calendly, reset gate
+            const wrap = document.getElementById('calendly-widget-wrap');
+            const gate = document.getElementById('calendly-gate');
+            wrap.classList.remove('visible');
+            setTimeout(() => { wrap.style.display = 'none'; }, 420);
+            gate.style.display = 'block';
+
+            // Reset chips
+            ['chip-name','chip-phone','chip-email'].forEach(id => {
+                const chip = document.getElementById(id);
+                chip.classList.remove('done');
+            });
+            document.getElementById('chip-name').textContent  = '✦ Name';
+            document.getElementById('chip-phone').textContent = '✦ Phone';
+            document.getElementById('chip-email').textContent = '✦ Email';
+
+            // Show success
             const successBox = document.getElementById('booking-success');
             if (successBox) successBox.style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
