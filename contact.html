@@ -515,12 +515,13 @@
 
                 <div id="calendly-gate">
                     <div class="gate-icon">🗓️</div>
-                    <h4>Fill In Your Info First</h4>
-                    <p>Complete your name, phone, and email above and the booking calendar will appear right here.</p>
+                    <h4>Complete Your Info &amp; Add Gifts First</h4>
+                    <p>Fill in your name, phone, email, and add at least one gift — then the booking calendar will appear right here.</p>
                     <div class="gate-fields-needed">
                         <span class="gate-chip" id="chip-name">✦ Name</span>
                         <span class="gate-chip" id="chip-phone">✦ Phone</span>
                         <span class="gate-chip" id="chip-email">✦ Email</span>
+                        <span class="gate-chip" id="chip-gifts">✦ Add Gifts</span>
                     </div>
                 </div>
 
@@ -678,23 +679,29 @@
     });
 
     // ── Calendly gate logic ──
+    // Requires: name + phone + email + at least 1 gift added
     function checkInfoReady() {
         const name  = document.getElementById('booking-name')?.value.trim()  || '';
         const phone = document.getElementById('booking-phone')?.value.trim() || '';
         const email = document.getElementById('booking-email')?.value.trim() || '';
+        const giftsAdded = giftCustomizerDetails.length > 0;
 
         const nameOk  = name.length > 0;
         const phoneOk = phone.length > 0;
         const emailOk = email.includes('@') && email.includes('.');
 
+        // Update chips
         document.getElementById('chip-name').classList.toggle('done',  nameOk);
         document.getElementById('chip-phone').classList.toggle('done', phoneOk);
         document.getElementById('chip-email').classList.toggle('done', emailOk);
-        document.getElementById('chip-name').textContent  = nameOk  ? '✓ Name'  : '✦ Name';
-        document.getElementById('chip-phone').textContent = phoneOk ? '✓ Phone' : '✦ Phone';
-        document.getElementById('chip-email').textContent = emailOk ? '✓ Email' : '✦ Email';
+        document.getElementById('chip-gifts').classList.toggle('done', giftsAdded);
 
-        const allReady = nameOk && phoneOk && emailOk;
+        document.getElementById('chip-name').textContent  = nameOk     ? '✓ Name'        : '✦ Name';
+        document.getElementById('chip-phone').textContent = phoneOk    ? '✓ Phone'       : '✦ Phone';
+        document.getElementById('chip-email').textContent = emailOk    ? '✓ Email'       : '✦ Email';
+        document.getElementById('chip-gifts').textContent = giftsAdded ? '✓ Gifts Added' : '✦ Add Gifts';
+
+        const allReady = nameOk && phoneOk && emailOk && giftsAdded;
         const gate = document.getElementById('calendly-gate');
         const wrap = document.getElementById('calendly-widget-wrap');
 
@@ -761,12 +768,14 @@
         giftCustomizerDetails.push({ gift: giftCustomizerDetails.length + 1, size: '', paper: 'red', bow: 'gold', tag: '' });
         renderGiftCustomizer();
         recalc();
+        checkInfoReady(); // re-check gate now that a gift was added
     }
 
     function removeGift(index) {
         giftCustomizerDetails.splice(index, 1);
         renderGiftCustomizer();
         recalc();
+        checkInfoReady(); // re-check gate — may now be 0 gifts
     }
 
     function createGiftSizeButton(option, giftIndex) {
@@ -1004,13 +1013,14 @@
             setTimeout(() => { wrap.style.display = 'none'; }, 420);
             gate.style.display = 'block';
 
-            ['chip-name','chip-phone','chip-email'].forEach(id => {
+            ['chip-name','chip-phone','chip-email','chip-gifts'].forEach(id => {
                 const chip = document.getElementById(id);
                 chip.classList.remove('done');
             });
             document.getElementById('chip-name').textContent  = '✦ Name';
             document.getElementById('chip-phone').textContent = '✦ Phone';
             document.getElementById('chip-email').textContent = '✦ Email';
+            document.getElementById('chip-gifts').textContent = '✦ Add Gifts';
 
             const successBox = document.getElementById('booking-success');
             if (successBox) successBox.style.display = 'block';
