@@ -998,6 +998,28 @@
                 return;
             }
 
+            // ── Email yourself via Formspree ──
+            const giftSummary = giftDetails.map((g, i) =>
+                `Gift ${i+1}: ${g.size || 'size not selected'} | Paper: ${g.paper} | Bow: ${g.bow}${g.tag ? ' | Tag: "' + g.tag + '"' : ''}`
+            ).join('\n');
+
+            await fetch('https://formspree.io/f/xpqykjkn', {
+                method: 'POST',
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    _subject:        'New Drop-Off Booking — Cancan\'s Corner 🎀',
+                    Name:            name,
+                    Phone:           phone,
+                    Email:           email,
+                    'Total Gifts':   count,
+                    'Wrapping Style': style === 'bulk' ? 'Bulk (10+ gifts)' : 'Basic',
+                    'Rush Order':    rushOrd ? 'YES (+$10)' : 'No',
+                    'Estimated Total': '$' + total.toFixed(2),
+                    'Gift Details':  giftSummary || 'No gift details provided',
+                    'Notes':         document.getElementById('booking-notes')?.value.trim() || 'None'
+                })
+            });
+
             // Reset everything
             document.getElementById('booking-fields').reset();
             if (hiddenTotal) hiddenTotal.value = '0';
