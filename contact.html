@@ -236,6 +236,31 @@
         }
         .send-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(245, 215, 154, 0.5); }
         .send-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .gift-add-btn {
+            padding: 0.65rem 1.2rem;
+            font-size: 0.88rem;
+            margin-top: 0;
+        }
+        .gift-card-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .gift-card-heading h4 {
+            margin: 0;
+            font-size: 1rem;
+        }
+        .gift-remove-button {
+            background: none;
+            border: none;
+            color: var(--gray-lavender);
+            font-size: 0.78rem;
+            cursor: pointer;
+            padding: 0;
+            align-self: flex-start;
+        }
 
         /* ── RIGHT COLUMN: Sidebar ── */
         .contact-info-card { display: flex; flex-direction: column; gap: 1.4rem; }
@@ -503,24 +528,15 @@
                 </div>
 
                 <div class="form-section-label" style="margin-top:1rem;">Gift Details</div>
-                <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
-                    <strong>Basic:</strong> Small $6 &middot; Medium $9 &middot; Large $12 &nbsp;|&nbsp; <strong>Bulk (10+ gifts):</strong> Small $5 &middot; Medium $8 &middot; Large $10
+                <p id="gift-pricing-ref" style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
+                    Small $6 &middot; Medium $9 &middot; Large $12 | Bulk (10+ gifts): Small $5 &middot; Medium $8 &middot; Large $10
                 </p>
-                <div class="form-row" style="grid-template-columns:repeat(3,1fr);">
-                    <div class="form-group">
-                        <label>Small &mdash; $6 <span style="font-weight:400;text-transform:none;letter-spacing:0;">(up to 12&Prime;&times;8&Prime;&times;4&Prime;)</span></label>
-                        <input type="number" id="book-small" placeholder="0" min="0" value="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Medium &mdash; $9 <span style="font-weight:400;text-transform:none;letter-spacing:0;">(up to 18&Prime;&times;12&Prime;&times;6&Prime;)</span></label>
-                        <input type="number" id="book-medium" placeholder="0" min="0" value="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Large &mdash; $12 <span style="font-weight:400;text-transform:none;letter-spacing:0;">(up to 24&Prime;&times;18&Prime;&times;12&Prime;)</span></label>
-                        <input type="number" id="book-large" placeholder="0" min="0" value="0">
-                    </div>
+                <div id="gift-customizer-section" style="margin-top:1rem;">
+                    <div class="form-section-label">Customize Each Gift</div>
+                    <div id="gift-cards-container"></div>
+                    <button type="button" class="send-btn gift-add-btn" id="add-gift-btn" onclick="addGiftCard()">🎁 Add a Gift</button>
+                    <p id="book-gift-total" style="color:#f5d79a;font-weight:700;margin-bottom:1.2rem;margin-top:0.8rem;">Total Gifts: 0</p>
                 </div>
-                <p id="book-gift-total" style="color:#f5d79a;font-weight:700;margin-bottom:1.2rem;">Total Gifts: 0</p>
 
                 <p style="color:#f5d79a;font-size:0.85rem;font-style:italic;margin-bottom:0.6rem;">A classic bow is included free with every wrap 🎀</p>
 
@@ -533,16 +549,12 @@
                     <label>Special Requests or Notes</label>
                     <textarea id="booking-notes" name="dropoff_notes" placeholder="Ribbon color, theme, occasion, anything special…"></textarea>
                 </div>
-                <div class="form-group">
-                    <label>🏷️ Gift Tag Message</label>
-                    <textarea id="booking-gift-tag" name="gift_tag" placeholder='e.g. "To: Mom, From: The Kids — Happy Birthday! 🎉" — leave blank if no tag needed' style="min-height:80px;"></textarea>
-                </div>
 
                 <!-- Hidden fields -->
                 <input type="hidden" id="booking-gift-count" name="dropoff_gifts"   value="0">
                 <input type="hidden" id="booking-style"       name="dropoff_style"   value="basic">
-                <input type="hidden" id="booking-gift-size"   name="dropoff_size"    value="mixed">
                 <input type="hidden" id="book-rush-hidden"    name="rush_order"      value="false">
+                <input type="hidden" id="gift-details-json"  name="gift_details"   value="[]">
                 <input type="hidden" id="estimated-total"     name="estimated_total" value="0">
 
                 <!-- ── CALENDLY SECTION ── -->
@@ -823,11 +835,6 @@
             if (el) el.addEventListener('input', checkInfoReady);
         });
 
-        // Attach calculator listeners
-        ['book-small','book-medium','book-large'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.addEventListener('input', recalc);
-        });
         document.getElementById('book-rush')?.addEventListener('change', recalc);
         recalc();
     });
@@ -921,66 +928,318 @@
     const hiddenCount       = document.getElementById('booking-gift-count');
     const hiddenStyle       = document.getElementById('booking-style');
     const hiddenRush        = document.getElementById('book-rush-hidden');
+    const giftCustomizerSection = document.getElementById('gift-customizer-section');
+    const giftCustomizerContainer = document.getElementById('gift-cards-container');
+    const giftDetailsJsonField = document.getElementById('gift-details-json');
+
+    let giftCustomizerDetails = [];
+    const paperColorOptions = [
+        { value: 'red',   hex: '#E24B4A' },
+        { value: 'blue',  hex: '#378ADD' },
+        { value: 'green', hex: '#639922' },
+        { value: 'gold',  hex: '#EF9F27' },
+        { value: 'silver',hex: '#B4B2A9' },
+        { value: 'pink',  hex: '#D4537E' },
+        { value: 'white', hex: '#f5d79a' },
+        { value: 'purple',hex: '#7F77DD' }
+    ];
+    const sizeOptions = [
+        { value: 'small',  label: 'Small ($6)' },
+        { value: 'medium', label: 'Medium ($9)' },
+        { value: 'large',  label: 'Large ($12)' }
+    ];
+    const bowColorOptions = [
+        { value: 'red',   hex: '#E24B4A' },
+        { value: 'gold',  hex: '#EF9F27' },
+        { value: 'silver',hex: '#B4B2A9' },
+        { value: 'green', hex: '#639922' },
+        { value: 'blue',  hex: '#378ADD' },
+        { value: 'white', hex: '#f5d79a' },
+        { value: 'pink',  hex: '#D4537E' },
+        { value: 'no-bow', hex: 'transparent' }
+    ];
+
+    function createGiftSizeButton(option, giftIndex) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'gift-size-button';
+        button.dataset.value = option.value;
+        button.textContent = option.label;
+
+        button.addEventListener('click', function () {
+            const giftIndexInt = parseInt(giftIndex, 10);
+            updateGiftDetail(giftIndexInt, 'size', option.value);
+            renderGiftCustomizer();
+            recalc();
+        });
+
+        return button;
+    }
+
+    function syncGiftDetailsField() {
+        if (!giftDetailsJsonField) return;
+        giftDetailsJsonField.value = JSON.stringify(giftCustomizerDetails);
+    }
+
+    function updateGiftDetail(index, key, value) {
+        if (!giftCustomizerDetails[index]) return;
+        giftCustomizerDetails[index][key] = value;
+        syncGiftDetailsField();
+    }
+
+    function addGiftCard() {
+        giftCustomizerDetails.push({
+            gift: giftCustomizerDetails.length + 1,
+            size: '',
+            paper: 'red',
+            bow: 'gold',
+            tag: ''
+        });
+        renderGiftCustomizer();
+        recalc();
+    }
+
+    function removeGift(index) {
+        if (index < 0 || index >= giftCustomizerDetails.length) return;
+        giftCustomizerDetails.splice(index, 1);
+        renderGiftCustomizer();
+        recalc();
+    }
+
+    function createGiftSwatch(option, giftIndex, type) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'gift-swatch';
+        button.dataset.value = option.value;
+        button.dataset.type = type;
+        button.title = option.value === 'no-bow' ? 'No Bow' : option.value.charAt(0).toUpperCase() + option.value.slice(1);
+        if (option.value === 'no-bow') {
+            button.classList.add('no-bow');
+            button.textContent = '✕';
+        } else {
+            button.style.backgroundColor = option.hex;
+        }
+
+        button.addEventListener('click', function () {
+            const giftIndexInt = parseInt(giftIndex, 10);
+            const field = type === 'paper' ? 'paper' : 'bow';
+            updateGiftDetail(giftIndexInt, field, option.value);
+            renderGiftCustomizer();
+            recalc();
+        });
+
+        return button;
+    }
+
+    function buildGiftCard(gift, index) {
+        const card = document.createElement('div');
+        card.className = 'gift-customizer-card';
+
+        const headingRow = document.createElement('div');
+        headingRow.className = 'gift-card-heading';
+        const heading = document.createElement('h4');
+        heading.textContent = 'Gift ' + (index + 1);
+        headingRow.appendChild(heading);
+
+        const removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.className = 'gift-remove-button';
+        removeButton.textContent = '✕ Remove';
+        removeButton.addEventListener('click', function () {
+            removeGift(index);
+        });
+        headingRow.appendChild(removeButton);
+        card.appendChild(headingRow);
+
+        const sizeRow = document.createElement('div');
+        sizeRow.className = 'gift-customizer-row';
+        const sizeLabel = document.createElement('label');
+        sizeLabel.textContent = 'Gift Size';
+        sizeRow.appendChild(sizeLabel);
+        sizeOptions.forEach(option => {
+            const sizeButton = createGiftSizeButton(option, index);
+            if (gift.size === option.value) sizeButton.classList.add('selected');
+            sizeRow.appendChild(sizeButton);
+        });
+        card.appendChild(sizeRow);
+
+        const paperRow = document.createElement('div');
+        paperRow.className = 'gift-customizer-row';
+        const paperLabel = document.createElement('label');
+        paperLabel.textContent = 'Paper Color';
+        paperRow.appendChild(paperLabel);
+        paperColorOptions.forEach(option => {
+            const swatch = createGiftSwatch(option, index, 'paper');
+            if (gift.paper === option.value) swatch.classList.add('selected');
+            paperRow.appendChild(swatch);
+        });
+        card.appendChild(paperRow);
+
+        const bowRow = document.createElement('div');
+        bowRow.className = 'gift-customizer-row';
+        const bowLabel = document.createElement('label');
+        bowLabel.textContent = 'Bow Color';
+        bowRow.appendChild(bowLabel);
+        bowColorOptions.forEach(option => {
+            const swatch = createGiftSwatch(option, index, 'bow');
+            if (gift.bow === option.value) swatch.classList.add('selected');
+            bowRow.appendChild(swatch);
+        });
+        card.appendChild(bowRow);
+
+        const tagRow = document.createElement('div');
+        tagRow.className = 'gift-customizer-row';
+        const tagLabel = document.createElement('label');
+        tagLabel.textContent = 'Gift Tag Message';
+        tagRow.appendChild(tagLabel);
+        const tagInput = document.createElement('input');
+        tagInput.type = 'text';
+        tagInput.placeholder = 'e.g. "Happy Birthday Mom!"';
+        tagInput.value = gift.tag || '';
+        tagInput.addEventListener('input', function () {
+            updateGiftDetail(index, 'tag', tagInput.value);
+        });
+        tagRow.appendChild(tagInput);
+        card.appendChild(tagRow);
+
+        return card;
+    }
+
+    function renderGiftCustomizer() {
+        if (!giftCustomizerSection || !giftCustomizerContainer) return;
+
+        giftCustomizerContainer.innerHTML = '';
+        giftCustomizerDetails.forEach((gift, index) => {
+            giftCustomizerDetails[index].gift = index + 1;
+            giftCustomizerContainer.appendChild(buildGiftCard(gift, index));
+        });
+
+        syncGiftDetailsField();
+    }
 
     function recalc() {
-        const small  = parseInt(document.getElementById('book-small')?.value, 10)  || 0;
-        const medium = parseInt(document.getElementById('book-medium')?.value, 10) || 0;
-        const large  = parseInt(document.getElementById('book-large')?.value, 10)  || 0;
-        const total  = small + medium + large;
-        const rush   = document.getElementById('book-rush')?.checked || false;
+        const total = giftCustomizerDetails.length;
+        const rush  = document.getElementById('book-rush')?.checked || false;
 
         if (giftTotal)   giftTotal.textContent = 'Total Gifts: ' + total;
         if (hiddenCount) hiddenCount.value = total;
 
         const isBulk = total >= 10;
         if (hiddenStyle) hiddenStyle.value = isBulk ? 'bulk' : 'basic';
-        if (hiddenRush)  hiddenRush.value  = rush   ? 'true' : 'false';
+        if (hiddenRush)  hiddenRush.value  = rush ? 'true' : 'false';
 
         if (total === 0) {
             if (card) card.style.display = 'none';
             if (hiddenTotal) hiddenTotal.value = '0';
+            if (bulkUnlockMessage) bulkUnlockMessage.style.display = 'none';
             return;
         }
 
-        const basicPrice = (small * 6) + (medium * 9) + (large * 12);
-        const bulkPrice  = (small * 5) + (medium * 8) + (large * 10);
-        const base = isBulk ? bulkPrice : basicPrice;
+        let basicPrice = 0;
+        let bulkPrice  = 0;
+        giftCustomizerDetails.forEach(gift => {
+            if (gift.size === 'small')       { basicPrice += 6;  bulkPrice += 5; }
+            else if (gift.size === 'medium') { basicPrice += 9;  bulkPrice += 8; }
+            else if (gift.size === 'large')  { basicPrice += 12; bulkPrice += 10; }
+        });
 
-        let discountAmount  = 0;
-        let discountPercent = 0;
-        if (isBulk) {
-            discountAmount  = basicPrice - bulkPrice;
-            discountPercent = ((discountAmount / basicPrice) * 100).toFixed(0);
-        }
-
+        const base           = isBulk ? bulkPrice : basicPrice;
+        const discountAmount = isBulk ? basicPrice - bulkPrice : 0;
+        const discountPercent = isBulk && basicPrice > 0
+            ? ((discountAmount / basicPrice) * 100).toFixed(0) : 0;
         const rushAmt = rush ? 10 : 0;
         const grand   = base + rushAmt;
 
+        // Build the estimator card content dynamically
         if (card) card.style.display = 'block';
 
-        if (isBulk) {
-            if (estSubtotalLine) estSubtotalLine.style.display = 'flex';
-            if (estSubtotal)     estSubtotal.textContent = '$' + basicPrice.toFixed(2);
-            if (estDiscountLine) estDiscountLine.style.display = 'flex';
-            if (estDiscount)     estDiscount.textContent = '-$' + discountAmount.toFixed(2);
-            if (bulkBadgeText)   bulkBadgeText.textContent = 'BULK ' + discountPercent + '%';
-            if (bulkUnlockMessage) bulkUnlockMessage.style.display = 'none';
-            if (estDivider)      estDivider.style.display = 'block';
-        } else {
-            if (estSubtotalLine)   estSubtotalLine.style.display = 'none';
-            if (estDiscountLine)   estDiscountLine.style.display = 'none';
-            if (estDivider)        estDivider.style.display = 'none';
-            if (bulkUnlockMessage) {
-                bulkUnlockMessage.style.display = 'block';
-                const needed = 10 - total;
-                if (giftsNeeded)       giftsNeeded.textContent = needed;
-                if (giftsNeededPlural) giftsNeededPlural.textContent = needed === 1 ? '' : 's';
+        // Build gift line items
+        let itemsHtml = '';
+        giftCustomizerDetails.forEach((gift, idx) => {
+            const itemIndex = idx + 1;
+            const sizeLabel = gift.size && gift.size.length > 0 ? gift.size.charAt(0).toUpperCase() + gift.size.slice(1) : null;
+            let itemPrice = 0;
+            if (sizeLabel) {
+                if (gift.size === 'small')       itemPrice = isBulk ? 5 : 6;
+                else if (gift.size === 'medium') itemPrice = isBulk ? 8 : 9;
+                else if (gift.size === 'large')  itemPrice = isBulk ? 10 : 12;
             }
+            const labelClass = sizeLabel ? 'quote-label' : 'quote-label';
+            const leftText = sizeLabel ? `Gift ${itemIndex} — ${sizeLabel}` : `Gift ${itemIndex} — (size needed)`;
+            const leftStyle = sizeLabel ? 'color:var(--gray-lavender);' : 'color:var(--gray-lavender); opacity:0.9;';
+            itemsHtml += `
+                <div class="quote-line" style="font-size:0.82rem;">
+                    <span class="quote-label" style="${leftStyle}">${leftText}</span>
+                    <span class="quote-dash">—</span>
+                    <span class="quote-price" style="color:#f5d79a;">$${itemPrice.toFixed(2)}</span>
+                </div>
+            `;
+        });
+
+        // Subtotal line
+        const subtotalHtml = `
+            <div class="quote-line quote-subtotal" style="font-size:0.9rem;">
+                <span class="quote-label">Subtotal</span>
+                <span class="quote-dash">—</span>
+                <span class="quote-price" id="est-subtotal-new" style="color:rgba(245,215,154,0.85);">$${basicPrice.toFixed(2)}</span>
+            </div>
+        `;
+
+        // Bulk discount or unlock message
+        let bulkHtml = '';
+        if (isBulk) {
+            bulkHtml = `
+                <div class="quote-line quote-discount" style="font-size:0.9rem;">
+                    <span class="quote-label">Bulk Discount <span class="bulk-badge">BULK ${discountPercent}%</span></span>
+                    <span class="quote-dash">-</span>
+                    <span class="quote-price" style="color:#52c27a;">-$${discountAmount.toFixed(2)}</span>
+                </div>
+            `;
+        } else {
+            const needed = 10 - total;
+            bulkHtml = `
+                <div class="bulk-unlock-message" id="bulk-unlock-message-new">
+                    Add <span id="gifts-needed-new">${needed}</span> more gift<span id="gifts-needed-plural-new">${needed === 1 ? '' : 's'}</span> to unlock bulk pricing! 🎀
+                </div>
+            `;
         }
 
+        // Rush line
+        const rushHtml = rush ? `
+            <div class="quote-line" style="font-size:0.9rem;">
+                <span class="quote-label">Rush Order (+1-2 days)</span>
+                <span class="quote-dash">—</span>
+                <span class="quote-price" style="color:#f5d79a;">+$${rushAmt.toFixed(2)}</span>
+            </div>
+        ` : '';
+
+        // Divider and total
+        const totalHtml = `
+            <div class="quote-divider"></div>
+            <div class="quote-line quote-total" style="font-size:1rem; font-weight:700; margin-top:0.6rem;">
+                <span class="quote-label">Estimated Total</span>
+                <span class="quote-dash">—</span>
+                <span class="quote-price" id="est-total-new" style="color:#f5d79a; font-size:1.05rem;">$${grand.toFixed(2)}</span>
+            </div>
+            <p style="color:#f5d79a;font-size:0.75rem;font-style:italic;text-align:center;margin-top:0.8rem;">Final price confirmed at drop-off</p>
+        `;
+
+        // Assemble and write
+        card.innerHTML = `
+            <div class="side-card-title">🎀 Estimated Quote</div>
+            ${itemsHtml}
+            <div class="quote-divider"></div>
+            ${subtotalHtml}
+            ${bulkHtml}
+            ${rushHtml}
+            ${totalHtml}
+        `;
+
+        // Update hidden/known fields
         if (hiddenTotal) hiddenTotal.value = grand.toFixed(2);
-        if (estTotal)    estTotal.textContent = '$' + grand.toFixed(2);
-        if (estRushLine) estRushLine.style.display = rush ? 'flex' : 'none';
+        // Also set the visible est total element we just created
+        const estTotalNew = document.getElementById('est-total-new');
+        if (estTotalNew) estTotalNew.textContent = '$' + grand.toFixed(2);
     }
 
     // ── Calendly event listener — saves to Supabase on booking confirmed ──
@@ -995,7 +1254,9 @@
             const rushOrd = hiddenRush?.value === 'true';
             const total   = parseFloat(hiddenTotal?.value) || 0;
             const notes   = document.getElementById('booking-notes')?.value.trim()    || '';
-            const giftTag = document.getElementById('booking-gift-tag')?.value.trim() || '';
+            const giftDetailsJson = document.getElementById('gift-details-json')?.value || '[]';
+            let giftDetails = [];
+            try { giftDetails = JSON.parse(giftDetailsJson); } catch (e) { giftDetails = []; }
 
             // Safety net — should never fire now due to gate, but just in case
             if (!name || !phone || !email) {
@@ -1011,6 +1272,7 @@
                 gift_size:       'mixed',
                 wrapping_style:  style,
                 estimated_total: '$' + total.toFixed(2),
+                gift_details:    giftDetails,
                 status:          'Received',
                 rush_order:      rushOrd
             }]);
@@ -1026,6 +1288,14 @@
             if (hiddenTotal) hiddenTotal.value = '0';
             if (card)        card.style.display = 'none';
             if (giftTotal)   giftTotal.textContent = 'Total Gifts: 0';
+            if (giftCustomizerSection) {
+                giftCustomizerSection.style.display = 'none';
+            }
+            if (giftCustomizerContainer) {
+                giftCustomizerContainer.innerHTML = '';
+            }
+            giftCustomizerDetails = [];
+            syncGiftDetailsField();
 
             // Hide Calendly, reset gate
             const wrap = document.getElementById('calendly-widget-wrap');
