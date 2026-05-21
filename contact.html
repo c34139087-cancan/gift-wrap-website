@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | Cancan's Corner Gift Wrapping Service</title>
-    <meta name="description" content="Get in touch with Cancan's Corner Gift Wrapping Service in Morrison, TN. Have questions or want to book a service? Fill out the form below!">
+    <meta name="description" content="Book your gift wrapping drop-off with Cancan's Corner in Morrison, TN. Easy online scheduling with live price calculator!">
     <meta property="og:title" content="Contact | Cancan's Corner Gift Wrapping Service">
-    <meta property="og:description" content="Get in touch with Cancan's Corner Gift Wrapping Service in Morrison, TN. Have questions or want to book a service? Fill out the form below!">
+    <meta property="og:description" content="Book your gift wrapping drop-off with Cancan's Corner in Morrison, TN.">
     <meta property="og:image" content="https://c34139087-cancan.github.io/gift-wrap-website/purple-gifts.jpg">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css">
@@ -15,7 +15,6 @@
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <style>
-        /* ── Page header ── */
         .contact-page-header {
             text-align: center;
             padding: 3rem 2rem 1.5rem;
@@ -34,7 +33,7 @@
             color: var(--pastel-orange);
             font-size: 1rem;
             font-style: italic;
-            text-shadow: 0 0 8px rgba(245, 215, 154, 0.4);
+            text-shadow: 0 0 8px rgba(245,215,154,0.4);
         }
         .gold-divider {
             width: 80px;
@@ -59,7 +58,7 @@
 
         /* ── LEFT COLUMN: Form card ── */
         .form-card {
-            background: rgba(32, 17, 60, 0.8);
+            background: rgba(32,17,60,0.8);
             border-radius: var(--radius-xl);
             padding: 2.5rem;
             backdrop-filter: blur(10px);
@@ -82,8 +81,8 @@
 
         /* ── Payment notice ── */
         .payment-notice {
-            background: rgba(195, 149, 89, 0.12);
-            border: 1.5px solid rgba(195, 149, 89, 0.45);
+            background: rgba(195,149,89,0.12);
+            border: 1.5px solid rgba(195,149,89,0.45);
             border-radius: var(--radius-md);
             padding: 0.85rem 1.2rem;
             margin-bottom: 1.5rem;
@@ -104,38 +103,6 @@
             font-size: 0.88rem;
             color: var(--pastel-yellow);
             line-height: 1.5;
-        }
-
-        /* ── Purpose toggle ── */
-        .purpose-toggle {
-            display: flex;
-            gap: 0;
-            margin-bottom: 2rem;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            border: 2px solid var(--gray-lavender);
-        }
-        .purpose-toggle button {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            background: transparent;
-            border: none;
-            color: var(--gray-lavender);
-            font-family: var(--font-body);
-            font-size: 0.82rem;
-            font-weight: 600;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.25s ease;
-        }
-        .purpose-toggle button.active {
-            background: linear-gradient(135deg, var(--gray-orange) 0%, var(--pastel-orange) 100%);
-            color: #f5d79a;
-        }
-        .purpose-toggle button:not(.active):hover {
-            background: rgba(245, 215, 154, 0.1);
-            color: #f5d79a;
         }
 
         /* ── Form fields ── */
@@ -160,7 +127,7 @@
         .form-group select {
             width: 100%;
             padding: 0.85rem 1.2rem;
-            background: rgba(104, 82, 129, 0.3);
+            background: rgba(104,82,129,0.3);
             border: 2px solid var(--gray-lavender);
             border-radius: var(--radius-md);
             color: #f5d79a;
@@ -177,8 +144,8 @@
         .form-group select:focus {
             outline: none;
             border-color: var(--pastel-orange);
-            background: rgba(104, 82, 129, 0.5);
-            box-shadow: 0 0 20px rgba(245, 215, 154, 0.2);
+            background: rgba(104,82,129,0.5);
+            box-shadow: 0 0 20px rgba(245,215,154,0.2);
         }
         .form-group textarea { resize: vertical; min-height: 120px; }
 
@@ -200,9 +167,6 @@
             accent-color: var(--pastel-orange);
         }
 
-        /* ── Booking fields (hidden by default) ── */
-        #booking-fields { display: none; }
-
         /* ── Section divider inside form ── */
         .form-section-label {
             font-size: 0.7rem;
@@ -210,13 +174,13 @@
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--pastel-orange);
-            border-bottom: 1px solid rgba(245, 215, 154, 0.2);
+            border-bottom: 1px solid rgba(245,215,154,0.2);
             padding-bottom: 0.4rem;
             margin-bottom: 1.2rem;
             margin-top: 0.5rem;
         }
 
-        /* ── Submit / action buttons ── */
+        /* ── Buttons ── */
         .send-btn {
             width: 100%;
             padding: 1rem;
@@ -232,15 +196,12 @@
             cursor: pointer;
             margin-top: 0.5rem;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(245, 215, 154, 0.3);
+            box-shadow: 0 8px 20px rgba(245,215,154,0.3);
         }
-        .send-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(245, 215, 154, 0.5); }
+        .send-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(245,215,154,0.5); }
         .send-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-        .gift-add-btn {
-            padding: 0.65rem 1.2rem;
-            font-size: 0.88rem;
-            margin-top: 0;
-        }
+        .gift-add-btn { padding: 0.65rem 1.2rem; font-size: 0.88rem; margin-top: 0; }
+
         .gift-card-heading {
             display: flex;
             align-items: center;
@@ -248,10 +209,7 @@
             gap: 0.75rem;
             margin-bottom: 1rem;
         }
-        .gift-card-heading h4 {
-            margin: 0;
-            font-size: 1rem;
-        }
+        .gift-card-heading h4 { margin: 0; font-size: 1rem; }
         .gift-remove-button {
             background: none;
             border: none;
@@ -265,7 +223,7 @@
         /* ── RIGHT COLUMN: Sidebar ── */
         .contact-info-card { display: flex; flex-direction: column; gap: 1.4rem; }
         .side-card {
-            background: rgba(64, 41, 91, 0.6);
+            background: rgba(64,41,91,0.6);
             backdrop-filter: blur(10px);
             border: 2px solid var(--gray-lavender);
             border-radius: var(--radius-lg);
@@ -280,13 +238,13 @@
         .info-row { display: flex; gap: 0.8rem; align-items: center; margin-bottom: 1rem; }
         .info-icon {
             width: 36px; height: 36px; flex-shrink: 0;
-            background: rgba(245, 215, 154, 0.1); border: 1px solid rgba(245, 215, 154, 0.25);
+            background: rgba(245,215,154,0.1); border: 1px solid rgba(245,215,154,0.25);
             border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
         }
         .info-label { font-size: 0.65rem; color: var(--gray-lavender); text-transform: uppercase; letter-spacing: 0.08em; }
         .info-value { font-size: 0.9rem; color: var(--pastel-orange); margin-top: 0.1rem; }
         .info-value a { color: var(--pastel-orange); text-decoration: none; transition: color 0.2s; }
-        .contact-divider { height: 1px; background: rgba(245, 215, 154, 0.2); margin: 1rem 0; }
+        .contact-divider { height: 1px; background: rgba(245,215,154,0.2); margin: 1rem 0; }
         .qr-block { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; }
         .qr-block p { font-size: 0.8rem; color: var(--gray-lavender); text-align: center; }
         .qr-img-wrap { background: #fff; border-radius: var(--radius-sm); padding: 8px; display: inline-block; box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
@@ -304,14 +262,12 @@
         /* ── Live Quote Estimator ── */
         .quote-line { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.6rem; font-size: 0.85rem; }
         .quote-label { color: var(--gray-lavender); flex: 1; }
-        .quote-dash  { color: rgba(245, 215, 154, 0.4); flex: 0 0 auto; }
+        .quote-dash  { color: rgba(245,215,154,0.4); flex: 0 0 auto; }
         .quote-price { color: #f5d79a; font-weight: 600; text-align: right; min-width: 60px; }
         .quote-total .quote-label { color: #f5d79a; font-weight: 700; }
         .quote-total .quote-price { font-weight: 700; font-size: 0.95rem; }
-        .quote-divider { height: 1px; background: rgba(245, 215, 154, 0.25); margin: 0.6rem 0; }
-
-        /* ── Bulk Discount Styles ── */
-        .quote-subtotal .quote-price { color: rgba(245, 215, 154, 0.7); font-weight: 600; }
+        .quote-divider { height: 1px; background: rgba(245,215,154,0.25); margin: 0.6rem 0; }
+        .quote-subtotal .quote-price { color: rgba(245,215,154,0.7); font-weight: 600; }
         .bulk-badge {
             display: inline-block;
             background: linear-gradient(135deg, #52c27a 0%, #42b66d 100%);
@@ -326,7 +282,7 @@
         }
         .quote-discount .quote-price { color: #52c27a; font-weight: 700; }
         .bulk-unlock-message {
-            background: rgba(82, 194, 122, 0.08);
+            background: rgba(82,194,122,0.08);
             border-left: 3px solid #52c27a;
             padding: 0.6rem 0.8rem;
             border-radius: 0.3rem;
@@ -347,10 +303,10 @@
         .success-message p { color: #c39559; }
         .success-message .success-tagline { color: #866e9f; font-size: 0.85rem; margin-top: 0.5rem; font-style: italic; }
 
-        /* ── Calendly gate placeholder ── */
+        /* ── Calendly gate ── */
         #calendly-gate {
-            background: rgba(104, 82, 129, 0.2);
-            border: 2px dashed rgba(195, 149, 89, 0.4);
+            background: rgba(104,82,129,0.2);
+            border: 2px dashed rgba(195,149,89,0.4);
             border-radius: 16px;
             padding: 2.5rem 1.5rem;
             text-align: center;
@@ -358,55 +314,99 @@
             transition: all 0.3s ease;
         }
         #calendly-gate .gate-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
-        #calendly-gate h4 {
-            font-family: var(--font-display);
-            font-size: 1.1rem;
-            color: var(--pastel-orange);
-            margin-bottom: 0.5rem;
-        }
-        #calendly-gate p {
-            font-size: 0.85rem;
-            color: var(--gray-lavender);
-            line-height: 1.6;
-        }
-        #calendly-gate .gate-fields-needed {
-            display: flex;
-            justify-content: center;
-            gap: 0.75rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
+        #calendly-gate h4 { font-family: var(--font-display); font-size: 1.1rem; color: var(--pastel-orange); margin-bottom: 0.5rem; }
+        #calendly-gate p { font-size: 0.85rem; color: var(--gray-lavender); line-height: 1.6; }
+        #calendly-gate .gate-fields-needed { display: flex; justify-content: center; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap; }
         #calendly-gate .gate-chip {
-            padding: 0.3rem 0.85rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            border: 1.5px solid rgba(195, 149, 89, 0.4);
-            color: var(--gray-lavender);
-            transition: all 0.25s ease;
+            padding: 0.3rem 0.85rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+            border: 1.5px solid rgba(195,149,89,0.4); color: var(--gray-lavender); transition: all 0.25s ease;
         }
-        #calendly-gate .gate-chip.done {
-            border-color: #52c27a;
-            color: #52c27a;
-            background: rgba(82, 194, 122, 0.1);
-        }
+        #calendly-gate .gate-chip.done { border-color: #52c27a; color: #52c27a; background: rgba(82,194,122,0.1); }
 
         /* ── Calendly widget wrapper ── */
         #calendly-widget-wrap {
-            display: none;
-            opacity: 0;
+            display: none; opacity: 0;
             transition: opacity 0.4s ease;
             margin-bottom: 1.5rem;
         }
-        #calendly-widget-wrap.visible {
-            display: block;
-            opacity: 1;
+        #calendly-widget-wrap.visible { display: block; opacity: 1; }
+
+        /* ── Still Have Questions section ── */
+        .still-questions {
+            max-width: 1000px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
         }
+        .still-questions-card {
+            background: rgba(64,41,91,0.5);
+            border: 2px solid rgba(195,149,89,0.3);
+            border-radius: var(--radius-xl);
+            padding: 2rem 2.5rem;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .still-questions-text h4 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--pastel-orange);
+            margin-bottom: 0.4rem;
+        }
+        .still-questions-text p {
+            color: var(--gray-lavender);
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+        .still-questions-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            flex-shrink: 0;
+        }
+        .sq-link {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.6rem 1.2rem;
+            background: rgba(245,215,154,0.08);
+            border: 1.5px solid rgba(245,215,154,0.25);
+            border-radius: var(--radius-md);
+            color: var(--pastel-orange);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .sq-link:hover {
+            background: rgba(245,215,154,0.15);
+            border-color: var(--pastel-orange);
+            transform: translateX(3px);
+        }
+        .sq-faq-note {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.82rem;
+            color: var(--gray-lavender);
+        }
+        .sq-faq-note a {
+            color: var(--pastel-orange);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .sq-faq-note a:hover { text-decoration: underline; }
 
         /* ── Responsive ── */
         @media (max-width: 720px) {
             .contact-layout { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
+            .still-questions-card { flex-direction: column; text-align: center; }
+            .still-questions-links { width: 100%; }
+            .sq-link { justify-content: center; }
         }
     </style>
 </head>
@@ -436,7 +436,7 @@
     </nav>
 
     <div class="contact-page-header" id="get-in-touch">
-        <h2>Get In Touch</h2>
+        <h2>Book Your Drop-Off</h2>
         <p>"Pretty bows &amp; tidy lines, Cancan's Corner always shines!"</p>
         <div class="gold-divider"></div>
     </div>
@@ -445,8 +445,8 @@
 
         <!-- ═══ LEFT COLUMN ═══ -->
         <div class="form-card">
-            <h3>Send a Message or Book Your Drop-Off!</h3>
-            <p class="form-subtitle">Choose what you need below — I'll get back to you shortly! 🎀</p>
+            <h3>Schedule Your Drop-Off 🎀</h3>
+            <p class="form-subtitle">Fill in your info, choose your gifts, and pick a time — it's that easy!</p>
 
             <div class="payment-notice">
                 <span class="payment-notice-icon">💳</span>
@@ -457,56 +457,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="purpose-toggle" role="group" aria-label="Form purpose">
-                <button type="button" id="btn-message" class="active" onclick="setPurpose('message')">Send a Message</button>
-                <button type="button" id="btn-book"    onclick="setPurpose('book')">Book Drop-off</button>
-            </div>
-
-            <!-- MESSAGE FORM -->
-            <form id="contact-form" action="https://formspree.io/f/xpqykjkn" method="POST">
-                <input type="hidden" name="_subject"     id="form-subject"       value="New Message — Cancan's Corner">
-                <input type="hidden" name="form_purpose" id="form-purpose-field" value="Message">
-
-                <div class="form-section-label">Your Info</div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Full Name <span class="req">*</span></label>
-                        <input type="text" name="name" placeholder="Your full name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Phone Number <span class="req">*</span></label>
-                        <input type="tel" name="phone" placeholder="(555) 123-4567" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Email Address <span class="req">*</span></label>
-                    <input type="email" name="email" placeholder="you@email.com" required>
-                </div>
-                <div class="form-group">
-                    <label>Service Interested In</label>
-                    <select name="service">
-                        <option value="" disabled selected>Select a service…</option>
-                        <option>Basic Gift Wrapping</option>
-                        <option>Bulk Orders (10+ gifts)</option>
-                        <option>Other / Not Sure</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Preferred Contact Method</label>
-                    <select name="preferred_contact">
-                        <option value="" disabled selected>How should I reach you?</option>
-                        <option>Email</option>
-                        <option>Phone Call</option>
-                        <option>Text Message</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Message <span class="req">*</span></label>
-                    <textarea name="message" id="message-field" placeholder="What can Cancan's Corner do for you? Share your wrapping details — number of gifts, gift sizes, event date, and any special requests. The more you tell me the better I can help!" required></textarea>
-                </div>
-                <button type="submit" class="send-btn" id="submit-btn">✉ Send Message</button>
-            </form>
 
             <!-- BOOKING FORM -->
             <form id="booking-fields">
@@ -528,8 +478,8 @@
                 </div>
 
                 <div class="form-section-label" style="margin-top:1rem;">Gift Details</div>
-                <p id="gift-pricing-ref" style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
-                    Small $6 &middot; Medium $9 &middot; Large $12 | Bulk (10+ gifts): Small $5 &middot; Medium $8 &middot; Large $10
+                <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
+                    <strong>Basic:</strong> Small $6 &middot; Medium $9 &middot; Large $12 &nbsp;|&nbsp; <strong>Bulk (10+ gifts):</strong> Small $5 &middot; Medium $8 &middot; Large $10
                 </p>
                 <div id="gift-customizer-section" style="margin-top:1rem;">
                     <div class="form-section-label">Customize Each Gift</div>
@@ -554,7 +504,7 @@
                 <input type="hidden" id="booking-gift-count" name="dropoff_gifts"   value="0">
                 <input type="hidden" id="booking-style"       name="dropoff_style"   value="basic">
                 <input type="hidden" id="book-rush-hidden"    name="rush_order"      value="false">
-                <input type="hidden" id="gift-details-json"  name="gift_details"   value="[]">
+                <input type="hidden" id="gift-details-json"   name="gift_details"    value="[]">
                 <input type="hidden" id="estimated-total"     name="estimated_total" value="0">
 
                 <!-- ── CALENDLY SECTION ── -->
@@ -563,7 +513,6 @@
                     Select a time slot below — you'll get a confirmation email automatically 🎀
                 </p>
 
-                <!-- GATE — shown until name/phone/email are filled -->
                 <div id="calendly-gate">
                     <div class="gate-icon">🗓️</div>
                     <h4>Fill In Your Info First</h4>
@@ -575,7 +524,6 @@
                     </div>
                 </div>
 
-                <!-- CALENDLY WIDGET — hidden until gate clears -->
                 <div id="calendly-widget-wrap">
                     <div class="calendly-inline-widget"
                          data-url="https://calendly.com/c34139087/drop-off"
@@ -591,7 +539,6 @@
                 </div>
 
             </form>
-
         </div>
         <!-- ═══ END LEFT COLUMN ═══ -->
 
@@ -626,7 +573,7 @@
                     </div>
                 </div>
 
-                <div class="info-row" style="margin-bottom: 0;">
+                <div class="info-row" style="margin-bottom:0;">
                     <div class="info-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
@@ -635,14 +582,14 @@
                     </div>
                     <div>
                         <div class="info-label">Location</div>
-                        <div class="info-value">Tennessee</div>
+                        <div class="info-value">Morrison, TN</div>
                     </div>
                 </div>
 
                 <div class="contact-divider"></div>
 
                 <div class="qr-block">
-                    <div class="side-card-title" style="margin-bottom: 0.4rem;">Save My Contact</div>
+                    <div class="side-card-title" style="margin-bottom:0.4rem;">Save My Contact</div>
                     <p>Scan to save me in your phone</p>
                     <div class="qr-img-wrap">
                         <img src="QR_Code.png" alt="QR Code to save Candida Cook contact">
@@ -650,8 +597,8 @@
                 </div>
 
                 <div class="payment-side-card">
-                    <div class="side-card-title" style="margin-bottom: 0.6rem;">Payment</div>
-                    <div style="font-size: 0.85rem; color: var(--pastel-yellow); line-height: 1.5; margin-bottom: 0.7rem;">
+                    <div class="side-card-title" style="margin-bottom:0.6rem;">Payment</div>
+                    <div style="font-size:0.85rem;color:var(--pastel-yellow);line-height:1.5;margin-bottom:0.7rem;">
                         Payment is due at <strong style="color:var(--pastel-orange);">drop-off</strong> — no online payment required.
                     </div>
                     <a href="https://cash.app/$Cancans92" target="_blank" rel="noopener noreferrer" class="cashapp-link">
@@ -661,55 +608,34 @@
                         </svg>
                         Cash App: $Cancans92
                     </a>
-                    <div style="font-size: 0.78rem; color: var(--gray-lavender); font-style: italic;">Also accepted: cash in person</div>
+                    <div style="font-size:0.78rem;color:var(--gray-lavender);font-style:italic;">Also accepted: cash in person</div>
                 </div>
             </div>
 
             <!-- Live Quote Estimator Card -->
-            <div class="side-card" id="quote-estimator-card" style="display: none;">
+            <div class="side-card" id="quote-estimator-card" style="display:none;">
                 <div class="side-card-title">🎀 Estimated Quote</div>
-
-                <div class="quote-line quote-subtotal" id="est-subtotal-line" style="display: none;">
-                    <span class="quote-label">Subtotal</span>
-                    <span class="quote-dash">—</span>
-                    <span class="quote-price" id="est-subtotal">—</span>
-                </div>
-
-                <div class="quote-line quote-discount" id="est-discount-line" style="display: none;">
-                    <span class="quote-label">
-                        Bulk Discount
-                        <span class="bulk-badge" id="bulk-badge-text">BULK 20%</span>
-                    </span>
-                    <span class="quote-dash">-</span>
-                    <span class="quote-price" id="est-discount">-$0.00</span>
-                </div>
-
-                <div class="bulk-unlock-message" id="bulk-unlock-message" style="display: none;">
-                    Add <span id="gifts-needed">10</span> more gift<span id="gifts-needed-plural">s</span> to unlock bulk pricing! 🎀
-                </div>
-
-                <div class="quote-divider" id="est-divider" style="display: none;"></div>
-
-                <div class="quote-line quote-total" style="margin-bottom: 1rem;">
-                    <span class="quote-label">Estimated Total</span>
-                    <span class="quote-dash">—</span>
-                    <span class="quote-price" id="est-total">—</span>
-                </div>
-
-                <div class="quote-divider"></div>
-
-                <div class="quote-line" id="est-rush-line" style="display: none;">
-                    <span class="quote-label">Rush Order: $10 flat — 1–2 day turnaround for up to 5 gifts, subject to availability.</span>
-                    <span class="quote-dash">+</span>
-                    <span class="quote-price">$10</span>
-                </div>
-
                 <p style="color:#f5d79a;font-size:0.75rem;font-style:italic;text-align:center;margin-top:0.8rem;">Final price confirmed at drop-off</p>
             </div>
 
         </div>
         <!-- ═══ END RIGHT COLUMN ═══ -->
 
+    </div>
+
+    <!-- ═══ STILL HAVE QUESTIONS ═══ -->
+    <div class="still-questions">
+        <div class="still-questions-card">
+            <div class="still-questions-text">
+                <h4>Still Have Questions?</h4>
+                <p>Not ready to book yet? No worries — reach out anytime and I'll get back to you as soon as I can!</p>
+                <p class="sq-faq-note" style="margin-top:0.75rem;">You can also check out the <a href="services.html#faq">FAQ page</a> for quick answers.</p>
+            </div>
+            <div class="still-questions-links">
+                <a href="tel:9313044499" class="sq-link">📞 Call or Text: 931-304-4499</a>
+                <a href="mailto:c34139087@gmail.com" class="sq-link">✉️ c34139087@gmail.com</a>
+            </div>
+        </div>
     </div>
 
     <footer class="footer">
@@ -721,59 +647,13 @@
             <a href="about.html">About</a>
         </nav>
         <p>&copy; 2026 Candida Cook | Cancan's Corner Gift Wrapping <span id="secret-bow" style="cursor:default;user-select:none;">🎀</span></p>
-        <p class="footer-note">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!" <a href="inventory.html" style="text-decoration:none; cursor:default;" title="Inventory">🎁</a></p>
+        <p class="footer-note">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!" <a href="inventory.html" style="text-decoration:none;cursor:default;" title="Inventory">🎁</a></p>
     </footer>
 
     <script>
-        function showAdminPasswordModal(redirectUrl) {
-            let modal = document.getElementById('admin-password-modal');
-            if (!modal) {
-                modal = document.createElement('div');
-                modal.id = 'admin-password-modal';
-                modal.style.cssText = 'position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.82);z-index:9999;';
-                modal.innerHTML = `
-                    <div style="width:min(100%,400px);background:#20113c;color:#f5d79a;padding:2rem;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,0.45);font-family:Poppins,sans-serif;">
-                        <h2 style="margin:0 0 0.75rem;font-size:1.3rem;">Admin Access</h2>
-                        <p style="margin:0 0 1.25rem;color:#d8c49f;">Enter the password to continue.</p>
-                        <input id="admin-password-input" type="password" autocomplete="current-password" placeholder="Password" style="width:100%;padding:0.85rem 1rem;border-radius:14px;border:2px solid #866e9f;background:#2d1f52;color:#f5d79a;font-size:0.95rem;"/>
-                        <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1rem;">
-                            <button id="admin-password-cancel" type="button" style="padding:0.75rem 1.1rem;border:none;border-radius:14px;background:rgba(255,255,255,0.08);color:#f5d79a;cursor:pointer;">Cancel</button>
-                            <button id="admin-password-submit" type="button" style="padding:0.75rem 1.1rem;border:none;border-radius:14px;background:linear-gradient(135deg,#c39559,#f5d79a);color:#20113c;cursor:pointer;font-weight:700;">Enter</button>
-                        </div>
-                        <p id="admin-password-feedback" style="margin-top:1rem;color:#f08080;min-height:1.2rem;font-size:0.92rem;"></p>
-                    </div>`;
-                document.body.appendChild(modal);
-                const input = modal.querySelector('#admin-password-input');
-                const feedback = modal.querySelector('#admin-password-feedback');
-                const cancel = modal.querySelector('#admin-password-cancel');
-                const submit = modal.querySelector('#admin-password-submit');
-                function closeModal() {
-                    modal.style.display = 'none';
-                    input.value = '';
-                    feedback.textContent = '';
-                }
-                cancel.addEventListener('click', closeModal);
-                submit.addEventListener('click', () => {
-                    if (input.value === 'Cookcandida5') {
-                        closeModal();
-                        if (redirectUrl) window.location.href = redirectUrl;
-                    } else {
-                        feedback.textContent = 'Incorrect password. Please try again.';
-                        input.value = '';
-                        input.focus();
-                    }
-                });
-                input.addEventListener('keydown', (event) => {
-                    if (event.key === 'Enter') submit.click();
-                    if (event.key === 'Escape') closeModal();
-                });
-            }
-            modal.style.display = 'flex';
-            const input = modal.querySelector('#admin-password-input');
-            input.focus();
-        }
         document.getElementById('secret-bow').addEventListener('click', function() {
-            showAdminPasswordModal('clients.html');
+            const pw = prompt('Enter password:');
+            if (pw === 'Cookcandida5') window.location.href = 'clients.html';
         });
     </script>
 
@@ -781,61 +661,19 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
-    // ── Supabase client ──
     const supabaseClient = supabase.createClient(
         "https://umfheobuqegcluwedxwm.supabase.co",
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtZmhlb2J1cWVnY2x1d2VkeHdtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1OTUzODMsImV4cCI6MjA5MTE3MTM4M30.6ejuz6sJJw9kLBRf3XLTd7Cf5OP9UWu60hGEv4TKDZY"
     );
 
-    // ── Tab switcher ──
-    function setPurpose(mode) {
-        const bookingFields = document.getElementById('booking-fields');
-        const contactForm   = document.getElementById('contact-form');
-        const submitBtn     = document.getElementById('submit-btn');
-        const btnMsg        = document.getElementById('btn-message');
-        const btnBook       = document.getElementById('btn-book');
-        const card          = document.getElementById('quote-estimator-card');
-
-        bookingFields.style.display = 'none';
-        contactForm.style.display   = 'block';
-        submitBtn.style.display     = 'block';
-        if (card) card.style.display = 'none';
-
-        if (mode === 'book') {
-            contactForm.style.display   = 'none';
-            bookingFields.style.display = 'block';
-            submitBtn.style.display     = 'none';
-            recalc();
-            checkInfoReady(); // run gate check when tab opens
-        } else {
-            submitBtn.textContent = '✉ Send Message';
-            document.getElementById('form-subject').value       = "New Message — Cancan's Corner";
-            document.getElementById('form-purpose-field').value = 'Message';
-        }
-
-        [btnMsg, btnBook].forEach(btn => btn && btn.classList.remove('active'));
-        const activeBtn = document.getElementById('btn-' + mode);
-        if (activeBtn) activeBtn.classList.add('active');
-    }
-
-    // ── Auto-activate tab from URL ──
+    // ── On load: attach listeners ──
     window.addEventListener('DOMContentLoaded', function () {
-        const params = new URLSearchParams(window.location.search);
-        const tab    = params.get('tab');
-        const hash   = window.location.hash;
-        if (tab === 'booking' || tab === 'book' || hash === '#btn-book') {
-            setPurpose('book');
-        } else {
-            setPurpose('message');
-        }
-
-        // Attach gate listeners
         ['booking-name', 'booking-phone', 'booking-email'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.addEventListener('input', checkInfoReady);
         });
-
         document.getElementById('book-rush')?.addEventListener('change', recalc);
+        checkInfoReady();
         recalc();
     });
 
@@ -849,136 +687,68 @@
         const phoneOk = phone.length > 0;
         const emailOk = email.includes('@') && email.includes('.');
 
-        // Update chips
         document.getElementById('chip-name').classList.toggle('done',  nameOk);
         document.getElementById('chip-phone').classList.toggle('done', phoneOk);
         document.getElementById('chip-email').classList.toggle('done', emailOk);
-
-        // Update chip labels
         document.getElementById('chip-name').textContent  = nameOk  ? '✓ Name'  : '✦ Name';
         document.getElementById('chip-phone').textContent = phoneOk ? '✓ Phone' : '✦ Phone';
         document.getElementById('chip-email').textContent = emailOk ? '✓ Email' : '✦ Email';
 
         const allReady = nameOk && phoneOk && emailOk;
-        const gate     = document.getElementById('calendly-gate');
-        const wrap     = document.getElementById('calendly-widget-wrap');
+        const gate = document.getElementById('calendly-gate');
+        const wrap = document.getElementById('calendly-widget-wrap');
 
         if (allReady) {
             gate.style.display = 'none';
             wrap.style.display = 'block';
-            // Small delay so display:block takes effect before opacity transition
             setTimeout(() => wrap.classList.add('visible'), 20);
         } else {
             wrap.classList.remove('visible');
-            // Wait for fade-out before hiding
-            setTimeout(() => {
-                if (!wrap.classList.contains('visible')) {
-                    wrap.style.display = 'none';
-                }
-            }, 420);
+            setTimeout(() => { if (!wrap.classList.contains('visible')) wrap.style.display = 'none'; }, 420);
             gate.style.display = 'block';
         }
     }
 
-    // ── Message form submit (Formspree) ──
-    document.getElementById('contact-form').addEventListener('submit', async function (e) {
-        e.preventDefault();
-        const form = e.target;
-        try {
-            const response = await fetch(form.action, {
-                method: 'POST',
-                body: new FormData(form),
-                headers: { 'Accept': 'application/json' }
-            });
-            if (response.ok) {
-                form.style.display = 'none';
-                document.querySelector('.purpose-toggle').style.display = 'none';
-                const msg = document.createElement('div');
-                msg.className = 'success-message';
-                msg.innerHTML = `
-                    <div class="success-icon">🎀</div>
-                    <h3>Message Sent!</h3>
-                    <p>Thank you for reaching out! I'll get back to you shortly.</p>
-                    <p class="success-tagline">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!"</p>
-                `;
-                document.querySelector('.form-card').appendChild(msg);
-            } else {
-                alert('Something went wrong. Please try again!');
-            }
-        } catch (err) {
-            alert('Something went wrong. Please try again!');
-        }
-    });
-
-    // ── Live Calculator ──
-    const card              = document.getElementById('quote-estimator-card');
-    const giftTotal         = document.getElementById('book-gift-total');
-    const estTotal          = document.getElementById('est-total');
-    const estSubtotalLine   = document.getElementById('est-subtotal-line');
-    const estSubtotal       = document.getElementById('est-subtotal');
-    const estDiscountLine   = document.getElementById('est-discount-line');
-    const estDiscount       = document.getElementById('est-discount');
-    const estDivider        = document.getElementById('est-divider');
-    const bulkBadgeText     = document.getElementById('bulk-badge-text');
-    const bulkUnlockMessage = document.getElementById('bulk-unlock-message');
-    const giftsNeeded       = document.getElementById('gifts-needed');
-    const giftsNeededPlural = document.getElementById('gifts-needed-plural');
-    const estRushLine       = document.getElementById('est-rush-line');
-    const hiddenTotal       = document.getElementById('estimated-total');
-    const hiddenCount       = document.getElementById('booking-gift-count');
-    const hiddenStyle       = document.getElementById('booking-style');
-    const hiddenRush        = document.getElementById('book-rush-hidden');
-    const giftCustomizerSection = document.getElementById('gift-customizer-section');
+    // ── Gift customizer ──
+    const card                    = document.getElementById('quote-estimator-card');
+    const giftTotal               = document.getElementById('book-gift-total');
+    const hiddenTotal             = document.getElementById('estimated-total');
+    const hiddenCount             = document.getElementById('booking-gift-count');
+    const hiddenStyle             = document.getElementById('booking-style');
+    const hiddenRush              = document.getElementById('book-rush-hidden');
     const giftCustomizerContainer = document.getElementById('gift-cards-container');
-    const giftDetailsJsonField = document.getElementById('gift-details-json');
+    const giftDetailsJsonField    = document.getElementById('gift-details-json');
 
     let giftCustomizerDetails = [];
+
     const paperColorOptions = [
-        { value: 'red',   hex: '#E24B4A' },
-        { value: 'blue',  hex: '#378ADD' },
-        { value: 'green', hex: '#639922' },
-        { value: 'gold',  hex: '#EF9F27' },
-        { value: 'silver',hex: '#B4B2A9' },
-        { value: 'pink',  hex: '#D4537E' },
-        { value: 'white', hex: '#f5d79a' },
-        { value: 'purple',hex: '#7F77DD' }
+        { value: 'red',    hex: '#E24B4A' },
+        { value: 'blue',   hex: '#378ADD' },
+        { value: 'green',  hex: '#639922' },
+        { value: 'gold',   hex: '#EF9F27' },
+        { value: 'silver', hex: '#B4B2A9' },
+        { value: 'pink',   hex: '#D4537E' },
+        { value: 'white',  hex: '#f5d79a' },
+        { value: 'purple', hex: '#7F77DD' }
     ];
     const sizeOptions = [
-        { value: 'small',  label: 'Small ($6)' },
+        { value: 'small',  label: 'Small ($6)'  },
         { value: 'medium', label: 'Medium ($9)' },
         { value: 'large',  label: 'Large ($12)' }
     ];
     const bowColorOptions = [
-        { value: 'red',   hex: '#E24B4A' },
-        { value: 'gold',  hex: '#EF9F27' },
-        { value: 'silver',hex: '#B4B2A9' },
-        { value: 'green', hex: '#639922' },
-        { value: 'blue',  hex: '#378ADD' },
-        { value: 'white', hex: '#f5d79a' },
-        { value: 'pink',  hex: '#D4537E' },
+        { value: 'red',    hex: '#E24B4A' },
+        { value: 'gold',   hex: '#EF9F27' },
+        { value: 'silver', hex: '#B4B2A9' },
+        { value: 'green',  hex: '#639922' },
+        { value: 'blue',   hex: '#378ADD' },
+        { value: 'white',  hex: '#f5d79a' },
+        { value: 'pink',   hex: '#D4537E' },
         { value: 'no-bow', hex: 'transparent' }
     ];
 
-    function createGiftSizeButton(option, giftIndex) {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'gift-size-button';
-        button.dataset.value = option.value;
-        button.textContent = option.label;
-
-        button.addEventListener('click', function () {
-            const giftIndexInt = parseInt(giftIndex, 10);
-            updateGiftDetail(giftIndexInt, 'size', option.value);
-            renderGiftCustomizer();
-            recalc();
-        });
-
-        return button;
-    }
-
     function syncGiftDetailsField() {
-        if (!giftDetailsJsonField) return;
-        giftDetailsJsonField.value = JSON.stringify(giftCustomizerDetails);
+        if (giftDetailsJsonField) giftDetailsJsonField.value = JSON.stringify(giftCustomizerDetails);
     }
 
     function updateGiftDetail(index, key, value) {
@@ -988,22 +758,29 @@
     }
 
     function addGiftCard() {
-        giftCustomizerDetails.push({
-            gift: giftCustomizerDetails.length + 1,
-            size: '',
-            paper: 'red',
-            bow: 'gold',
-            tag: ''
-        });
+        giftCustomizerDetails.push({ gift: giftCustomizerDetails.length + 1, size: '', paper: 'red', bow: 'gold', tag: '' });
         renderGiftCustomizer();
         recalc();
     }
 
     function removeGift(index) {
-        if (index < 0 || index >= giftCustomizerDetails.length) return;
         giftCustomizerDetails.splice(index, 1);
         renderGiftCustomizer();
         recalc();
+    }
+
+    function createGiftSizeButton(option, giftIndex) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'gift-size-button';
+        button.dataset.value = option.value;
+        button.textContent = option.label;
+        button.addEventListener('click', function () {
+            updateGiftDetail(parseInt(giftIndex, 10), 'size', option.value);
+            renderGiftCustomizer();
+            recalc();
+        });
+        return button;
     }
 
     function createGiftSwatch(option, giftIndex, type) {
@@ -1011,45 +788,33 @@
         button.type = 'button';
         button.className = 'gift-swatch';
         button.dataset.value = option.value;
-        button.dataset.type = type;
         button.title = option.value === 'no-bow' ? 'No Bow' : option.value.charAt(0).toUpperCase() + option.value.slice(1);
-        if (option.value === 'no-bow') {
-            button.classList.add('no-bow');
-            button.textContent = '✕';
-        } else {
-            button.style.backgroundColor = option.hex;
-        }
-
+        if (option.value === 'no-bow') { button.classList.add('no-bow'); button.textContent = '✕'; }
+        else { button.style.backgroundColor = option.hex; }
         button.addEventListener('click', function () {
-            const giftIndexInt = parseInt(giftIndex, 10);
-            const field = type === 'paper' ? 'paper' : 'bow';
-            updateGiftDetail(giftIndexInt, field, option.value);
+            updateGiftDetail(parseInt(giftIndex, 10), type === 'paper' ? 'paper' : 'bow', option.value);
             renderGiftCustomizer();
             recalc();
         });
-
         return button;
     }
 
     function buildGiftCard(gift, index) {
-        const card = document.createElement('div');
-        card.className = 'gift-customizer-card';
+        const cardEl = document.createElement('div');
+        cardEl.className = 'gift-customizer-card';
 
         const headingRow = document.createElement('div');
         headingRow.className = 'gift-card-heading';
         const heading = document.createElement('h4');
         heading.textContent = 'Gift ' + (index + 1);
         headingRow.appendChild(heading);
-
         const removeButton = document.createElement('button');
         removeButton.type = 'button';
         removeButton.className = 'gift-remove-button';
         removeButton.textContent = '✕ Remove';
-        removeButton.addEventListener('click', function () {
-            removeGift(index);
-        });
+        removeButton.addEventListener('click', () => removeGift(index));
         headingRow.appendChild(removeButton);
-        card.appendChild(headingRow);
+        cardEl.appendChild(headingRow);
 
         const sizeRow = document.createElement('div');
         sizeRow.className = 'gift-customizer-row';
@@ -1057,11 +822,11 @@
         sizeLabel.textContent = 'Gift Size';
         sizeRow.appendChild(sizeLabel);
         sizeOptions.forEach(option => {
-            const sizeButton = createGiftSizeButton(option, index);
-            if (gift.size === option.value) sizeButton.classList.add('selected');
-            sizeRow.appendChild(sizeButton);
+            const btn = createGiftSizeButton(option, index);
+            if (gift.size === option.value) btn.classList.add('selected');
+            sizeRow.appendChild(btn);
         });
-        card.appendChild(sizeRow);
+        cardEl.appendChild(sizeRow);
 
         const paperRow = document.createElement('div');
         paperRow.className = 'gift-customizer-row';
@@ -1069,11 +834,11 @@
         paperLabel.textContent = 'Paper Color';
         paperRow.appendChild(paperLabel);
         paperColorOptions.forEach(option => {
-            const swatch = createGiftSwatch(option, index, 'paper');
-            if (gift.paper === option.value) swatch.classList.add('selected');
-            paperRow.appendChild(swatch);
+            const sw = createGiftSwatch(option, index, 'paper');
+            if (gift.paper === option.value) sw.classList.add('selected');
+            paperRow.appendChild(sw);
         });
-        card.appendChild(paperRow);
+        cardEl.appendChild(paperRow);
 
         const bowRow = document.createElement('div');
         bowRow.className = 'gift-customizer-row';
@@ -1081,11 +846,11 @@
         bowLabel.textContent = 'Bow Color';
         bowRow.appendChild(bowLabel);
         bowColorOptions.forEach(option => {
-            const swatch = createGiftSwatch(option, index, 'bow');
-            if (gift.bow === option.value) swatch.classList.add('selected');
-            bowRow.appendChild(swatch);
+            const sw = createGiftSwatch(option, index, 'bow');
+            if (gift.bow === option.value) sw.classList.add('selected');
+            bowRow.appendChild(sw);
         });
-        card.appendChild(bowRow);
+        cardEl.appendChild(bowRow);
 
         const tagRow = document.createElement('div');
         tagRow.className = 'gift-customizer-row';
@@ -1096,24 +861,20 @@
         tagInput.type = 'text';
         tagInput.placeholder = 'e.g. "Happy Birthday Mom!"';
         tagInput.value = gift.tag || '';
-        tagInput.addEventListener('input', function () {
-            updateGiftDetail(index, 'tag', tagInput.value);
-        });
+        tagInput.addEventListener('input', () => updateGiftDetail(index, 'tag', tagInput.value));
         tagRow.appendChild(tagInput);
-        card.appendChild(tagRow);
+        cardEl.appendChild(tagRow);
 
-        return card;
+        return cardEl;
     }
 
     function renderGiftCustomizer() {
-        if (!giftCustomizerSection || !giftCustomizerContainer) return;
-
+        if (!giftCustomizerContainer) return;
         giftCustomizerContainer.innerHTML = '';
         giftCustomizerDetails.forEach((gift, index) => {
             giftCustomizerDetails[index].gift = index + 1;
             giftCustomizerContainer.appendChild(buildGiftCard(gift, index));
         });
-
         syncGiftDetailsField();
     }
 
@@ -1131,100 +892,47 @@
         if (total === 0) {
             if (card) card.style.display = 'none';
             if (hiddenTotal) hiddenTotal.value = '0';
-            if (bulkUnlockMessage) bulkUnlockMessage.style.display = 'none';
             return;
         }
 
-        let basicPrice = 0;
-        let bulkPrice  = 0;
+        let basicPrice = 0, bulkPrice = 0;
         giftCustomizerDetails.forEach(gift => {
             if (gift.size === 'small')       { basicPrice += 6;  bulkPrice += 5; }
             else if (gift.size === 'medium') { basicPrice += 9;  bulkPrice += 8; }
             else if (gift.size === 'large')  { basicPrice += 12; bulkPrice += 10; }
         });
 
-        const base           = isBulk ? bulkPrice : basicPrice;
-        const discountAmount = isBulk ? basicPrice - bulkPrice : 0;
-        const discountPercent = isBulk && basicPrice > 0
-            ? ((discountAmount / basicPrice) * 100).toFixed(0) : 0;
-        const rushAmt = rush ? 10 : 0;
-        const grand   = base + rushAmt;
+        const base            = isBulk ? bulkPrice : basicPrice;
+        const discountAmount  = isBulk ? basicPrice - bulkPrice : 0;
+        const discountPercent = isBulk && basicPrice > 0 ? ((discountAmount / basicPrice) * 100).toFixed(0) : 0;
+        const rushAmt         = rush ? 10 : 0;
+        const grand           = base + rushAmt;
 
-        // Build the estimator card content dynamically
         if (card) card.style.display = 'block';
 
-        // Build gift line items
         let itemsHtml = '';
         giftCustomizerDetails.forEach((gift, idx) => {
-            const itemIndex = idx + 1;
-            const sizeLabel = gift.size && gift.size.length > 0 ? gift.size.charAt(0).toUpperCase() + gift.size.slice(1) : null;
+            const sizeLabel = gift.size ? gift.size.charAt(0).toUpperCase() + gift.size.slice(1) : null;
             let itemPrice = 0;
-            if (sizeLabel) {
-                if (gift.size === 'small')       itemPrice = isBulk ? 5 : 6;
-                else if (gift.size === 'medium') itemPrice = isBulk ? 8 : 9;
-                else if (gift.size === 'large')  itemPrice = isBulk ? 10 : 12;
-            }
-            const labelClass = sizeLabel ? 'quote-label' : 'quote-label';
-            const leftText = sizeLabel ? `Gift ${itemIndex} — ${sizeLabel}` : `Gift ${itemIndex} — (size needed)`;
-            const leftStyle = sizeLabel ? 'color:var(--gray-lavender);' : 'color:var(--gray-lavender); opacity:0.9;';
-            itemsHtml += `
-                <div class="quote-line" style="font-size:0.82rem;">
-                    <span class="quote-label" style="${leftStyle}">${leftText}</span>
-                    <span class="quote-dash">—</span>
-                    <span class="quote-price" style="color:#f5d79a;">$${itemPrice.toFixed(2)}</span>
-                </div>
-            `;
+            if (gift.size === 'small')       itemPrice = isBulk ? 5 : 6;
+            else if (gift.size === 'medium') itemPrice = isBulk ? 8 : 9;
+            else if (gift.size === 'large')  itemPrice = isBulk ? 10 : 12;
+            const leftText  = sizeLabel ? `Gift ${idx + 1} — ${sizeLabel}` : `Gift ${idx + 1} — (size needed)`;
+            itemsHtml += `<div class="quote-line" style="font-size:0.82rem;"><span class="quote-label" style="color:var(--gray-lavender);">${leftText}</span><span class="quote-dash">—</span><span class="quote-price">$${itemPrice.toFixed(2)}</span></div>`;
         });
 
-        // Subtotal line
-        const subtotalHtml = `
-            <div class="quote-line quote-subtotal" style="font-size:0.9rem;">
-                <span class="quote-label">Subtotal</span>
-                <span class="quote-dash">—</span>
-                <span class="quote-price" id="est-subtotal-new" style="color:rgba(245,215,154,0.85);">$${basicPrice.toFixed(2)}</span>
-            </div>
-        `;
+        const subtotalHtml = `<div class="quote-line quote-subtotal"><span class="quote-label">Subtotal</span><span class="quote-dash">—</span><span class="quote-price" style="color:rgba(245,215,154,0.85);">$${basicPrice.toFixed(2)}</span></div>`;
 
-        // Bulk discount or unlock message
         let bulkHtml = '';
         if (isBulk) {
-            bulkHtml = `
-                <div class="quote-line quote-discount" style="font-size:0.9rem;">
-                    <span class="quote-label">Bulk Discount <span class="bulk-badge">BULK ${discountPercent}%</span></span>
-                    <span class="quote-dash">-</span>
-                    <span class="quote-price" style="color:#52c27a;">-$${discountAmount.toFixed(2)}</span>
-                </div>
-            `;
+            bulkHtml = `<div class="quote-line quote-discount"><span class="quote-label">Bulk Discount <span class="bulk-badge">BULK ${discountPercent}%</span></span><span class="quote-dash">-</span><span class="quote-price" style="color:#52c27a;">-$${discountAmount.toFixed(2)}</span></div>`;
         } else {
             const needed = 10 - total;
-            bulkHtml = `
-                <div class="bulk-unlock-message" id="bulk-unlock-message-new">
-                    Add <span id="gifts-needed-new">${needed}</span> more gift<span id="gifts-needed-plural-new">${needed === 1 ? '' : 's'}</span> to unlock bulk pricing! 🎀
-                </div>
-            `;
+            bulkHtml = `<div class="bulk-unlock-message">Add ${needed} more gift${needed === 1 ? '' : 's'} to unlock bulk pricing! 🎀</div>`;
         }
 
-        // Rush line
-        const rushHtml = rush ? `
-            <div class="quote-line" style="font-size:0.9rem;">
-                <span class="quote-label">Rush Order (+1-2 days)</span>
-                <span class="quote-dash">—</span>
-                <span class="quote-price" style="color:#f5d79a;">+$${rushAmt.toFixed(2)}</span>
-            </div>
-        ` : '';
+        const rushHtml = rush ? `<div class="quote-line"><span class="quote-label">Rush Order</span><span class="quote-dash">+</span><span class="quote-price">+$10.00</span></div>` : '';
 
-        // Divider and total
-        const totalHtml = `
-            <div class="quote-divider"></div>
-            <div class="quote-line quote-total" style="font-size:1rem; font-weight:700; margin-top:0.6rem;">
-                <span class="quote-label">Estimated Total</span>
-                <span class="quote-dash">—</span>
-                <span class="quote-price" id="est-total-new" style="color:#f5d79a; font-size:1.05rem;">$${grand.toFixed(2)}</span>
-            </div>
-            <p style="color:#f5d79a;font-size:0.75rem;font-style:italic;text-align:center;margin-top:0.8rem;">Final price confirmed at drop-off</p>
-        `;
-
-        // Assemble and write
         card.innerHTML = `
             <div class="side-card-title">🎀 Estimated Quote</div>
             ${itemsHtml}
@@ -1232,20 +940,21 @@
             ${subtotalHtml}
             ${bulkHtml}
             ${rushHtml}
-            ${totalHtml}
+            <div class="quote-divider"></div>
+            <div class="quote-line quote-total">
+                <span class="quote-label">Estimated Total</span>
+                <span class="quote-dash">—</span>
+                <span class="quote-price" style="font-size:1.05rem;">$${grand.toFixed(2)}</span>
+            </div>
+            <p style="color:#f5d79a;font-size:0.75rem;font-style:italic;text-align:center;margin-top:0.8rem;">Final price confirmed at drop-off</p>
         `;
 
-        // Update hidden/known fields
         if (hiddenTotal) hiddenTotal.value = grand.toFixed(2);
-        // Also set the visible est total element we just created
-        const estTotalNew = document.getElementById('est-total-new');
-        if (estTotalNew) estTotalNew.textContent = '$' + grand.toFixed(2);
     }
 
-    // ── Calendly event listener — saves to Supabase on booking confirmed ──
+    // ── Calendly → Supabase ──
     window.addEventListener('message', async function (e) {
         if (e.data.event && e.data.event === 'calendly.event_scheduled') {
-
             const name    = document.getElementById('booking-name')?.value.trim();
             const phone   = document.getElementById('booking-phone')?.value.trim();
             const email   = document.getElementById('booking-email')?.value.trim();
@@ -1253,14 +962,11 @@
             const style   = hiddenStyle?.value || 'basic';
             const rushOrd = hiddenRush?.value === 'true';
             const total   = parseFloat(hiddenTotal?.value) || 0;
-            const notes   = document.getElementById('booking-notes')?.value.trim()    || '';
-            const giftDetailsJson = document.getElementById('gift-details-json')?.value || '[]';
             let giftDetails = [];
-            try { giftDetails = JSON.parse(giftDetailsJson); } catch (e) { giftDetails = []; }
+            try { giftDetails = JSON.parse(giftDetailsJsonField?.value || '[]'); } catch(e) {}
 
-            // Safety net — should never fire now due to gate, but just in case
             if (!name || !phone || !email) {
-                alert('Your time slot is booked! Please fill in your name, phone, and email above so I can save your order, then text me at 931-304-4499.');
+                alert('Your time slot is booked! Please fill in your name, phone, and email above, then text me at 931-304-4499.');
                 return;
             }
 
@@ -1283,28 +989,21 @@
                 return;
             }
 
-            // Reset form
+            // Reset everything
             document.getElementById('booking-fields').reset();
             if (hiddenTotal) hiddenTotal.value = '0';
-            if (card)        card.style.display = 'none';
-            if (giftTotal)   giftTotal.textContent = 'Total Gifts: 0';
-            if (giftCustomizerSection) {
-                giftCustomizerSection.style.display = 'none';
-            }
-            if (giftCustomizerContainer) {
-                giftCustomizerContainer.innerHTML = '';
-            }
+            if (card) card.style.display = 'none';
+            if (giftTotal) giftTotal.textContent = 'Total Gifts: 0';
+            if (giftCustomizerContainer) giftCustomizerContainer.innerHTML = '';
             giftCustomizerDetails = [];
             syncGiftDetailsField();
 
-            // Hide Calendly, reset gate
             const wrap = document.getElementById('calendly-widget-wrap');
             const gate = document.getElementById('calendly-gate');
             wrap.classList.remove('visible');
             setTimeout(() => { wrap.style.display = 'none'; }, 420);
             gate.style.display = 'block';
 
-            // Reset chips
             ['chip-name','chip-phone','chip-email'].forEach(id => {
                 const chip = document.getElementById(id);
                 chip.classList.remove('done');
@@ -1313,7 +1012,6 @@
             document.getElementById('chip-phone').textContent = '✦ Phone';
             document.getElementById('chip-email').textContent = '✦ Email';
 
-            // Show success
             const successBox = document.getElementById('booking-success');
             if (successBox) successBox.style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1323,18 +1021,12 @@
     // ── Confetti ──
     (function () {
         const container = document.getElementById('confetti');
-        const colors    = ['#f5d79a', '#ecdb9f', '#c39559', '#866e9f', '#785678'];
+        const colors    = ['#f5d79a','#ecdb9f','#c39559','#866e9f','#785678'];
         for (let i = 0; i < 50; i++) {
-            const dot  = document.createElement('div');
+            const dot = document.createElement('div');
             dot.classList.add('confetti-dot');
             const size = Math.random() * 8 + 4;
-            dot.style.width             = size + 'px';
-            dot.style.height            = size + 'px';
-            dot.style.left              = Math.random() * 100 + '%';
-            dot.style.top               = '-20px';
-            dot.style.background        = colors[Math.floor(Math.random() * colors.length)];
-            dot.style.animationDuration = (Math.random() * 6 + 4) + 's';
-            dot.style.animationDelay    = (Math.random() * 5) + 's';
+            dot.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:-20px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${Math.random()*6+4}s;animation-delay:${Math.random()*5}s;`;
             container.appendChild(dot);
         }
     })();
@@ -1342,7 +1034,6 @@
 
     <script src="script.js"></script>
 
-    <!-- Back to Top Bow Button -->
     <style>
         #backToTop {
             position: fixed; bottom: 32px; right: 28px;
