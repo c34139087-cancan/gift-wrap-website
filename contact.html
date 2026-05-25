@@ -259,83 +259,8 @@
         }
         .cashapp-link:hover { background: rgba(245,215,154,0.2); }
 
-        /* ── Live Quote Estimator ── */
-        .quote-line { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.6rem; font-size: 0.85rem; }
-        .quote-label { color: var(--gray-lavender); flex: 1; }
-        .quote-dash  { color: rgba(245,215,154,0.4); flex: 0 0 auto; }
-        .quote-price { color: #f5d79a; font-weight: 600; text-align: right; min-width: 60px; }
-        .quote-total .quote-label { color: #f5d79a; font-weight: 700; }
-        .quote-total .quote-price { font-weight: 700; font-size: 0.95rem; }
-        .quote-divider { height: 1px; background: rgba(245,215,154,0.25); margin: 0.6rem 0; }
-        .quote-subtotal .quote-price { color: rgba(245,215,154,0.7); font-weight: 600; }
-        .bulk-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #52c27a 0%, #42b66d 100%);
-            color: #ffffff;
-            padding: 0.3rem 0.7rem;
-            border-radius: 0.3rem;
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            margin-left: 0.5rem;
-        }
-        .quote-discount .quote-price { color: #52c27a; font-weight: 700; }
-        .bulk-unlock-message {
-            background: rgba(82,194,122,0.08);
-            border-left: 3px solid #52c27a;
-            padding: 0.6rem 0.8rem;
-            border-radius: 0.3rem;
-            font-size: 0.8rem;
-            color: #52c27a;
-            margin-bottom: 1rem;
-            text-align: center;
-            font-weight: 500;
-        }
-
         /* ── Confetti ── */
         .confetti-dot { position: absolute; border-radius: 50%; animation: confetti-fall linear infinite; pointer-events: none; }
-
-        /* ── Paper thumbnail picker ── */
-        .paper-category-label { font-size: 0.82rem; color: var(--gray-lavender); font-weight:700; margin: 0.6rem 0 0.35rem; }
-        .paper-thumbnails { display:flex; gap:0.6rem; flex-wrap:wrap; margin-bottom:0.65rem; align-items:flex-start; }
-        .paper-swatch { display:inline-flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:6px; border-radius:10px; border:2px solid transparent; background:transparent; cursor:pointer; width:92px; }
-        .paper-swatch img { width:80px; height:80px; object-fit:cover; border-radius:8px; display:block; }
-        .paper-swatch .thumb-label { margin-top:6px; font-size:0.75rem; color:var(--gray-lavender); text-align:center; max-width:84px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-        .paper-swatch.selected { border-color: #f5d79a; box-shadow: 0 8px 22px rgba(245,215,154,0.18); background: linear-gradient(180deg, rgba(245,215,154,0.03), transparent); }
-        .paper-category-select {
-            width: 100%;
-            padding: 0.6rem 0.9rem;
-            margin: 0.45rem 0 0.6rem 0;
-            background: #f5d79a;
-            border: 2px solid #20113c;
-            border-radius: var(--radius-md);
-            color: #20113c;
-            font-family: var(--font-body);
-            font-weight: 700;
-        }
-        .paper-category-select option {
-            color: #20113c;
-            background: #f5d79a;
-        }
-        .paper-category-select option:checked {
-            background: #20113c;
-            color: #f5d79a;
-        }
-
-        /* Thumbnail preview modal */
-        .thumb-modal-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.65); display:flex; align-items:center; justify-content:center; z-index:99999;
-        }
-        .thumb-modal {
-            background: rgba(32,17,60,0.95); border: 3px solid #f5d79a; padding: 1rem; border-radius: 10px; max-width: 92vw; max-height: 88vh; overflow:auto; display:flex; flex-direction:column; align-items:center; gap:0.8rem;
-        }
-        .thumb-modal img { max-width: min(760px, 88vw); max-height: 68vh; border-radius:8px; display:block; }
-        .thumb-modal-title { color: #f5d79a; font-weight:700; font-size:1rem; text-align:center; }
-        .thumb-modal-actions { display:flex; gap:0.6rem; }
-        .thumb-modal-button { padding:0.55rem 0.9rem; border-radius:8px; border:none; cursor:pointer; font-weight:700; }
-        .thumb-modal-button.select { background: linear-gradient(135deg,#E6C07A,#f5d79a); color:#20113c; }
-        .thumb-modal-button.close { background: transparent; border:1.5px solid rgba(245,215,154,0.2); color:var(--gray-lavender); }
 
         /* ── Success message ── */
         .success-message { text-align: center; padding: 2rem; }
@@ -523,10 +448,12 @@
                     <strong>Basic:</strong> Small $6 &middot; Medium $9 &middot; Large $12 &nbsp;|&nbsp; <strong>Bulk (10+ gifts):</strong> Small $5 &middot; Medium $8 &middot; Large $10
                 </p>
                 <div id="gift-customizer-section" style="margin-top:1rem;">
-                    <div class="form-section-label">Customize Each Gift</div>
-                    <div id="gift-cards-container"></div>
-                    <button type="button" class="send-btn gift-add-btn" id="add-gift-btn" onclick="addGiftCard()">🎁 Add a Gift</button>
-                    <p id="book-gift-total" style="color:#f5d79a;font-weight:700;margin-bottom:1.2rem;margin-top:0.8rem;">Total Gifts: 0</p>
+                    <div class="form-section-label">Gift Preview</div>
+                    <p style="color:#f5d79a;font-size:0.95rem;margin-bottom:1rem; line-height:1.5;">
+                        Use the preview tool to choose wrapping paper, ribbon, and tags before booking. The preview page opens separately so you can explore options and then return here to complete your booking.
+                    </p>
+                    <a class="send-btn gift-add-btn" href="can-gift-preview.html">🎁 Open Gift Preview</a>
+                    <p style="color:#f5d79a;font-weight:700;margin-bottom:1.2rem;margin-top:0.8rem;">The preview page will show your gift options in a dedicated designer.</p>
                 </div>
 
                 <p style="color:#f5d79a;font-size:0.85rem;font-style:italic;margin-bottom:0.6rem;">A classic bow is included free with every wrap 🎀</p>
@@ -556,13 +483,12 @@
 
                 <div id="calendly-gate">
                     <div class="gate-icon">🗓️</div>
-                    <h4>Complete Your Info &amp; Add Gifts First</h4>
-                    <p>Fill in your name, phone, email, and add at least one gift — then the booking calendar will appear right here.</p>
+                    <h4>Complete Your Info to Book</h4>
+                    <p>Fill in your name, phone, and email — then the booking calendar will appear right here.</p>
                     <div class="gate-fields-needed">
                         <span class="gate-chip" id="chip-name">✦ Name</span>
                         <span class="gate-chip" id="chip-phone">✦ Phone</span>
                         <span class="gate-chip" id="chip-email">✦ Email</span>
-                        <span class="gate-chip" id="chip-gifts">✦ Add Gifts</span>
                     </div>
                 </div>
 
@@ -654,12 +580,6 @@
                 </div>
             </div>
 
-            <!-- Live Quote Estimator Card -->
-            <div class="side-card" id="quote-estimator-card" style="display:none;">
-                <div class="side-card-title">🎀 Estimated Quote</div>
-                <p style="color:#f5d79a;font-size:0.75rem;font-style:italic;text-align:center;margin-top:0.8rem;">Final price confirmed at drop-off</p>
-            </div>
-
         </div>
         <!-- ═══ END RIGHT COLUMN ═══ -->
 
@@ -701,7 +621,6 @@
 
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="asset-data.js"></script>
 
     <script>
     const supabaseClient = supabase.createClient(
@@ -716,523 +635,60 @@
             if (el) el.addEventListener('input', checkInfoReady);
         });
         document.getElementById('book-rush')?.addEventListener('change', recalc);
-        document.getElementById('add-gift-btn')?.addEventListener('click', addGiftCard);
         checkInfoReady();
         recalc();
     });
 
     // ── Calendly gate logic ──
-    // Requires: name + phone + email + at least 1 gift added
     function checkInfoReady() {
         const name  = document.getElementById('booking-name')?.value.trim()  || '';
         const phone = document.getElementById('booking-phone')?.value.trim() || '';
         const email = document.getElementById('booking-email')?.value.trim() || '';
-        const giftsAdded = giftCustomizerDetails.length > 0;
 
         const nameOk  = name.length > 0;
         const phoneOk = phone.length > 0;
         const emailOk = email.includes('@') && email.includes('.');
 
-        // Update chips
-        document.getElementById('chip-name').classList.toggle('done',  nameOk);
-        document.getElementById('chip-phone').classList.toggle('done', phoneOk);
-        document.getElementById('chip-email').classList.toggle('done', emailOk);
-        document.getElementById('chip-gifts').classList.toggle('done', giftsAdded);
+        const chipName  = document.getElementById('chip-name');
+        const chipPhone = document.getElementById('chip-phone');
+        const chipEmail = document.getElementById('chip-email');
 
-        document.getElementById('chip-name').textContent  = nameOk     ? '✓ Name'        : '✦ Name';
-        document.getElementById('chip-phone').textContent = phoneOk    ? '✓ Phone'       : '✦ Phone';
-        document.getElementById('chip-email').textContent = emailOk    ? '✓ Email'       : '✦ Email';
-        document.getElementById('chip-gifts').textContent = giftsAdded ? '✓ Gifts Added' : '✦ Add Gifts';
+        if (chipName)  { chipName.classList.toggle('done', nameOk); chipName.textContent = nameOk ? '✓ Name' : '✦ Name'; }
+        if (chipPhone) { chipPhone.classList.toggle('done', phoneOk); chipPhone.textContent = phoneOk ? '✓ Phone' : '✦ Phone'; }
+        if (chipEmail) { chipEmail.classList.toggle('done', emailOk); chipEmail.textContent = emailOk ? '✓ Email' : '✦ Email'; }
 
-        const allReady = nameOk && phoneOk && emailOk && giftsAdded;
+        const allReady = nameOk && phoneOk && emailOk;
         const gate = document.getElementById('calendly-gate');
         const wrap = document.getElementById('calendly-widget-wrap');
 
         if (allReady) {
-            gate.style.display = 'none';
-            wrap.style.display = 'block';
-            setTimeout(() => wrap.classList.add('visible'), 20);
+            if (gate) gate.style.display = 'none';
+            if (wrap) {
+                wrap.style.display = 'block';
+                setTimeout(() => wrap.classList.add('visible'), 20);
+            }
         } else {
-            wrap.classList.remove('visible');
-            setTimeout(() => { if (!wrap.classList.contains('visible')) wrap.style.display = 'none'; }, 420);
-            gate.style.display = 'block';
+            if (wrap) {
+                wrap.classList.remove('visible');
+                setTimeout(() => { if (!wrap.classList.contains('visible')) wrap.style.display = 'none'; }, 420);
+            }
+            if (gate) gate.style.display = 'block';
         }
     }
 
-    // ── Gift customizer ──
-    const card                    = document.getElementById('quote-estimator-card');
-    const giftTotal               = document.getElementById('book-gift-total');
-    const hiddenTotal             = document.getElementById('estimated-total');
-    const hiddenCount             = document.getElementById('booking-gift-count');
-    const hiddenStyle             = document.getElementById('booking-style');
-    const hiddenRush              = document.getElementById('book-rush-hidden');
-    const giftCustomizerContainer = document.getElementById('gift-cards-container');
-    const giftDetailsJsonField    = document.getElementById('gift-details-json');
-
-    let giftCustomizerDetails = [];
-
-    function syncGiftDetailsField() {
-        if (giftDetailsJsonField) giftDetailsJsonField.value = JSON.stringify(giftCustomizerDetails);
-    }
-
-    const sizeOptions = [
-        { value: 'small',  label: 'Small ($6)'  },
-        { value: 'medium', label: 'Medium ($9)' },
-        { value: 'large',  label: 'Large ($12)' }
-    ];
-
-    function createTagThumbnail(displayPath, filename, giftIndex) {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'paper-swatch';
-        button.dataset.value = displayPath;
-
-        const img = document.createElement('img');
-        img.src = encodeURI(displayPath);
-        img.alt = filename;
-        button.appendChild(img);
-
-        const label = document.createElement('div');
-        label.className = 'thumb-label';
-        label.textContent = displayNameFromFilename(filename);
-        button.appendChild(label);
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
-            openThumbnailPreview(displayPath, filename, giftIndex, 'tag');
-        });
-        return button;
-    }
-
-    function createRibbonThumbnail(filename, giftIndex) {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'paper-swatch';
-        const displayPath = `Ribbon/${filename}`;
-        button.dataset.value = displayPath;
-
-        const img = document.createElement('img');
-        img.src = encodeURI(displayPath);
-        img.alt = filename;
-        button.appendChild(img);
-
-        const label = document.createElement('div');
-        label.className = 'thumb-label';
-        label.textContent = displayNameFromFilename(filename);
-        button.appendChild(label);
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
-            openThumbnailPreview(displayPath, filename, giftIndex, 'ribbon');
-        });
-        return button;
-    }
-
-    function openThumbnailPreview(path, filename, giftIndex, type = 'paper') {
-        // If modal exists, remove it first and cleanup its key handler if present
-        const existing = document.getElementById('thumb-modal-overlay');
-        if (existing) {
-            if (existing._escHandler) document.removeEventListener('keyup', existing._escHandler);
-            existing.remove();
-        }
-
-        const overlay = document.createElement('div');
-        overlay.id = 'thumb-modal-overlay';
-        overlay.className = 'thumb-modal-overlay';
-
-        const modal = document.createElement('div');
-        modal.className = 'thumb-modal';
-
-        const img = document.createElement('img');
-        img.src = encodeURI(path);
-        img.alt = filename;
-
-        const title = document.createElement('div');
-        title.className = 'thumb-modal-title';
-        title.textContent = displayNameFromFilename(filename);
-
-        const actions = document.createElement('div');
-        actions.className = 'thumb-modal-actions';
-
-        const selectBtn = document.createElement('button');
-        selectBtn.className = 'thumb-modal-button select';
-        selectBtn.textContent = type === 'tag' ? 'Use This Tag' : 'Use This Paper';
-
-        const closeBtn = document.createElement('button');
-        closeBtn.className = 'thumb-modal-button close';
-        closeBtn.textContent = 'Close';
-
-        actions.appendChild(selectBtn);
-        actions.appendChild(closeBtn);
-
-        modal.appendChild(img);
-        modal.appendChild(title);
-        modal.appendChild(actions);
-        overlay.appendChild(modal);
-
-        function closeModal() {
-            if (overlay._escHandler) document.removeEventListener('keyup', overlay._escHandler);
-            overlay.remove();
-        }
-
-        selectBtn.addEventListener('click', function () {
-            const key = type === 'tag' ? 'tagImage' : (type === 'ribbon' ? 'ribbonImage' : 'paper');
-            updateGiftDetail(parseInt(giftIndex, 10), key, path);
-            renderGiftCustomizer();
-            recalc();
-            closeModal();
-        });
-        closeBtn.addEventListener('click', closeModal);
-
-        overlay.addEventListener('click', function (ev) { if (ev.target === overlay) closeModal(); });
-
-        // close on ESC
-        function escHandler(ev) { if (ev.key === 'Escape') closeModal(); }
-        overlay._escHandler = escHandler;
-        document.addEventListener('keyup', escHandler);
-
-        document.body.appendChild(overlay);
-    }
-
-    function displayNameFromFilename(fn) {
-        // Remove extension and replace common separators with spaces
-        const name = fn.replace(/\.[^/.]+$/, '');
-        return decodeURIComponent(name).replace(/[_\-]+/g, ' ').replace(/\s+/g, ' ').trim();
-    }
-
-    function getCategoryFromPath(path) {
-        if (!path) return null;
-        const parts = path.split('/');
-        return parts.length >= 2 ? parts[1] : null;
-    }
-
-    function createPaperThumbnail(category, filename, giftIndex) {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'paper-swatch';
-        const displayPath = `Wrapping/${category}/${filename}`;
-        button.dataset.value = displayPath;
-
-        const img = document.createElement('img');
-        img.src = encodeURI(displayPath);
-        img.alt = filename;
-        button.appendChild(img);
-
-        const label = document.createElement('div');
-        label.className = 'thumb-label';
-        label.textContent = displayNameFromFilename(filename);
-        button.appendChild(label);
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
-            openThumbnailPreview(displayPath, filename, giftIndex, 'paper');
-        });
-        return button;
-    }
-
-    function populatePaperThumbnailsForCategory(thumbsWrap, categoryName, giftIndex, gift) {
-        thumbsWrap.innerHTML = '';
-        const cat = paperCategories.find(c => c.category === categoryName);
-        if (!cat) return;
-        cat.images.forEach(filename => {
-            const thumb = createPaperThumbnail(cat.category, filename, giftIndex);
-            const displayPath = `Wrapping/${cat.category}/${filename}`;
-            if (gift.paper === displayPath) thumb.classList.add('selected');
-            thumbsWrap.appendChild(thumb);
-        });
-    }
-
-    function populateTagThumbnailsForCategory(thumbsWrap, categoryName, giftIndex, gift) {
-        thumbsWrap.innerHTML = '';
-        const cat = tagCategories.find(c => c.folder === categoryName);
-        if (!cat) return;
-        cat.images.forEach(filename => {
-            const displayPath = `Tags/${cat.folder}/${filename}`;
-            const thumb = createTagThumbnail(displayPath, filename, giftIndex);
-            if (gift.tagImage === displayPath) thumb.classList.add('selected');
-            thumbsWrap.appendChild(thumb);
-        });
-    }
-
-    function populateRibbonThumbnailsForCategory(thumbsWrap, categoryName, giftIndex, gift) {
-        thumbsWrap.innerHTML = '';
-        const cat = ribbonCategories.find(c => c.category === categoryName);
-        if (!cat) return;
-        cat.images.forEach(filename => {
-            const displayPath = `Ribbon/${filename}`;
-            const thumb = createRibbonThumbnail(filename, giftIndex);
-            if (gift.ribbonImage === displayPath) thumb.classList.add('selected');
-            thumbsWrap.appendChild(thumb);
-        });
-    }
-
-    function updateGiftDetail(index, key, value) {
-        if (!giftCustomizerDetails[index]) return;
-        giftCustomizerDetails[index][key] = value;
-        syncGiftDetailsField();
-    }
-
-    function addGiftCard() {
-        giftCustomizerDetails.push({ gift: giftCustomizerDetails.length + 1, size: '', paper: '', tag: '', tagImage: '', ribbonImage: '' });
-        renderGiftCustomizer();
-        recalc();
-        checkInfoReady(); // re-check gate now that a gift was added
-    }
-
-    function removeGift(index) {
-        giftCustomizerDetails.splice(index, 1);
-        renderGiftCustomizer();
-        recalc();
-        checkInfoReady(); // re-check gate — may now be 0 gifts
-    }
-
-    function createGiftSizeButton(option, giftIndex) {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'gift-size-button';
-        button.dataset.value = option.value;
-        button.textContent = option.label;
-        button.addEventListener('click', function () {
-            updateGiftDetail(parseInt(giftIndex, 10), 'size', option.value);
-            renderGiftCustomizer();
-            recalc();
-        });
-        return button;
-    }
-
-    function createGiftSwatch(option, giftIndex, type) {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'gift-swatch';
-        button.dataset.value = option.value;
-        button.title = option.value === 'no-bow' ? 'No Bow' : option.value.charAt(0).toUpperCase() + option.value.slice(1);
-        if (option.value === 'no-bow') { button.classList.add('no-bow'); button.textContent = '✕'; }
-        else { button.style.backgroundColor = option.hex; }
-        button.addEventListener('click', function () {
-            updateGiftDetail(parseInt(giftIndex, 10), type === 'paper' ? 'paper' : 'bow', option.value);
-            renderGiftCustomizer();
-            recalc();
-        });
-        return button;
-    }
-
-    function buildGiftCard(gift, index) {
-        const cardEl = document.createElement('div');
-        cardEl.className = 'gift-customizer-card';
-
-        const headingRow = document.createElement('div');
-        headingRow.className = 'gift-card-heading';
-        const heading = document.createElement('h4');
-        heading.textContent = 'Gift ' + (index + 1);
-        headingRow.appendChild(heading);
-        const removeButton = document.createElement('button');
-        removeButton.type = 'button';
-        removeButton.className = 'gift-remove-button';
-        removeButton.textContent = '✕ Remove';
-        removeButton.addEventListener('click', () => removeGift(index));
-        headingRow.appendChild(removeButton);
-        cardEl.appendChild(headingRow);
-
-        const sizeRow = document.createElement('div');
-        sizeRow.className = 'gift-customizer-row';
-        const sizeLabel = document.createElement('label');
-        sizeLabel.textContent = 'Gift Size';
-        sizeRow.appendChild(sizeLabel);
-        sizeOptions.forEach(option => {
-            const btn = createGiftSizeButton(option, index);
-            if (gift.size === option.value) btn.classList.add('selected');
-            sizeRow.appendChild(btn);
-        });
-        cardEl.appendChild(sizeRow);
-
-        const paperRow = document.createElement('div');
-        paperRow.className = 'gift-customizer-row';
-        const paperLabel = document.createElement('label');
-        paperLabel.textContent = 'Paper';
-        paperRow.appendChild(paperLabel);
-
-        // Two-step selector: first choose a category, then pick from thumbnails
-        const select = document.createElement('select');
-        select.className = 'paper-category-select';
-        paperCategories.forEach(cat => {
-            const opt = document.createElement('option');
-            opt.value = cat.category;
-            opt.textContent = cat.category;
-            select.appendChild(opt);
-        });
-        paperRow.appendChild(select);
-
-        const thumbsWrap = document.createElement('div');
-        thumbsWrap.className = 'paper-thumbnails';
-        paperRow.appendChild(thumbsWrap);
-
-        // Determine initial category from current gift.paper or default to first category
-        const initialCat = getCategoryFromPath(gift.paper) || (paperCategories[0] && paperCategories[0].category);
-        if (initialCat) select.value = initialCat;
-        populatePaperThumbnailsForCategory(thumbsWrap, select.value, index, gift);
-
-        select.addEventListener('change', function () {
-            populatePaperThumbnailsForCategory(thumbsWrap, select.value, index, gift);
-        });
-        cardEl.appendChild(paperRow);
-
-        const ribbonRow = document.createElement('div');
-        ribbonRow.className = 'gift-customizer-row';
-        const ribbonLabel = document.createElement('label');
-        ribbonLabel.textContent = 'Ribbon';
-        ribbonRow.appendChild(ribbonLabel);
-
-        const ribbonSelect = document.createElement('select');
-        ribbonSelect.className = 'paper-category-select';
-        ribbonCategories.forEach(cat => {
-            const opt = document.createElement('option');
-            opt.value = cat.category;
-            opt.textContent = cat.category;
-            ribbonSelect.appendChild(opt);
-        });
-        ribbonRow.appendChild(ribbonSelect);
-
-        const ribbonThumbsWrap = document.createElement('div');
-        ribbonThumbsWrap.className = 'paper-thumbnails';
-        ribbonRow.appendChild(ribbonThumbsWrap);
-        cardEl.appendChild(ribbonRow);
-
-        const initialRibbonCat = getCategoryFromPath(gift.ribbonImage) || (ribbonCategories[0] && ribbonCategories[0].category);
-        if (initialRibbonCat) ribbonSelect.value = initialRibbonCat;
-        populateRibbonThumbnailsForCategory(ribbonThumbsWrap, ribbonSelect.value, index, gift);
-
-        ribbonSelect.addEventListener('change', function () {
-            populateRibbonThumbnailsForCategory(ribbonThumbsWrap, ribbonSelect.value, index, gift);
-        });
-
-        // ── Tag image picker (thumbnails)
-        const tagPickerRow = document.createElement('div');
-        tagPickerRow.className = 'gift-customizer-row';
-        const tagPickerLabel = document.createElement('label');
-        tagPickerLabel.textContent = 'Tag Category';
-        tagPickerRow.appendChild(tagPickerLabel);
-
-        const tagCategorySelect = document.createElement('select');
-        tagCategorySelect.className = 'paper-category-select';
-        tagCategories.forEach(cat => {
-            const opt = document.createElement('option');
-            opt.value = cat.folder;
-            opt.textContent = cat.category;
-            tagCategorySelect.appendChild(opt);
-        });
-        tagPickerRow.appendChild(tagCategorySelect);
-        cardEl.appendChild(tagPickerRow);
-
-        const tagThumbsRow = document.createElement('div');
-        tagThumbsRow.className = 'gift-customizer-row';
-        const tagThumbsWrap = document.createElement('div');
-        tagThumbsWrap.className = 'paper-thumbnails';
-        tagThumbsRow.appendChild(tagThumbsWrap);
-        cardEl.appendChild(tagThumbsRow);
-
-        const initialTagCat = getCategoryFromPath(gift.tagImage) || (tagCategories[0] && tagCategories[0].category);
-        if (initialTagCat) tagCategorySelect.value = initialTagCat;
-        populateTagThumbnailsForCategory(tagThumbsWrap, tagCategorySelect.value, index, gift);
-
-        tagCategorySelect.addEventListener('change', function () {
-            populateTagThumbnailsForCategory(tagThumbsWrap, tagCategorySelect.value, index, gift);
-        });
-
-        const tagRow = document.createElement('div');
-        tagRow.className = 'gift-customizer-row';
-        const tagLabel = document.createElement('label');
-        tagLabel.textContent = 'Gift Tag Message';
-        tagRow.appendChild(tagLabel);
-        const tagInput = document.createElement('input');
-        tagInput.type = 'text';
-        tagInput.placeholder = 'e.g. "Happy Birthday Mom!"';
-        tagInput.value = gift.tag || '';
-        tagInput.addEventListener('input', () => updateGiftDetail(index, 'tag', tagInput.value));
-        tagRow.appendChild(tagInput);
-        cardEl.appendChild(tagRow);
-
-        return cardEl;
-    }
-
-    function renderGiftCustomizer() {
-        if (!giftCustomizerContainer) return;
-        giftCustomizerContainer.innerHTML = '';
-        giftCustomizerDetails.forEach((gift, index) => {
-            giftCustomizerDetails[index].gift = index + 1;
-            giftCustomizerContainer.appendChild(buildGiftCard(gift, index));
-        });
-        syncGiftDetailsField();
-    }
+    // ── Gift helper state ──
+    const hiddenTotal          = document.getElementById('estimated-total');
+    const hiddenCount          = document.getElementById('booking-gift-count');
+    const hiddenStyle          = document.getElementById('booking-style');
+    const hiddenRush           = document.getElementById('book-rush-hidden');
+    const giftDetailsJsonField = document.getElementById('gift-details-json');
 
     function recalc() {
-        const total = giftCustomizerDetails.length;
-        const rush  = document.getElementById('book-rush')?.checked || false;
-
-        if (giftTotal)   giftTotal.textContent = 'Total Gifts: ' + total;
-        if (hiddenCount) hiddenCount.value = total;
-
-        const isBulk = total >= 10;
-        if (hiddenStyle) hiddenStyle.value = isBulk ? 'bulk' : 'basic';
-        if (hiddenRush)  hiddenRush.value  = rush ? 'true' : 'false';
-
-        if (total === 0) {
-            if (card) card.style.display = 'none';
-            if (hiddenTotal) hiddenTotal.value = '0';
-            return;
-        }
-
-        let basicPrice = 0, bulkPrice = 0;
-        giftCustomizerDetails.forEach(gift => {
-            if (gift.size === 'small')       { basicPrice += 6;  bulkPrice += 5; }
-            else if (gift.size === 'medium') { basicPrice += 9;  bulkPrice += 8; }
-            else if (gift.size === 'large')  { basicPrice += 12; bulkPrice += 10; }
-        });
-
-        const base            = isBulk ? bulkPrice : basicPrice;
-        const discountAmount  = isBulk ? basicPrice - bulkPrice : 0;
-        const discountPercent = isBulk && basicPrice > 0 ? ((discountAmount / basicPrice) * 100).toFixed(0) : 0;
-        const rushAmt         = rush ? 10 : 0;
-        const grand           = base + rushAmt;
-
-        if (card) card.style.display = 'block';
-
-        let itemsHtml = '';
-        giftCustomizerDetails.forEach((gift, idx) => {
-            const sizeLabel = gift.size ? gift.size.charAt(0).toUpperCase() + gift.size.slice(1) : null;
-            let itemPrice = 0;
-            if (gift.size === 'small')       itemPrice = isBulk ? 5 : 6;
-            else if (gift.size === 'medium') itemPrice = isBulk ? 8 : 9;
-            else if (gift.size === 'large')  itemPrice = isBulk ? 10 : 12;
-            const leftText  = sizeLabel ? `Gift ${idx + 1} — ${sizeLabel}` : `Gift ${idx + 1} — (size needed)`;
-            itemsHtml += `<div class="quote-line" style="font-size:0.82rem;"><span class="quote-label" style="color:var(--gray-lavender);">${leftText}</span><span class="quote-dash">—</span><span class="quote-price">$${itemPrice.toFixed(2)}</span></div>`;
-        });
-
-        const subtotalHtml = `<div class="quote-line quote-subtotal"><span class="quote-label">Subtotal</span><span class="quote-dash">—</span><span class="quote-price" style="color:rgba(245,215,154,0.85);">$${basicPrice.toFixed(2)}</span></div>`;
-
-        let bulkHtml = '';
-        if (isBulk) {
-            bulkHtml = `<div class="quote-line quote-discount"><span class="quote-label">Bulk Discount <span class="bulk-badge">BULK ${discountPercent}%</span></span><span class="quote-dash">-</span><span class="quote-price" style="color:#52c27a;">-$${discountAmount.toFixed(2)}</span></div>`;
-        } else {
-            const needed = 10 - total;
-            bulkHtml = `<div class="bulk-unlock-message">Add ${needed} more gift${needed === 1 ? '' : 's'} to unlock bulk pricing! 🎀</div>`;
-        }
-
-        const rushHtml = rush ? `<div class="quote-line"><span class="quote-label">Rush Order</span><span class="quote-dash">+</span><span class="quote-price">+$10.00</span></div>` : '';
-
-        card.innerHTML = `
-            <div class="side-card-title">🎀 Estimated Quote</div>
-            ${itemsHtml}
-            <div class="quote-divider"></div>
-            ${subtotalHtml}
-            ${bulkHtml}
-            ${rushHtml}
-            <div class="quote-divider"></div>
-            <div class="quote-line quote-total">
-                <span class="quote-label">Estimated Total</span>
-                <span class="quote-dash">—</span>
-                <span class="quote-price" style="font-size:1.05rem;">$${grand.toFixed(2)}</span>
-            </div>
-            <p style="color:#f5d79a;font-size:0.75rem;font-style:italic;text-align:center;margin-top:0.8rem;">Final price confirmed at drop-off</p>
-        `;
-
-        if (hiddenTotal) hiddenTotal.value = grand.toFixed(2);
+        const rush = document.getElementById('book-rush')?.checked || false;
+        if (hiddenCount) hiddenCount.value = '0';
+        if (hiddenStyle) hiddenStyle.value = 'basic';
+        if (hiddenRush) hiddenRush.value = rush ? 'true' : 'false';
+        if (hiddenTotal) hiddenTotal.value = rush ? '10' : '0';
     }
 
     // ── Calendly → Supabase ──
@@ -1297,26 +753,23 @@
             // Reset everything
             document.getElementById('booking-fields').reset();
             if (hiddenTotal) hiddenTotal.value = '0';
-            if (card) card.style.display = 'none';
-            if (giftTotal) giftTotal.textContent = 'Total Gifts: 0';
-            if (giftCustomizerContainer) giftCustomizerContainer.innerHTML = '';
-            giftCustomizerDetails = [];
-            syncGiftDetailsField();
+            if (giftDetailsJsonField) giftDetailsJsonField.value = '[]';
 
             const wrap = document.getElementById('calendly-widget-wrap');
             const gate = document.getElementById('calendly-gate');
-            wrap.classList.remove('visible');
-            setTimeout(() => { wrap.style.display = 'none'; }, 420);
-            gate.style.display = 'block';
+            if (wrap) {
+                wrap.classList.remove('visible');
+                setTimeout(() => { wrap.style.display = 'none'; }, 420);
+            }
+            if (gate) gate.style.display = 'block';
 
-            ['chip-name','chip-phone','chip-email','chip-gifts'].forEach(id => {
+            ['chip-name','chip-phone','chip-email'].forEach(id => {
                 const chip = document.getElementById(id);
-                chip.classList.remove('done');
+                if (chip) chip.classList.remove('done');
             });
             document.getElementById('chip-name').textContent  = '✦ Name';
             document.getElementById('chip-phone').textContent = '✦ Phone';
             document.getElementById('chip-email').textContent = '✦ Email';
-            document.getElementById('chip-gifts').textContent = '✦ Add Gifts';
 
             const successBox = document.getElementById('booking-success');
             if (successBox) successBox.style.display = 'block';
