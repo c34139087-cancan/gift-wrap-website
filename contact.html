@@ -366,100 +366,63 @@
         }
         .sq-faq-note a:hover { text-decoration: underline; }
 
-        .gift-preview-panel {
-            display: grid;
-            grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-            gap: 1rem;
-            margin-top: 1rem;
-            background: rgba(64,41,91,0.3);
-            border: 1.5px solid rgba(245,215,154,0.2);
-            border-radius: var(--radius-xl);
-            padding: 1.25rem;
-            backdrop-filter: blur(10px);
+        .gift-customizer-intro {
+            color: var(--gray-lavender);
+            font-size: 0.88rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
         }
-        .gift-preview-display {
+        .customizer-grid {
+            display: grid;
+            gap: 1.2rem;
+        }
+        .customizer-field {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.5rem;
+            gap: 0.5rem;
         }
-        .gift-preview-display canvas {
-            width: 100%;
-            max-width: 320px;
-            height: auto;
-            aspect-ratio: 6 / 7;
-            border-radius: 24px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(245,215,154,0.08));
-            border: 1px solid rgba(245,215,154,0.15);
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
-        }
-        .selection-pill {
-            padding: 1rem 1.1rem;
-            border-radius: 24px;
-            background: rgba(245,215,154,0.16);
-            border: 1px solid rgba(245,215,154,0.28);
-            color: var(--pastel-yellow);
-            font-size: 0.85rem;
-            text-align: left;
-            line-height: 1.5;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 0.35rem;
-            min-height: auto;
-            justify-items: start;
-        }
-        .selection-pill span { display: block; }
-        .gift-preview-options {
-            display: grid;
-            gap: 1rem;
-            padding: 0.5rem;
-        }
-        .preview-section {
-            background: rgba(104,82,129,0.16);
-            border: 1px solid rgba(245,215,154,0.18);
-            border-radius: var(--radius-lg);
-            padding: 1rem;
-        }
-        .preview-section-title {
-            font-size: 0.85rem;
-            font-weight: 700;
+        .customizer-field label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            letter-spacing: 0.12em;
             color: var(--pastel-orange);
-            margin-bottom: 0.75rem;
         }
-        .preview-section p {
-            color: var(--gray-lavender);
-            font-size: 0.85rem;
-            margin-bottom: 0.85rem;
-            line-height: 1.55;
-        }
-        .styled {
+        .customizer-field select {
             width: 100%;
-            font-size: 0.95rem;
             padding: 0.85rem 1rem;
             background: rgba(255,255,255,0.92);
             color: #3b105a;
             border: 2px solid rgba(104,82,129,0.4);
             border-radius: var(--radius-md);
-            appearance: none;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
-        .styled option { color: #3b105a; background: #fff; }
-        .styled:focus { outline: none; border-color: var(--pastel-orange); }
-        .swatch-grid { display: flex; flex-wrap: wrap; gap: 0.65rem; justify-content: flex-start; }
-        .sw-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; width: 52px; }
-        .sw, .tag-sw, .ribbon-sw {
-            width: 52px; height: 52px; border-radius: 16px; border: 2px solid transparent; overflow: hidden; cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease; display: flex; align-items: center; justify-content: center;
+        .customizer-field select:hover {
+            border-color: #866e9f;
         }
-        .sw:hover, .tag-sw:hover, .ribbon-sw:hover { transform: translateY(-1px); }
-        .sw.active, .tag-sw.active, .ribbon-sw.active { border-color: var(--pastel-orange); box-shadow: 0 0 0 1px rgba(245,215,154,0.35); }
-        .sw img, .tag-sw img, .ribbon-sw img { width: 100%; height: 100%; object-fit: cover; }
-        .sw-lbl { font-size: 0.7rem; color: var(--gray-lavender); text-align: center; line-height: 1.2; }
-        .gift-size-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; align-items: end; }
-        .gift-size-row label { font-size: 0.75rem; color: var(--gray-lavender); display: block; margin-bottom: 0.35rem; }
-        .gift-size-row input[type="number"] { width: 100%; padding: 0.85rem 1rem; background: rgba(104,82,129,0.3); border: 2px solid var(--gray-lavender); border-radius: var(--radius-md); color: #f5d79a; }
-        .gift-size-row input[type="number"]:focus { outline: none; border-color: var(--pastel-orange); }
+        .customizer-field select:focus {
+            outline: none;
+            border-color: var(--pastel-orange);
+            box-shadow: 0 0 0 3px rgba(245,215,154,0.15);
+        }
+        .customizer-field select option {
+            color: #3b105a;
+            background: #fff;
+        }
+        .size-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .gift-note {
+            color: var(--gray-lavender);
+            font-size: 0.8rem;
+            margin-top: 0.75rem;
+            line-height: 1.5;
+            font-style: italic;
+        }
 
         /* ── Responsive ── */
         @media (max-width: 720px) {
@@ -545,107 +508,59 @@
                 <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
                     <strong>Basic:</strong> Small $6 &middot; Medium $9 &middot; Large $12 &nbsp;|&nbsp; <strong>Bulk (10+ gifts):</strong> Small $5 &middot; Medium $8 &middot; Large $10
                 </p>
-              <div id="gift-customizer-section">
+              <div id="gift-customizer-section" class="customizer-grid">
 
-    <div class="form-section-label">🎁 Customize Your Gift Wrap</div>
-    <p class="customizer-intro">
-        Choose your wrapping paper, ribbon, and tag — your selections are saved automatically with your booking.
+    <div class="form-section-label">🎁 Choose Your Design</div>
+    <p class="gift-customizer-intro">
+        Select your wrapping paper, ribbon, and tag options below. Each choice will be noted with your booking.
     </p>
 
-    <!-- Two-column customizer layout -->
-    <div class="gc-layout">
-
-        <!-- LEFT: sticky preview -->
-        <aside class="gc-preview-col">
-            <div class="gc-preview-sticky">
-
-                <div class="gc-preview-header">
-                    <span class="gc-preview-label">Live Preview ✨</span>
-                    <button type="button" class="gc-enlarge-btn" id="gcEnlargeBtn" aria-label="Enlarge preview">⛶ Enlarge</button>
-                </div>
-
-                <div class="gc-canvas-wrap" id="gcCanvasWrap">
-                    <canvas id="giftBox" width="360" height="420" aria-label="Live gift wrap preview"></canvas>
-                </div>
-
-                <div class="gc-pill" id="selPill">Loading preview…</div>
-
-            </div>
-        </aside>
-
-        <!-- RIGHT: scrollable controls -->
-        <div class="gc-controls-col">
-
-            <div class="gc-section">
-                <div class="gc-section-title">🎁 Wrapping Paper</div>
-                <select class="styled" id="paperCat"></select>
-                <div class="swatch-grid" id="paperSwatches"></div>
-            </div>
-
-            <div class="gc-section">
-                <div class="gc-section-title">🎀 Ribbon</div>
-                <select class="styled" id="ribbonCat"></select>
-                <div class="swatch-grid" id="ribbonSwatches"></div>
-            </div>
-
-            <div class="gc-section">
-                <div class="gc-section-title">🏷️ Gift Tag</div>
-                <select class="styled" id="tagCat"></select>
-                <div class="swatch-grid" id="tagSwatches"></div>
-            </div>
-
-            <div class="gc-section">
-                <div class="gc-section-title">📏 Gift Details</div>
-                <div class="gift-size-row">
-                    <div>
-                        <label for="giftSize">Gift size</label>
-                        <select class="styled" id="giftSize">
-                            <option value="Small">Small</option>
-                            <option value="Medium" selected>Medium</option>
-                            <option value="Large">Large</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="giftCountInput">Gift count</label>
-                        <input type="number" id="giftCountInput" min="1" value="1">
-                    </div>
-                </div>
-                <p class="gift-note">
-                    Rush order adds $10 for up to 5 gifts. Bulk pricing applies automatically for 10+ gifts.
-                </p>
-            </div>
-
-        </div>
-        <!-- end gc-controls-col -->
-
+    <div class="customizer-field">
+        <label for="paperCat">Wrapping Paper</label>
+        <select id="paperCat"></select>
     </div>
-    <!-- end gc-layout -->
+
+    <div class="customizer-field">
+        <label for="ribbonCat">Ribbon</label>
+        <select id="ribbonCat"></select>
+    </div>
+
+    <div class="customizer-field">
+        <label for="tagCat">Gift Tag</label>
+        <select id="tagCat"></select>
+    </div>
+
+    <div class="customizer-field">
+        <div class="size-row">
+            <div>
+                <label for="giftSize">Gift Size</label>
+                <select id="giftSize">
+                    <option value="Small">Small ($6–5)</option>
+                    <option value="Medium" selected>Medium ($9–8)</option>
+                    <option value="Large">Large ($12–10)</option>
+                </select>
+            </div>
+            <div>
+                <label for="giftCountInput">How Many Gifts?</label>
+                <input type="number" id="giftCountInput" min="1" value="1">
+            </div>
+        </div>
+        <p class="gift-note">
+            Bulk pricing (10+ gifts): Small $5 · Medium $8 · Large $10 | Rush order: +$10 (1–2 day turnaround)
+        </p>
+    </div>
 
 </div>
 <!-- end #gift-customizer-section -->
 
+                <!-- Hidden fields for form data -->
+                <input type="hidden" id="booking-gift-count" name="dropoff_gifts" value="1">
+                <input type="hidden" id="booking-gift-size" name="dropoff_size" value="Medium">
+                <input type="hidden" id="booking-style" name="dropoff_style" value="basic">
+                <input type="hidden" id="book-rush-hidden" name="rush_order" value="false">
+                <input type="hidden" id="gift-details-json" name="gift_details" value="[]">
+                <input type="hidden" id="estimated-total" name="estimated_total" value="9">
 
-<!--
- 
-                <label class="checkbox-label" style="margin-top:0.5rem;margin-bottom:1.2rem;">
-                    <input type="checkbox" id="book-rush">
-                    Rush Order: $10 flat — 1–2 day turnaround for up to 5 gifts, subject to availability.
-                </label>
-
-                <div class="form-group">
-                    <label>Special Requests or Notes</label>
-                    <textarea id="booking-notes" name="dropoff_notes" placeholder="Ribbon color, theme, occasion, anything special…"></textarea>
-                </div>
-
-                <!-- Hidden fields -->
-                <input type="hidden" id="booking-gift-count" name="dropoff_gifts"   value="1">
-                <input type="hidden" id="booking-gift-size"  name="dropoff_size"   value="Medium">
-                <input type="hidden" id="booking-style"       name="dropoff_style"   value="basic">
-                <input type="hidden" id="book-rush-hidden"    name="rush_order"      value="false">
-                <input type="hidden" id="gift-details-json"   name="gift_details"    value="[]">
-                <input type="hidden" id="estimated-total"     name="estimated_total" value="9">
-
-                <!-- ── CALENDLY SECTION ── -->
                 <div class="form-section-label" style="margin-top:1rem;">Pick Your Drop-Off Time</div>
                 <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
                     Select a time slot below — you'll get a confirmation email automatically 🎀
@@ -677,12 +592,6 @@
                 </div>
 
             </form>
-            <div id="gcLightbox" class="gc-lightbox" role="dialog" aria-modal="true" aria-label="Enlarged gift preview" hidden>
-    <button type="button" class="gc-lightbox-close" id="gcLightboxClose" aria-label="Close enlarged preview">×</button>
-    <div class="gc-lightbox-inner">
-        <canvas id="lightboxCanvas" width="720" height="840" aria-label="Enlarged gift wrap preview"></canvas>
-    </div>
-</div>
         </div>
         <!-- ═══ END LEFT COLUMN ═══ -->
 
@@ -812,7 +721,7 @@
         });
         document.getElementById('book-rush')?.addEventListener('change', recalc);
         checkInfoReady();
-        initGiftPreview();
+        initGiftSelectors();
         recalc();
     });
 
@@ -1119,217 +1028,6 @@
       tagCat: 'Birthday', tagIdx: 0,
     };
 
-    const imgCache = {};
-    function loadImg(url) {
-      if (imgCache[url]) return imgCache[url];
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.onload = () => { imgCache[url]._loaded = true; drawBox(); };
-      img.onerror = () => { imgCache[url]._err = true; };
-      img.src = url;
-      imgCache[url] = img;
-      return img;
-    }
-    function getImg(path) {
-      return loadImg(`${BASE}/${path}`);
-    }
-
-        function drawImageCover(ctx, img, dx, dy, dw, dh) {
-            const iw = img.naturalWidth || img.width || 1;
-            const ih = img.naturalHeight || img.height || 1;
-            const scale = Math.max(dw / iw, dh / ih);
-            const sw = Math.round(dw / scale);
-            const sh = Math.round(dh / scale);
-            const sx = Math.max(0, Math.floor((iw - sw) / 2));
-            const sy = Math.max(0, Math.floor((ih - sh) / 2));
-            try {
-                ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
-            } catch (e) {
-                // fallback
-                ctx.drawImage(img, dx, dy, dw, dh);
-            }
-        }
-
-    const cv = document.getElementById('giftBox');
-    const cx = cv ? cv.getContext('2d') : null;
-
-    function drawBox() {
-      if (!cx || !cv) return;
-      const W = cv.width, H = cv.height;
-      cx.clearRect(0, 0, W, H);
-
-      const paper = (PAPERS[giftState.paperCat] || [])[giftState.paperIdx] || {};
-      const ribbon = (RIBBON_CATEGORIES[giftState.ribbonCat] || [])[giftState.ribbonIdx] || {};
-      const tag = (TAGS[giftState.tagCat] || [])[giftState.tagIdx] || {};
-
-      const pImg = getImg(paper.f || '');
-      const rImg = getImg(ribbon.f || '');
-      const tImg = getImg(tag.f || '');
-
-      const bx = 52, by = 96, bw = 232, bh = 176;
-    const sx = 48, sy = 32;
-    const paperPattern = pImg._loaded ? cx.createPattern(pImg, 'repeat') : null;
-
-      cx.save(); cx.beginPath(); cx.rect(bx, by, bw, bh); cx.clip();
-    if (paperPattern) { cx.fillStyle = paperPattern; cx.fillRect(bx, by, bw, bh); } else { cx.fillStyle = '#d0c8e0'; cx.fillRect(bx, by, bw, bh); }
-      cx.restore();
-
-      cx.save(); cx.beginPath(); cx.moveTo(bx+bw, by); cx.lineTo(bx+bw+sx, by-sy); cx.lineTo(bx+bw+sx, by-sy+bh); cx.lineTo(bx+bw, by+bh); cx.closePath(); cx.clip();
-    if (paperPattern) { cx.globalAlpha = 0.72; cx.fillStyle = paperPattern; cx.fillRect(bx+bw, by-sy, sx+20, bh+sy); cx.globalAlpha = 0.28; cx.fillStyle = '#000'; cx.fillRect(bx+bw, by-sy, sx+20, bh+sy); cx.globalAlpha = 1; } else { cx.fillStyle = '#b0a8c0'; cx.fill(); }
-      cx.restore();
-
-      cx.save(); cx.beginPath(); cx.moveTo(bx, by); cx.lineTo(bx+sx, by-sy); cx.lineTo(bx+bw+sx, by-sy); cx.lineTo(bx+bw, by); cx.closePath(); cx.clip();
-    if (paperPattern) { cx.globalAlpha = 0.88; cx.fillStyle = paperPattern; cx.fillRect(bx, by-sy, bw+sx, sy+10); cx.globalAlpha = 0.12; cx.fillStyle = '#fff'; cx.fillRect(bx, by-sy, bw+sx, sy+10); cx.globalAlpha = 1; } else { cx.fillStyle = '#c8c0d8'; cx.fill(); }
-      cx.restore();
-
-      cx.strokeStyle = 'rgba(0,0,0,0.2)'; cx.lineWidth = 1.5; cx.lineJoin = 'round';
-      cx.strokeRect(bx, by, bw, bh);
-      cx.beginPath(); cx.moveTo(bx+bw, by); cx.lineTo(bx+bw+sx, by-sy); cx.lineTo(bx+bw+sx, by-sy+bh); cx.lineTo(bx+bw, by+bh); cx.closePath(); cx.stroke();
-      cx.beginPath(); cx.moveTo(bx, by); cx.lineTo(bx+sx, by-sy); cx.lineTo(bx+bw+sx, by-sy); cx.lineTo(bx+bw, by); cx.closePath(); cx.stroke();
-
-      const lidH = 36;
-      cx.strokeStyle = 'rgba(0,0,0,0.15)'; cx.lineWidth = 1;
-      cx.beginPath(); cx.moveTo(bx, by+lidH); cx.lineTo(bx+bw, by+lidH); cx.stroke();
-      cx.beginPath(); cx.moveTo(bx+bw, by+lidH); cx.lineTo(bx+bw+sx, by+lidH-sy); cx.stroke();
-      cx.beginPath(); cx.moveTo(bx, by+lidH); cx.lineTo(bx+sx, by+lidH-sy); cx.stroke();
-
-      const rcx = bx + bw/2;
-      const rcy = by + lidH;
-
-      cx.save(); cx.beginPath(); cx.rect(bx, by, bw, bh); cx.clip();
-      if (rImg._loaded) { const rp = cx.createPattern(rImg, 'repeat'); cx.fillStyle = rp; cx.globalAlpha = 0.92; cx.fillRect(rcx-9, by, 18, bh); } else { cx.fillStyle = '#C9A020'; cx.fillRect(rcx-9, by, 18, bh); }
-      cx.restore();
-
-      cx.save(); cx.beginPath(); cx.rect(bx, by, bw, bh); cx.clip();
-      if (rImg._loaded) { const rp2 = cx.createPattern(rImg, 'repeat'); cx.fillStyle = rp2; cx.globalAlpha = 0.92; cx.fillRect(bx, rcy-9, bw, 18); } else { cx.fillStyle = '#C9A020'; cx.fillRect(bx, rcy-9, bw, 18); }
-      cx.restore();
-
-      cx.save();
-      cx.beginPath(); cx.moveTo(bx, rcy-9); cx.lineTo(bx+bw, rcy-9); cx.strokeStyle = 'rgba(255,255,255,0.22)'; cx.lineWidth = 1.2; cx.stroke();
-      cx.beginPath(); cx.moveTo(rcx-9, by); cx.lineTo(rcx-9, by+bh); cx.stroke();
-      cx.beginPath(); cx.moveTo(rcx+9, by); cx.lineTo(rcx+9, by+bh); cx.stroke();
-      cx.restore();
-
-      cx.save(); cx.beginPath(); cx.moveTo(bx+bw, by); cx.lineTo(bx+bw+sx, by-sy); cx.lineTo(bx+bw+sx, by-sy+bh); cx.lineTo(bx+bw, by+bh); cx.closePath(); cx.clip();
-      cx.globalAlpha = 0.7;
-      if (rImg._loaded) { const rp3 = cx.createPattern(rImg, 'repeat'); cx.fillStyle = rp3; cx.fillRect(bx+bw+sx/2-9, by-sy, 18, bh+sy+5); } else { cx.fillStyle = '#A08010'; cx.fillRect(bx+bw+sx/2-9, by-sy, 18, bh+sy+5); }
-      cx.restore();
-
-      cx.globalAlpha = 1;
-      drawBow(cx, rcx, rcy, rImg);
-      drawTag(cx, rcx + 35, rcy - 30, tImg);
-
-      cx.save();
-      const sg = cx.createRadialGradient(bx+bw/2+sx/3, by+bh+16, 5, bx+bw/2+sx/3, by+bh+16, bw*0.55);
-      sg.addColorStop(0, 'rgba(0,0,0,0.14)');
-      sg.addColorStop(1, 'rgba(0,0,0,0)');
-      cx.fillStyle = sg;
-      cx.beginPath(); cx.ellipse(bx+bw/2+sx/3, by+bh+14, bw*0.52, 14, 0.1, 0, Math.PI*2); cx.fill();
-      cx.restore();
-    }
-
-    function drawBow(ctx, bcx, bcy, rImg) {
-            ctx.save();
-            // subtle drop shadow for separation
-            ctx.fillStyle = 'rgba(0,0,0,0.12)';
-            ctx.beginPath(); ctx.ellipse(bcx, bcy+8, 30, 10, 0, 0, Math.PI*2); ctx.fill();
-
-            // draw bow loops with slightly larger scale for visibility
-            const loops = [[-1,-1],[-1,1],[1,-1],[1,1]];
-            const scale = 1.12;
-            loops.forEach(([lx, ly]) => {
-                ctx.save();
-                ctx.beginPath();
-                ctx.moveTo(bcx, bcy);
-                ctx.bezierCurveTo(bcx+lx*28*scale, bcy+ly*6*scale, bcx+lx*30*scale, bcy+ly*22*scale, bcx+lx*18*scale, bcy+ly*24*scale);
-                ctx.bezierCurveTo(bcx+lx*8*scale, bcy+ly*26*scale, bcx+lx*4*scale, bcy+ly*16*scale, bcx, bcy);
-                ctx.closePath();
-                if (rImg._loaded) { const p = ctx.createPattern(rImg, 'repeat'); ctx.fillStyle = p; } else { ctx.fillStyle = '#C9A020'; }
-                ctx.fill();
-                // stronger outline for clarity
-                ctx.strokeStyle = 'rgba(0,0,0,0.38)'; ctx.lineWidth = 1.4; ctx.stroke();
-                // subtle highlight on top of loops
-                ctx.strokeStyle = 'rgba(255,255,255,0.28)'; ctx.lineWidth = 0.9; ctx.stroke();
-                ctx.restore();
-            });
-
-            // ribbon tails with layered strokes (dark then patterned then highlight)
-            [[-1,1],[1,1]].forEach(([tx]) => {
-                ctx.save();
-                ctx.beginPath();
-                ctx.moveTo(bcx + tx*3, bcy + 4);
-                ctx.bezierCurveTo(bcx + tx*12, bcy+22, bcx + tx*8, bcy+36, bcx + tx*15, bcy+44);
-                // dark base stroke
-                ctx.lineWidth = 10; ctx.strokeStyle = 'rgba(0,0,0,0.28)'; ctx.lineCap = 'round'; ctx.stroke();
-                // patterned mid stroke
-                if (rImg._loaded) { ctx.lineWidth = 6; const p2 = ctx.createPattern(rImg, 'repeat'); ctx.strokeStyle = p2; ctx.stroke(); }
-                else { ctx.lineWidth = 6; ctx.strokeStyle = '#C9A020'; ctx.stroke(); }
-                // bright highlight
-                ctx.strokeStyle = 'rgba(255,255,255,0.34)'; ctx.lineWidth = 2; ctx.stroke();
-                ctx.restore();
-            });
-
-            // central knot with glossy radial highlight
-            ctx.save();
-            const knotRadius = 10;
-            if (rImg._loaded) { const p = ctx.createPattern(rImg, 'repeat'); ctx.fillStyle = p; }
-            else { ctx.fillStyle = '#E0B020'; }
-            const grad = ctx.createRadialGradient(bcx-3, bcy-3, 1, bcx, bcy, knotRadius);
-            grad.addColorStop(0, 'rgba(255,255,255,0.95)');
-            grad.addColorStop(0.18, 'rgba(255,255,255,0.55)');
-            grad.addColorStop(1, 'rgba(224,176,32,1)');
-            ctx.fillStyle = grad;
-            ctx.beginPath(); ctx.arc(bcx, bcy, knotRadius, 0, Math.PI*2); ctx.fill();
-            ctx.strokeStyle = 'rgba(0,0,0,0.32)'; ctx.lineWidth = 1.2; ctx.stroke();
-            ctx.restore();
-
-            ctx.restore();
-    }
-
-    function drawTag(ctx, tx, ty, tImg) {
-      ctx.save();
-      ctx.strokeStyle = 'rgba(100,80,40,0.6)';
-      ctx.lineWidth = 1.2;
-      ctx.setLineDash([2,2]);
-      ctx.beginPath(); ctx.moveTo(tx-18, ty+14); ctx.lineTo(tx-6, ty-2); ctx.stroke();
-      ctx.setLineDash([]);
-      const tw = 54, th = 68;
-      if (tImg._loaded) {
-        ctx.save(); ctx.beginPath(); roundRect(ctx, tx, ty, tw, th, 5); ctx.clip(); ctx.drawImage(tImg, tx, ty, tw, th); ctx.restore();
-        ctx.strokeStyle = 'rgba(0,0,0,0.15)'; ctx.lineWidth = 0.8; ctx.beginPath(); roundRect(ctx, tx, ty, tw, th, 5); ctx.stroke();
-      } else {
-        ctx.fillStyle = '#FAF7F2'; ctx.beginPath(); roundRect(ctx, tx, ty, tw, th, 5); ctx.fill();
-        ctx.strokeStyle = 'rgba(0,0,0,0.15)'; ctx.lineWidth = 0.8; ctx.stroke();
-        ctx.fillStyle = '#9B6FD0'; ctx.font = '11px Poppins, sans-serif'; ctx.textAlign = 'center';
-        ctx.fillText('Tag', tx+tw/2, ty+th/2+4);
-      }
-      ctx.fillStyle = '#f0ede8';
-      ctx.strokeStyle = 'rgba(0,0,0,0.15)'; ctx.lineWidth = 0.8;
-      ctx.beginPath(); ctx.arc(tx+tw/2, ty+7, 4, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-      ctx.restore();
-    }
-
-    function roundRect(ctx, x, y, w, h, r) {
-      ctx.moveTo(x+r, y);
-      ctx.lineTo(x+w-r, y); ctx.arcTo(x+w, y, x+w, y+r, r);
-      ctx.lineTo(x+w, y+h-r); ctx.arcTo(x+w, y+h, x+w-r, y+h, r);
-      ctx.lineTo(x+r, y+h); ctx.arcTo(x, y+h, x, y+h-r, r);
-      ctx.lineTo(x, y+r); ctx.arcTo(x, y, x+r, y, r);
-      ctx.closePath();
-    }
-
-    function updatePill() {
-      const paper = (PAPERS[giftState.paperCat] || [])[giftState.paperIdx] || {};
-      const ribbon = (RIBBON_CATEGORIES[giftState.ribbonCat] || [])[giftState.ribbonIdx] || {};
-      const tag = (TAGS[giftState.tagCat] || [])[giftState.tagIdx] || {};
-      const size = document.getElementById('giftSize')?.value || 'Medium';
-      document.getElementById('selPill').innerHTML =
-        `<span><strong>Paper:</strong> ${paper.n || 'Paper'}</span>` +
-        `<span><strong>Ribbon:</strong> ${ribbon.n || 'Ribbon'}</span>` +
-        `<span><strong>Tag:</strong> ${tag.n || 'Tag'}</span>` +
-        `<span><strong>Size:</strong> ${size}</span>`;
-    }
-
     function buildPaperCat() {
       const sel = document.getElementById('paperCat');
       if (!sel) return;
@@ -1339,24 +1037,7 @@
         if (k === giftState.paperCat) o.selected = true;
         sel.appendChild(o);
       });
-      sel.onchange = e => { giftState.paperCat = e.target.value; giftState.paperIdx = 0; buildPaperSwatches(); updatePill(); drawBox(); recalc(); };
-    }
-
-    function buildPaperSwatches() {
-      const el = document.getElementById('paperSwatches');
-      if (!el) return;
-      el.innerHTML = '';
-      (PAPERS[giftState.paperCat] || []).forEach((p, i) => {
-        const wrap = document.createElement('div'); wrap.className = 'sw-wrap';
-        const sw = document.createElement('div'); sw.className = 'sw' + (i === giftState.paperIdx ? ' active' : '');
-        sw.dataset.index = String(i);
-        const img = document.createElement('img'); img.src = `${BASE}/${p.f}`; img.alt = p.n; img.crossOrigin = 'anonymous';
-        sw.appendChild(img);
-        sw.onclick = () => { giftState.paperIdx = i; buildPaperSwatches(); updatePill(); drawBox(); recalc(); };
-        const lbl = document.createElement('div'); lbl.className = 'sw-lbl'; lbl.textContent = p.n;
-        wrap.appendChild(sw); wrap.appendChild(lbl);
-        el.appendChild(wrap);
-      });
+      sel.onchange = e => { giftState.paperCat = e.target.value; giftState.paperIdx = 0; updateGiftDetails(); recalc(); };
     }
 
     function buildRibbonCat() {
@@ -1368,25 +1049,7 @@
         if (k === giftState.ribbonCat) o.selected = true;
         sel.appendChild(o);
       });
-      sel.onchange = e => { giftState.ribbonCat = e.target.value; giftState.ribbonIdx = 0; buildRibbonSwatches(); updatePill(); drawBox(); recalc(); };
-    }
-
-    function buildRibbonSwatches() {
-      const el = document.getElementById('ribbonSwatches');
-      if (!el) return;
-      el.innerHTML = '';
-      const current = RIBBON_CATEGORIES[giftState.ribbonCat] || [];
-      current.forEach((r, i) => {
-        const wrap = document.createElement('div'); wrap.className = 'sw-wrap';
-        const sw = document.createElement('div'); sw.className = 'ribbon-sw' + (i === giftState.ribbonIdx ? ' active' : '');
-        sw.dataset.index = String(i);
-        const img = document.createElement('img'); img.src = `${BASE}/${r.f}`; img.alt = r.n; img.crossOrigin = 'anonymous';
-        sw.appendChild(img);
-        sw.onclick = () => { giftState.ribbonIdx = i; buildRibbonSwatches(); updatePill(); drawBox(); recalc(); };
-        const lbl = document.createElement('div'); lbl.className = 'sw-lbl'; lbl.textContent = r.n;
-        wrap.appendChild(sw); wrap.appendChild(lbl);
-        el.appendChild(wrap);
-      });
+      sel.onchange = e => { giftState.ribbonCat = e.target.value; giftState.ribbonIdx = 0; updateGiftDetails(); recalc(); };
     }
 
     function buildTagCat() {
@@ -1398,24 +1061,7 @@
         if (k === giftState.tagCat) o.selected = true;
         sel.appendChild(o);
       });
-      sel.onchange = e => { giftState.tagCat = e.target.value; giftState.tagIdx = 0; buildTagSwatches(); updatePill(); drawBox(); recalc(); };
-    }
-
-    function buildTagSwatches() {
-      const el = document.getElementById('tagSwatches');
-      if (!el) return;
-      el.innerHTML = '';
-      (TAGS[giftState.tagCat] || []).forEach((t, i) => {
-        const wrap = document.createElement('div'); wrap.className = 'sw-wrap';
-        const sw = document.createElement('div'); sw.className = 'tag-sw' + (i === giftState.tagIdx ? ' active' : '');
-        sw.dataset.index = String(i);
-        const img = document.createElement('img'); img.src = `${BASE}/${t.f}`; img.alt = t.n; img.crossOrigin = 'anonymous';
-        sw.appendChild(img);
-        sw.onclick = () => { giftState.tagIdx = i; buildTagSwatches(); updatePill(); drawBox(); recalc(); };
-        const lbl = document.createElement('div'); lbl.className = 'sw-lbl'; lbl.textContent = t.n;
-        wrap.appendChild(sw); wrap.appendChild(lbl);
-        el.appendChild(wrap);
-      });
+      sel.onchange = e => { giftState.tagCat = e.target.value; giftState.tagIdx = 0; updateGiftDetails(); recalc(); };
     }
 
     function recalc() {
@@ -1436,17 +1082,14 @@
 
     function updateGiftDetails() {
         const paperCat = document.getElementById('paperCat')?.value || giftState.paperCat;
-        const paperIdx = parseInt(document.querySelector('#paperSwatches .sw.active')?.dataset.index || String(giftState.paperIdx), 10);
         const tagCat = document.getElementById('tagCat')?.value || giftState.tagCat;
-        const tagIdx = parseInt(document.querySelector('#tagSwatches .tag-sw.active')?.dataset.index || String(giftState.tagIdx), 10);
         const ribbonCat = document.getElementById('ribbonCat')?.value || giftState.ribbonCat;
-        const ribbonIdx = parseInt(document.querySelector('#ribbonSwatches .ribbon-sw.active')?.dataset.index || String(giftState.ribbonIdx), 10);
         const size = document.getElementById('giftSize')?.value || 'Medium';
         const count = Math.max(1, parseInt(document.getElementById('giftCountInput')?.value, 10) || 1);
 
-        const paper = (PAPERS[paperCat] || [])[paperIdx] || {};
-        const ribbon = (RIBBON_CATEGORIES[ribbonCat] || [])[ribbonIdx] || {};
-        const tag = (TAGS[tagCat] || [])[tagIdx] || {};
+        const paper = (PAPERS[paperCat] || [])[0] || {};
+        const ribbon = (RIBBON_CATEGORIES[ribbonCat] || [])[0] || {};
+        const tag = (TAGS[tagCat] || [])[0] || {};
 
         const details = [{
             size,
@@ -1454,6 +1097,7 @@
             paperCategory: paperCat,
             paper: paper.n || '',
             paperImage: paper.f || '',
+            ribbonCategory: ribbonCat,
             ribbon: ribbon.n || '',
             ribbonImage: ribbon.f || '',
             tagCategory: tagCat,
@@ -1464,20 +1108,12 @@
         if (giftDetailsJsonField) giftDetailsJsonField.value = JSON.stringify(details);
     }
 
-    function initGiftPreview() {
-        if (!document.getElementById('giftBox')) return;
+    function initGiftSelectors() {
         buildPaperCat();
-        buildPaperSwatches();
         buildRibbonCat();
-        buildRibbonSwatches();
         buildTagCat();
-        buildTagSwatches();
-        updatePill();
-        drawBox();
-
-        document.getElementById('giftSize')?.addEventListener('change', () => { recalc(); updatePill(); });
-        document.getElementById('giftCountInput')?.addEventListener('input', () => { recalc(); });
-
+        document.getElementById('giftSize')?.addEventListener('change', recalc);
+        document.getElementById('giftCountInput')?.addEventListener('input', recalc);
         recalc();
     }
 
@@ -1620,51 +1256,12 @@ if (addGiftBtn && giftCustomizerSection) {
         const heading = clone.querySelector('.form-section-label');
 
         if (heading) {
-            heading.textContent = `🎁 Customize Your Gift Wrap #${giftCount}`;
+            heading.textContent = `🎁 Choose Your Design #${giftCount}`;
         }
 
         giftCustomizerSection.parentNode.insertBefore(clone, addGiftBtn);
 
     });
-}
-
-
-/* ENLARGE PREVIEW */
-const gcEnlargeBtn = document.getElementById('gcEnlargeBtn');
-
-if (gcEnlargeBtn) {
-
-    gcEnlargeBtn.addEventListener('click', function () {
-
-        const previewImage = document.querySelector('.gc-preview-image img');
-
-        if (!previewImage) return;
-
-        const overlay = document.createElement('div');
-
-        overlay.className = 'gc-lightbox-overlay';
-
-        overlay.innerHTML = `
-            <div class="gc-lightbox-content">
-                <button class="gc-lightbox-close">&times;</button>
-                <img src="${previewImage.src}" alt="Preview Enlarged">
-            </div>
-        `;
-
-        document.body.appendChild(overlay);
-
-        overlay.querySelector('.gc-lightbox-close').addEventListener('click', () => {
-            overlay.remove();
-        });
-
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
-                overlay.remove();
-            }
-        });
-
-    });
-
 }
 
 </script>
