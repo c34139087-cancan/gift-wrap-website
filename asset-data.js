@@ -138,7 +138,6 @@ const ribbonCategories = [
     {
         "category": "Ribbon",
         "images": [
-            "28d70356-e3df-4abd-85d3-076eb2ab58d3.png",
             "Buffalo Check Plaid.png",
             "Camo.png",
             "Chalkboard & Gold.png",
