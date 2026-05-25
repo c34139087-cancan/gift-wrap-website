@@ -1114,25 +1114,23 @@
         });
         cardEl.appendChild(paperRow);
 
-        const bowRow = document.createElement('div');
-        bowRow.className = 'gift-customizer-row';
-        const bowLabel = document.createElement('label');
-        bowLabel.textContent = 'Bow Color';
-        bowRow.appendChild(bowLabel);
+        const bowRibbonRow = document.createElement('div');
+        bowRibbonRow.className = 'gift-customizer-row';
+        const bowRibbonLabel = document.createElement('label');
+        bowRibbonLabel.textContent = 'Bow & Ribbon';
+        bowRibbonRow.appendChild(bowRibbonLabel);
+
+        const bowWrapper = document.createElement('div');
+        bowWrapper.className = 'bow-wrapper';
         bowColorOptions.forEach(option => {
             const sw = createGiftSwatch(option, index, 'bow');
             if (gift.bow === option.value) sw.classList.add('selected');
-            bowRow.appendChild(sw);
+            bowWrapper.appendChild(sw);
         });
-        cardEl.appendChild(bowRow);
+        bowRibbonRow.appendChild(bowWrapper);
 
-        // ── Ribbon picker
-        const ribbonRow = document.createElement('div');
-        ribbonRow.className = 'gift-customizer-row';
-        const ribbonLabel = document.createElement('label');
-        ribbonLabel.textContent = 'Ribbon';
-        ribbonRow.appendChild(ribbonLabel);
-
+        const ribbonWrapper = document.createElement('div');
+        ribbonWrapper.className = 'ribbon-wrapper';
         const ribbonSelect = document.createElement('select');
         ribbonSelect.className = 'paper-category-select';
         ribbonCategories.forEach(cat => {
@@ -1141,12 +1139,13 @@
             opt.textContent = cat.category;
             ribbonSelect.appendChild(opt);
         });
-        ribbonRow.appendChild(ribbonSelect);
+        ribbonWrapper.appendChild(ribbonSelect);
 
         const ribbonThumbsWrap = document.createElement('div');
         ribbonThumbsWrap.className = 'paper-thumbnails';
-        ribbonRow.appendChild(ribbonThumbsWrap);
-        cardEl.appendChild(ribbonRow);
+        ribbonWrapper.appendChild(ribbonThumbsWrap);
+        bowRibbonRow.appendChild(ribbonWrapper);
+        cardEl.appendChild(bowRibbonRow);
 
         const initialRibbonCat = getCategoryFromPath(gift.ribbonImage) || (ribbonCategories[0] && ribbonCategories[0].category);
         if (initialRibbonCat) ribbonSelect.value = initialRibbonCat;
