@@ -548,7 +548,7 @@
                         Choose wrapping paper, ribbon, and tags right here while placing your order. Your selection will be saved with your booking.
                     </p>
                     <div class="gift-customizer-layout">
-<
+
     <!-- LEFT: Sticky Preview -->
     <aside class="gift-preview-sidebar">
 
@@ -630,12 +630,28 @@
 
 <!-- LIGHTBOX -->
 <div id="previewLightbox" class="preview-lightbox">
+ <div class="preview-lightbox-inner">
 
-    <button class="preview-lightbox-close">×</button>
-
+    <button
+        type="button"
+        class="preview-lightbox-close"
+    >
     <div class="preview-lightbox-inner">
-        <canvas id="lightboxCanvas" width="720" height="840"></canvas>
-    </div>
+
+    <button
+        type="button"
+        class="preview-lightbox-close"
+    >
+        &times;
+    </button>
+
+   <canvas
+    id="lightboxCanvas"
+    width="720"
+    height="840"
+></canvas>
+
+</div>
 
 </div>
                 <label class="checkbox-label" style="margin-top:0.5rem;margin-bottom:1.2rem;">
