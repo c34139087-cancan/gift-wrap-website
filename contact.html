@@ -701,6 +701,7 @@
 
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="asset-data.js"></script>
 
     <script>
     const supabaseClient = supabase.createClient(
@@ -774,41 +775,10 @@
         if (giftDetailsJsonField) giftDetailsJsonField.value = JSON.stringify(giftCustomizerDetails);
     }
 
-    // Paper thumbnails grouped by category. Filenames live under Wrapping/<Category>/
-    const paperCategories = [
-        { category: 'Anniverary', images: ['22ann.png','50ann.png','blackandgoldann.png','Moreeveryday.png','myforeverride.png','pinkfloralhappyann.png','redroseanniversary.png','romanticann.png','thanksfor.png','thanksfornotkillingme.png'] },
-        { category: 'Baby', images: ['boyorgirl.png','camo its a girl.png','itsaboycamo.png','hellobaby.png','its not your ex.png','purplebabygirlcamo.png'] },
-        { category: 'Camo', images: ['blue camo.png','desert camo.png','greencamo.png','orange camo.png','pink camo.png','Woodland Camo.png'] },
-        { category: 'Christmas', images: ['camochristmas.png','classicchristmas.png','classicredreindeer.png','lightbluechristmas.png','redchristmas.png'] },
-        { category: 'For Her', images: ['botanical birthday.png','glam bday.png','neon animal print.png','pink floral.png'] },
-        { category: 'For Him', images: ['Birthday Plaid1.webp','geometric happy birthday.png','outdoor adventure.png'] },
-        { category: 'General Birthday', images: ['black and gold birthday.png','royalty.png','tan bday.png'] },
-        { category: 'Graduation', images: ['blackandgold.png','colorful caps.png','greencamograd.png','navygoldgrad.png','pinkgradcamo.png','pinkhats.png','tancamograd.png'] },
-        { category: 'Kids Boys', images: ['Dino.png','Jungle.png','Monster Trucks.png','Race Cars.png','Space.png','Superhero Comic.png'] },
-        { category: 'Kids Girls', images: ['Mermaids.png','Pink Kitty.png','Princess.png','Spa Day.png','Unicorns.png'] },
-        { category: 'Kids Neutral', images: ['balloonbirthday.png','confetti explosion.png','Cupcakes.png'] },
-        { category: 'Wedding', images: ['bachelorhunt.png','boho.png','bride and groom celebration.png','bride squad.png','bridetobe.png','Elegant white and gold floral.png','fishing vows.png','girly fun bridal.png','greenery.png','groomlastride.png','pearly.png','royalpurple.png'] }
-    ];
     const sizeOptions = [
         { value: 'small',  label: 'Small ($6)'  },
         { value: 'medium', label: 'Medium ($9)' },
         { value: 'large',  label: 'Large ($12)' }
-    ];
-    // Ribbon images live directly under Ribbon/ (single category)
-    const ribbonCategories = [
-        { category: 'Ribbon', images: ['Buffalo Check Plaid.png','Camo.png','Chalkboard & Gold.png','Floral Blush.png','Glittery Polka Dots.png','Gold & Pink Dots.png','Gold Diagonal Stripe.png','Holographic Shimmer.png','Rustic Kraft & Twine.png','Satin Purple & Gold.png','Velvet Deep Red.png'] }
-    ];
-
-    const tagCategories = [
-        { category: 'Black', folder: 'Black', images: ['Black & Gold Stars.png','Black&GoldDiamond.png','Black&GoldDiamond1.png','Black&GoldDiamond3.png','Black&GoldDiamond4.png','Black&GoldStars2.png','Black&GoldStars3.png','Black&GoldStars4.png','BlackGold1.png','BlackGold2.png','BlackGold3.png','BlackGold4.png','Gothrose.jpg','tagblackgold.jpg'] },
-        { category: 'Birthday', folder: 'Birthday', images: ['1blackgold.jpg','NeonPaintBday.jpg','bdaytag1.png','bdaytag2.png','bdaytags.png','blackandgoldtags1.png','blackandgoldtags2.png','blackandgoldtags3.png','blackandgoldtags5.png'] },
-        { category: 'Camo', folder: 'Camo', images: ['Baby Camo.png','Baby Camo1.png','Camo Tag 1.png','Camo Tag 3.png','Camo Tag 4.png','Camo Tag 5.png','Camo Tag 6.png','Camo Tag 7.png','Camo Tag.png','Pink Camo 4.png','Pink Camo1.png','Pink Camo2.png','PinkCamo3.png'] },
-        { category: 'Christmas', folder: 'Christmas', images: ['2blackgoldchristmas.jpg','2dino.jpg','Baby Camo2.png','bkackgoldchristmas.jpg','chrismastag2.jpg','christmasdino.jpg','christmasgingerbread.jpg','creamychrismastag2.jpg'] },
-        { category: 'Floral', folder: 'Floral', images: ['1floraltag.jpg','Gold Rose.png','Gold Rose2.png','Gold Rose3.png','Gold Rose4.png','Lav1.png','Lav2.png','Lav3.png','floral1.png','floral2.png','floral3.png','floral4.png'] },
-        { category: 'Animal', folder: 'Animal', images: ['Neon Animal 5.png','Neon Animal 7.png','Neon Animal 8.png','Neon Animal6.png','NeonAnimal1.png','NeonAnimal2.png','NeonAnimal3.png','NeonPaint.png','Pink Animal 2.png','Pink Animal.png','PinkAnimal3.png','PinkAnimal4.png'] },
-        { category: 'Purple', folder: 'Purple', images: ['Grad Name Tag 2.png','Grad Name Tag.png','Purple & Gold Graduation.png','Purple & Gold1.png','Purple & Gold2.png','Purple & Gold3.png','Purple & Gold4.png','Purple Camo1.png','Purple Camo2.png','Purple Camo3.png','Purple Camo4.png'] },
-        { category: 'Wedding', folder: 'Wedding', images: ['hearts and champagne.png','hearts and champagne2.png','woodlandanniversary.png'] },
-        { category: 'Kids', folder: 'kids', images: ['girlstag.jpg','image_1e4ec60d.png','outerspacetag.jpg'] }
     ];
 
     function createTagThumbnail(displayPath, filename, giftIndex) {
