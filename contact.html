@@ -805,6 +805,11 @@
         { value: 'no-bow', hex: 'transparent' }
     ];
 
+    // Ribbon images live directly under Ribbon/ (single category)
+    const ribbonCategories = [
+        { category: 'Ribbons', images: ['Buffalo Check Plaid.png','Camo.png','Chalkboard & Gold.png','Floral Blush.png','Glittery Polka Dots.png','Gold & Pink Dots.png','Gold Diagonal Stripe.png','Holographic Shimmer.png','Rustic Kraft & Twine.png','Satin Purple & Gold.png','Velvet Deep Red.png'] }
+    ];
+
     const tagCategories = [
         { category: 'Black', images: ['tagblackgold.jpg','BlackGold4.png','BlackGold3.png','BlackGold2.png','BlackGold1.png','Black&GoldStars4.png','Black&GoldStars3.png','Black&GoldStars2.png','Black&GoldDiamond4.png','Black&GoldDiamond3.png','Black&GoldDiamond1.png','Black&GoldDiamond.png','Black & Gold Stars.png'] },
         { category: 'Birthday', images: ['blackandgoldtags5.png','blackandgoldtags3.png','blackandgoldtags2.png','blackandgoldtags1.png','bdaytags.png','bdaytag2.png','bdaytag1.png','1blackgold.jpg'] },
@@ -835,6 +840,29 @@
         button.addEventListener('click', function (e) {
             e.preventDefault();
             openThumbnailPreview(displayPath, filename, giftIndex, 'tag');
+        });
+        return button;
+    }
+
+    function createRibbonThumbnail(filename, giftIndex) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'paper-swatch';
+        const displayPath = `Ribbon/${filename}`;
+        button.dataset.value = displayPath;
+
+        const img = document.createElement('img');
+        img.src = encodeURI(displayPath);
+        img.alt = filename;
+        button.appendChild(img);
+
+        const label = document.createElement('div');
+        label.className = 'thumb-label';
+        label.textContent = displayNameFromFilename(filename);
+        button.appendChild(label);
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            openThumbnailPreview(displayPath, filename, giftIndex, 'ribbon');
         });
         return button;
     }
@@ -887,7 +915,7 @@
         }
 
         selectBtn.addEventListener('click', function () {
-            const key = type === 'tag' ? 'tagImage' : 'paper';
+            const key = type === 'tag' ? 'tagImage' : (type === 'ribbon' ? 'ribbonImage' : 'paper');
             updateGiftDetail(parseInt(giftIndex, 10), key, path);
             renderGiftCustomizer();
             recalc();
@@ -964,6 +992,18 @@
         });
     }
 
+    function populateRibbonThumbnailsForCategory(thumbsWrap, categoryName, giftIndex, gift) {
+        thumbsWrap.innerHTML = '';
+        const cat = ribbonCategories.find(c => c.category === categoryName);
+        if (!cat) return;
+        cat.images.forEach(filename => {
+            const displayPath = `Ribbon/${filename}`;
+            const thumb = createRibbonThumbnail(filename, giftIndex);
+            if (gift.ribbonImage === displayPath) thumb.classList.add('selected');
+            thumbsWrap.appendChild(thumb);
+        });
+    }
+
     function updateGiftDetail(index, key, value) {
         if (!giftCustomizerDetails[index]) return;
         giftCustomizerDetails[index][key] = value;
@@ -971,7 +1011,7 @@
     }
 
     function addGiftCard() {
-        giftCustomizerDetails.push({ gift: giftCustomizerDetails.length + 1, size: '', paper: '', bow: 'gold', tag: '', tagImage: '' });
+        giftCustomizerDetails.push({ gift: giftCustomizerDetails.length + 1, size: '', paper: '', bow: 'gold', tag: '', tagImage: '', ribbonImage: '' });
         renderGiftCustomizer();
         recalc();
         checkInfoReady(); // re-check gate now that a gift was added
@@ -1085,6 +1125,36 @@
             bowRow.appendChild(sw);
         });
         cardEl.appendChild(bowRow);
+
+        // ── Ribbon picker
+        const ribbonRow = document.createElement('div');
+        ribbonRow.className = 'gift-customizer-row';
+        const ribbonLabel = document.createElement('label');
+        ribbonLabel.textContent = 'Ribbon';
+        ribbonRow.appendChild(ribbonLabel);
+
+        const ribbonSelect = document.createElement('select');
+        ribbonSelect.className = 'paper-category-select';
+        ribbonCategories.forEach(cat => {
+            const opt = document.createElement('option');
+            opt.value = cat.category;
+            opt.textContent = cat.category;
+            ribbonSelect.appendChild(opt);
+        });
+        ribbonRow.appendChild(ribbonSelect);
+
+        const ribbonThumbsWrap = document.createElement('div');
+        ribbonThumbsWrap.className = 'paper-thumbnails';
+        ribbonRow.appendChild(ribbonThumbsWrap);
+        cardEl.appendChild(ribbonRow);
+
+        const initialRibbonCat = getCategoryFromPath(gift.ribbonImage) || (ribbonCategories[0] && ribbonCategories[0].category);
+        if (initialRibbonCat) ribbonSelect.value = initialRibbonCat;
+        populateRibbonThumbnailsForCategory(ribbonThumbsWrap, ribbonSelect.value, index, gift);
+
+        ribbonSelect.addEventListener('change', function () {
+            populateRibbonThumbnailsForCategory(ribbonThumbsWrap, ribbonSelect.value, index, gift);
+        });
 
         // ── Tag image picker (thumbnails)
         const tagPickerRow = document.createElement('div');
