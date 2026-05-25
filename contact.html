@@ -399,31 +399,28 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        .customizer-field select:hover {
-            border-color: #866e9f;
-        }
+        .customizer-field select:hover { border-color: #866e9f; }
         .customizer-field select:focus {
             outline: none;
             border-color: var(--pastel-orange);
             box-shadow: 0 0 0 3px rgba(245,215,154,0.15);
         }
-        .customizer-field select option {
-            color: #3b105a;
-            background: #fff;
-        }
+        .customizer-field select option { color: #3b105a; background: #fff; }
+
+        /* ── Thumbnail grid ── */
         .thumb-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
-            margin-top: 0.4rem;
+            gap: 6px;
+            margin-top: 0.5rem;
             align-items: flex-start;
         }
         .thumb-group {
             width: 100%;
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
-            margin-bottom: 0.85rem;
+            gap: 6px;
+            margin-bottom: 1rem;
             align-items: center;
         }
         .thumb-category {
@@ -433,18 +430,20 @@
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.3rem;
         }
+        /* ── FIXED: bigger thumbs so designs are actually visible ── */
         .thumb {
-            width: 22px;
-            height: 22px;
-            border-radius: 3px;
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
             overflow: hidden;
             cursor: pointer;
-            border: 1px solid transparent;
+            border: 2px solid transparent;
             flex: 0 0 auto;
             display: inline-block;
-            transition: width 0.18s ease, height 0.18s ease, transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+            transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+            position: relative;
         }
         .thumb img {
             width: 100%;
@@ -454,17 +453,15 @@
             pointer-events: none;
             user-select: none;
         }
-        .thumb:hover {
-            transform: scale(1.08);
-        }
+        .thumb:hover { transform: scale(1.08); }
         .thumb.active {
-            width: 36px;
-            height: 36px;
-            transform: none;
-            z-index: 3;
+            width: 74px;
+            height: 74px;
             border-color: var(--pastel-orange);
-            box-shadow: 0 0 0 2px rgba(245,215,154,0.65);
+            box-shadow: 0 0 0 3px rgba(245,215,154,0.65);
         }
+
+        /* ── Lightbox ── */
         .image-lightbox {
             display: none;
             position: fixed;
@@ -475,12 +472,10 @@
             justify-content: center;
             padding: 20px;
         }
-        .image-lightbox.active {
-            display: flex;
-        }
+        .image-lightbox.active { display: flex; }
         .image-lightbox img {
             max-width: 90vw;
-            max-height: 90vh;
+            max-height: 85vh;
             border-radius: 12px;
             box-shadow: 0 30px 80px rgba(0,0,0,0.6);
         }
@@ -493,7 +488,23 @@
             background: none;
             border: none;
             cursor: pointer;
+            z-index: 100000;
         }
+        .lb-caption {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(32,17,60,0.9);
+            color: #f5d79a;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(245,215,154,0.3);
+            white-space: nowrap;
+        }
+
         .size-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -514,6 +525,8 @@
             .still-questions-card { flex-direction: column; text-align: center; }
             .still-questions-links { width: 100%; }
             .sq-link { justify-content: center; }
+            .thumb { width: 48px; height: 48px; }
+            .thumb.active { width: 60px; height: 60px; }
         }
     </style>
 </head>
@@ -588,55 +601,54 @@
                 <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
                     <strong>Basic:</strong> Small $6 &middot; Medium $9 &middot; Large $12 &nbsp;|&nbsp; <strong>Bulk (10+ gifts):</strong> Small $5 &middot; Medium $8 &middot; Large $10
                 </p>
-              <div id="gift-customizer-section" class="customizer-grid">
 
-    <div class="form-section-label">🎁 Choose Your Design</div>
-    <p class="gift-customizer-intro">
-        Select your wrapping paper, ribbon, and tag options below. Each choice will be noted with your booking.
-    </p>
+                <div id="gift-customizer-section" class="customizer-grid">
+                    <div class="form-section-label">🎁 Choose Your Design</div>
+                    <p class="gift-customizer-intro">
+                        Select your wrapping paper, ribbon, and tag options below. Click any image to see it bigger! Each choice will be noted with your booking.
+                    </p>
 
-    <div class="customizer-field">
-        <label for="paperCat">Wrapping Paper</label>
-        <select id="paperCat"></select>
-        <div id="paperThumbs" class="thumb-grid" aria-hidden="false"></div>
-    </div>
+                    <div class="customizer-field">
+                        <label for="paperCat">Wrapping Paper</label>
+                        <select id="paperCat"></select>
+                        <div id="paperThumbs" class="thumb-grid"></div>
+                    </div>
 
-    <div class="customizer-field">
-        <label for="ribbonCat">Ribbon</label>
-        <select id="ribbonCat"></select>
-        <div id="ribbonThumbs" class="thumb-grid"></div>
-    </div>
+                    <div class="customizer-field">
+                        <label for="ribbonCat">Ribbon</label>
+                        <select id="ribbonCat"></select>
+                        <div id="ribbonThumbs" class="thumb-grid"></div>
+                    </div>
 
-    <div class="customizer-field">
-        <label for="tagCat">Gift Tag</label>
-        <select id="tagCat"></select>
-        <div id="tagThumbs" class="thumb-grid"></div>
-    </div>
+                    <div class="customizer-field">
+                        <label for="tagCat">Gift Tag</label>
+                        <select id="tagCat"></select>
+                        <div id="tagThumbs" class="thumb-grid"></div>
+                    </div>
 
-    <div class="customizer-field">
-        <div class="size-row">
-            <div>
-                <label for="giftSize">Gift Size</label>
-                <select id="giftSize">
-                    <option value="Small">Small ($6–5)</option>
-                    <option value="Medium" selected>Medium ($9–8)</option>
-                    <option value="Large">Large ($12–10)</option>
-                </select>
-            </div>
-            <div>
-                <label for="giftCountInput">How Many Gifts?</label>
-                <input type="number" id="giftCountInput" min="1" value="1">
-            </div>
-        </div>
-        <p class="gift-note">
-            Bulk pricing (10+ gifts): Small $5 · Medium $8 · Large $10 | Rush order: +$10 (1–2 day turnaround)
-        </p>
-    </div>
+                    <div class="customizer-field">
+                        <div class="size-row">
+                            <div>
+                                <label for="giftSize">Gift Size</label>
+                                <select id="giftSize">
+                                    <option value="Small">Small ($6–5)</option>
+                                    <option value="Medium" selected>Medium ($9–8)</option>
+                                    <option value="Large">Large ($12–10)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="giftCountInput">How Many Gifts?</label>
+                                <input type="number" id="giftCountInput" min="1" value="1">
+                            </div>
+                        </div>
+                        <p class="gift-note">
+                            Bulk pricing (10+ gifts): Small $5 · Medium $8 · Large $10 | Rush order: +$10 (1–2 day turnaround)
+                        </p>
+                    </div>
+                </div>
+                <!-- end #gift-customizer-section -->
 
-</div>
-<!-- end #gift-customizer-section -->
-
-                <button type="button" id="addGiftBtn" class="send-btn gift-add-btn">Add Gift</button>
+                <button type="button" id="addGiftBtn" class="send-btn gift-add-btn">+ Add Another Gift</button>
 
                 <!-- Hidden fields for form data -->
                 <input type="hidden" id="booking-gift-count" name="dropoff_gifts" value="1">
@@ -682,7 +694,6 @@
 
         <!-- ═══ RIGHT COLUMN ═══ -->
         <div class="contact-info-card">
-
             <div class="side-card">
                 <div class="side-card-title">Contact Info</div>
 
@@ -749,7 +760,6 @@
                     <div style="font-size:0.78rem;color:var(--gray-lavender);font-style:italic;">Also accepted: cash in person</div>
                 </div>
             </div>
-
         </div>
         <!-- ═══ END RIGHT COLUMN ═══ -->
 
@@ -798,7 +808,35 @@
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtZmhlb2J1cWVnY2x1d2VkeHdtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1OTUzODMsImV4cCI6MjA5MTE3MTM4M30.6ejuz6sJJw9kLBRf3XLTd7Cf5OP9UWu60hGEv4TKDZY"
     );
 
-    // ── On load: attach listeners ──
+    // ── Hidden field references ──
+    const hiddenTotal          = document.getElementById('estimated-total');
+    const hiddenCount          = document.getElementById('booking-gift-count');
+    const hiddenSize           = document.getElementById('booking-gift-size');
+    const hiddenStyle          = document.getElementById('booking-style');
+    const hiddenRush           = document.getElementById('book-rush-hidden');
+    const giftDetailsJsonField = document.getElementById('gift-details-json');
+
+    const PRICE_TABLE      = { Small: 6, Medium: 9, Large: 12 };
+    const BULK_PRICE_TABLE = { Small: 5, Medium: 8, Large: 10 };
+    const BASE = 'https://c34139087-cancan.github.io/gift-wrap-website';
+
+    // ── recalc: updates price totals and hidden fields ──
+    function recalc() {
+        const size  = document.getElementById('giftSize')?.value || 'Medium';
+        const count = Math.max(1, parseInt(document.getElementById('giftCountInput')?.value, 10) || 1);
+        const isBulk = count >= 10;
+        const priceTable = isBulk ? BULK_PRICE_TABLE : PRICE_TABLE;
+        const unitPrice  = priceTable[size] || 9;
+        const rush  = document.getElementById('book-rush')?.checked ? 10 : 0;
+        const total = (unitPrice * count) + rush;
+        if (hiddenTotal)  hiddenTotal.value  = total.toFixed(2);
+        if (hiddenCount)  hiddenCount.value  = count;
+        if (hiddenSize)   hiddenSize.value   = size;
+        if (hiddenStyle)  hiddenStyle.value  = isBulk ? 'bulk' : 'basic';
+        updateGiftDetails();
+    }
+
+    // ── On load ──
     window.addEventListener('DOMContentLoaded', function () {
         ['booking-name', 'booking-phone', 'booking-email'].forEach(id => {
             const el = document.getElementById(id);
@@ -824,7 +862,7 @@
         const chipPhone = document.getElementById('chip-phone');
         const chipEmail = document.getElementById('chip-email');
 
-        if (chipName)  { chipName.classList.toggle('done', nameOk); chipName.textContent = nameOk ? '✓ Name' : '✦ Name'; }
+        if (chipName)  { chipName.classList.toggle('done', nameOk);   chipName.textContent  = nameOk  ? '✓ Name'  : '✦ Name';  }
         if (chipPhone) { chipPhone.classList.toggle('done', phoneOk); chipPhone.textContent = phoneOk ? '✓ Phone' : '✦ Phone'; }
         if (chipEmail) { chipEmail.classList.toggle('done', emailOk); chipEmail.textContent = emailOk ? '✓ Email' : '✦ Email'; }
 
@@ -834,37 +872,17 @@
 
         if (allReady) {
             if (gate) gate.style.display = 'none';
-            if (wrap) {
-                wrap.style.display = 'block';
-                setTimeout(() => wrap.classList.add('visible'), 20);
-            }
+            if (wrap) { wrap.style.display = 'block'; setTimeout(() => wrap.classList.add('visible'), 20); }
         } else {
-            if (wrap) {
-                wrap.classList.remove('visible');
-                setTimeout(() => { if (!wrap.classList.contains('visible')) wrap.style.display = 'none'; }, 420);
-            }
+            if (wrap) { wrap.classList.remove('visible'); setTimeout(() => { if (!wrap.classList.contains('visible')) wrap.style.display = 'none'; }, 420); }
             if (gate) gate.style.display = 'block';
         }
     }
 
-    // ── Gift helper state ──
-    const hiddenTotal          = document.getElementById('estimated-total');
-    const hiddenCount          = document.getElementById('booking-gift-count');
-    const hiddenSize           = document.getElementById('booking-gift-size');
-    const hiddenStyle          = document.getElementById('booking-style');
-    const hiddenRush           = document.getElementById('book-rush-hidden');
-    const giftDetailsJsonField = document.getElementById('gift-details-json');
-
-    const PRICE_TABLE = { Small: 6, Medium: 9, Large: 12 };
-    const BULK_PRICE_TABLE = { Small: 5, Medium: 8, Large: 10 };
-
-    const BASE = 'https://c34139087-cancan.github.io/gift-wrap-website';
-
-    // Add new paper, ribbon, and tag categories here as you create more designs.
-    // Example: add Mother's Day or Father's Day arrays with matching file paths.
+    // ── Design data ──
     const PAPERS = {
       'Anniversary': [
-        {n:'22nd Ann',f:'Wrapping/Anniverary/22ann.png'},
+        {n:'25th Ann',f:'Wrapping/Anniverary/25ann.png'},
         {n:'50th Ann',f:'Wrapping/Anniverary/50ann.png'},
         {n:'Black & Gold',f:'Wrapping/Anniverary/blackandgoldann.png'},
         {n:'More Everyday',f:'Wrapping/Anniverary/Moreeveryday.png'},
@@ -985,13 +1003,6 @@
       {n:'XOXO',f:'Ribbon/xoxo.png'},
     ];
 
-    const RIBBON_CATEGORIES = {
-      'All Ribbons': RIBBONS,
-      "Valentine's Day": RIBBONS.filter(r => /Val Day|Vday|XOXO|Velvet Deep Red|Pink Bow|Pale Pink Bow/i.test(r.n)),
-      'Metallic & Sparkle': RIBBONS.filter(r => /Chalkboard & Gold|Glittery Polka Dots|Gold & Pink Dots|Gold Diagonal Stripe|Holographic Shimmer|Satin Purple & Gold|Purple Gold Grad/i.test(r.n)),
-      'Casual & Bold': RIBBONS.filter(r => /Buffalo Check Plaid|Camo|Purple & Black|Purple Camo|Red Plaid Bow|Rustic Kraft & Twine|Galactic Camo/i.test(r.n)),
-    };
-
     const TAGS = {
       'Animal': [
         {n:'Neon Animal 5',f:'Tags/Animal/Neon Animal 5.png'},
@@ -1107,215 +1118,194 @@
       ],
     };
 
-        // Populate selects with every available design (grouped by category)
-        function buildPaperCat() {
-            const sel = document.getElementById('paperCat');
-            if (!sel) return;
-            sel.innerHTML = '';
-            Object.keys(PAPERS).forEach(cat => {
-                const group = document.createElement('optgroup');
-                group.label = cat;
-                (PAPERS[cat] || []).forEach((p, i) => {
-                    const o = document.createElement('option');
-                    o.value = `${cat}||${i}`;
-                    o.textContent = p.n || p.f || `${cat} ${i+1}`;
-                    o.dataset.path = p.f || '';
-                    group.appendChild(o);
-                });
-                sel.appendChild(group);
-            });
-            // select first option by default
-            if (sel.options.length) sel.selectedIndex = 0;
-            sel.onchange = () => { updateGiftDetails(); recalc(); };
-        }
-
-        function buildRibbonCat() {
-            const sel = document.getElementById('ribbonCat');
-            if (!sel) return;
-            sel.innerHTML = '';
-            const group = document.createElement('optgroup'); group.label = 'All Ribbons';
-            (RIBBONS || []).forEach((r, i) => {
+    // ── Build dropdowns ──
+    function buildPaperCat() {
+        const sel = document.getElementById('paperCat');
+        if (!sel) return;
+        sel.innerHTML = '';
+        Object.keys(PAPERS).forEach(cat => {
+            const group = document.createElement('optgroup');
+            group.label = cat;
+            (PAPERS[cat] || []).forEach((p, i) => {
                 const o = document.createElement('option');
-                o.value = `__RIBBON__||${i}`;
-                o.textContent = r.n || r.f || `Ribbon ${i+1}`;
-                o.dataset.path = r.f || '';
+                o.value = `${cat}||${i}`;
+                o.textContent = p.n;
                 group.appendChild(o);
             });
             sel.appendChild(group);
-            if (sel.options.length) sel.selectedIndex = 0;
-            sel.onchange = () => { updateGiftDetails(); recalc(); };
-        }
+        });
+        if (sel.options.length) sel.selectedIndex = 0;
+        sel.onchange = () => { updateGiftDetails(); recalc(); };
+    }
 
-        function buildTagCat() {
-            const sel = document.getElementById('tagCat');
-            if (!sel) return;
-            sel.innerHTML = '';
-            Object.keys(TAGS).forEach(cat => {
-                const group = document.createElement('optgroup'); group.label = cat;
-                (TAGS[cat] || []).forEach((t, i) => {
-                    const o = document.createElement('option');
-                    o.value = `${cat}||${i}`;
-                    o.textContent = t.n || t.f || `${cat} ${i+1}`;
-                    o.dataset.path = t.f || '';
-                    group.appendChild(o);
-                });
-                sel.appendChild(group);
+    function buildRibbonCat() {
+        const sel = document.getElementById('ribbonCat');
+        if (!sel) return;
+        sel.innerHTML = '';
+        const group = document.createElement('optgroup');
+        group.label = 'All Ribbons';
+        RIBBONS.forEach((r, i) => {
+            const o = document.createElement('option');
+            o.value = `__RIBBON__||${i}`;
+            o.textContent = r.n;
+            group.appendChild(o);
+        });
+        sel.appendChild(group);
+        if (sel.options.length) sel.selectedIndex = 0;
+        sel.onchange = () => { updateGiftDetails(); recalc(); };
+    }
+
+    function buildTagCat() {
+        const sel = document.getElementById('tagCat');
+        if (!sel) return;
+        sel.innerHTML = '';
+        Object.keys(TAGS).forEach(cat => {
+            const group = document.createElement('optgroup');
+            group.label = cat;
+            (TAGS[cat] || []).forEach((t, i) => {
+                const o = document.createElement('option');
+                o.value = `${cat}||${i}`;
+                o.textContent = t.n;
+                group.appendChild(o);
             });
-            if (sel.options.length) sel.selectedIndex = 0;
-            sel.onchange = () => { updateGiftDetails(); recalc(); };
+            sel.appendChild(group);
+        });
+        if (sel.options.length) sel.selectedIndex = 0;
+        sel.onchange = () => { updateGiftDetails(); recalc(); };
+    }
+
+    // ── Lightbox ──
+    function openImageLightbox(src, caption) {
+        let lb = document.getElementById('imageLightbox');
+        if (!lb) {
+            lb = document.createElement('div');
+            lb.id = 'imageLightbox';
+            lb.className = 'image-lightbox';
+            lb.innerHTML = '<button class="lb-close" aria-label="Close">✕</button><img src="" alt="Enlarged preview"><div class="lb-caption"></div>';
+            document.body.appendChild(lb);
+            lb.querySelector('.lb-close').addEventListener('click', () => lb.classList.remove('active'));
+            lb.addEventListener('click', (e) => { if (e.target === lb) lb.classList.remove('active'); });
+        }
+        lb.querySelector('img').src = src;
+        lb.querySelector('.lb-caption').textContent = caption || '';
+        lb.classList.add('active');
+    }
+
+    // ── Thumbnail builders ──
+    function buildThumbGrid(containerEl, selectEl, items, valuePrefix, wrapperId, isGrouped) {
+        if (!containerEl || !selectEl) return;
+        containerEl.innerHTML = '';
+
+        if (isGrouped) {
+            Object.keys(items).forEach(cat => {
+                const groupWrap = document.createElement('div');
+                groupWrap.className = 'thumb-group';
+                const label = document.createElement('div');
+                label.className = 'thumb-category';
+                label.textContent = cat;
+                groupWrap.appendChild(label);
+
+                (items[cat] || []).forEach((item, i) => {
+                    const thumb = makeThumb(item, `${cat}||${i}`, selectEl, wrapperId);
+                    groupWrap.appendChild(thumb);
+                });
+                containerEl.appendChild(groupWrap);
+            });
+        } else {
+            items.forEach((item, i) => {
+                const thumb = makeThumb(item, `${valuePrefix}${i}`, selectEl, wrapperId);
+                containerEl.appendChild(thumb);
+            });
         }
 
-        function updateGiftDetails() {
-                const size = document.getElementById('giftSize')?.value || 'Medium';
-                const count = Math.max(1, parseInt(document.getElementById('giftCountInput')?.value, 10) || 1);
+        const first = containerEl.querySelector('.thumb');
+        if (first) first.classList.add('active');
+    }
 
-                // paper value format: category||index
-                const paperVal = document.getElementById('paperCat')?.value || '';
-                const tagVal = document.getElementById('tagCat')?.value || '';
-                const ribbonVal = document.getElementById('ribbonCat')?.value || '';
+    function makeThumb(item, value, selectEl, wrapperId) {
+        const path = item.f || '';
+        const thumb = document.createElement('div');
+        thumb.className = 'thumb';
+        thumb.title = item.n || '';
+        const img = document.createElement('img');
+        img.src = BASE + '/' + path;
+        img.alt = item.n || '';
+        thumb.appendChild(img);
+        thumb.addEventListener('click', () => {
+            selectEl.value = value;
+            document.querySelectorAll(`#${wrapperId} .thumb`).forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+            updateGiftDetails();
+            recalc();
+            // Open lightbox with full-size image
+            openImageLightbox(BASE + '/' + path, item.n);
+        });
+        return thumb;
+    }
 
-                let paper = {};
-                if (paperVal.includes('||')) {
-                    const [cat, idx] = paperVal.split('||');
-                    paper = (PAPERS[cat] || [])[parseInt(idx,10)] || {};
-                }
-
-                let tag = {};
-                if (tagVal.includes('||')) {
-                    const [cat, idx] = tagVal.split('||');
-                    tag = (TAGS[cat] || [])[parseInt(idx,10)] || {};
-                }
-
-                let ribbon = {};
-                if (ribbonVal.startsWith('__RIBBON__||')) {
-                    const idx = parseInt(ribbonVal.split('||')[1],10);
-                    ribbon = (RIBBONS || [])[idx] || {};
-                }
-
-                const details = [{
-                        size,
-                        count,
-                        paperCategory: paperVal.split('||')[0] || '',
-                        paper: paper.n || '',
-                        paperImage: paper.f || '',
-                        ribbonCategory: '',
-                        ribbon: ribbon.n || '',
-                        ribbonImage: ribbon.f || '',
-                        tagCategory: tagVal.split('||')[0] || '',
-                        tag: tag.n || '',
-                        tagImage: tag.f || ''
-                }];
-
-                if (giftDetailsJsonField) giftDetailsJsonField.value = JSON.stringify(details);
-        }
+    function buildPaperThumbs()  { buildThumbGrid(document.getElementById('paperThumbs'),  document.getElementById('paperCat'),  PAPERS,  '',              'paperThumbs',  true);  }
+    function buildRibbonThumbs() { buildThumbGrid(document.getElementById('ribbonThumbs'), document.getElementById('ribbonCat'), RIBBONS, '__RIBBON__||',  'ribbonThumbs', false); }
+    function buildTagThumbs()    { buildThumbGrid(document.getElementById('tagThumbs'),    document.getElementById('tagCat'),    TAGS,    '',              'tagThumbs',    true);  }
 
     function initGiftSelectors() {
         buildPaperCat();
         buildRibbonCat();
-                buildTagCat();
-                // also populate thumbnail grids
-                buildPaperThumbs();
-                buildRibbonThumbs();
-                buildTagThumbs();
+        buildTagCat();
+        buildPaperThumbs();
+        buildRibbonThumbs();
+        buildTagThumbs();
         document.getElementById('giftSize')?.addEventListener('change', recalc);
         document.getElementById('giftCountInput')?.addEventListener('input', recalc);
         recalc();
     }
 
-        function selectThumb(thumb, sel, value, wrapperId) {
-            if (!thumb || !sel) return;
-            sel.value = value;
-            document.querySelectorAll(`#${wrapperId} .thumb`).forEach(t => t.classList.remove('active'));
-            thumb.classList.add('active');
-            updateGiftDetails();
-            recalc();
-        }
+    function updateGiftDetails() {
+        const size     = document.getElementById('giftSize')?.value || 'Medium';
+        const count    = Math.max(1, parseInt(document.getElementById('giftCountInput')?.value, 10) || 1);
+        const paperVal = document.getElementById('paperCat')?.value  || '';
+        const tagVal   = document.getElementById('tagCat')?.value    || '';
+        const ribbonVal= document.getElementById('ribbonCat')?.value || '';
 
-        // ── Thumbnail builders and lightbox ──
-        function buildPaperThumbs() {
-            const el = document.getElementById('paperThumbs');
-            const sel = document.getElementById('paperCat');
-            if (!el || !sel) return;
-            el.innerHTML = '';
-            Object.keys(PAPERS).forEach(cat => {
-                const groupWrap = document.createElement('div');
-                groupWrap.className = 'thumb-group';
-                const label = document.createElement('div');
-                label.className = 'thumb-category';
-                label.textContent = cat;
-                groupWrap.appendChild(label);
+        let paper = {};
+        if (paperVal.includes('||')) { const [cat,idx] = paperVal.split('||'); paper = (PAPERS[cat]||[])[parseInt(idx,10)] || {}; }
 
-                (PAPERS[cat] || []).forEach((p, i) => {
-                    const path = p.f || '';
-                    const thumb = document.createElement('div'); thumb.className = 'thumb';
-                    const img = document.createElement('img'); img.src = BASE + '/' + path; img.alt = p.n || '';
-                    thumb.appendChild(img);
-                    thumb.addEventListener('click', () => {
-                        selectThumb(thumb, sel, `${cat}||${i}`, 'paperThumbs');
-                        openImageLightbox(BASE + '/' + path);
-                    });
-                    groupWrap.appendChild(thumb);
-                });
+        let tag = {};
+        if (tagVal.includes('||')) { const [cat,idx] = tagVal.split('||'); tag = (TAGS[cat]||[])[parseInt(idx,10)] || {}; }
 
-                el.appendChild(groupWrap);
+        let ribbon = {};
+        if (ribbonVal.startsWith('__RIBBON__||')) { ribbon = RIBBONS[parseInt(ribbonVal.split('||')[1],10)] || {}; }
+
+        const details = [{ size, count,
+            paperCategory: paperVal.split('||')[0] || '',
+            paper: paper.n || '', paperImage: paper.f || '',
+            ribbon: ribbon.n || '', ribbonImage: ribbon.f || '',
+            tagCategory: tagVal.split('||')[0] || '',
+            tag: tag.n || '', tagImage: tag.f || ''
+        }];
+        if (giftDetailsJsonField) giftDetailsJsonField.value = JSON.stringify(details);
+    }
+
+    // ── Add Gift button ──
+    document.addEventListener('DOMContentLoaded', function() {
+        const addGiftBtn = document.getElementById('addGiftBtn');
+        const giftCustomizerSection = document.getElementById('gift-customizer-section');
+        if (!addGiftBtn || !giftCustomizerSection) return;
+
+        let giftCount = 1;
+        addGiftBtn.addEventListener('click', function () {
+            giftCount++;
+            const clone = giftCustomizerSection.cloneNode(true);
+            clone.id = `gift-customizer-section-${giftCount}`;
+            const heading = clone.querySelector('.form-section-label');
+            if (heading) heading.textContent = `🎁 Choose Your Design #${giftCount}`;
+            // Clear cloned selects and thumbs so they rebuild cleanly
+            ['paperCat','ribbonCat','tagCat','paperThumbs','ribbonThumbs','tagThumbs'].forEach(id => {
+                const el = clone.querySelector(`#${id}`);
+                if (el) el.id = `${id}-${giftCount}`;
             });
-            const first = el.querySelector('.thumb'); if (first) first.classList.add('active');
-        }
-
-        function buildRibbonThumbs() {
-            const el = document.getElementById('ribbonThumbs');
-            const sel = document.getElementById('ribbonCat');
-            if (!el || !sel) return;
-            el.innerHTML = '';
-            (RIBBONS || []).forEach((r, i) => {
-                const path = r.f || '';
-                const thumb = document.createElement('div'); thumb.className = 'thumb';
-                const img = document.createElement('img'); img.src = BASE + '/' + path; img.alt = r.n || '';
-                thumb.appendChild(img);
-                thumb.addEventListener('click', () => { selectThumb(thumb, sel, `__RIBBON__||${i}`, 'ribbonThumbs'); openImageLightbox(BASE + '/' + path); });
-                el.appendChild(thumb);
-            });
-            const first = el.querySelector('.thumb'); if (first) first.classList.add('active');
-        }
-
-        function buildTagThumbs() {
-            const el = document.getElementById('tagThumbs');
-            const sel = document.getElementById('tagCat');
-            if (!el || !sel) return;
-            el.innerHTML = '';
-            Object.keys(TAGS).forEach(cat => {
-                const groupWrap = document.createElement('div');
-                groupWrap.className = 'thumb-group';
-                const label = document.createElement('div');
-                label.className = 'thumb-category';
-                label.textContent = cat;
-                groupWrap.appendChild(label);
-
-                (TAGS[cat] || []).forEach((t, i) => {
-                    const path = t.f || '';
-                    const thumb = document.createElement('div'); thumb.className = 'thumb';
-                    const img = document.createElement('img'); img.src = BASE + '/' + path; img.alt = t.n || '';
-                    thumb.appendChild(img);
-                    thumb.addEventListener('click', () => { selectThumb(thumb, sel, `${cat}||${i}`, 'tagThumbs'); openImageLightbox(BASE + '/' + path); });
-                    groupWrap.appendChild(thumb);
-                });
-
-                el.appendChild(groupWrap);
-            });
-            const first = el.querySelector('.thumb'); if (first) first.classList.add('active');
-        }
-
-        function openImageLightbox(src) {
-            let lb = document.getElementById('imageLightbox');
-            if (!lb) {
-                lb = document.createElement('div'); lb.id = 'imageLightbox'; lb.className = 'image-lightbox';
-                lb.innerHTML = '<button class="lb-close" aria-label="Close">✕</button><img src="" alt="Enlarged">';
-                document.body.appendChild(lb);
-                lb.querySelector('.lb-close').addEventListener('click', ()=> lb.classList.remove('active'));
-                lb.addEventListener('click', (e)=>{ if (e.target === lb) lb.classList.remove('active'); });
-            }
-            const img = lb.querySelector('img'); img.src = src; lb.classList.add('active');
-        }
+            giftCustomizerSection.parentNode.insertBefore(clone, addGiftBtn);
+        });
+    });
 
     // ── Calendly → Supabase ──
     window.addEventListener('message', async function (e) {
@@ -1328,7 +1318,7 @@
             const rushOrd = hiddenRush?.value === 'true';
             const total   = parseFloat(hiddenTotal?.value) || 0;
             let giftDetails = [];
-            try { giftDetails = JSON.parse(giftDetailsJsonField?.value || '[]'); } catch(e) {}
+            try { giftDetails = JSON.parse(giftDetailsJsonField?.value || '[]'); } catch(err) {}
 
             if (!name || !phone || !email) {
                 alert('Your time slot is booked! Please fill in your name, phone, and email above, then text me at 931-304-4499.');
@@ -1354,48 +1344,40 @@
                 return;
             }
 
-            // ── Email yourself via Formspree ──
             const giftSummary = giftDetails.map((g, i) =>
-                `Gift ${i+1}: ${g.size || 'size not selected'} | Paper: ${g.paper} | Ribbon: ${g.ribbonImage || 'none'}${g.tag ? ' | Tag: "' + g.tag + '"' : ''}${g.tagImage ? ' | Tag Image: ' + g.tagImage : ''}`
+                `Gift ${i+1}: ${g.size || 'size not selected'} | Paper: ${g.paper} | Ribbon: ${g.ribbon || 'none'} | Tag: ${g.tag || 'none'}`
             ).join('\n');
 
             await fetch('https://formspree.io/f/xpqykjkn', {
                 method: 'POST',
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    _subject:        'New Drop-Off Booking — Cancan\'s Corner 🎀',
-                    Name:            name,
-                    Phone:           phone,
-                    Email:           email,
-                    'Total Gifts':   count,
+                    _subject:         "New Drop-Off Booking — Cancan's Corner 🎀",
+                    Name:             name,
+                    Phone:            phone,
+                    Email:            email,
+                    'Total Gifts':    count,
                     'Wrapping Style': style === 'bulk' ? 'Bulk (10+ gifts)' : 'Basic',
-                    'Rush Order':    rushOrd ? 'YES (+$10)' : 'No',
-                    'Estimated Total': '$' + total.toFixed(2),
-                    'Gift Details':  giftSummary || 'No gift details provided',
-                    'Notes':         document.getElementById('booking-notes')?.value.trim() || 'None'
+                    'Rush Order':     rushOrd ? 'YES (+$10)' : 'No',
+                    'Estimated Total':'$' + total.toFixed(2),
+                    'Gift Details':   giftSummary || 'No gift details provided',
+                    'Notes':          document.getElementById('booking-notes')?.value.trim() || 'None'
                 })
             });
 
-            // Reset everything
             document.getElementById('booking-fields').reset();
             if (hiddenTotal) hiddenTotal.value = '0';
             if (giftDetailsJsonField) giftDetailsJsonField.value = '[]';
 
             const wrap = document.getElementById('calendly-widget-wrap');
             const gate = document.getElementById('calendly-gate');
-            if (wrap) {
-                wrap.classList.remove('visible');
-                setTimeout(() => { wrap.style.display = 'none'; }, 420);
-            }
+            if (wrap) { wrap.classList.remove('visible'); setTimeout(() => { wrap.style.display = 'none'; }, 420); }
             if (gate) gate.style.display = 'block';
 
             ['chip-name','chip-phone','chip-email'].forEach(id => {
                 const chip = document.getElementById(id);
-                if (chip) chip.classList.remove('done');
+                if (chip) { chip.classList.remove('done'); chip.textContent = id === 'chip-name' ? '✦ Name' : id === 'chip-phone' ? '✦ Phone' : '✦ Email'; }
             });
-            document.getElementById('chip-name').textContent  = '✦ Name';
-            document.getElementById('chip-phone').textContent = '✦ Phone';
-            document.getElementById('chip-email').textContent = '✦ Email';
 
             const successBox = document.getElementById('booking-success');
             if (successBox) successBox.style.display = 'block';
@@ -1406,7 +1388,7 @@
     // ── Confetti ──
     (function () {
         const container = document.getElementById('confetti');
-        const colors    = ['#f5d79a','#ecdb9f','#c39559','#866e9f','#785678'];
+        const colors = ['#f5d79a','#ecdb9f','#c39559','#866e9f','#785678'];
         for (let i = 0; i < 50; i++) {
             const dot = document.createElement('div');
             dot.classList.add('confetti-dot');
@@ -1435,36 +1417,6 @@
         #backToTop.btt-visible { opacity: 1; transform: translateY(0) scale(1); }
         #backToTop:hover { box-shadow: 0 6px 24px rgba(236,219,159,0.35); transform: translateY(-3px) scale(1.08); }
     </style>
-    <script>
-
-/* ADD GIFT BUTTON */
-const addGiftBtn = document.getElementById('addGiftBtn');
-const giftCustomizerSection = document.getElementById('gift-customizer-section');
-
-if (addGiftBtn && giftCustomizerSection) {
-
-    let giftCount = 1;
-
-    addGiftBtn.addEventListener('click', function () {
-
-        giftCount++;
-
-        const clone = giftCustomizerSection.cloneNode(true);
-
-        clone.id = `gift-customizer-section-${giftCount}`;
-
-        const heading = clone.querySelector('.form-section-label');
-
-        if (heading) {
-            heading.textContent = `🎁 Choose Your Design #${giftCount}`;
-        }
-
-        giftCustomizerSection.parentNode.insertBefore(clone, addGiftBtn);
-
-    });
-}
-
-</script>
     <script>
         (function () {
             const btn = document.createElement("a");
