@@ -547,7 +547,97 @@
                     <p style="color:#f5d79a;font-size:0.95rem;margin-bottom:1rem; line-height:1.5;">
                         Choose wrapping paper, ribbon, and tags right here while placing your order. Your selection will be saved with your booking.
                     </p>
-                    <div class="gift-preview-panel">
+                    <div class="gift-customizer-layout">
+<
+    <!-- LEFT: Sticky Preview -->
+    <aside class="gift-preview-sidebar">
+
+        <div class="gift-preview-sticky">
+
+            <div class="gift-preview-header">
+                <h4>Live Gift Preview ✨</h4>
+                <p>Click preview to enlarge</p>
+            </div>
+
+            <div class="gift-preview-display premium-preview">
+                <canvas id="giftBox" width="360" height="420"></canvas>
+
+                <div class="selection-pill" id="selPill">
+                    Loading preview...
+                </div>
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- CENTER: Options -->
+    <div class="gift-preview-options-wrap">
+
+        <div class="gift-preview-options">
+
+            <div class="preview-section">
+                <div class="preview-section-title">🎁 Wrapping Paper</div>
+                <select class="styled" id="paperCat"></select>
+                <div class="swatch-grid" id="paperSwatches"></div>
+            </div>
+
+            <div class="preview-section">
+                <div class="preview-section-title">🎀 Ribbon</div>
+                <select class="styled" id="ribbonCat"></select>
+                <div class="swatch-grid" id="ribbonSwatches"></div>
+            </div>
+
+            <div class="preview-section">
+                <div class="preview-section-title">🏷️ Gift Tag</div>
+                <select class="styled" id="tagCat"></select>
+                <div class="swatch-grid" id="tagSwatches"></div>
+            </div>
+
+            <div class="preview-section">
+                <div class="preview-section-title">📏 Gift Details</div>
+
+                <div class="gift-size-row">
+
+                    <div>
+                        <label for="giftSize">Gift size</label>
+                        <select class="styled" id="giftSize">
+                            <option value="Small">Small</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="Large">Large</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="giftCountInput">Gift count</label>
+                        <input type="number" id="giftCountInput" min="1" value="1">
+                    </div>
+
+                </div>
+
+                <p class="gift-note">
+                    Rush order adds $10 for up to 5 gifts.
+                    Bulk pricing automatically applies for 10+ gifts.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- LIGHTBOX -->
+<div id="previewLightbox" class="preview-lightbox">
+
+    <button class="preview-lightbox-close">×</button>
+
+    <div class="preview-lightbox-inner">
+        <canvas id="lightboxCanvas" width="720" height="840"></canvas>
+    </div>
+
+</div>
                         <div class="gift-preview-display">
                             <canvas id="giftBox" width="360" height="420"></canvas>
                             <div class="selection-pill" id="selPill">Loading preview…</div>
