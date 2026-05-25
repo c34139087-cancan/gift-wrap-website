@@ -502,9 +502,7 @@
                 </div>
 
                 <div class="form-section-label" style="margin-top:1rem;">Gift Details</div>
-                <button type="button" id="addGiftBtn" class="send-btn gift-add-btn">
-    + Add Another Gift
-</button>
+                <button type="button" id="addGiftBtn" class="send-btn gift-add-btn">Add Gift</button>
                 <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
                     <strong>Basic:</strong> Small $6 &middot; Medium $9 &middot; Large $12 &nbsp;|&nbsp; <strong>Bulk (10+ gifts):</strong> Small $5 &middot; Medium $8 &middot; Large $10
                 </p>
@@ -1022,91 +1020,107 @@
       ],
     };
 
-    let giftState = {
-      paperCat: 'Kids Neutral', paperIdx: 0,
-      ribbonCat: 'All Ribbons', ribbonIdx: 0,
-      tagCat: 'Birthday', tagIdx: 0,
-    };
+        // Populate selects with every available design (grouped by category)
+        function buildPaperCat() {
+            const sel = document.getElementById('paperCat');
+            if (!sel) return;
+            sel.innerHTML = '';
+            Object.keys(PAPERS).forEach(cat => {
+                const group = document.createElement('optgroup');
+                group.label = cat;
+                (PAPERS[cat] || []).forEach((p, i) => {
+                    const o = document.createElement('option');
+                    o.value = `${cat}||${i}`;
+                    o.textContent = p.n || p.f || `${cat} ${i+1}`;
+                    o.dataset.path = p.f || '';
+                    group.appendChild(o);
+                });
+                sel.appendChild(group);
+            });
+            // select first option by default
+            if (sel.options.length) sel.selectedIndex = 0;
+            sel.onchange = () => { updateGiftDetails(); recalc(); };
+        }
 
-    function buildPaperCat() {
-      const sel = document.getElementById('paperCat');
-      if (!sel) return;
-      sel.innerHTML = '';
-      Object.keys(PAPERS).forEach(k => {
-        const o = document.createElement('option'); o.value = k; o.textContent = k;
-        if (k === giftState.paperCat) o.selected = true;
-        sel.appendChild(o);
-      });
-      sel.onchange = e => { giftState.paperCat = e.target.value; giftState.paperIdx = 0; updateGiftDetails(); recalc(); };
-    }
+        function buildRibbonCat() {
+            const sel = document.getElementById('ribbonCat');
+            if (!sel) return;
+            sel.innerHTML = '';
+            const group = document.createElement('optgroup'); group.label = 'All Ribbons';
+            (RIBBONS || []).forEach((r, i) => {
+                const o = document.createElement('option');
+                o.value = `__RIBBON__||${i}`;
+                o.textContent = r.n || r.f || `Ribbon ${i+1}`;
+                o.dataset.path = r.f || '';
+                group.appendChild(o);
+            });
+            sel.appendChild(group);
+            if (sel.options.length) sel.selectedIndex = 0;
+            sel.onchange = () => { updateGiftDetails(); recalc(); };
+        }
 
-    function buildRibbonCat() {
-      const sel = document.getElementById('ribbonCat');
-      if (!sel) return;
-      sel.innerHTML = '';
-      Object.keys(RIBBON_CATEGORIES).forEach(k => {
-        const o = document.createElement('option'); o.value = k; o.textContent = k;
-        if (k === giftState.ribbonCat) o.selected = true;
-        sel.appendChild(o);
-      });
-      sel.onchange = e => { giftState.ribbonCat = e.target.value; giftState.ribbonIdx = 0; updateGiftDetails(); recalc(); };
-    }
+        function buildTagCat() {
+            const sel = document.getElementById('tagCat');
+            if (!sel) return;
+            sel.innerHTML = '';
+            Object.keys(TAGS).forEach(cat => {
+                const group = document.createElement('optgroup'); group.label = cat;
+                (TAGS[cat] || []).forEach((t, i) => {
+                    const o = document.createElement('option');
+                    o.value = `${cat}||${i}`;
+                    o.textContent = t.n || t.f || `${cat} ${i+1}`;
+                    o.dataset.path = t.f || '';
+                    group.appendChild(o);
+                });
+                sel.appendChild(group);
+            });
+            if (sel.options.length) sel.selectedIndex = 0;
+            sel.onchange = () => { updateGiftDetails(); recalc(); };
+        }
 
-    function buildTagCat() {
-      const sel = document.getElementById('tagCat');
-      if (!sel) return;
-      sel.innerHTML = '';
-      Object.keys(TAGS).forEach(k => {
-        const o = document.createElement('option'); o.value = k; o.textContent = k;
-        if (k === giftState.tagCat) o.selected = true;
-        sel.appendChild(o);
-      });
-      sel.onchange = e => { giftState.tagCat = e.target.value; giftState.tagIdx = 0; updateGiftDetails(); recalc(); };
-    }
+        function updateGiftDetails() {
+                const size = document.getElementById('giftSize')?.value || 'Medium';
+                const count = Math.max(1, parseInt(document.getElementById('giftCountInput')?.value, 10) || 1);
 
-    function recalc() {
-        const rush = document.getElementById('book-rush')?.checked || false;
-        const size = document.getElementById('giftSize')?.value || 'Medium';
-        const count = Math.max(1, parseInt(document.getElementById('giftCountInput')?.value, 10) || 1);
-        const isBulk = count >= 10;
-        const unitPrice = isBulk ? BULK_PRICE_TABLE[size] : PRICE_TABLE[size];
-        const total = count * unitPrice + (rush ? 10 : 0);
+                // paper value format: category||index
+                const paperVal = document.getElementById('paperCat')?.value || '';
+                const tagVal = document.getElementById('tagCat')?.value || '';
+                const ribbonVal = document.getElementById('ribbonCat')?.value || '';
 
-        if (hiddenCount) hiddenCount.value = String(count);
-        if (hiddenSize) hiddenSize.value = size;
-        if (hiddenStyle) hiddenStyle.value = isBulk ? 'bulk' : 'basic';
-        if (hiddenRush) hiddenRush.value = rush ? 'true' : 'false';
-        if (hiddenTotal) hiddenTotal.value = String(total);
-        updateGiftDetails();
-    }
+                let paper = {};
+                if (paperVal.includes('||')) {
+                    const [cat, idx] = paperVal.split('||');
+                    paper = (PAPERS[cat] || [])[parseInt(idx,10)] || {};
+                }
 
-    function updateGiftDetails() {
-        const paperCat = document.getElementById('paperCat')?.value || giftState.paperCat;
-        const tagCat = document.getElementById('tagCat')?.value || giftState.tagCat;
-        const ribbonCat = document.getElementById('ribbonCat')?.value || giftState.ribbonCat;
-        const size = document.getElementById('giftSize')?.value || 'Medium';
-        const count = Math.max(1, parseInt(document.getElementById('giftCountInput')?.value, 10) || 1);
+                let tag = {};
+                if (tagVal.includes('||')) {
+                    const [cat, idx] = tagVal.split('||');
+                    tag = (TAGS[cat] || [])[parseInt(idx,10)] || {};
+                }
 
-        const paper = (PAPERS[paperCat] || [])[0] || {};
-        const ribbon = (RIBBON_CATEGORIES[ribbonCat] || [])[0] || {};
-        const tag = (TAGS[tagCat] || [])[0] || {};
+                let ribbon = {};
+                if (ribbonVal.startsWith('__RIBBON__||')) {
+                    const idx = parseInt(ribbonVal.split('||')[1],10);
+                    ribbon = (RIBBONS || [])[idx] || {};
+                }
 
-        const details = [{
-            size,
-            count,
-            paperCategory: paperCat,
-            paper: paper.n || '',
-            paperImage: paper.f || '',
-            ribbonCategory: ribbonCat,
-            ribbon: ribbon.n || '',
-            ribbonImage: ribbon.f || '',
-            tagCategory: tagCat,
-            tag: tag.n || '',
-            tagImage: tag.f || ''
-        }];
+                const details = [{
+                        size,
+                        count,
+                        paperCategory: paperVal.split('||')[0] || '',
+                        paper: paper.n || '',
+                        paperImage: paper.f || '',
+                        ribbonCategory: '',
+                        ribbon: ribbon.n || '',
+                        ribbonImage: ribbon.f || '',
+                        tagCategory: tagVal.split('||')[0] || '',
+                        tag: tag.n || '',
+                        tagImage: tag.f || ''
+                }];
 
-        if (giftDetailsJsonField) giftDetailsJsonField.value = JSON.stringify(details);
-    }
+                if (giftDetailsJsonField) giftDetailsJsonField.value = JSON.stringify(details);
+        }
 
     function initGiftSelectors() {
         buildPaperCat();
