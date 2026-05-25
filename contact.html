@@ -539,6 +539,9 @@
                 </div>
 
                 <div class="form-section-label" style="margin-top:1rem;">Gift Details</div>
+                <button type="button" id="addGiftBtn" class="send-btn gift-add-btn">
+    + Add Another Gift
+</button>
                 <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
                     <strong>Basic:</strong> Small $6 &middot; Medium $9 &middot; Large $12 &nbsp;|&nbsp; <strong>Bulk (10+ gifts):</strong> Small $5 &middot; Medium $8 &middot; Large $10
                 </p>
@@ -1597,6 +1600,75 @@
         #backToTop.btt-visible { opacity: 1; transform: translateY(0) scale(1); }
         #backToTop:hover { box-shadow: 0 6px 24px rgba(236,219,159,0.35); transform: translateY(-3px) scale(1.08); }
     </style>
+    <script>
+
+/* ADD GIFT BUTTON */
+const addGiftBtn = document.getElementById('addGiftBtn');
+const giftCustomizerSection = document.getElementById('gift-customizer-section');
+
+if (addGiftBtn && giftCustomizerSection) {
+
+    let giftCount = 1;
+
+    addGiftBtn.addEventListener('click', function () {
+
+        giftCount++;
+
+        const clone = giftCustomizerSection.cloneNode(true);
+
+        clone.id = `gift-customizer-section-${giftCount}`;
+
+        const heading = clone.querySelector('.form-section-label');
+
+        if (heading) {
+            heading.textContent = `🎁 Customize Your Gift Wrap #${giftCount}`;
+        }
+
+        giftCustomizerSection.parentNode.insertBefore(clone, addGiftBtn);
+
+    });
+}
+
+
+/* ENLARGE PREVIEW */
+const gcEnlargeBtn = document.getElementById('gcEnlargeBtn');
+
+if (gcEnlargeBtn) {
+
+    gcEnlargeBtn.addEventListener('click', function () {
+
+        const previewImage = document.querySelector('.gc-preview-image img');
+
+        if (!previewImage) return;
+
+        const overlay = document.createElement('div');
+
+        overlay.className = 'gc-lightbox-overlay';
+
+        overlay.innerHTML = `
+            <div class="gc-lightbox-content">
+                <button class="gc-lightbox-close">&times;</button>
+                <img src="${previewImage.src}" alt="Preview Enlarged">
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        overlay.querySelector('.gc-lightbox-close').addEventListener('click', () => {
+            overlay.remove();
+        });
+
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                overlay.remove();
+            }
+        });
+
+    });
+
+}
+
+</script>
     <script>
         (function () {
             const btn = document.createElement("a");
