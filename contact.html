@@ -366,6 +366,101 @@
         }
         .sq-faq-note a:hover { text-decoration: underline; }
 
+        .gift-preview-panel {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+            gap: 1rem;
+            margin-top: 1rem;
+            background: rgba(64,41,91,0.3);
+            border: 1.5px solid rgba(245,215,154,0.2);
+            border-radius: var(--radius-xl);
+            padding: 1.25rem;
+            backdrop-filter: blur(10px);
+        }
+        .gift-preview-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem;
+        }
+        .gift-preview-display canvas {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            aspect-ratio: 6 / 7;
+            border-radius: 24px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(245,215,154,0.08));
+            border: 1px solid rgba(245,215,154,0.15);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+        }
+        .selection-pill {
+            padding: 1rem 1.1rem;
+            border-radius: 24px;
+            background: rgba(245,215,154,0.16);
+            border: 1px solid rgba(245,215,154,0.28);
+            color: var(--pastel-yellow);
+            font-size: 0.85rem;
+            text-align: left;
+            line-height: 1.5;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.35rem;
+            min-height: auto;
+            justify-items: start;
+        }
+        .selection-pill span { display: block; }
+        .gift-preview-options {
+            display: grid;
+            gap: 1rem;
+            padding: 0.5rem;
+        }
+        .preview-section {
+            background: rgba(104,82,129,0.16);
+            border: 1px solid rgba(245,215,154,0.18);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+        }
+        .preview-section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--pastel-orange);
+            margin-bottom: 0.75rem;
+        }
+        .preview-section p {
+            color: var(--gray-lavender);
+            font-size: 0.85rem;
+            margin-bottom: 0.85rem;
+            line-height: 1.55;
+        }
+        .styled {
+            width: 100%;
+            font-size: 0.95rem;
+            padding: 0.85rem 1rem;
+            background: rgba(255,255,255,0.92);
+            color: #3b105a;
+            border: 2px solid rgba(104,82,129,0.4);
+            border-radius: var(--radius-md);
+            appearance: none;
+        }
+        .styled option { color: #3b105a; background: #fff; }
+        .styled:focus { outline: none; border-color: var(--pastel-orange); }
+        .swatch-grid { display: flex; flex-wrap: wrap; gap: 0.65rem; justify-content: flex-start; }
+        .sw-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; width: 52px; }
+        .sw, .tag-sw, .ribbon-sw {
+            width: 52px; height: 52px; border-radius: 16px; border: 2px solid transparent; overflow: hidden; cursor: pointer; transition: transform 0.2s ease, border-color 0.2s ease; display: flex; align-items: center; justify-content: center;
+        }
+        .sw:hover, .tag-sw:hover, .ribbon-sw:hover { transform: translateY(-1px); }
+        .sw.active, .tag-sw.active, .ribbon-sw.active { border-color: var(--pastel-orange); box-shadow: 0 0 0 1px rgba(245,215,154,0.35); }
+        .sw img, .tag-sw img, .ribbon-sw img { width: 100%; height: 100%; object-fit: cover; }
+        .sw-lbl { font-size: 0.7rem; color: var(--gray-lavender); text-align: center; line-height: 1.2; }
+        .gift-size-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; align-items: end; }
+        .gift-size-row label { font-size: 0.75rem; color: var(--gray-lavender); display: block; margin-bottom: 0.35rem; }
+        .gift-size-row input[type="number"] { width: 100%; padding: 0.85rem 1rem; background: rgba(104,82,129,0.3); border: 2px solid var(--gray-lavender); border-radius: var(--radius-md); color: #f5d79a; }
+        .gift-size-row input[type="number"]:focus { outline: none; border-color: var(--pastel-orange); }
+
         /* ── Responsive ── */
         @media (max-width: 720px) {
             .contact-layout { grid-template-columns: 1fr; }
@@ -450,10 +545,49 @@
                 <div id="gift-customizer-section" style="margin-top:1rem;">
                     <div class="form-section-label">Gift Preview</div>
                     <p style="color:#f5d79a;font-size:0.95rem;margin-bottom:1rem; line-height:1.5;">
-                        Use the preview tool to choose wrapping paper, ribbon, and tags before booking. The preview page opens separately so you can explore options and then return here to complete your booking.
+                        Choose wrapping paper, ribbon, and tags right here while placing your order. Your selection will be saved with your booking.
                     </p>
-                    <a class="send-btn gift-add-btn" href="can-gift-preview.html">🎁 Open Gift Preview</a>
-                    <p style="color:#f5d79a;font-weight:700;margin-bottom:1.2rem;margin-top:0.8rem;">The preview page will show your gift options in a dedicated designer.</p>
+                    <div class="gift-preview-panel">
+                        <div class="gift-preview-display">
+                            <canvas id="giftBox" width="360" height="420"></canvas>
+                            <div class="selection-pill" id="selPill">Loading preview…</div>
+                        </div>
+                        <div class="gift-preview-options">
+                            <div class="preview-section">
+                                <div class="preview-section-title">🎁 Wrapping Paper</div>
+                                <select class="styled" id="paperCat"></select>
+                                <div class="swatch-grid" id="paperSwatches"></div>
+                            </div>
+                            <div class="preview-section">
+                                <div class="preview-section-title">🎀 Ribbon</div>
+                                <select class="styled" id="ribbonCat"></select>
+                                <div class="swatch-grid" id="ribbonSwatches"></div>
+                            </div>
+                            <div class="preview-section">
+                                <div class="preview-section-title">🏷️ Gift Tag</div>
+                                <select class="styled" id="tagCat"></select>
+                                <div class="swatch-grid" id="tagSwatches"></div>
+                            </div>
+                            <div class="preview-section">
+                                <div class="preview-section-title">📏 Gift Details</div>
+                                <div class="gift-size-row">
+                                    <div>
+                                        <label for="giftSize">Gift size</label>
+                                        <select class="styled" id="giftSize">
+                                            <option value="Small">Small</option>
+                                            <option value="Medium" selected>Medium</option>
+                                            <option value="Large">Large</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="giftCountInput">Gift count</label>
+                                        <input type="number" id="giftCountInput" min="1" value="1">
+                                    </div>
+                                </div>
+                                <p style="margin-top:0.8rem;color:#f5d79a;font-size:0.85rem;">Rush order adds $10 for up to 5 gifts; bulk pricing applies automatically for 10+ gifts.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <p style="color:#f5d79a;font-size:0.85rem;font-style:italic;margin-bottom:0.6rem;">A classic bow is included free with every wrap 🎀</p>
@@ -469,11 +603,12 @@
                 </div>
 
                 <!-- Hidden fields -->
-                <input type="hidden" id="booking-gift-count" name="dropoff_gifts"   value="0">
+                <input type="hidden" id="booking-gift-count" name="dropoff_gifts"   value="1">
+                <input type="hidden" id="booking-gift-size"  name="dropoff_size"   value="Medium">
                 <input type="hidden" id="booking-style"       name="dropoff_style"   value="basic">
                 <input type="hidden" id="book-rush-hidden"    name="rush_order"      value="false">
                 <input type="hidden" id="gift-details-json"   name="gift_details"    value="[]">
-                <input type="hidden" id="estimated-total"     name="estimated_total" value="0">
+                <input type="hidden" id="estimated-total"     name="estimated_total" value="9">
 
                 <!-- ── CALENDLY SECTION ── -->
                 <div class="form-section-label" style="margin-top:1rem;">Pick Your Drop-Off Time</div>
@@ -636,6 +771,7 @@
         });
         document.getElementById('book-rush')?.addEventListener('change', recalc);
         checkInfoReady();
+        initGiftPreview();
         recalc();
     });
 
@@ -679,16 +815,630 @@
     // ── Gift helper state ──
     const hiddenTotal          = document.getElementById('estimated-total');
     const hiddenCount          = document.getElementById('booking-gift-count');
+    const hiddenSize           = document.getElementById('booking-gift-size');
     const hiddenStyle          = document.getElementById('booking-style');
     const hiddenRush           = document.getElementById('book-rush-hidden');
     const giftDetailsJsonField = document.getElementById('gift-details-json');
 
+    const PRICE_TABLE = { Small: 6, Medium: 9, Large: 12 };
+    const BULK_PRICE_TABLE = { Small: 5, Medium: 8, Large: 10 };
+
+    const BASE = 'https://c34139087-cancan.github.io/gift-wrap-website';
+
+    // Add new paper, ribbon, and tag categories here as you create more designs.
+    // Example: add Mother's Day or Father's Day arrays with matching file paths.
+    const PAPERS = {
+      'Anniversary': [
+        {n:'22nd Ann',f:'Wrapping/Anniverary/22ann.png'},
+        {n:'50th Ann',f:'Wrapping/Anniverary/50ann.png'},
+        {n:'Black & Gold',f:'Wrapping/Anniverary/blackandgoldann.png'},
+        {n:'More Everyday',f:'Wrapping/Anniverary/Moreeveryday.png'},
+        {n:'My Forever',f:'Wrapping/Anniverary/myforeverride.png'},
+        {n:'Pink Floral',f:'Wrapping/Anniverary/pinkfloralhappyann.png'},
+        {n:'Red Rose',f:'Wrapping/Anniverary/redroseanniversary.png'},
+        {n:'Romantic',f:'Wrapping/Anniverary/romanticann.png'},
+        {n:'Thanks For',f:'Wrapping/Anniverary/thanksfor.png'},
+        {n:'Thanks For Not',f:'Wrapping/Anniverary/thanksfornotkillingme.png'},
+      ],
+      'Baby': [
+        {n:'Boy or Girl',f:'Wrapping/Baby/boyorgirl.png'},
+        {n:'Camo Girl',f:'Wrapping/Baby/camo its a girl.png'},
+        {n:'Hello Baby',f:'Wrapping/Baby/hellobaby.png'},
+        {n:"It's Not Your Ex",f:'Wrapping/Baby/its not your ex.png'},
+        {n:"It's a Boy Camo",f:'Wrapping/Baby/itsaboycamo.png'},
+        {n:'Purple Baby Camo',f:'Wrapping/Baby/purplebabygirlcamo.png'},
+      ],
+      'Camo': [
+        {n:'Blue Camo',f:'Wrapping/Camo/blue camo.png'},
+        {n:'Desert Camo',f:'Wrapping/Camo/desert camo.png'},
+        {n:'Green Camo',f:'Wrapping/Camo/greencamo.png'},
+        {n:'Orange Camo',f:'Wrapping/Camo/orange camo.png'},
+        {n:'Pink Camo',f:'Wrapping/Camo/pink camo.png'},
+        {n:'Woodland',f:'Wrapping/Camo/Woodland Camo.png'},
+      ],
+      'Christmas': [
+        {n:'Camo Christmas',f:'Wrapping/Christmas/camochristmas.png'},
+        {n:'Classic Christmas',f:'Wrapping/Christmas/classicchristmas.png'},
+        {n:'Classic Reindeer',f:'Wrapping/Christmas/classicredreindeer.png'},
+        {n:'Light Blue',f:'Wrapping/Christmas/lightbluechristmas.png'},
+        {n:'Red Christmas',f:'Wrapping/Christmas/redchristmas.png'},
+      ],
+      'For Her': [
+        {n:'Botanical Bday',f:'Wrapping/For Her/botanical birthday.png'},
+        {n:'Glam Bday',f:'Wrapping/For Her/glam bday.png'},
+        {n:'Neon Animal',f:'Wrapping/For Her/neon animal print.png'},
+        {n:'Pink Floral',f:'Wrapping/For Her/pink floral.png'},
+      ],
+      'For Him': [
+        {n:'Birthday Plaid',f:'Wrapping/For Him/Birthday Plaid1.webp'},
+        {n:'Geometric Bday',f:'Wrapping/For Him/geometric happy birthday.png'},
+        {n:'Outdoor Adventure',f:'Wrapping/For Him/outdoor adventure.png'},
+      ],
+      'General Birthday': [
+        {n:'Black & Gold Bday',f:'Wrapping/General Birthday/black and gold birthday.png'},
+        {n:'Royalty',f:'Wrapping/General Birthday/royalty.png'},
+        {n:'Tan Bday',f:'Wrapping/General Birthday/tan bday.png'},
+      ],
+      'Graduation': [
+        {n:'Black & Gold',f:'Wrapping/Graduation/blackandgold.png'},
+        {n:'Colorful Caps',f:'Wrapping/Graduation/colorful caps.png'},
+        {n:'Green Camo Grad',f:'Wrapping/Graduation/greencamograd.png'},
+        {n:'Navy Gold Grad',f:'Wrapping/Graduation/navygoldgrad.png'},
+        {n:'Pink Camo Grad',f:'Wrapping/Graduation/pinkgradcamo.png'},
+        {n:'Pink Hats',f:'Wrapping/Graduation/pinkhats.png'},
+        {n:'Tan Camo Grad',f:'Wrapping/Graduation/tancamograd.png'},
+      ],
+      'Kids Boys': [
+        {n:'Dino',f:'Wrapping/Kids Boys/Dino.png'},
+        {n:'Jungle',f:'Wrapping/Kids Boys/Jungle.png'},
+        {n:'Monster Trucks',f:'Wrapping/Kids Boys/Monster Trucks.png'},
+        {n:'Race Cars',f:'Wrapping/Kids Boys/Race Cars.png'},
+        {n:'Space',f:'Wrapping/Kids Boys/Space.png'},
+        {n:'Superhero Comic',f:'Wrapping/Kids Boys/Superhero Comic.png'},
+      ],
+      'Kids Girls': [
+        {n:'Mermaids',f:'Wrapping/Kids Girls/Mermaids.png'},
+        {n:'Pink Kitty',f:'Wrapping/Kids Girls/Pink Kitty.png'},
+        {n:'Princess',f:'Wrapping/Kids Girls/Princess.png'},
+        {n:'Spa Day',f:'Wrapping/Kids Girls/Spa Day.png'},
+        {n:'Unicorns',f:'Wrapping/Kids Girls/Unicorns.png'},
+      ],
+      'Kids Neutral': [
+        {n:'Balloon Birthday',f:'Wrapping/Kids Neutral/balloonbirthday.png'},
+        {n:'Confetti Explosion',f:'Wrapping/Kids Neutral/confetti explosion.png'},
+        {n:'Cupcakes',f:'Wrapping/Kids Neutral/Cupcakes.png'},
+      ],
+      'Wedding': [
+        {n:'Bachelorette Hunt',f:'Wrapping/Wedding/bachelorhunt.png'},
+        {n:'Boho',f:'Wrapping/Wedding/boho.png'},
+        {n:'Bride & Groom',f:'Wrapping/Wedding/bride and groom celebration.png'},
+        {n:'Bride Squad',f:'Wrapping/Wedding/bride squad.png'},
+        {n:'Bride to Be',f:'Wrapping/Wedding/bridetobe.png'},
+        {n:'Elegant Floral',f:'Wrapping/Wedding/Elegant white and gold floral.png'},
+        {n:'Fishing Vows',f:'Wrapping/Wedding/fishing vows.png'},
+        {n:'Girly Bridal',f:'Wrapping/Wedding/girly fun bridal.png'},
+        {n:'Greenery',f:'Wrapping/Wedding/greenery.png'},
+        {n:"Groom's Last Ride",f:'Wrapping/Wedding/groomlastride.png'},
+        {n:'Pearly',f:'Wrapping/Wedding/pearly.png'},
+        {n:'Royal Purple',f:'Wrapping/Wedding/royalpurple.png'},
+      ],
+    };
+
+    const RIBBONS = [
+      {n:'Buffalo Check Plaid',f:'Ribbon/Buffalo Check Plaid.png'},
+      {n:'Camo',f:'Ribbon/Camo.png'},
+      {n:'Chalkboard & Gold',f:'Ribbon/Chalkboard & Gold.png'},
+      {n:'Floral Blush',f:'Ribbon/Floral Blush.png'},
+      {n:'Glittery Polka Dots',f:'Ribbon/Glittery Polka Dots.png'},
+      {n:'Gold & Pink Dots',f:'Ribbon/Gold & Pink Dots.png'},
+      {n:'Gold Diagonal Stripe',f:'Ribbon/Gold Diagonal Stripe.png'},
+      {n:'Holographic Shimmer',f:'Ribbon/Holographic Shimmer.png'},
+      {n:'Pink Bow',f:'Ribbon/pinkbow.png'},
+      {n:'Purple & Black',f:'Ribbon/purpleblack.jpg'},
+      {n:'Purple Gold Grad',f:'Ribbon/purplegoldgrad.jpg'},
+      {n:'Red Plaid Bow',f:'Ribbon/redplaidbow.jpg'},
+      {n:'Rustic Kraft & Twine',f:'Ribbon/Rustic Kraft & Twine.png'},
+      {n:'Satin Purple & Gold',f:'Ribbon/Satin Purple & Gold.png'},
+      {n:'Val Day 1',f:'Ribbon/valday.jpg'},
+      {n:'Val Day 2',f:'Ribbon/vday.jpg'},
+      {n:'Val Day 3',f:'Ribbon/vday2.jpg'},
+      {n:'Val Day 4',f:'Ribbon/vday3.jpg'},
+      {n:'Galactic Camo',f:'Ribbon/gcamo.jpg'},
+      {n:'Pale Pink Bow',f:'Ribbon/palepinkbow.jpg'},
+      {n:'Purple Camo',f:'Ribbon/purplecamo.jpg'},
+      {n:'Velvet Deep Red',f:'Ribbon/Velvet Deep Red.png'},
+      {n:'XOXO',f:'Ribbon/xoxo.png'},
+    ];
+
+    const RIBBON_CATEGORIES = {
+      'All Ribbons': RIBBONS,
+      "Valentine's Day": RIBBONS.filter(r => /Val Day|Vday|XOXO|Velvet Deep Red|Pink Bow|Pale Pink Bow/i.test(r.n)),
+      'Metallic & Sparkle': RIBBONS.filter(r => /Chalkboard & Gold|Glittery Polka Dots|Gold & Pink Dots|Gold Diagonal Stripe|Holographic Shimmer|Satin Purple & Gold|Purple Gold Grad/i.test(r.n)),
+      'Casual & Bold': RIBBONS.filter(r => /Buffalo Check Plaid|Camo|Purple & Black|Purple Camo|Red Plaid Bow|Rustic Kraft & Twine|Galactic Camo/i.test(r.n)),
+    };
+
+    const TAGS = {
+      'Animal': [
+        {n:'Neon Animal 5',f:'Tags/Animal/Neon Animal 5.png'},
+        {n:'Neon Animal 6',f:'Tags/Animal/Neon Animal6.png'},
+        {n:'Neon Animal 7',f:'Tags/Animal/Neon Animal 7.png'},
+        {n:'Neon Animal 8',f:'Tags/Animal/Neon Animal 8.png'},
+        {n:'Neon Animal 1',f:'Tags/Animal/NeonAnimal1.png'},
+        {n:'Neon Animal 2',f:'Tags/Animal/NeonAnimal2.png'},
+        {n:'Neon Animal 3',f:'Tags/Animal/NeonAnimal3.png'},
+        {n:'Neon Cheetah',f:'Tags/Animal/neoncheetah.png'},
+        {n:'Neon Paint',f:'Tags/Animal/NeonPaint.png'},
+        {n:'Pink Animal',f:'Tags/Animal/Pink Animal.png'},
+        {n:'Pink Animal 2',f:'Tags/Animal/Pink Animal 2.png'},
+        {n:'Pink Animal 3',f:'Tags/Animal/Pink Animal 3.png'},
+        {n:'Pink Animal 4',f:'Tags/Animal/Pink Animal 4.png'},
+      ],
+      'Birthday': [
+        {n:'Black Gold',f:'Tags/Birthday/1blackgold.jpg'},
+        {n:'Bday Tag 1',f:'Tags/Birthday/bdaytag1.png'},
+        {n:'Bday Tag 2',f:'Tags/Birthday/bdaytag2.png'},
+        {n:'Bday Tags',f:'Tags/Birthday/bdaytags.png'},
+        {n:'Black Gold Stars 1',f:'Tags/Birthday/blackandgoldtags1.png'},
+        {n:'Black Gold Stars 2',f:'Tags/Birthday/blackandgoldtags2.png'},
+        {n:'Black Gold Stars 3',f:'Tags/Birthday/blackandgoldtags3.png'},
+        {n:'Black Gold Stars 5',f:'Tags/Birthday/blackandgoldtags5.png'},
+        {n:'Neon Paint Bday',f:'Tags/Birthday/NeonPaintBday.jpg'},
+      ],
+      'Black': [
+        {n:'Black & Gold Stars',f:'Tags/Black/Black & Gold Stars.png'},
+        {n:'Black & Gold Diamond',f:'Tags/Black/Black&GoldDiamond.png'},
+        {n:'Black & Gold Diamond 1',f:'Tags/Black/Black&GoldDiamond1.png'},
+        {n:'Black & Gold Diamond 3',f:'Tags/Black/Black&GoldDiamond3.png'},
+        {n:'Black & Gold Diamond 4',f:'Tags/Black/Black&GoldDiamond4.png'},
+        {n:'Black & Gold Stars 2',f:'Tags/Black/Black&GoldStars2.png'},
+        {n:'Black & Gold Stars 3',f:'Tags/Black/Black&GoldStars3.png'},
+        {n:'Black & Gold Stars 4',f:'Tags/Black/Black&GoldStars4.png'},
+        {n:'Black Gold 1',f:'Tags/Black/BlackGold1.png'},
+        {n:'Black Gold 2',f:'Tags/Black/BlackGold2.png'},
+        {n:'Black Gold 3',f:'Tags/Black/BlackGold3.png'},
+        {n:'Black Gold 4',f:'Tags/Black/BlackGold4.png'},
+        {n:'Gothrose',f:'Tags/Black/Gothrose.jpg'},
+        {n:'Tag Black Gold',f:'Tags/Black/tagblackgold.jpg'},
+      ],
+      'Camo': [
+        {n:'Baby Camo',f:'Tags/Camo/Baby Camo.png'},
+        {n:'Baby Camo 1',f:'Tags/Camo/Baby Camo1.png'},
+        {n:'Camo Tag 1',f:'Tags/Camo/Camo Tag 1.png'},
+        {n:'Camo Tag 3',f:'Tags/Camo/Camo Tag 3.png'},
+        {n:'Camo Tag 4',f:'Tags/Camo/Camo Tag 4.png'},
+        {n:'Camo Tag 5',f:'Tags/Camo/Camo Tag 5.png'},
+        {n:'Camo Tag 6',f:'Tags/Camo/Camo Tag 6.png'},
+        {n:'Camo Tag 7',f:'Tags/Camo/Camo Tag 7.png'},
+        {n:'Camo Tag',f:'Tags/Camo/Camo Tag.png'},
+        {n:'Pink Camo 1',f:'Tags/Camo/Pink Camo1.png'},
+        {n:'Pink Camo 2',f:'Tags/Camo/Pink Camo2.png'},
+        {n:'Pink Camo 3',f:'Tags/Camo/Pink Camo3.png'},
+        {n:'Pink Camo 4',f:'Tags/Camo/Pink Camo 4.png'},
+      ],
+      'Christmas': [
+        {n:'2 Black Gold Christmas',f:'Tags/Christmas/2blackgoldchristmas.jpg'},
+        {n:'2 Dino',f:'Tags/Christmas/2dino.jpg'},
+        {n:'Black Gold Christmas',f:'Tags/Christmas/bkackgoldchristmas.jpg'},
+        {n:'Christmas Dino',f:'Tags/Christmas/christmasdino.jpg'},
+        {n:'Christmas Gingerbread',f:'Tags/Christmas/christmasgingerbread.jpg'},
+        {n:'Creamy Christmas',f:'Tags/Christmas/creamychrismastag2.jpg'},
+      ],
+      'Floral': [
+        {n:'Floral Tag',f:'Tags/Floral/1floraltag.jpg'},
+        {n:'Floral 1',f:'Tags/Floral/floral1.png'},
+        {n:'Floral 2',f:'Tags/Floral/floral2.png'},
+        {n:'Floral 3',f:'Tags/Floral/floral3.png'},
+        {n:'Floral 4',f:'Tags/Floral/floral4.png'},
+        {n:'Gold Rose',f:'Tags/Floral/Gold Rose.png'},
+        {n:'Gold Rose 2',f:'Tags/Floral/Gold Rose2.png'},
+        {n:'Gold Rose 3',f:'Tags/Floral/Gold Rose3.png'},
+        {n:'Gold Rose 4',f:'Tags/Floral/Gold Rose4.png'},
+        {n:'Lavender 1',f:'Tags/Floral/Lav1.png'},
+        {n:'Lavender 2',f:'Tags/Floral/Lav2.png'},
+        {n:'Lavender 3',f:'Tags/Floral/Lav3.png'},
+      ],
+      'Kids': [
+        {n:'Girls Tag',f:'Tags/kids/girlstag.jpg'},
+        {n:'Bday Tag',f:'Tags/kids/image_1e4ec60d.png'},
+        {n:'Outer Space',f:'Tags/kids/outerspacetag.jpg'},
+      ],
+      'Purple': [
+        {n:'Goodnight',f:'Tags/Purple/goodnight.png'},
+        {n:'Grad Name Tag 2',f:'Tags/Purple/Grad Name Tag 2.png'},
+        {n:'Grad Name Tag',f:'Tags/Purple/Grad Name Tag.png'},
+        {n:'Purple & Gold Grad',f:'Tags/Purple/Purple & Gold Graduation.png'},
+        {n:'Purple & Gold 1',f:'Tags/Purple/Purple & Gold1.png'},
+        {n:'Purple & Gold 2',f:'Tags/Purple/Purple & Gold2.png'},
+        {n:'Purple & Gold 3',f:'Tags/Purple/Purple & Gold3.png'},
+        {n:'Purple & Gold 4',f:'Tags/Purple/Purple & Gold4.png'},
+        {n:'Purple Camo 1',f:'Tags/Purple/Purple Camo1.png'},
+        {n:'Purple Camo 2',f:'Tags/Purple/Purple Camo2.png'},
+        {n:'Purple Camo 3',f:'Tags/Purple/Purple Camo3.png'},
+        {n:'Purple Camo 4',f:'Tags/Purple/Purple Camo4.png'},
+      ],
+      "Valentine's Day": [
+        {n:'Valentines 1',f:'Tags/Valentines Day/1valentines.png'},
+        {n:'Cherry Val',f:'Tags/Valentines Day/cherryval.png'},
+        {n:'Floral Val',f:'Tags/Valentines Day/floralval.png'},
+        {n:'Valentines',f:'Tags/Valentines Day/valentines.png'},
+        {n:'Vday 1',f:'Tags/Valentines Day/vday.jpg'},
+        {n:'Vday 2',f:'Tags/Valentines Day/vday2.png'},
+        {n:'Vday 3',f:'Tags/Valentines Day/vday3.png'},
+        {n:'Vday 4',f:'Tags/Valentines Day/vday4.png'},
+      ],
+      'Wedding': [
+        {n:'Hearts & Champagne',f:'Tags/Wedding/hearts and champagne.png'},
+        {n:'Hearts & Champagne 2',f:'Tags/Wedding/hearts and champagne2.png'},
+        {n:'Woodland Anniversary',f:'Tags/Wedding/woodlandanniversary.png'},
+      ],
+    };
+
+    let giftState = {
+      paperCat: 'Kids Neutral', paperIdx: 0,
+      ribbonCat: 'All Ribbons', ribbonIdx: 0,
+      tagCat: 'Birthday', tagIdx: 0,
+    };
+
+    const imgCache = {};
+    function loadImg(url) {
+      if (imgCache[url]) return imgCache[url];
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => { imgCache[url]._loaded = true; drawBox(); };
+      img.onerror = () => { imgCache[url]._err = true; };
+      img.src = url;
+      imgCache[url] = img;
+      return img;
+    }
+    function getImg(path) {
+      return loadImg(`${BASE}/${path}`);
+    }
+
+        function drawImageCover(ctx, img, dx, dy, dw, dh) {
+            const iw = img.naturalWidth || img.width || 1;
+            const ih = img.naturalHeight || img.height || 1;
+            const scale = Math.max(dw / iw, dh / ih);
+            const sw = Math.round(dw / scale);
+            const sh = Math.round(dh / scale);
+            const sx = Math.max(0, Math.floor((iw - sw) / 2));
+            const sy = Math.max(0, Math.floor((ih - sh) / 2));
+            try {
+                ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+            } catch (e) {
+                // fallback
+                ctx.drawImage(img, dx, dy, dw, dh);
+            }
+        }
+
+    const cv = document.getElementById('giftBox');
+    const cx = cv ? cv.getContext('2d') : null;
+
+    function drawBox() {
+      if (!cx || !cv) return;
+      const W = cv.width, H = cv.height;
+      cx.clearRect(0, 0, W, H);
+
+      const paper = (PAPERS[giftState.paperCat] || [])[giftState.paperIdx] || {};
+      const ribbon = (RIBBON_CATEGORIES[giftState.ribbonCat] || [])[giftState.ribbonIdx] || {};
+      const tag = (TAGS[giftState.tagCat] || [])[giftState.tagIdx] || {};
+
+      const pImg = getImg(paper.f || '');
+      const rImg = getImg(ribbon.f || '');
+      const tImg = getImg(tag.f || '');
+
+      const bx = 52, by = 96, bw = 232, bh = 176;
+    const sx = 48, sy = 32;
+    const paperPattern = pImg._loaded ? cx.createPattern(pImg, 'repeat') : null;
+
+      cx.save(); cx.beginPath(); cx.rect(bx, by, bw, bh); cx.clip();
+    if (paperPattern) { cx.fillStyle = paperPattern; cx.fillRect(bx, by, bw, bh); } else { cx.fillStyle = '#d0c8e0'; cx.fillRect(bx, by, bw, bh); }
+      cx.restore();
+
+      cx.save(); cx.beginPath(); cx.moveTo(bx+bw, by); cx.lineTo(bx+bw+sx, by-sy); cx.lineTo(bx+bw+sx, by-sy+bh); cx.lineTo(bx+bw, by+bh); cx.closePath(); cx.clip();
+    if (paperPattern) { cx.globalAlpha = 0.72; cx.fillStyle = paperPattern; cx.fillRect(bx+bw, by-sy, sx+20, bh+sy); cx.globalAlpha = 0.28; cx.fillStyle = '#000'; cx.fillRect(bx+bw, by-sy, sx+20, bh+sy); cx.globalAlpha = 1; } else { cx.fillStyle = '#b0a8c0'; cx.fill(); }
+      cx.restore();
+
+      cx.save(); cx.beginPath(); cx.moveTo(bx, by); cx.lineTo(bx+sx, by-sy); cx.lineTo(bx+bw+sx, by-sy); cx.lineTo(bx+bw, by); cx.closePath(); cx.clip();
+    if (paperPattern) { cx.globalAlpha = 0.88; cx.fillStyle = paperPattern; cx.fillRect(bx, by-sy, bw+sx, sy+10); cx.globalAlpha = 0.12; cx.fillStyle = '#fff'; cx.fillRect(bx, by-sy, bw+sx, sy+10); cx.globalAlpha = 1; } else { cx.fillStyle = '#c8c0d8'; cx.fill(); }
+      cx.restore();
+
+      cx.strokeStyle = 'rgba(0,0,0,0.2)'; cx.lineWidth = 1.5; cx.lineJoin = 'round';
+      cx.strokeRect(bx, by, bw, bh);
+      cx.beginPath(); cx.moveTo(bx+bw, by); cx.lineTo(bx+bw+sx, by-sy); cx.lineTo(bx+bw+sx, by-sy+bh); cx.lineTo(bx+bw, by+bh); cx.closePath(); cx.stroke();
+      cx.beginPath(); cx.moveTo(bx, by); cx.lineTo(bx+sx, by-sy); cx.lineTo(bx+bw+sx, by-sy); cx.lineTo(bx+bw, by); cx.closePath(); cx.stroke();
+
+      const lidH = 36;
+      cx.strokeStyle = 'rgba(0,0,0,0.15)'; cx.lineWidth = 1;
+      cx.beginPath(); cx.moveTo(bx, by+lidH); cx.lineTo(bx+bw, by+lidH); cx.stroke();
+      cx.beginPath(); cx.moveTo(bx+bw, by+lidH); cx.lineTo(bx+bw+sx, by+lidH-sy); cx.stroke();
+      cx.beginPath(); cx.moveTo(bx, by+lidH); cx.lineTo(bx+sx, by+lidH-sy); cx.stroke();
+
+      const rcx = bx + bw/2;
+      const rcy = by + lidH;
+
+      cx.save(); cx.beginPath(); cx.rect(bx, by, bw, bh); cx.clip();
+      if (rImg._loaded) { const rp = cx.createPattern(rImg, 'repeat'); cx.fillStyle = rp; cx.globalAlpha = 0.92; cx.fillRect(rcx-9, by, 18, bh); } else { cx.fillStyle = '#C9A020'; cx.fillRect(rcx-9, by, 18, bh); }
+      cx.restore();
+
+      cx.save(); cx.beginPath(); cx.rect(bx, by, bw, bh); cx.clip();
+      if (rImg._loaded) { const rp2 = cx.createPattern(rImg, 'repeat'); cx.fillStyle = rp2; cx.globalAlpha = 0.92; cx.fillRect(bx, rcy-9, bw, 18); } else { cx.fillStyle = '#C9A020'; cx.fillRect(bx, rcy-9, bw, 18); }
+      cx.restore();
+
+      cx.save();
+      cx.beginPath(); cx.moveTo(bx, rcy-9); cx.lineTo(bx+bw, rcy-9); cx.strokeStyle = 'rgba(255,255,255,0.22)'; cx.lineWidth = 1.2; cx.stroke();
+      cx.beginPath(); cx.moveTo(rcx-9, by); cx.lineTo(rcx-9, by+bh); cx.stroke();
+      cx.beginPath(); cx.moveTo(rcx+9, by); cx.lineTo(rcx+9, by+bh); cx.stroke();
+      cx.restore();
+
+      cx.save(); cx.beginPath(); cx.moveTo(bx+bw, by); cx.lineTo(bx+bw+sx, by-sy); cx.lineTo(bx+bw+sx, by-sy+bh); cx.lineTo(bx+bw, by+bh); cx.closePath(); cx.clip();
+      cx.globalAlpha = 0.7;
+      if (rImg._loaded) { const rp3 = cx.createPattern(rImg, 'repeat'); cx.fillStyle = rp3; cx.fillRect(bx+bw+sx/2-9, by-sy, 18, bh+sy+5); } else { cx.fillStyle = '#A08010'; cx.fillRect(bx+bw+sx/2-9, by-sy, 18, bh+sy+5); }
+      cx.restore();
+
+      cx.globalAlpha = 1;
+      drawBow(cx, rcx, rcy, rImg);
+      drawTag(cx, rcx + 35, rcy - 30, tImg);
+
+      cx.save();
+      const sg = cx.createRadialGradient(bx+bw/2+sx/3, by+bh+16, 5, bx+bw/2+sx/3, by+bh+16, bw*0.55);
+      sg.addColorStop(0, 'rgba(0,0,0,0.14)');
+      sg.addColorStop(1, 'rgba(0,0,0,0)');
+      cx.fillStyle = sg;
+      cx.beginPath(); cx.ellipse(bx+bw/2+sx/3, by+bh+14, bw*0.52, 14, 0.1, 0, Math.PI*2); cx.fill();
+      cx.restore();
+    }
+
+    function drawBow(ctx, bcx, bcy, rImg) {
+            ctx.save();
+            // subtle drop shadow for separation
+            ctx.fillStyle = 'rgba(0,0,0,0.12)';
+            ctx.beginPath(); ctx.ellipse(bcx, bcy+8, 30, 10, 0, 0, Math.PI*2); ctx.fill();
+
+            // draw bow loops with slightly larger scale for visibility
+            const loops = [[-1,-1],[-1,1],[1,-1],[1,1]];
+            const scale = 1.12;
+            loops.forEach(([lx, ly]) => {
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(bcx, bcy);
+                ctx.bezierCurveTo(bcx+lx*28*scale, bcy+ly*6*scale, bcx+lx*30*scale, bcy+ly*22*scale, bcx+lx*18*scale, bcy+ly*24*scale);
+                ctx.bezierCurveTo(bcx+lx*8*scale, bcy+ly*26*scale, bcx+lx*4*scale, bcy+ly*16*scale, bcx, bcy);
+                ctx.closePath();
+                if (rImg._loaded) { const p = ctx.createPattern(rImg, 'repeat'); ctx.fillStyle = p; } else { ctx.fillStyle = '#C9A020'; }
+                ctx.fill();
+                // stronger outline for clarity
+                ctx.strokeStyle = 'rgba(0,0,0,0.38)'; ctx.lineWidth = 1.4; ctx.stroke();
+                // subtle highlight on top of loops
+                ctx.strokeStyle = 'rgba(255,255,255,0.28)'; ctx.lineWidth = 0.9; ctx.stroke();
+                ctx.restore();
+            });
+
+            // ribbon tails with layered strokes (dark then patterned then highlight)
+            [[-1,1],[1,1]].forEach(([tx]) => {
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(bcx + tx*3, bcy + 4);
+                ctx.bezierCurveTo(bcx + tx*12, bcy+22, bcx + tx*8, bcy+36, bcx + tx*15, bcy+44);
+                // dark base stroke
+                ctx.lineWidth = 10; ctx.strokeStyle = 'rgba(0,0,0,0.28)'; ctx.lineCap = 'round'; ctx.stroke();
+                // patterned mid stroke
+                if (rImg._loaded) { ctx.lineWidth = 6; const p2 = ctx.createPattern(rImg, 'repeat'); ctx.strokeStyle = p2; ctx.stroke(); }
+                else { ctx.lineWidth = 6; ctx.strokeStyle = '#C9A020'; ctx.stroke(); }
+                // bright highlight
+                ctx.strokeStyle = 'rgba(255,255,255,0.34)'; ctx.lineWidth = 2; ctx.stroke();
+                ctx.restore();
+            });
+
+            // central knot with glossy radial highlight
+            ctx.save();
+            const knotRadius = 10;
+            if (rImg._loaded) { const p = ctx.createPattern(rImg, 'repeat'); ctx.fillStyle = p; }
+            else { ctx.fillStyle = '#E0B020'; }
+            const grad = ctx.createRadialGradient(bcx-3, bcy-3, 1, bcx, bcy, knotRadius);
+            grad.addColorStop(0, 'rgba(255,255,255,0.95)');
+            grad.addColorStop(0.18, 'rgba(255,255,255,0.55)');
+            grad.addColorStop(1, 'rgba(224,176,32,1)');
+            ctx.fillStyle = grad;
+            ctx.beginPath(); ctx.arc(bcx, bcy, knotRadius, 0, Math.PI*2); ctx.fill();
+            ctx.strokeStyle = 'rgba(0,0,0,0.32)'; ctx.lineWidth = 1.2; ctx.stroke();
+            ctx.restore();
+
+            ctx.restore();
+    }
+
+    function drawTag(ctx, tx, ty, tImg) {
+      ctx.save();
+      ctx.strokeStyle = 'rgba(100,80,40,0.6)';
+      ctx.lineWidth = 1.2;
+      ctx.setLineDash([2,2]);
+      ctx.beginPath(); ctx.moveTo(tx-18, ty+14); ctx.lineTo(tx-6, ty-2); ctx.stroke();
+      ctx.setLineDash([]);
+      const tw = 54, th = 68;
+      if (tImg._loaded) {
+        ctx.save(); ctx.beginPath(); roundRect(ctx, tx, ty, tw, th, 5); ctx.clip(); ctx.drawImage(tImg, tx, ty, tw, th); ctx.restore();
+        ctx.strokeStyle = 'rgba(0,0,0,0.15)'; ctx.lineWidth = 0.8; ctx.beginPath(); roundRect(ctx, tx, ty, tw, th, 5); ctx.stroke();
+      } else {
+        ctx.fillStyle = '#FAF7F2'; ctx.beginPath(); roundRect(ctx, tx, ty, tw, th, 5); ctx.fill();
+        ctx.strokeStyle = 'rgba(0,0,0,0.15)'; ctx.lineWidth = 0.8; ctx.stroke();
+        ctx.fillStyle = '#9B6FD0'; ctx.font = '11px Poppins, sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText('Tag', tx+tw/2, ty+th/2+4);
+      }
+      ctx.fillStyle = '#f0ede8';
+      ctx.strokeStyle = 'rgba(0,0,0,0.15)'; ctx.lineWidth = 0.8;
+      ctx.beginPath(); ctx.arc(tx+tw/2, ty+7, 4, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+      ctx.restore();
+    }
+
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.moveTo(x+r, y);
+      ctx.lineTo(x+w-r, y); ctx.arcTo(x+w, y, x+w, y+r, r);
+      ctx.lineTo(x+w, y+h-r); ctx.arcTo(x+w, y+h, x+w-r, y+h, r);
+      ctx.lineTo(x+r, y+h); ctx.arcTo(x, y+h, x, y+h-r, r);
+      ctx.lineTo(x, y+r); ctx.arcTo(x, y, x+r, y, r);
+      ctx.closePath();
+    }
+
+    function updatePill() {
+      const paper = (PAPERS[giftState.paperCat] || [])[giftState.paperIdx] || {};
+      const ribbon = (RIBBON_CATEGORIES[giftState.ribbonCat] || [])[giftState.ribbonIdx] || {};
+      const tag = (TAGS[giftState.tagCat] || [])[giftState.tagIdx] || {};
+      const size = document.getElementById('giftSize')?.value || 'Medium';
+      document.getElementById('selPill').innerHTML =
+        `<span><strong>Paper:</strong> ${paper.n || 'Paper'}</span>` +
+        `<span><strong>Ribbon:</strong> ${ribbon.n || 'Ribbon'}</span>` +
+        `<span><strong>Tag:</strong> ${tag.n || 'Tag'}</span>` +
+        `<span><strong>Size:</strong> ${size}</span>`;
+    }
+
+    function buildPaperCat() {
+      const sel = document.getElementById('paperCat');
+      if (!sel) return;
+      sel.innerHTML = '';
+      Object.keys(PAPERS).forEach(k => {
+        const o = document.createElement('option'); o.value = k; o.textContent = k;
+        if (k === giftState.paperCat) o.selected = true;
+        sel.appendChild(o);
+      });
+      sel.onchange = e => { giftState.paperCat = e.target.value; giftState.paperIdx = 0; buildPaperSwatches(); updatePill(); drawBox(); recalc(); };
+    }
+
+    function buildPaperSwatches() {
+      const el = document.getElementById('paperSwatches');
+      if (!el) return;
+      el.innerHTML = '';
+      (PAPERS[giftState.paperCat] || []).forEach((p, i) => {
+        const wrap = document.createElement('div'); wrap.className = 'sw-wrap';
+        const sw = document.createElement('div'); sw.className = 'sw' + (i === giftState.paperIdx ? ' active' : '');
+        sw.dataset.index = String(i);
+        const img = document.createElement('img'); img.src = `${BASE}/${p.f}`; img.alt = p.n; img.crossOrigin = 'anonymous';
+        sw.appendChild(img);
+        sw.onclick = () => { giftState.paperIdx = i; buildPaperSwatches(); updatePill(); drawBox(); recalc(); };
+        const lbl = document.createElement('div'); lbl.className = 'sw-lbl'; lbl.textContent = p.n;
+        wrap.appendChild(sw); wrap.appendChild(lbl);
+        el.appendChild(wrap);
+      });
+    }
+
+    function buildRibbonCat() {
+      const sel = document.getElementById('ribbonCat');
+      if (!sel) return;
+      sel.innerHTML = '';
+      Object.keys(RIBBON_CATEGORIES).forEach(k => {
+        const o = document.createElement('option'); o.value = k; o.textContent = k;
+        if (k === giftState.ribbonCat) o.selected = true;
+        sel.appendChild(o);
+      });
+      sel.onchange = e => { giftState.ribbonCat = e.target.value; giftState.ribbonIdx = 0; buildRibbonSwatches(); updatePill(); drawBox(); recalc(); };
+    }
+
+    function buildRibbonSwatches() {
+      const el = document.getElementById('ribbonSwatches');
+      if (!el) return;
+      el.innerHTML = '';
+      const current = RIBBON_CATEGORIES[giftState.ribbonCat] || [];
+      current.forEach((r, i) => {
+        const wrap = document.createElement('div'); wrap.className = 'sw-wrap';
+        const sw = document.createElement('div'); sw.className = 'ribbon-sw' + (i === giftState.ribbonIdx ? ' active' : '');
+        sw.dataset.index = String(i);
+        const img = document.createElement('img'); img.src = `${BASE}/${r.f}`; img.alt = r.n; img.crossOrigin = 'anonymous';
+        sw.appendChild(img);
+        sw.onclick = () => { giftState.ribbonIdx = i; buildRibbonSwatches(); updatePill(); drawBox(); recalc(); };
+        const lbl = document.createElement('div'); lbl.className = 'sw-lbl'; lbl.textContent = r.n;
+        wrap.appendChild(sw); wrap.appendChild(lbl);
+        el.appendChild(wrap);
+      });
+    }
+
+    function buildTagCat() {
+      const sel = document.getElementById('tagCat');
+      if (!sel) return;
+      sel.innerHTML = '';
+      Object.keys(TAGS).forEach(k => {
+        const o = document.createElement('option'); o.value = k; o.textContent = k;
+        if (k === giftState.tagCat) o.selected = true;
+        sel.appendChild(o);
+      });
+      sel.onchange = e => { giftState.tagCat = e.target.value; giftState.tagIdx = 0; buildTagSwatches(); updatePill(); drawBox(); recalc(); };
+    }
+
+    function buildTagSwatches() {
+      const el = document.getElementById('tagSwatches');
+      if (!el) return;
+      el.innerHTML = '';
+      (TAGS[giftState.tagCat] || []).forEach((t, i) => {
+        const wrap = document.createElement('div'); wrap.className = 'sw-wrap';
+        const sw = document.createElement('div'); sw.className = 'tag-sw' + (i === giftState.tagIdx ? ' active' : '');
+        sw.dataset.index = String(i);
+        const img = document.createElement('img'); img.src = `${BASE}/${t.f}`; img.alt = t.n; img.crossOrigin = 'anonymous';
+        sw.appendChild(img);
+        sw.onclick = () => { giftState.tagIdx = i; buildTagSwatches(); updatePill(); drawBox(); recalc(); };
+        const lbl = document.createElement('div'); lbl.className = 'sw-lbl'; lbl.textContent = t.n;
+        wrap.appendChild(sw); wrap.appendChild(lbl);
+        el.appendChild(wrap);
+      });
+    }
+
     function recalc() {
         const rush = document.getElementById('book-rush')?.checked || false;
-        if (hiddenCount) hiddenCount.value = '0';
-        if (hiddenStyle) hiddenStyle.value = 'basic';
+        const size = document.getElementById('giftSize')?.value || 'Medium';
+        const count = Math.max(1, parseInt(document.getElementById('giftCountInput')?.value, 10) || 1);
+        const isBulk = count >= 10;
+        const unitPrice = isBulk ? BULK_PRICE_TABLE[size] : PRICE_TABLE[size];
+        const total = count * unitPrice + (rush ? 10 : 0);
+
+        if (hiddenCount) hiddenCount.value = String(count);
+        if (hiddenSize) hiddenSize.value = size;
+        if (hiddenStyle) hiddenStyle.value = isBulk ? 'bulk' : 'basic';
         if (hiddenRush) hiddenRush.value = rush ? 'true' : 'false';
-        if (hiddenTotal) hiddenTotal.value = rush ? '10' : '0';
+        if (hiddenTotal) hiddenTotal.value = String(total);
+        updateGiftDetails();
+    }
+
+    function updateGiftDetails() {
+        const paperCat = document.getElementById('paperCat')?.value || giftState.paperCat;
+        const paperIdx = parseInt(document.querySelector('#paperSwatches .sw.active')?.dataset.index || String(giftState.paperIdx), 10);
+        const tagCat = document.getElementById('tagCat')?.value || giftState.tagCat;
+        const tagIdx = parseInt(document.querySelector('#tagSwatches .tag-sw.active')?.dataset.index || String(giftState.tagIdx), 10);
+        const ribbonCat = document.getElementById('ribbonCat')?.value || giftState.ribbonCat;
+        const ribbonIdx = parseInt(document.querySelector('#ribbonSwatches .ribbon-sw.active')?.dataset.index || String(giftState.ribbonIdx), 10);
+        const size = document.getElementById('giftSize')?.value || 'Medium';
+        const count = Math.max(1, parseInt(document.getElementById('giftCountInput')?.value, 10) || 1);
+
+        const paper = (PAPERS[paperCat] || [])[paperIdx] || {};
+        const ribbon = (RIBBON_CATEGORIES[ribbonCat] || [])[ribbonIdx] || {};
+        const tag = (TAGS[tagCat] || [])[tagIdx] || {};
+
+        const details = [{
+            size,
+            count,
+            paperCategory: paperCat,
+            paper: paper.n || '',
+            paperImage: paper.f || '',
+            ribbon: ribbon.n || '',
+            ribbonImage: ribbon.f || '',
+            tagCategory: tagCat,
+            tag: tag.n || '',
+            tagImage: tag.f || ''
+        }];
+
+        if (giftDetailsJsonField) giftDetailsJsonField.value = JSON.stringify(details);
+    }
+
+    function initGiftPreview() {
+        if (!document.getElementById('giftBox')) return;
+        buildPaperCat();
+        buildPaperSwatches();
+        buildRibbonCat();
+        buildRibbonSwatches();
+        buildTagCat();
+        buildTagSwatches();
+        updatePill();
+        drawBox();
+
+        document.getElementById('giftSize')?.addEventListener('change', () => { recalc(); updatePill(); });
+        document.getElementById('giftCountInput')?.addEventListener('input', () => { recalc(); });
+
+        recalc();
     }
 
     // ── Calendly → Supabase ──
@@ -714,7 +1464,7 @@
                 phone:           phone,
                 email:           email,
                 gift_count:      count,
-                gift_size:       'mixed',
+                gift_size:       hiddenSize?.value || 'Mixed',
                 wrapping_style:  style,
                 estimated_total: '$' + total.toFixed(2),
                 gift_details:    giftDetails,
