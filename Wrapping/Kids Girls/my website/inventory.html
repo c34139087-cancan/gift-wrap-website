@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory | Cancan's Corner Admin</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --dark-purple: #20113c;
+            --pastel-orange: #f5d79a;
+            --gray-orange: #c39559;
+            --gray-lavender: #866e9f;
+            --gray-purple: #685281;
+            --purple-deep: #40295b;
+            --pastel-yellow: #ecdb9f;
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Poppins', sans-serif;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: linear-gradient(135deg, #20113c 0%, #40295b 50%, #685281 100%);
+            color: var(--pastel-orange);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── CONFETTI ── */
+        .confetti-container {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 1; overflow: hidden;
+        }
+        .confetti-dot {
+            position: absolute; border-radius: 50%;
+            animation: confetti-fall linear infinite;
+        }
+        @keyframes confetti-fall {
+            0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* ── NAV ── */
+        .navbar {
+            background: rgba(32,17,60,0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.6rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 3px solid var(--pastel-orange);
+            border-radius: 0 0 24px 24px;
+        }
+        .nav-brand { display: flex; align-items: center; gap: 0.75rem; }
+        .nav-logo { height: 42px; width: 42px; border-radius: 8px; border: 4px solid #D4AF37; }
+        .tagline { font-size: 0.7rem; color: var(--pastel-yellow); letter-spacing: 2px; text-transform: uppercase; }
+        .nav-back {
+            color: var(--pastel-yellow); text-decoration: none;
+            font-size: 0.85rem; font-weight: 600;
+            padding: 0.4rem 1rem;
+            border: 1.5px solid var(--gray-lavender);
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+        .nav-back:hover { border-color: var(--pastel-orange); color: var(--pastel-orange); }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            text-align: center;
+            padding: 2.5rem 2rem 1rem;
+            position: relative; z-index: 10;
+        }
+        .page-header h2 {
+            font-family: var(--font-display);
+            font-size: 2.2rem; font-weight: 900;
+            color: var(--pastel-orange);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+            margin-bottom: 0.3rem;
+        }
+        .page-header p { color: var(--gray-lavender); font-size: 0.9rem; font-style: italic; }
+        .gold-divider {
+            width: 80px; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--pastel-orange), transparent);
+            margin: 0.8rem auto 0; border-radius: 2px;
+        }
+
+        /* ── SUMMARY CARDS ── */
+        .summary-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            max-width: 900px;
+            margin: 1.5rem auto;
+            padding: 0 2rem;
+            position: relative; z-index: 10;
+        }
+        .summary-card {
+            background: rgba(32,17,60,0.75);
+            border: 2px solid rgba(195,149,89,0.3);
+            border-radius: var(--radius-md);
+            padding: 1.2rem 1.5rem;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        .summary-card .s-label {
+            font-size: 0.68rem; font-weight: 700;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--gray-lavender); margin-bottom: 0.4rem;
+        }
+        .summary-card .s-value {
+            font-family: var(--font-display);
+            font-size: 1.8rem; font-weight: 900;
+            color: var(--pastel-orange);
+        }
+
+        /* ── MAIN LAYOUT ── */
+        .main-layout {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 2rem;
+            position: relative; z-index: 10;
+        }
+
+        /* ── ADD FORM ── */
+        .add-form-card {
+            background: rgba(32,17,60,0.8);
+            border: 2px solid var(--gray-lavender);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            position: sticky; top: 100px;
+            height: fit-content;
+        }
+        .add-form-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem; font-weight: 700;
+            color: var(--pastel-orange);
+            margin-bottom: 1.5rem;
+        }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label {
+            display: block;
+            font-size: 0.7rem; font-weight: 700;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--gray-lavender); margin-bottom: 0.35rem;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(104,82,129,0.3);
+            border: 2px solid var(--gray-lavender);
+            border-radius: 12px;
+            color: #f5d79a;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        .form-group select option { background: var(--dark-purple); color: #f5d79a; }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: var(--gray-lavender); }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--pastel-orange);
+            background: rgba(104,82,129,0.5);
+            box-shadow: 0 0 15px rgba(245,215,154,0.2);
+        }
+        .form-group textarea { resize: vertical; min-height: 70px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+        .add-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, var(--gray-orange), var(--pastel-orange));
+            color: #20113c;
+            font-family: var(--font-body);
+            font-size: 0.95rem; font-weight: 700;
+            letter-spacing: 0.07em; text-transform: uppercase;
+            border: none; border-radius: 12px;
+            cursor: pointer; margin-top: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(245,215,154,0.3);
+        }
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(245,215,154,0.5);
+        }
+        .add-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        /* ── INVENTORY TABLE AREA ── */
+        .table-controls {
+            display: flex; align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap; gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .filter-select {
+            padding: 0.5rem 1rem;
+            background: rgba(64,41,91,0.6);
+            border: 2px solid var(--gray-lavender);
+            border-radius: 10px;
+            color: var(--pastel-yellow);
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+        }
+        .filter-select option { background: var(--dark-purple); }
+        .filter-select:focus { outline: none; border-color: var(--pastel-orange); }
+
+        .table-wrap {
+            background: rgba(32,17,60,0.75);
+            border: 2px solid var(--gray-lavender);
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        table { width: 100%; border-collapse: collapse; }
+        thead tr {
+            background: rgba(64,41,91,0.8);
+            border-bottom: 2px solid rgba(195,149,89,0.3);
+        }
+        th {
+            padding: 0.9rem 1rem;
+            font-size: 0.65rem; font-weight: 700;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--pastel-orange); text-align: left;
+        }
+        td {
+            padding: 0.85rem 1rem;
+            font-size: 0.88rem;
+            color: var(--pastel-yellow);
+            border-bottom: 1px solid rgba(134,110,159,0.2);
+            vertical-align: middle;
+        }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: rgba(104,82,129,0.2); }
+
+        .category-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 0.06em; text-transform: uppercase;
+        }
+        .cat-ribbon   { background: rgba(195,149,89,0.2); color: #f5d79a; border: 1px solid rgba(195,149,89,0.4); }
+        .cat-paper    { background: rgba(134,110,159,0.2); color: #c9b8e8; border: 1px solid rgba(134,110,159,0.4); }
+        .cat-bow      { background: rgba(120,86,120,0.3); color: #e8b8e8; border: 1px solid rgba(120,86,120,0.4); }
+        .cat-tape     { background: rgba(54,125,86,0.2); color: #a8e8c0; border: 1px solid rgba(54,125,86,0.3); }
+        .cat-other    { background: rgba(64,41,91,0.4); color: #c8c0d8; border: 1px solid rgba(104,82,129,0.4); }
+        .cat-bags     { background: rgba(180,120,60,0.2); color: #f0c890; border: 1px solid rgba(180,120,60,0.4); }
+        .cat-tissue   { background: rgba(100,150,180,0.2); color: #b8d8f0; border: 1px solid rgba(100,150,180,0.4); }
+
+        .cost-cell { color: #a8e8a0; font-weight: 600; }
+        .total-cell { color: var(--pastel-orange); font-weight: 700; }
+        .qty-cell { font-weight: 600; }
+        .qty-low { color: #f08080; }
+        .qty-ok  { color: #a8e8a0; }
+
+        .delete-btn {
+            background: none;
+            border: 1.5px solid rgba(240,128,128,0.4);
+            color: #f08080;
+            padding: 0.3rem 0.7rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+        .delete-btn:hover {
+            background: rgba(240,128,128,0.15);
+            border-color: #f08080;
+        }
+
+        /* ── STATUS MESSAGES ── */
+        .status-msg {
+            text-align: center; padding: 0.7rem 1rem;
+            border-radius: 10px; font-size: 0.85rem;
+            font-weight: 600; margin-top: 0.75rem;
+            display: none;
+        }
+        .status-msg.success { background: rgba(168,232,160,0.15); color: #a8e8a0; border: 1px solid rgba(168,232,160,0.3); display: block; }
+        .status-msg.error   { background: rgba(240,128,128,0.15); color: #f08080; border: 1px solid rgba(240,128,128,0.3); display: block; }
+
+        /* ── EMPTY / LOADING STATE ── */
+        .empty-state {
+            text-align: center; padding: 3rem 2rem;
+            color: var(--gray-lavender); font-style: italic;
+        }
+        .empty-state .bow { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 800px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .add-form-card { position: static; }
+            table { font-size: 0.8rem; }
+            th, td { padding: 0.6rem 0.5rem; }
+        }
+
+        /* ── SPARKLE ── */
+        .sparkle {
+            position: fixed; width: 8px; height: 8px;
+            pointer-events: none;
+            background: radial-gradient(circle, #ffd700, #ffcc00, #fff8dc, transparent);
+            border-radius: 50%;
+            animation: sparkle-fade 0.8s ease-out forwards;
+            z-index: 9999;
+            box-shadow: 0 0 6px gold, 0 0 10px #ffd700;
+        }
+        @keyframes sparkle-fade {
+            0%   { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0.2) translateY(-10px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="inventory-password-modal" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.88);z-index:9999;">
+    <div style="width:min(100%,400px);background:#20113c;color:#f5d79a;padding:2rem;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,0.45);font-family:Poppins,sans-serif;">
+        <h2 style="margin:0 0 1rem;font-size:1.4rem;">Inventory Access</h2>
+        <p style="margin:0 0 1.25rem;color:#d8c49f;">Enter the admin password to view the inventory.</p>
+        <input id="inventory-password-input" type="password" autocomplete="current-password" placeholder="Password" style="width:100%;padding:0.85rem 1rem;border-radius:14px;border:2px solid #866e9f;background:#2d1f52;color:#f5d79a;font-size:0.95rem;" />
+        <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1rem;">
+            <button id="inventory-password-cancel" type="button" style="padding:0.75rem 1.1rem;border:none;border-radius:14px;background:rgba(255,255,255,0.08);color:#f5d79a;cursor:pointer;">Back</button>
+            <button id="inventory-password-submit" type="button" style="padding:0.75rem 1.1rem;border:none;border-radius:14px;background:linear-gradient(135deg,#c39559,#f5d79a);color:#20113c;cursor:pointer;font-weight:700;">Unlock</button>
+        </div>
+        <p id="inventory-password-feedback" style="margin-top:1rem;color:#f08080;min-height:1.2rem;font-size:0.92rem;"></p>
+    </div>
+</div>
+
+<script>
+  const inventoryModal = document.getElementById('inventory-password-modal');
+  const inventoryInput = document.getElementById('inventory-password-input');
+  const inventoryFeedback = document.getElementById('inventory-password-feedback');
+  const inventorySubmit = document.getElementById('inventory-password-submit');
+  const inventoryCancel = document.getElementById('inventory-password-cancel');
+
+  function unlockInventory() {
+    if (inventoryInput.value === 'Cookcandida5') {
+      inventoryModal.style.display = 'none';
+      inventoryFeedback.textContent = '';
+      inventoryInput.value = '';
+      loadInventory();
+    } else {
+      inventoryFeedback.textContent = 'Incorrect password. Access denied.';
+      inventoryInput.value = '';
+      inventoryInput.focus();
+    }
+  }
+
+  inventorySubmit.addEventListener('click', unlockInventory);
+  inventoryInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') unlockInventory();
+  });
+  inventoryCancel.addEventListener('click', function() {
+    window.location.href = 'index.html';
+  });
+
+  window.addEventListener('load', function() {
+    inventoryInput.focus();
+  });
+</script>
+
+<div class="confetti-container" id="confetti"></div>
+
+<nav class="navbar">
+    <div class="nav-brand">
+        <a href="index.html">
+            <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
+        </a>
+        <p class="tagline">Cancan's Corner · Admin</p>
+    </div>
+    <a href="index.html" class="nav-back">← Back to Site</a>
+</nav>
+
+<!-- Page Header -->
+<div class="page-header">
+    <h2>🎀 Supply Inventory</h2>
+    <p>Track your wrapping supplies, costs, vendors & stock levels</p>
+    <div class="gold-divider"></div>
+</div>
+
+<!-- Summary Cards -->
+<div class="summary-bar">
+    <div class="summary-card">
+        <div class="s-label">Total Items</div>
+        <div class="s-value" id="stat-total">—</div>
+    </div>
+    <div class="summary-card">
+        <div class="s-label">Total Inventory Value</div>
+        <div class="s-value" id="stat-value">—</div>
+    </div>
+    <div class="summary-card">
+        <div class="s-label">Low Stock Items</div>
+        <div class="s-value" id="stat-low">—</div>
+    </div>
+    <div class="summary-card">
+        <div class="s-label">Vendors</div>
+        <div class="s-value" id="stat-vendors">—</div>
+    </div>
+</div>
+
+<!-- Main Layout -->
+<div class="main-layout">
+
+    <!-- ADD FORM -->
+    <div class="add-form-card">
+        <h3>➕ Add New Supply</h3>
+
+        <div class="form-group">
+            <label>Item Name *</label>
+            <input type="text" id="item_name" placeholder="e.g. Gold Ribbon">
+        </div>
+
+        <div class="form-group">
+            <label>Category *</label>
+            <select id="category">
+                <option value="" disabled selected>Select category…</option>
+                <option>Ribbon</option>
+                <option>Wrapping Paper</option>
+                <option>Bow</option>
+                <option>Tape</option>
+                <option>Gift Bag</option>
+                <option>Tissue Paper</option>
+                <option>Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Vendor / Store</label>
+            <input type="text" id="vendor" placeholder="e.g. Dollar Tree, Amazon">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Cost Per Unit ($) *</label>
+                <input type="number" id="cost_per_unit" placeholder="e.g. 2.50" step="0.01" min="0">
+            </div>
+            <div class="form-group">
+                <label>Quantity *</label>
+                <input type="number" id="quantity" placeholder="e.g. 10" min="0">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Notes</label>
+            <textarea id="notes" placeholder="Color, size, where to reorder…"></textarea>
+        </div>
+
+        <button class="add-btn" id="addBtn" onclick="addItem()">🎀 Add to Inventory</button>
+        <div class="status-msg" id="formStatus"></div>
+    </div>
+
+    <!-- TABLE AREA -->
+    <div class="table-area">
+        <div class="table-controls">
+            <strong style="font-size:0.95rem;">All Supplies</strong>
+            <select class="filter-select" id="filterCategory" onchange="filterTable()">
+                <option value="">All Categories</option>
+                <option>Ribbon</option>
+                <option>Wrapping Paper</option>
+                <option>Bow</option>
+                <option>Tape</option>
+                <option>Gift Bag</option>
+                <option>Tissue Paper</option>
+                <option>Other</option>
+            </select>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Category</th>
+                        <th>Vendor</th>
+                        <th>Cost / Unit</th>
+                        <th>Qty</th>
+                        <th>Total Value</th>
+                        <th>Notes</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="inventoryBody">
+                    <tr>
+                        <td colspan="8">
+                            <div class="empty-state">
+                                <div class="bow">🎀</div>
+                                <p>Loading inventory…</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// ── SUPABASE INIT ──
+const { createClient } = supabase;
+const SUPABASE_URL = 'https://umfheobuqegcluwedxwm.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtZmhlb2J1cWVnY2x1d2VkeHdtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1OTUzODMsImV4cCI6MjA5MTE3MTM4M30.6ejuz6sJJw9kLBRf3XLTd7Cf5OP9UWu60hGEv4TKDZY';
+const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let allItems = [];
+
+// ── CATEGORY → CSS CLASS ──
+function catClass(cat) {
+    const map = {
+        'Ribbon': 'cat-ribbon',
+        'Wrapping Paper': 'cat-paper',
+        'Bow': 'cat-bow',
+        'Tape': 'cat-tape',
+        'Gift Bag': 'cat-bags',
+        'Tissue Paper': 'cat-tissue',
+        'Other': 'cat-other'
+    };
+    return map[cat] || 'cat-other';
+}
+
+// ── LOAD INVENTORY ──
+async function loadInventory() {
+    const { data, error } = await db
+        .from('inventory')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        document.getElementById('inventoryBody').innerHTML = `
+            <tr><td colspan="8">
+                <div class="empty-state"><div class="bow">⚠️</div><p>Could not load inventory. Check Supabase connection.</p></div>
+            </td></tr>`;
+        return;
+    }
+
+    allItems = data || [];
+    renderTable(allItems);
+    updateStats(allItems);
+}
+
+// ── RENDER TABLE ──
+function renderTable(items) {
+    const tbody = document.getElementById('inventoryBody');
+    if (!items.length) {
+        tbody.innerHTML = `
+            <tr><td colspan="8">
+                <div class="empty-state">
+                    <div class="bow">🎀</div>
+                    <p>No supplies yet — add your first item!</p>
+                </div>
+            </td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = items.map(item => {
+        const total = ((item.cost_per_unit || 0) * (item.quantity || 0)).toFixed(2);
+        const qtyClass = (item.quantity || 0) <= 2 ? 'qty-low' : 'qty-ok';
+        return `
+        <tr>
+            <td><strong>${item.item_name || '—'}</strong></td>
+            <td><span class="category-badge ${catClass(item.category)}">${item.category || '—'}</span></td>
+            <td>${item.vendor || '—'}</td>
+            <td class="cost-cell">$${parseFloat(item.cost_per_unit || 0).toFixed(2)}</td>
+            <td class="qty-cell ${qtyClass}">${item.quantity ?? '—'}</td>
+            <td class="total-cell">$${total}</td>
+            <td style="font-size:0.8rem;color:var(--gray-lavender);">${item.notes || '—'}</td>
+            <td><button class="delete-btn" onclick="deleteItem(${item.id})">✕</button></td>
+        </tr>`;
+    }).join('');
+}
+
+// ── UPDATE SUMMARY STATS ──
+function updateStats(items) {
+    const totalValue = items.reduce((sum, i) => sum + ((i.cost_per_unit || 0) * (i.quantity || 0)), 0);
+    const lowStock = items.filter(i => (i.quantity || 0) <= 2).length;
+    const vendors = new Set(items.map(i => i.vendor).filter(Boolean)).size;
+
+    document.getElementById('stat-total').textContent   = items.length;
+    document.getElementById('stat-value').textContent   = '$' + totalValue.toFixed(2);
+    document.getElementById('stat-low').textContent     = lowStock;
+    document.getElementById('stat-vendors').textContent = vendors;
+}
+
+// ── FILTER TABLE ──
+function filterTable() {
+    const cat = document.getElementById('filterCategory').value;
+    const filtered = cat ? allItems.filter(i => i.category === cat) : allItems;
+    renderTable(filtered);
+}
+
+// ── ADD ITEM ──
+async function addItem() {
+    const btn = document.getElementById('addBtn');
+    const statusEl = document.getElementById('formStatus');
+
+    const item_name    = document.getElementById('item_name').value.trim();
+    const category     = document.getElementById('category').value;
+    const vendor       = document.getElementById('vendor').value.trim();
+    const cost_per_unit = parseFloat(document.getElementById('cost_per_unit').value);
+    const quantity     = parseInt(document.getElementById('quantity').value);
+    const notes        = document.getElementById('notes').value.trim();
+
+    // Validate required fields
+    if (!item_name || !category || isNaN(cost_per_unit) || isNaN(quantity)) {
+        statusEl.className = 'status-msg error';
+        statusEl.textContent = '⚠️ Please fill in all required fields.';
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Adding…';
+
+    const { error } = await db.from('inventory').insert([{
+        item_name, category, vendor, cost_per_unit, quantity, notes
+    }]);
+
+    if (error) {
+        statusEl.className = 'status-msg error';
+        statusEl.textContent = '❌ Error adding item. Try again.';
+    } else {
+        statusEl.className = 'status-msg success';
+        statusEl.textContent = '🎀 Item added successfully!';
+        // Clear form
+        ['item_name','vendor','cost_per_unit','quantity','notes'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('category').selectedIndex = 0;
+        await loadInventory();
+        setTimeout(() => { statusEl.className = 'status-msg'; statusEl.textContent = ''; }, 3000);
+    }
+
+    btn.disabled = false;
+    btn.textContent = '🎀 Add to Inventory';
+}
+
+// ── DELETE ITEM ──
+async function deleteItem(id) {
+    if (!confirm('Remove this item from inventory?')) return;
+    const { error } = await db.from('inventory').delete().eq('id', id);
+    if (!error) await loadInventory();
+}
+
+// ── CONFETTI ──
+const confettiContainer = document.getElementById('confetti');
+const colors = ['#f5d79a', '#ecdb9f', '#c39559', '#866e9f', '#785678'];
+for (let i = 0; i < 25; i++) {
+    const dot = document.createElement('div');
+    dot.classList.add('confetti-dot');
+    const size = Math.random() * 8 + 4;
+    dot.style.width = size + 'px';
+    dot.style.height = size + 'px';
+    dot.style.left = Math.random() * 100 + '%';
+    dot.style.top = '-20px';
+    dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+    dot.style.animationDuration = (Math.random() * 6 + 4) + 's';
+    dot.style.animationDelay = (Math.random() * 5) + 's';
+    confettiContainer.appendChild(dot);
+}
+
+// ── SPARKLE CURSOR ──
+document.addEventListener('mousemove', function(e) {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    sparkle.style.left = e.clientX + 'px';
+    sparkle.style.top  = e.clientY + 'px';
+    document.body.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 800);
+});
+
+// ── INIT ──
+// Inventory data will load after successful password entry.
+</script>
+
+</body>
+</html>

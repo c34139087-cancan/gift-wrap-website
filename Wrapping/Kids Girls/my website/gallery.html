@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Cancan's Corner Gift Wrapping</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        .gallery-hero {
+            text-align: center;
+            padding: 60px 20px 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .gallery-hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #f5d79a;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-hero p {
+            color: #ecdb9f;
+            font-size: 1.15rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .gallery-divider {
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #f5d79a, transparent);
+            margin: 1.2rem auto 0;
+            border-radius: 2px;
+        }
+
+        .gallery-section {
+            padding: 40px 5% 80px;
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-featured {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid #866e9f;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.5);
+            transition: all 0.4s ease;
+            background: rgba(64,41,91,0.6);
+            cursor: pointer;
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .gallery-featured:hover {
+            border-color: #f5d79a;
+            box-shadow: 0 20px 55px rgba(0,0,0,0.65), 0 0 0 1px rgba(245,215,154,0.3);
+        }
+
+        .gallery-featured img {
+            width: 100%;
+            height: 480px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-featured:hover img {
+            transform: scale(1.03);
+        }
+
+        .gallery-trio {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid #866e9f;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.5);
+            transition: all 0.4s ease;
+            background: rgba(64,41,91,0.6);
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px) scale(1.01);
+            border-color: #f5d79a;
+            box-shadow: 0 20px 55px rgba(0,0,0,0.65), 0 0 0 1px rgba(245,215,154,0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(32,17,60,0.85) 0%, rgba(32,17,60,0.2) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 24px;
+        }
+
+        .gallery-featured:hover .gallery-overlay,
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .overlay-text {
+            color: #f5d79a;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10,5,20,0.92);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(6px);
+        }
+
+        .lightbox.active { display: flex; }
+
+        .lightbox-img {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 16px;
+            box-shadow: 0 0 60px rgba(245,215,154,0.25), 0 0 0 3px #f5d79a;
+            object-fit: contain;
+            animation: lightboxIn 0.3s ease;
+        }
+
+        @keyframes lightboxIn {
+            from { opacity: 0; transform: scale(0.92); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        .lightbox-close {
+            position: fixed;
+            top: 20px;
+            right: 28px;
+            font-size: 2.5rem;
+            color: #f5d79a;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: sans-serif;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .lightbox-close:hover { color: #fff; transform: scale(1.2); }
+
+        @media (max-width: 768px) {
+            .gallery-trio { grid-template-columns: 1fr; }
+            .gallery-featured img { height: 280px; }
+            .gallery-item img { height: 260px; }
+            .gallery-hero h2 { font-size: 2rem; }
+        }
+
+        .nav-link.active { color: #f5d79a !important; border-bottom: 2px solid #f5d79a; padding-bottom: 2px; }
+    </style>
+</head>
+<body>
+    <div class="confetti-container" id="confetti"></div>
+
+    <nav class="navbar">
+        <div class="nav-brand" onclick="window.location='index.html'" style="cursor:pointer;">
+            <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
+            <div>
+                <p class="tagline">Cancan's Corner Gift Wrapping</p>
+            </div>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+            <li class="nav-item"><a href="gallery.html" class="nav-link active">Gallery</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="gallery-hero">
+        <h2>Gift Wrapping Gallery</h2>
+        <p>A peek at the pretty bows &amp; tidy lines!</p>
+        <div class="gallery-divider"></div>
+    </div>
+
+    <section class="gallery-section">
+
+        <!-- ── FEATURED TOP ── -->
+        <div class="gallery-featured" onclick="openLightbox('aipresentsforsite6.png')">
+            <img src="aipresentsforsite6.png" alt="Birthday gift wrapping collection by Cancan's Corner">
+            <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+        </div>
+
+        <!-- ── ROW 1 ── -->
+        <div class="gallery-trio">
+            <div class="gallery-item" onclick="openLightbox('aipresentforsite6.png')">
+                <img src="aipresentforsite6.png" alt="Birthday gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('aixmaschristmasgiftbags.png')">
+                <img src="aixmaschristmasgiftbags.png" alt="Christmas gift bags by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('aichristmasgift.png')">
+                <img src="aichristmasgift.png" alt="Christmas gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+        </div>
+
+        <!-- ── ROW 2 ── -->
+        <div class="gallery-trio">
+            <div class="gallery-item" onclick="openLightbox('bridegroomfavors.png')">
+                <img src="bridegroomfavors.png" alt="Wedding favor gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('bridegroomfavors1.png')">
+                <img src="bridegroomfavors1.png" alt="Bridal gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('bridegroomfavors2.png')">
+                <img src="bridegroomfavors2.png" alt="Wedding gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+        </div>
+
+        <!-- ── ROW 3 ── -->
+        <div class="gallery-trio">
+            <div class="gallery-item" onclick="openLightbox('corpgifts1.png')">
+                <img src="corpgifts1.png" alt="Corporate gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('corpgifts2.png')">
+                <img src="corpgifts2.png" alt="Corporate gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('corpgifts3.png')">
+                <img src="corpgifts3.png" alt="Corporate gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+        </div>
+
+        <!-- ── ROW 4 ── -->
+        <div class="gallery-trio">
+            <div class="gallery-item" onclick="openLightbox('kidschristmasgifts.png')">
+                <img src="kidschristmasgifts.png" alt="Kids Christmas gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('aianniversarygiftforsite.png')">
+                <img src="aianniversarygiftforsite.png" alt="Anniversary gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('aigiftsforsite7.png')">
+                <img src="aigiftsforsite7.png" alt="Baby shower gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+        </div>
+
+        <!-- ── FEATURED: present4 ── -->
+        <div class="gallery-featured" onclick="openLightbox('present4.jpg')">
+            <img src="present4.jpg" alt="Gift wrapping collection by Cancan's Corner">
+            <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+        </div>
+
+        <!-- ── ROW 5 ── -->
+        <div class="gallery-trio">
+            <div class="gallery-item" onclick="openLightbox('present2.jpg')">
+                <img src="present2.jpg" alt="Gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('present1.png')">
+                <img src="present1.png" alt="Gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('present3.jpg')">
+                <img src="present3.jpg" alt="Gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+        </div>
+
+        <!-- ── FEATURED 2: aigiftsforsite ── -->
+        <div class="gallery-featured" onclick="openLightbox('aigiftsforsite.png')">
+            <img src="aigiftsforsite.png" alt="Elegant holiday gift wrapping by Cancan's Corner">
+            <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+        </div>
+
+        <!-- ── ROW 6 ── -->
+        <div class="gallery-trio">
+            <div class="gallery-item" onclick="openLightbox('aigiftsforsite1.png')">
+                <img src="aigiftsforsite1.png" alt="Spring gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('aigiftsforsite2.png')">
+                <img src="aigiftsforsite2.png" alt="Colorful gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('aigiftsforsite3.png')">
+                <img src="aigiftsforsite3.png" alt="Silver gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+        </div>
+
+        <!-- ── ROW 7 ── -->
+        <div class="gallery-trio">
+            <div class="gallery-item" onclick="openLightbox('aigiftsforsite4.png')">
+                <img src="aigiftsforsite4.png" alt="Pink gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('aigiftsforsite5.png')">
+                <img src="aigiftsforsite5.png" alt="Blue gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('aigiftsforsite6.png')">
+                <img src="aigiftsforsite6.png" alt="Tropical gift wrapping by Cancan's Corner">
+                <div class="gallery-overlay"><span class="overlay-text">Click to view</span></div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+        <img class="lightbox-img" id="lightbox-img" src="" alt="Gallery photo enlarged">
+    </div>
+
+ <footer class="footer">
+  <nav class="footer-nav">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About</a>
+  </nav>
+  <p>© 2026 Candida Cook | Cancan's Corner Gift Wrapping <span id="secret-bow" style="cursor:default;user-select:none;">🎀</span></p>
+<p class="footer-note">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!" <a href="inventory.html" style="text-decoration:none; cursor:default;" title="Inventory">🎁</a></p>
+</footer>
+
+<script>
+  function showAdminPasswordModal(redirectUrl) {
+    let modal = document.getElementById('admin-password-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'admin-password-modal';
+      modal.style.cssText = 'position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.82);z-index:9999;';
+      modal.innerHTML = `
+        <div style="width:min(100%,400px);background:#20113c;color:#f5d79a;padding:2rem;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,0.45);font-family:Poppins,sans-serif;">
+          <h2 style="margin:0 0 0.75rem;font-size:1.3rem;">Admin Access</h2>
+          <p style="margin:0 0 1.25rem;color:#d8c49f;">Enter the password to continue.</p>
+          <input id="admin-password-input" type="password" autocomplete="current-password" placeholder="Password" style="width:100%;padding:0.85rem 1rem;border-radius:14px;border:2px solid #866e9f;background:#2d1f52;color:#f5d79a;font-size:0.95rem;"/>
+          <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1rem;">
+            <button id="admin-password-cancel" type="button" style="padding:0.75rem 1.1rem;border:none;border-radius:14px;background:rgba(255,255,255,0.08);color:#f5d79a;cursor:pointer;">Cancel</button>
+            <button id="admin-password-submit" type="button" style="padding:0.75rem 1.1rem;border:none;border-radius:14px;background:linear-gradient(135deg,#c39559,#f5d79a);color:#20113c;cursor:pointer;font-weight:700;">Enter</button>
+          </div>
+          <p id="admin-password-feedback" style="margin-top:1rem;color:#f08080;min-height:1.2rem;font-size:0.92rem;"></p>
+        </div>`;
+      document.body.appendChild(modal);
+      const input = modal.querySelector('#admin-password-input');
+      const feedback = modal.querySelector('#admin-password-feedback');
+      const cancel = modal.querySelector('#admin-password-cancel');
+      const submit = modal.querySelector('#admin-password-submit');
+      function closeModal() {
+        modal.style.display = 'none';
+        input.value = '';
+        feedback.textContent = '';
+      }
+      cancel.addEventListener('click', closeModal);
+      submit.addEventListener('click', () => {
+        if (input.value === 'Cookcandida5') {
+          closeModal();
+          if (redirectUrl) window.location.href = redirectUrl;
+        } else {
+          feedback.textContent = 'Incorrect password. Please try again.';
+          input.value = '';
+          input.focus();
+        }
+      });
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') submit.click();
+        if (event.key === 'Escape') closeModal();
+      });
+    }
+    modal.style.display = 'flex';
+    const input = modal.querySelector('#admin-password-input');
+    input.focus();
+  }
+  document.getElementById('secret-bow').addEventListener('click', function() {
+    showAdminPasswordModal('clients.html');
+  });
+</script>
+
+    <script>
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.getElementById('lightbox-img').src = '';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+        // Open a specific image via URL query param, e.g. gallery.html?img=filename.png
+        (function(){
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const img = params.get('img');
+                if (img) {
+                    // wait a tick to ensure elements are present
+                    setTimeout(() => {
+                        openLightbox(img);
+                        // remove query param for cleanliness
+                        if (history && history.replaceState) history.replaceState(null, '', window.location.pathname + window.location.hash);
+                    }, 50);
+                }
+            } catch (e) { /* ignore */ }
+        })();
+    </script>
+    <script>
+        const container = document.getElementById('confetti');
+        const colors = ['#f5d79a', '#ecdb9f', '#c39559', '#866e9f', '#785678'];
+        for (let i = 0; i < 25; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('confetti-dot');
+            const size = Math.random() * 8 + 4;
+            dot.style.width  = size + 'px';
+            dot.style.height = size + 'px';
+            dot.style.left   = Math.random() * 100 + '%';
+            dot.style.top    = Math.random() * 100 + '%';
+            dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+            dot.style.animationDuration = (Math.random() * 6 + 4) + 's';
+            dot.style.animationDelay    = (Math.random() * 4) + 's';
+            container.appendChild(dot);
+        }
+    </script>
+    <script src="script.js"></script>
+
+    <!-- Back to Top Bow Button -->
+    <style>
+        #backToTop {
+            position: fixed;
+            bottom: 32px;
+            right: 28px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3a1a5a, #5a2a7a);
+            border: 2px solid #ECDB9F;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 99998;
+            opacity: 0;
+            transform: translateY(16px) scale(0.85);
+            transition: opacity 0.35s ease, transform 0.35s ease, box-shadow 0.25s ease;
+            text-decoration: none;
+        }
+        #backToTop.btt-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        #backToTop:hover {
+            box-shadow: 0 6px 24px rgba(236,219,159,0.35);
+            transform: translateY(-3px) scale(1.08);
+        }
+    </style>
+    <script>
+        (function () {
+            const btn = document.createElement("a");
+            btn.id = "backToTop";
+            btn.title = "Back to top";
+            btn.textContent = "🎀";
+            btn.href = "#";
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+            document.body.appendChild(btn);
+            window.addEventListener("scroll", function () {
+                if (window.scrollY > 300) {
+                    btn.classList.add("btt-visible");
+                } else {
+                    btn.classList.remove("btt-visible");
+                }
+            }, { passive: true });
+        })();
+    </script>
+
+    <script>
+        // Mobile hamburger toggle (same behavior as other pages)
+        (function(){
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    hamburger.classList.toggle('active');
+                });
+            }
+        })();
+    </script>
+
+</body>
+</html>

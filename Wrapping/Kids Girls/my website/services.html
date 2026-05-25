@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | Cancan's Corner Gift Wrapping</title>
+    <meta name="description" content="Explore our range of professional gift wrapping services at Cancan's Corner. From simple to elaborate designs, we have something for every occasion.">
+    <meta property="og:title" content="Services | Cancan's Corner Gift Wrapping">
+    <meta property="og:description" content="Explore our range of professional gift wrapping services at Cancan's Corner. From simple to elaborate designs, we have something for every occasion.">
+    <meta property="og:image" content="https://c34139087-cancan.github.io/gift-wrap-website/purple-gifts.jpg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .services-hero {
+            padding: 80px 40px 40px;
+            text-align: center;
+        }
+        .services-hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            color: #ECDB9F;
+            margin-bottom: 16px;
+        }
+        .services-hero p {
+            color: rgba(255,255,255,0.75);
+            font-size: 1.1rem;
+            max-width: 580px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        .services-section {
+            padding: 20px 40px 60px;
+        }
+        .services-section .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .pricing-section {
+            padding: 60px 40px;
+            background: rgba(0,0,0,0.2);
+        }
+        .pricing-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: #ECDB9F;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .pricing-subtitle {
+            color: rgba(255,255,255,0.65);
+            text-align: center;
+            font-size: 1rem;
+            margin-bottom: 48px;
+        }
+        .pricing-grid {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .pricing-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(236,219,159,0.25);
+            border-radius: 16px;
+            padding: 36px 28px;
+            width: 280px;
+            text-align: center;
+            transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+            position: relative;
+        }
+        .pricing-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(236,219,159,0.6);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+        }
+        .pricing-card.featured {
+            border-color: #ECDB9F;
+            background: rgba(236,219,159,0.08);
+        }
+        .featured-badge {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ECDB9F;
+            color: #1A0E30;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 16px;
+            border-radius: 20px;
+        }
+        .card-icon-fa {
+            font-size: 2rem;
+            color: #ECDB9F;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .service-card .card-icon-fa {
+            font-size: 2rem;
+            color: #ECDB9F;
+            margin-bottom: 14px;
+            display: block;
+        }
+        .pricing-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: #ECDB9F;
+            margin-bottom: 10px;
+        }
+        .pricing-card p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            line-height: 1.65;
+            margin-bottom: 20px;
+        }
+        .pricing-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: #ECDB9F;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .pricing-note {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.45);
+            margin-bottom: 24px !important;
+        }
+        .pricing-btn {
+            display: inline-block;
+            padding: 10px 28px;
+            border: 1.5px solid #ECDB9F;
+            border-radius: 30px;
+            color: #ECDB9F;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            transition: background 0.2s, color 0.2s;
+        }
+        .pricing-btn:hover {
+            background: #ECDB9F;
+            color: #1A0E30;
+        }
+        .services-cta {
+            text-align: center;
+            padding: 60px 40px;
+        }
+        .services-cta p {
+            color: rgba(255,255,255,0.75);
+            font-size: 1.1rem;
+            margin-bottom: 24px;
+        }
+
+        /* ── FAQ SECTION ── */
+        .faq-section {
+            padding: 60px 40px;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+        .faq-section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .faq-section-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.4rem);
+            color: #ECDB9F;
+            margin-bottom: 0.3rem;
+        }
+        .faq-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            margin: 0.6rem 0 0.9rem;
+        }
+        .faq-divider span { color: #ECDB9F; font-size: 18px; }
+        .faq-divider hr { border: none; border-top: 1px solid rgba(236,219,159,0.3); width: 80px; }
+        .faq-section-header p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+        }
+        .faq-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.25rem;
+            align-items: center;
+        }
+        .faq-search {
+            flex: 1;
+            padding: 9px 16px;
+            border-radius: 24px;
+            border: 1px solid rgba(236,219,159,0.3);
+            background: rgba(255,255,255,0.05);
+            color: #f0e6ff;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .faq-search::placeholder { color: rgba(255,255,255,0.35); }
+        .faq-search:focus { border-color: #ECDB9F; }
+        .faq-toggle-all {
+            padding: 8px 16px;
+            border-radius: 24px;
+            border: 1px solid rgba(236,219,159,0.35);
+            background: transparent;
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            white-space: nowrap;
+            letter-spacing: 0.03em;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .faq-toggle-all:hover { border-color: #ECDB9F; color: #ECDB9F; }
+        .faq-cat-label {
+            margin: 1.4rem 0 0.5rem;
+            display: inline-flex;
+        }
+        .ribbon-tag {
+            background: rgba(236,219,159,0.1);
+            border: 1px solid #ECDB9F;
+            border-radius: 4px 4px 4px 0;
+            padding: 3px 12px 3px 10px;
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #ECDB9F;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            position: relative;
+        }
+        .ribbon-tag::after {
+            content: '';
+            position: absolute;
+            bottom: -7px;
+            left: -1px;
+            border-left: 7px solid #ECDB9F;
+            border-bottom: 7px solid transparent;
+        }
+        .ribbon-tag::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0px;
+            border-left: 6px solid #1A0E30;
+            border-bottom: 6px solid transparent;
+        }
+        .faq-item {
+            border: 1px solid rgba(236,219,159,0.2);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.04);
+            transition: border-color 0.25s;
+        }
+        .faq-item.faq-hidden { display: none; }
+        .faq-item.faq-open { border-color: #ECDB9F; background: rgba(236,219,159,0.05); }
+        .faq-q {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            gap: 12px;
+            user-select: none;
+        }
+        .faq-q-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.45;
+        }
+        .faq-item.faq-open .faq-q-text { color: #ECDB9F; }
+        .faq-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 1px solid rgba(236,219,159,0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: background 0.25s, border-color 0.25s, transform 0.3s;
+            color: rgba(255,255,255,0.5);
+            font-size: 16px;
+            font-family: monospace;
+            line-height: 1;
+        }
+        .faq-item.faq-open .faq-icon {
+            background: #ECDB9F;
+            border-color: #ECDB9F;
+            color: #1A0E30;
+            transform: rotate(45deg);
+        }
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.38s ease, padding 0.25s ease;
+            padding: 0 1.2rem;
+        }
+        .faq-a.faq-open {
+            max-height: 300px;
+            padding: 0 1.2rem 1rem;
+        }
+        .faq-a p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 13.5px;
+            line-height: 1.75;
+            color: rgba(255,255,255,0.65);
+            margin: 0;
+            border-left: 3px solid #ECDB9F;
+            padding-left: 12px;
+            animation: faqShimmer 0.45s ease;
+        }
+        @keyframes faqShimmer {
+            from { opacity: 0; transform: translateX(-5px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        .faq-no-results {
+            text-align: center;
+            color: rgba(255,255,255,0.35);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            padding: 2rem 0;
+            display: none;
+        }
+        .faq-cta-card {
+            margin-top: 2rem;
+            border: 1px solid rgba(236,219,159,0.3);
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.15) 100%);
+            padding: 1.4rem 1.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .faq-cta-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: #ECDB9F;
+            margin-bottom: 0.2rem;
+        }
+        .faq-cta-card-sub {
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+        }
+        .faq-cta-btn {
+            padding: 10px 24px;
+            border-radius: 30px;
+            background: #ECDB9F;
+            border: none;
+            color: #1A0E30;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            text-decoration: none;
+            display: inline-block;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .faq-cta-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+        #faqConfettiCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        @media (max-width: 640px) {
+            .services-hero,
+            .services-section,
+            .pricing-section,
+            .faq-section,
+            .services-cta { padding-left: 20px; padding-right: 20px; }
+            .pricing-card { width: 100%; max-width: 340px; }
+            .faq-cta-card { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="confetti-container" id="confetti"></div>
+
+    <nav class="navbar">
+        <div class="nav-brand" onclick="window.location='index.html'" style="cursor:pointer;">
+            <a href="index.html">
+                <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
+            </a>
+            <h1></h1>
+            <p class="tagline">Cancan's Corner Gift Wrapping</p>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="services.html" class="nav-link active">Services</a></li>
+            <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        </ul>
+        <button class="mobile-toggle" id="mobileToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <div class="services-hero">
+        <h2>Gift Wrapping Services</h2>
+        <p>Professional wrapping for everyday gifts and bulk orders — every wrap is crafted with care and a personal touch.</p>
+    </div>
+
+    <section class="services-section" id="services">
+        <h3 class="section-title centered">Services Overview</h3>
+        <div class="services-grid">
+            <div class="service-card" id="basic">
+                <i class="fa-solid fa-gift card-icon-fa"></i>
+                <h4>Basic Gift Wrapping</h4>
+                <p>Clean, polished wrapping for everyday gifts. May include simple or lightly styled presentation.</p>
+            </div>
+            <div class="service-card" id="bulk">
+                <i class="fa-solid fa-box-open card-icon-fa"></i>
+                <h4>Bulk Orders</h4>
+                <p>For 10 or more gifts — same size-based pricing with a discount for ordering in bulk. Ideal for events, corporate gifting, parties, and matching sets.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing-section">
+        <h3>Pricing & Options</h3>
+        <p class="pricing-subtitle">Transparent pricing for every gift-wrapping need</p>
+        <p class="payment-note">Payment due at drop-off — Cash App or cash accepted. Get your estimated quote on the Contact page.</p>
+
+        <div class="pricing-grid">
+
+            <div class="pricing-card">
+                <i class="fa-solid fa-gift card-icon-fa"></i>
+                <h4>Basic Gift Wrapping</h4>
+                <p>Clean, polished wrapping for everyday gifts. May include simple or lightly styled presentation.</p>
+                <div class="pricing-amount">Small $6 · Medium $9 · Large $12</div>
+                <p class="pricing-note">per gift</p>
+                <a href="contact.html#get-in-touch" class="pricing-btn">Book Now</a>
+            </div>
+
+            <div class="pricing-card">
+                <i class="fa-solid fa-box-open card-icon-fa"></i>
+                <h4>Bulk Orders (10+ gifts)</h4>
+                <p>Same size-based pricing with a bulk discount — the more you bring, the more you save! Ideal for events, corporate gifting, and parties.</p>
+                <div class="pricing-amount">Small $5 · Medium $8 · Large $10</div>
+                <p class="pricing-note">per gift — bulk discount applied at 10+</p>
+                <a href="contact.html#get-in-touch" class="pricing-btn">Book Now</a>
+            </div>
+
+        </div>
+        <p class="pricing-note" style="margin-top: 1.5rem;">Final pricing confirmed before wrapping begins — may vary based on gift size, quantity, complexity, and special requests.</p>
+    </section>
+
+    <!-- ══════════════ FAQ SECTION ══════════════ -->
+    <section class="faq-section" id="faq">
+
+        <div class="faq-section-header">
+            <h3>Frequently Asked Questions</h3>
+            <div class="faq-divider"><hr><span>🎁</span><hr></div>
+            <p>Everything you need to know about Cancan's Corner</p>
+        </div>
+
+        <div class="faq-controls">
+            <input class="faq-search" type="text" id="faqSearch" placeholder="Search questions…" oninput="faqFilter()">
+            <button class="faq-toggle-all" id="faqToggleAllBtn" onclick="faqToggleAll()">Open all</button>
+        </div>
+
+        <div id="faqList">
+
+            <!-- Drop-off & Pickup -->
+            <div class="faq-cat-block" data-cat="dropoff">
+                <div class="faq-cat-label"><span class="ribbon-tag">Drop-off &amp; Pickup</span></div>
+
+                <div class="faq-item" data-q="how does the drop-off process work">
+                    <div class="faq-q" onclick="faqToggle(this)">
+                        <span class="faq-q-text">How does the drop-off process work?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-a"><p>It's simple! Schedule your drop-off through the booking link on the Contact page, then bring your unwrapped gifts during your chosen time slot. I'll handle everything from there and reach out as soon as they're ready for pickup.</p></div>
+                </div>
+
+                <div class="faq-item" data-q="how far in advance should i drop off my gifts">
+                    <div class="faq-q" onclick="faqToggle(this)">
+                        <span class="faq-q-text">How far in advance should I drop off my gifts?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-a"><p>I recommend at least 24–48 hours before you need them — especially around the holidays. If you're in a time crunch, reach out and I'll do my best to make it work!</p></div>
+                </div>
+
+                <div class="faq-item" data-q="when will my gifts be ready for pickup">
+                    <div class="faq-q" onclick="faqToggle(this)">
+                        <span class="faq-q-text">When will my gifts be ready for pickup?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-a"><p>Most standard wrapping is done within 24 hours of drop-off. For larger or custom orders I'll give you an estimated time when you book. You'll hear from me as soon as everything's wrapped and ready!</p></div>
+                </div>
+            </div>
+
+            <!-- Pricing & Payment -->
+            <div class="faq-cat-block" data-cat="pricing">
+                <div class="faq-cat-label"><span class="ribbon-tag">Pricing &amp; Payment</span></div>
+
+                <div class="faq-item" data-q="how do i get a price estimate calculator">
+                    <div class="faq-q" onclick="faqToggle(this)">
+                        <span class="faq-q-text">How do I get a price estimate?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-a"><p>Easy! Head to the <a href="contact.html?tab=book" style="color:#ECDB9F;">Book Drop-Off</a> tab on the Contact page. Just enter how many small, medium, and large gifts you have and the price calculator updates instantly — no guessing, no waiting. You'll see your estimated total right there before you even submit!</p></div>
+                </div>
+
+                <div class="faq-item" data-q="how much does gift wrapping cost pricing tiers">
+                    <div class="faq-q" onclick="faqToggle(this)">
+                        <span class="faq-q-text">How much does gift wrapping cost?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-a"><p>Basic wrapping is $6 (small), $9 (medium), or $12 (large) per gift. Bulk orders of 10 or more gifts get a discount — $5 (small), $8 (medium), or $10 (large) per gift. The more you bring, the more you save! Check out the pricing cards above for full details.</p></div>
+                </div>
+
+                <div class="faq-item" data-q="how do i pay payment cash app">
+                    <div class="faq-q" onclick="faqToggle(this)">
+                        <span class="faq-q-text">How do I pay?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-a"><p>Payment is accepted via Cash App — just send to $Cancans92. Payment is due at or before pickup. Have questions? Send me a message through the Contact page anytime.</p></div>
+                </div>
+
+                <div class="faq-item" data-q="do you charge extra for oddly shaped large bulky gifts">
+                    <div class="faq-q" onclick="faqToggle(this)">
+                        <span class="faq-q-text">Do you charge extra for oddly shaped or large gifts?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-a"><p>Unusually large or tricky shapes typically fall under the Large/Custom quote tier. Just reach out before your drop-off and describe the item — I'll give you a price upfront so there are no surprises.</p></div>
+                </div>
+            </div>
+
+            <!-- Supplies & Style -->
+            <div class="faq-cat-block" data-cat="supplies">
+                <div class="faq-cat-label"><span class="ribbon-tag">Supplies &amp; Style</span></div>
+
+                <div class="faq-item" data-q="do i need to bring my own wrapping paper supplies materials">
+                    <div class="faq-q" onclick="faqToggle(this)">
+                        <span class="faq-q-text">Do I need to bring my own wrapping paper or supplies?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-a"><p>Nope — supplies are included! If you have a specific paper, ribbon, or theme in mind you're welcome to bring your own and I'll work with it. Just mention it when you book so I can plan ahead.</p></div>
+                </div>
+
+                <div class="faq-item" data-q="can i request a specific color theme style custom design">
+                    <div class="faq-q" onclick="faqToggle(this)">
+                        <span class="faq-q-text">Can I request a specific color, theme, or style?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-a"><p>Absolutely! There's a notes field in the booking form — share your occasion, colors, vibe, or anything else. The more detail you give me, the more personal I can make it.</p></div>
+                </div>
+            </div>
+
+            <!-- Booking & Contact -->
+            <div class="faq-cat-block" data-cat="booking">
+                <div class="faq-cat-label"><span class="ribbon-tag">Booking &amp; Contact</span></div>
+
+                <div class="faq-item" data-q="what are your hours when are you available open">
+                    <div class="faq-q" onclick="faqToggle(this)">
+                        <span class="faq-q-text">What are your hours?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-a"><p>Drop-offs are available 7 days a week, 3 PM to 8 PM. You can book your slot anytime through the Calendly scheduler on the Contact page — it'll show you exactly what's open.</p></div>
+                </div>
+
+                <div class="faq-item" data-q="what if i need to cancel or reschedule appointment booking">
+                    <div class="faq-q" onclick="faqToggle(this)">
+                        <span class="faq-q-text">What if I need to cancel or reschedule?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-a"><p>Life happens! Reschedule through the Calendly link in your booking confirmation email, or send me a message on the Contact page and I'll get you sorted out right away.</p></div>
+                </div>
+            </div>
+
+        </div><!-- /faqList -->
+
+        <div class="faq-no-results" id="faqNoResults">No questions match your search. Try a different keyword!</div>
+
+        <div class="faq-cta-card">
+            <div>
+                <div class="faq-cta-card-title">Still have questions?</div>
+                <div class="faq-cta-card-sub">I'd love to hear from you — reach out anytime!</div>
+            </div>
+            <a class="faq-cta-btn" href="contact.html#get-in-touch">Get In Touch</a>
+        </div>
+
+    </section>
+    <!-- ══════════════ END FAQ ══════════════ -->
+
+
+
+    <footer class="footer">
+        <nav class="footer-nav">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
+            <a href="about.html">About</a>
+        </nav>
+        <p>© 2026 Candida Cook | Cancan's Corner Gift Wrapping <span id="secret-bow" style="cursor:default;user-select:none;">🎀</span></p>
+        <p class="footer-note">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!" <a href="inventory.html" style="text-decoration:none; cursor:default;" title="Inventory">🎁</a></p>
+    </footer>
+
+    <canvas id="faqConfettiCanvas"></canvas>
+
+    <script>
+        function showAdminPasswordModal(redirectUrl) {
+            let modal = document.getElementById('admin-password-modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'admin-password-modal';
+                modal.style.cssText = 'position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.82);z-index:9999;';
+                modal.innerHTML = `
+                    <div style="width:min(100%,400px);background:#20113c;color:#f5d79a;padding:2rem;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,0.45);font-family:Poppins,sans-serif;">
+                        <h2 style="margin:0 0 0.75rem;font-size:1.3rem;">Admin Access</h2>
+                        <p style="margin:0 0 1.25rem;color:#d8c49f;">Enter the password to continue.</p>
+                        <input id="admin-password-input" type="password" autocomplete="current-password" placeholder="Password" style="width:100%;padding:0.85rem 1rem;border-radius:14px;border:2px solid #866e9f;background:#2d1f52;color:#f5d79a;font-size:0.95rem;"/>
+                        <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1rem;">
+                            <button id="admin-password-cancel" type="button" style="padding:0.75rem 1.1rem;border:none;border-radius:14px;background:rgba(255,255,255,0.08);color:#f5d79a;cursor:pointer;">Cancel</button>
+                            <button id="admin-password-submit" type="button" style="padding:0.75rem 1.1rem;border:none;border-radius:14px;background:linear-gradient(135deg,#c39559,#f5d79a);color:#20113c;cursor:pointer;font-weight:700;">Enter</button>
+                        </div>
+                        <p id="admin-password-feedback" style="margin-top:1rem;color:#f08080;min-height:1.2rem;font-size:0.92rem;"></p>
+                    </div>`;
+                document.body.appendChild(modal);
+                const input = modal.querySelector('#admin-password-input');
+                const feedback = modal.querySelector('#admin-password-feedback');
+                const cancel = modal.querySelector('#admin-password-cancel');
+                const submit = modal.querySelector('#admin-password-submit');
+                function closeModal() {
+                    modal.style.display = 'none';
+                    input.value = '';
+                    feedback.textContent = '';
+                }
+                cancel.addEventListener('click', closeModal);
+                submit.addEventListener('click', () => {
+                    if (input.value === 'Cookcandida5') {
+                        closeModal();
+                        if (redirectUrl) window.location.href = redirectUrl;
+                    } else {
+                        feedback.textContent = 'Incorrect password. Please try again.';
+                        input.value = '';
+                        input.focus();
+                    }
+                });
+                input.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter') submit.click();
+                    if (event.key === 'Escape') closeModal();
+                });
+            }
+            modal.style.display = 'flex';
+            const input = modal.querySelector('#admin-password-input');
+            input.focus();
+        }
+        document.getElementById('secret-bow').addEventListener('click', function() {
+            showAdminPasswordModal('clients.html');
+        });
+    </script>
+
+    <script>
+        const toggle = document.getElementById('mobileToggle');
+        const menu = document.querySelector('.nav-menu');
+        toggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+    </script>
+
+    <script>
+        const container = document.getElementById('confetti');
+        const colors = ['#f5d79a', '#ecdb9f', '#c39559', '#866e9f', '#785678'];
+        for (let i = 0; i < 25; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('confetti-dot');
+            const size = Math.random() * 8 + 4;
+            dot.style.width  = size + 'px';
+            dot.style.height = size + 'px';
+            dot.style.left   = Math.random() * 100 + '%';
+            dot.style.top    = Math.random() * 100 + '%';
+            dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+            dot.style.animationDuration = (Math.random() * 6 + 4) + 's';
+            dot.style.animationDelay    = (Math.random() * 4) + 's';
+            container.appendChild(dot);
+        }
+    </script>
+
+    <script>
+        const cursor = document.createElement('div');
+        cursor.style.cssText = `
+            position: fixed;
+            width: 28px;
+            height: 28px;
+            pointer-events: none;
+            z-index: 99999;
+            font-size: 22px;
+            line-height: 1;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+            user-select: none;
+        `;
+        cursor.textContent = '🎀';
+        document.body.appendChild(cursor);
+        document.body.style.cursor = 'none';
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top  = e.clientY + 'px';
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.left     = (e.clientX + (Math.random() * 16 - 8)) + 'px';
+            sparkle.style.top      = (e.clientY + (Math.random() * 16 - 8)) + 'px';
+            sparkle.style.position = 'fixed';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 800);
+        });
+        document.addEventListener('mousedown', () => { cursor.style.transform = 'translate(-50%, -50%) scale(1.4)'; });
+        document.addEventListener('mouseup',   () => { cursor.style.transform = 'translate(-50%, -50%) scale(1)'; });
+    </script>
+
+    <!-- ── FAQ JavaScript ── -->
+    <script>
+        const faqCanvas  = document.getElementById('faqConfettiCanvas');
+        const faqCtx     = faqCanvas.getContext('2d');
+        const faqColors  = ['#ECDB9F', '#c9b8e8', '#9b59b6', '#ffffff', '#e8a0d0', '#f5d79a'];
+        let   faqParticles = [];
+        let   faqAnimId    = null;
+
+        function faqBurst(x, y) {
+            faqCanvas.width  = window.innerWidth;
+            faqCanvas.height = window.innerHeight;
+            for (let i = 0; i < 40; i++) {
+                faqParticles.push({
+                    x, y,
+                    vx:    (Math.random() - 0.5) * 7,
+                    vy:    (Math.random() - 3)   * 5,
+                    r:     Math.random() * 4 + 2,
+                    color: faqColors[Math.floor(Math.random() * faqColors.length)],
+                    alpha: 1,
+                    rot:   Math.random() * 360,
+                    rotV:  (Math.random() - 0.5) * 9
+                });
+            }
+            if (faqAnimId) cancelAnimationFrame(faqAnimId);
+            faqAnimate();
+        }
+
+        function faqAnimate() {
+            faqCtx.clearRect(0, 0, faqCanvas.width, faqCanvas.height);
+            faqParticles = faqParticles.filter(p => p.alpha > 0.05);
+            faqParticles.forEach(p => {
+                p.x += p.vx; p.y += p.vy; p.vy += 0.2;
+                p.alpha -= 0.017; p.rot += p.rotV;
+                faqCtx.save();
+                faqCtx.globalAlpha = p.alpha;
+                faqCtx.translate(p.x, p.y);
+                faqCtx.rotate(p.rot * Math.PI / 180);
+                faqCtx.fillStyle = p.color;
+                faqCtx.fillRect(-p.r, -p.r / 2, p.r * 2, p.r);
+                faqCtx.restore();
+            });
+            if (faqParticles.length > 0) {
+                faqAnimId = requestAnimationFrame(faqAnimate);
+            } else {
+                faqCtx.clearRect(0, 0, faqCanvas.width, faqCanvas.height);
+            }
+        }
+
+        function faqToggle(btn) {
+            const item   = btn.closest('.faq-item');
+            const ans    = item.querySelector('.faq-a');
+            const isOpen = item.classList.contains('faq-open');
+            document.querySelectorAll('.faq-item.faq-open').forEach(el => {
+                el.classList.remove('faq-open');
+                el.querySelector('.faq-a').classList.remove('faq-open');
+            });
+            if (!isOpen) {
+                item.classList.add('faq-open');
+                ans.classList.add('faq-open');
+                const rect = btn.getBoundingClientRect();
+                faqBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+            }
+            faqUpdateToggleBtn();
+        }
+
+        function faqToggleAll() {
+            const visible = document.querySelectorAll('.faq-item:not(.faq-hidden)');
+            const anyOpen = document.querySelector('.faq-item.faq-open');
+            visible.forEach(item => {
+                const ans = item.querySelector('.faq-a');
+                if (anyOpen) {
+                    item.classList.remove('faq-open');
+                    ans.classList.remove('faq-open');
+                } else {
+                    item.classList.add('faq-open');
+                    ans.classList.add('faq-open');
+                }
+            });
+            faqUpdateToggleBtn();
+        }
+
+        function faqUpdateToggleBtn() {
+            const btn     = document.getElementById('faqToggleAllBtn');
+            const anyOpen = document.querySelector('.faq-item.faq-open');
+            btn.textContent = anyOpen ? 'Close all' : 'Open all';
+        }
+
+        function faqFilter() {
+            const val   = document.getElementById('faqSearch').value.toLowerCase().trim();
+            const items = document.querySelectorAll('.faq-item');
+            let anyVisible = false;
+            items.forEach(item => {
+                const keywords = (item.getAttribute('data-q') || '').toLowerCase();
+                const label    = item.querySelector('.faq-q-text').textContent.toLowerCase();
+                const match    = !val || keywords.includes(val) || label.includes(val);
+                item.classList.toggle('faq-hidden', !match);
+                if (match) anyVisible = true;
+            });
+            document.querySelectorAll('.faq-cat-block').forEach(block => {
+                const hasVisible = block.querySelectorAll('.faq-item:not(.faq-hidden)').length > 0;
+                block.style.display = hasVisible ? '' : 'none';
+            });
+            document.getElementById('faqNoResults').style.display = anyVisible ? 'none' : 'block';
+            faqUpdateToggleBtn();
+        }
+    </script>
+
+    <!-- ── Back to Top Bow Button ── -->
+    <style>
+        #backToTop {
+            position: fixed;
+            bottom: 32px;
+            right: 28px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3a1a5a, #5a2a7a);
+            border: 2px solid #ECDB9F;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 99998;
+            opacity: 0;
+            transform: translateY(16px) scale(0.85);
+            transition: opacity 0.35s ease, transform 0.35s ease, box-shadow 0.25s ease;
+            text-decoration: none;
+        }
+        #backToTop.btt-visible { opacity: 1; transform: translateY(0) scale(1); }
+        #backToTop:hover { box-shadow: 0 6px 24px rgba(236,219,159,0.35); transform: translateY(-3px) scale(1.08); }
+    </style>
+    <script>
+        (function () {
+            const btn = document.createElement("a");
+            btn.id = "backToTop";
+            btn.title = "Back to top";
+            btn.textContent = "🎀";
+            btn.href = "#";
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+            document.body.appendChild(btn);
+            window.addEventListener("scroll", function () {
+                if (window.scrollY > 300) {
+                    btn.classList.add("btt-visible");
+                } else {
+                    btn.classList.remove("btt-visible");
+                }
+            }, { passive: true });
+        })();
+    </script>
+
+</body>
+</html>

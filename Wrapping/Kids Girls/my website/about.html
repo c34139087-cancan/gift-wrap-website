@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Candida Cook | Cancan's Corner Gift Wrapping</title>
+    <meta name="description" content="Learn more about Candida Cook, the owner of Cancan's Corner Gift Wrapping Service, and her passion for creating beautiful gift wraps.">
+    <meta property="og:title" content="About Candida Cook | Cancan's Corner Gift Wrapping">
+    <meta property="og:description" content="Meet Candida Cook, the artist behind Cancan's Corner Gift Wrapping in Morrison, TN. Every ribbon and bow crafted with care!">
+    <meta property="og:image" content="https://c34139087-cancan.github.io/gift-wrap-website/purple-gifts.jpg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <nav class="navbar">
+        <div class="nav-brand" onclick="window.location='index.html'" style="cursor:pointer;">
+            <a href="index.html">
+  <a href="index.html">
+  <img src="navlogo.png" alt="Cancan's Corner Logo" class="nav-logo">
+</a>
+            
+            <p class="tagline">Cancan's Corner Gift Wrapping</p>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+            <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link active">About</a></li>
+        </ul>
+        <button class="mobile-toggle" id="mobileToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <section class="about">
+        <div class="about-container">
+            <div class="about-image">
+                <div class="image-frame">
+                    <img src="CandidaCook.jpg" alt="Candida Cook - Gift Wrapping Artist" class="profile-photo">
+                </div>
+            </div>
+            <div class="about-text">
+                <h3 class="section-title">About Me</h3>
+                <p>
+                    Hello! I'm Candida Cook, owner of Cancan's Corner Gift Wrapping Service. I believe
+                    that the presentation of a gift is just as important as what's inside. With years of
+                    experience in gift wrapping artistry, I've transformed many ordinary packages
+                    into extraordinary works of art.
+                </p>
+                <p>
+                    My passion lies in creating beautiful wrapping designs that capture the
+                    essence of celebration, love, and thoughtfulness. Every ribbon, every fold,
+                    every detail is crafted with care and precision.
+                </p>
+                <div class="skills-tags">
+                    <a href="gallery.html?img=corpgifts3.png" class="tag" style="text-decoration: none;">Custom Design</a>
+                    <a href="gallery.html?img=aigiftsforsite.png" class="tag" style="text-decoration: none;">Luxury Materials</a>
+                    <a href="gallery.html?img=bridegroomfavors2.png" class="tag" style="text-decoration: none;">Event Styling</a>
+                    <a href="services.html" class="tag" style="text-decoration: none;">Sustainable Options</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+      
+<footer class="footer">
+  <nav class="footer-nav">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About</a>
+  </nav>
+  <p>© 2026 Candida Cook | Cancan's Corner Gift Wrapping <span id="secret-bow" style="cursor:default;user-select:none;">🎀</span></p>
+<p class="footer-note">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!" <a href="inventory.html" style="text-decoration:none; cursor:default;" title="Inventory">🎁</a></p>
+</footer>
+
+<script>
+  function showAdminPasswordModal(redirectUrl) {
+    let modal = document.getElementById('admin-password-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'admin-password-modal';
+      modal.style.cssText = 'position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.82);z-index:9999;';
+      modal.innerHTML = `
+        <div style="width:min(100%,400px);background:#20113c;color:#f5d79a;padding:2rem;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,0.45);font-family:Poppins,sans-serif;">
+          <h2 style="margin:0 0 0.75rem;font-size:1.3rem;">Admin Access</h2>
+          <p style="margin:0 0 1.25rem;color:#d8c49f;">Enter the password to continue.</p>
+          <input id="admin-password-input" type="password" autocomplete="current-password" placeholder="Password" style="width:100%;padding:0.85rem 1rem;border-radius:14px;border:2px solid #866e9f;background:#2d1f52;color:#f5d79a;font-size:0.95rem;"/>
+          <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1rem;">
+            <button id="admin-password-cancel" type="button" style="padding:0.75rem 1.1rem;border:none;border-radius:14px;background:rgba(255,255,255,0.08);color:#f5d79a;cursor:pointer;">Cancel</button>
+            <button id="admin-password-submit" type="button" style="padding:0.75rem 1.1rem;border:none;border-radius:14px;background:linear-gradient(135deg,#c39559,#f5d79a);color:#20113c;cursor:pointer;font-weight:700;">Enter</button>
+          </div>
+          <p id="admin-password-feedback" style="margin-top:1rem;color:#f08080;min-height:1.2rem;font-size:0.92rem;"></p>
+        </div>`;
+      document.body.appendChild(modal);
+      const input = modal.querySelector('#admin-password-input');
+      const feedback = modal.querySelector('#admin-password-feedback');
+      const cancel = modal.querySelector('#admin-password-cancel');
+      const submit = modal.querySelector('#admin-password-submit');
+      function closeModal() {
+        modal.style.display = 'none';
+        input.value = '';
+        feedback.textContent = '';
+      }
+      cancel.addEventListener('click', closeModal);
+      submit.addEventListener('click', () => {
+        if (input.value === 'Cookcandida5') {
+          closeModal();
+          if (redirectUrl) window.location.href = redirectUrl;
+        } else {
+          feedback.textContent = 'Incorrect password. Please try again.';
+          input.value = '';
+          input.focus();
+        }
+      });
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') submit.click();
+        if (event.key === 'Escape') closeModal();
+      });
+    }
+    modal.style.display = 'flex';
+    const input = modal.querySelector('#admin-password-input');
+    input.focus();
+  }
+  document.getElementById('secret-bow').addEventListener('click', function() {
+    showAdminPasswordModal('clients.html');
+  });
+</script>
+
+    <script>
+        const container = document.getElementById('confettiContainer');
+        const colors = ['#f5d79a', '#ecdb9f', '#866e9f', '#c39559'];
+        for (let i = 0; i < 30; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('confetti');
+            dot.style.left = Math.random() * 100 + '%';
+            dot.style.top = Math.random() * 100 + '%';
+            dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+            dot.style.animationDuration = (Math.random() * 10 + 5) + 's';
+            dot.style.animationDelay = (Math.random() * 5) + 's';
+            dot.style.width = dot.style.height = (Math.random() * 8 + 4) + 'px';
+            container.appendChild(dot);
+        }
+
+        document.getElementById('mobileToggle').addEventListener('click', function () {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+    </script>
+<script>
+const cursor = document.createElement('div');
+cursor.style.cssText = `
+    position: fixed;
+    width: 28px;
+    height: 28px;
+    pointer-events: none;
+    z-index: 99999;
+    font-size: 22px;
+    line-height: 1;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+    user-select: none;
+`;
+cursor.textContent = '🎀';
+document.body.appendChild(cursor);
+
+document.body.style.cursor = 'none';
+
+document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+
+    const sparkle = document.createElement('div');
+    sparkle.classList.add('sparkle');
+    sparkle.style.left = (e.clientX + (Math.random() * 16 - 8)) + 'px';
+    sparkle.style.top = (e.clientY + (Math.random() * 16 - 8)) + 'px';
+    sparkle.style.position = 'fixed';
+    document.body.appendChild(sparkle);
+
+    setTimeout(() => sparkle.remove(), 800);
+});
+
+document.addEventListener('mousedown', () => {
+    cursor.style.transform = 'translate(-50%, -50%) scale(1.4)';
+});
+
+document.addEventListener('mouseup', () => {
+    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+});
+</script>
+
+    <!-- Back to Top Bow Button -->
+    <style>
+        #backToTop {
+            position: fixed;
+            bottom: 32px;
+            right: 28px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3a1a5a, #5a2a7a);
+            border: 2px solid #ECDB9F;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 99998;
+            opacity: 0;
+            transform: translateY(16px) scale(0.85);
+            transition: opacity 0.35s ease, transform 0.35s ease, box-shadow 0.25s ease;
+            text-decoration: none;
+        }
+        #backToTop.btt-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        #backToTop:hover {
+            box-shadow: 0 6px 24px rgba(236,219,159,0.35);
+            transform: translateY(-3px) scale(1.08);
+        }
+    </style>
+    <script>
+        (function () {
+            const btn = document.createElement("a");
+            btn.id = "backToTop";
+            btn.title = "Back to top";
+            btn.textContent = "🎀";
+            btn.href = "#";
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+            document.body.appendChild(btn);
+            window.addEventListener("scroll", function () {
+                if (window.scrollY > 100) {
+                    btn.classList.add("btt-visible");
+                } else {
+                    btn.classList.remove("btt-visible");
+                }
+            }, { passive: true });
+        })();
+    </script>
+
+</body>
+
+</html>
