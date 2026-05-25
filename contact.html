@@ -414,28 +414,56 @@
         .thumb-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 2px;
+            gap: 4px;
             margin-top: 0.4rem;
+            align-items: flex-start;
+        }
+        .thumb-group {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 0.85rem;
+            align-items: center;
+        }
+        .thumb-category {
+            width: 100%;
+            color: var(--pastel-orange);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
         }
         .thumb {
-            width: 16px;
-            height: 16px;
+            width: 22px;
+            height: 22px;
             border-radius: 3px;
             overflow: hidden;
             cursor: pointer;
             border: 1px solid transparent;
             flex: 0 0 auto;
             display: inline-block;
+            transition: width 0.18s ease, height 0.18s ease, transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
         }
         .thumb img {
-            width: 16px;
-            height: 16px;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             display: block;
+            pointer-events: none;
+            user-select: none;
+        }
+        .thumb:hover {
+            transform: scale(1.08);
         }
         .thumb.active {
+            width: 36px;
+            height: 36px;
+            transform: none;
+            z-index: 3;
             border-color: var(--pastel-orange);
-            box-shadow: 0 0 0 1px rgba(245,215,154,0.6);
+            box-shadow: 0 0 0 2px rgba(245,215,154,0.65);
         }
         .image-lightbox {
             display: none;
@@ -557,7 +585,6 @@
                 </div>
 
                 <div class="form-section-label" style="margin-top:1rem;">Gift Details</div>
-                <button type="button" id="addGiftBtn" class="send-btn gift-add-btn">Add Gift</button>
                 <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
                     <strong>Basic:</strong> Small $6 &middot; Medium $9 &middot; Large $12 &nbsp;|&nbsp; <strong>Bulk (10+ gifts):</strong> Small $5 &middot; Medium $8 &middot; Large $10
                 </p>
@@ -608,6 +635,8 @@
 
 </div>
 <!-- end #gift-customizer-section -->
+
+                <button type="button" id="addGiftBtn" class="send-btn gift-add-btn">Add Gift</button>
 
                 <!-- Hidden fields for form data -->
                 <input type="hidden" id="booking-gift-count" name="dropoff_gifts" value="1">
@@ -1193,6 +1222,15 @@
         recalc();
     }
 
+        function selectThumb(thumb, sel, value, wrapperId) {
+            if (!thumb || !sel) return;
+            sel.value = value;
+            document.querySelectorAll(`#${wrapperId} .thumb`).forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+            updateGiftDetails();
+            recalc();
+        }
+
         // ── Thumbnail builders and lightbox ──
         function buildPaperThumbs() {
             const el = document.getElementById('paperThumbs');
@@ -1200,24 +1238,27 @@
             if (!el || !sel) return;
             el.innerHTML = '';
             Object.keys(PAPERS).forEach(cat => {
+                const groupWrap = document.createElement('div');
+                groupWrap.className = 'thumb-group';
+                const label = document.createElement('div');
+                label.className = 'thumb-category';
+                label.textContent = cat;
+                groupWrap.appendChild(label);
+
                 (PAPERS[cat] || []).forEach((p, i) => {
                     const path = p.f || '';
                     const thumb = document.createElement('div'); thumb.className = 'thumb';
                     const img = document.createElement('img'); img.src = BASE + '/' + path; img.alt = p.n || '';
                     thumb.appendChild(img);
                     thumb.addEventListener('click', () => {
-                        // set select value matching this item
-                        sel.value = `${cat}||${i}`;
-                        // mark active
-                        document.querySelectorAll('#paperThumbs .thumb').forEach(t=>t.classList.remove('active'));
-                        thumb.classList.add('active');
-                        updateGiftDetails(); recalc();
+                        selectThumb(thumb, sel, `${cat}||${i}`, 'paperThumbs');
+                        openImageLightbox(BASE + '/' + path);
                     });
-                    img.addEventListener('click', (e)=>{ e.stopPropagation(); openImageLightbox(BASE + '/' + path); });
-                    el.appendChild(thumb);
+                    groupWrap.appendChild(thumb);
                 });
+
+                el.appendChild(groupWrap);
             });
-            // set initial active
             const first = el.querySelector('.thumb'); if (first) first.classList.add('active');
         }
 
@@ -1231,8 +1272,7 @@
                 const thumb = document.createElement('div'); thumb.className = 'thumb';
                 const img = document.createElement('img'); img.src = BASE + '/' + path; img.alt = r.n || '';
                 thumb.appendChild(img);
-                thumb.addEventListener('click', () => { sel.value = `__RIBBON__||${i}`; document.querySelectorAll('#ribbonThumbs .thumb').forEach(t=>t.classList.remove('active')); thumb.classList.add('active'); updateGiftDetails(); recalc(); });
-                img.addEventListener('click', (e)=>{ e.stopPropagation(); openImageLightbox(BASE + '/' + path); });
+                thumb.addEventListener('click', () => { selectThumb(thumb, sel, `__RIBBON__||${i}`, 'ribbonThumbs'); openImageLightbox(BASE + '/' + path); });
                 el.appendChild(thumb);
             });
             const first = el.querySelector('.thumb'); if (first) first.classList.add('active');
@@ -1244,15 +1284,23 @@
             if (!el || !sel) return;
             el.innerHTML = '';
             Object.keys(TAGS).forEach(cat => {
+                const groupWrap = document.createElement('div');
+                groupWrap.className = 'thumb-group';
+                const label = document.createElement('div');
+                label.className = 'thumb-category';
+                label.textContent = cat;
+                groupWrap.appendChild(label);
+
                 (TAGS[cat] || []).forEach((t, i) => {
                     const path = t.f || '';
                     const thumb = document.createElement('div'); thumb.className = 'thumb';
                     const img = document.createElement('img'); img.src = BASE + '/' + path; img.alt = t.n || '';
                     thumb.appendChild(img);
-                    thumb.addEventListener('click', () => { sel.value = `${cat}||${i}`; document.querySelectorAll('#tagThumbs .thumb').forEach(x=>x.classList.remove('active')); thumb.classList.add('active'); updateGiftDetails(); recalc(); });
-                    img.addEventListener('click', (e)=>{ e.stopPropagation(); openImageLightbox(BASE + '/' + path); });
-                    el.appendChild(thumb);
+                    thumb.addEventListener('click', () => { selectThumb(thumb, sel, `${cat}||${i}`, 'tagThumbs'); openImageLightbox(BASE + '/' + path); });
+                    groupWrap.appendChild(thumb);
                 });
+
+                el.appendChild(groupWrap);
             });
             const first = el.querySelector('.thumb'); if (first) first.classList.add('active');
         }
