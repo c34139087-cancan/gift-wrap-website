@@ -409,6 +409,14 @@
         }
         .customizer-field select option {
             color: #3b105a;
+            .thumb-grid { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:0.6rem; }
+            .thumb { width:40px; height:40px; border-radius:8px; overflow:hidden; cursor:pointer; border:2px solid transparent; flex:0 0 auto; }
+            .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+            .thumb.active { border-color: var(--pastel-orange); box-shadow: 0 12px 30px rgba(0,0,0,0.45); }
+            .image-lightbox { display:none; position:fixed; inset:0; background:rgba(10,5,20,0.92); z-index:99999; align-items:center; justify-content:center; padding:20px; }
+            .image-lightbox.active { display:flex; }
+            .image-lightbox img { max-width:90vw; max-height:90vh; border-radius:12px; box-shadow:0 30px 80px rgba(0,0,0,0.6); }
+            .image-lightbox .lb-close { position:absolute; top:18px; right:22px; font-size:2.4rem; color:#f5d79a; background:none; border:none; cursor:pointer; }
             background: #fff;
         }
         .size-row {
@@ -516,16 +524,19 @@
     <div class="customizer-field">
         <label for="paperCat">Wrapping Paper</label>
         <select id="paperCat"></select>
+        <div id="paperThumbs" class="thumb-grid" aria-hidden="false"></div>
     </div>
 
     <div class="customizer-field">
         <label for="ribbonCat">Ribbon</label>
         <select id="ribbonCat"></select>
+        <div id="ribbonThumbs" class="thumb-grid"></div>
     </div>
 
     <div class="customizer-field">
         <label for="tagCat">Gift Tag</label>
         <select id="tagCat"></select>
+        <div id="tagThumbs" class="thumb-grid"></div>
     </div>
 
     <div class="customizer-field">
@@ -1125,11 +1136,91 @@
     function initGiftSelectors() {
         buildPaperCat();
         buildRibbonCat();
-        buildTagCat();
+                buildTagCat();
+                // also populate thumbnail grids
+                buildPaperThumbs();
+                buildRibbonThumbs();
+                buildTagThumbs();
         document.getElementById('giftSize')?.addEventListener('change', recalc);
         document.getElementById('giftCountInput')?.addEventListener('input', recalc);
         recalc();
     }
+
+        // ── Thumbnail builders and lightbox ──
+        function buildPaperThumbs() {
+            const el = document.getElementById('paperThumbs');
+            const sel = document.getElementById('paperCat');
+            if (!el || !sel) return;
+            el.innerHTML = '';
+            Object.keys(PAPERS).forEach(cat => {
+                (PAPERS[cat] || []).forEach((p, i) => {
+                    const path = p.f || '';
+                    const thumb = document.createElement('div'); thumb.className = 'thumb';
+                    const img = document.createElement('img'); img.src = BASE + '/' + path; img.alt = p.n || '';
+                    thumb.appendChild(img);
+                    thumb.addEventListener('click', () => {
+                        // set select value matching this item
+                        sel.value = `${cat}||${i}`;
+                        // mark active
+                        document.querySelectorAll('#paperThumbs .thumb').forEach(t=>t.classList.remove('active'));
+                        thumb.classList.add('active');
+                        updateGiftDetails(); recalc();
+                    });
+                    img.addEventListener('click', (e)=>{ e.stopPropagation(); openImageLightbox(BASE + '/' + path); });
+                    el.appendChild(thumb);
+                });
+            });
+            // set initial active
+            const first = el.querySelector('.thumb'); if (first) first.classList.add('active');
+        }
+
+        function buildRibbonThumbs() {
+            const el = document.getElementById('ribbonThumbs');
+            const sel = document.getElementById('ribbonCat');
+            if (!el || !sel) return;
+            el.innerHTML = '';
+            (RIBBONS || []).forEach((r, i) => {
+                const path = r.f || '';
+                const thumb = document.createElement('div'); thumb.className = 'thumb';
+                const img = document.createElement('img'); img.src = BASE + '/' + path; img.alt = r.n || '';
+                thumb.appendChild(img);
+                thumb.addEventListener('click', () => { sel.value = `__RIBBON__||${i}`; document.querySelectorAll('#ribbonThumbs .thumb').forEach(t=>t.classList.remove('active')); thumb.classList.add('active'); updateGiftDetails(); recalc(); });
+                img.addEventListener('click', (e)=>{ e.stopPropagation(); openImageLightbox(BASE + '/' + path); });
+                el.appendChild(thumb);
+            });
+            const first = el.querySelector('.thumb'); if (first) first.classList.add('active');
+        }
+
+        function buildTagThumbs() {
+            const el = document.getElementById('tagThumbs');
+            const sel = document.getElementById('tagCat');
+            if (!el || !sel) return;
+            el.innerHTML = '';
+            Object.keys(TAGS).forEach(cat => {
+                (TAGS[cat] || []).forEach((t, i) => {
+                    const path = t.f || '';
+                    const thumb = document.createElement('div'); thumb.className = 'thumb';
+                    const img = document.createElement('img'); img.src = BASE + '/' + path; img.alt = t.n || '';
+                    thumb.appendChild(img);
+                    thumb.addEventListener('click', () => { sel.value = `${cat}||${i}`; document.querySelectorAll('#tagThumbs .thumb').forEach(x=>x.classList.remove('active')); thumb.classList.add('active'); updateGiftDetails(); recalc(); });
+                    img.addEventListener('click', (e)=>{ e.stopPropagation(); openImageLightbox(BASE + '/' + path); });
+                    el.appendChild(thumb);
+                });
+            });
+            const first = el.querySelector('.thumb'); if (first) first.classList.add('active');
+        }
+
+        function openImageLightbox(src) {
+            let lb = document.getElementById('imageLightbox');
+            if (!lb) {
+                lb = document.createElement('div'); lb.id = 'imageLightbox'; lb.className = 'image-lightbox';
+                lb.innerHTML = '<button class="lb-close" aria-label="Close">✕</button><img src="" alt="Enlarged">';
+                document.body.appendChild(lb);
+                lb.querySelector('.lb-close').addEventListener('click', ()=> lb.classList.remove('active'));
+                lb.addEventListener('click', (e)=>{ if (e.target === lb) lb.classList.remove('active'); });
+            }
+            const img = lb.querySelector('img'); img.src = src; lb.classList.add('active');
+        }
 
     // ── Calendly → Supabase ──
     window.addEventListener('message', async function (e) {
