@@ -542,63 +542,58 @@
                 <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
                     <strong>Basic:</strong> Small $6 &middot; Medium $9 &middot; Large $12 &nbsp;|&nbsp; <strong>Bulk (10+ gifts):</strong> Small $5 &middot; Medium $8 &middot; Large $10
                 </p>
-                <div id="gift-customizer-section" style="margin-top:1rem;">
-                    <div class="form-section-label">Gift Preview</div>
-                    <p style="color:#f5d79a;font-size:0.95rem;margin-bottom:1rem; line-height:1.5;">
-                        Choose wrapping paper, ribbon, and tags right here while placing your order. Your selection will be saved with your booking.
-                    </p>
-                    <div class="gift-customizer-layout">
+              <div id="gift-customizer-section">
 
-    <!-- LEFT: Sticky Preview -->
-    <aside class="gift-preview-sidebar">
+    <div class="form-section-label">🎁 Customize Your Gift Wrap</div>
+    <p class="customizer-intro">
+        Choose your wrapping paper, ribbon, and tag — your selections are saved automatically with your booking.
+    </p>
 
-        <div class="gift-preview-sticky">
+    <!-- Two-column customizer layout -->
+    <div class="gc-layout">
 
-            <div class="gift-preview-header">
-                <h4>Live Gift Preview ✨</h4>
-                <p>Click preview to enlarge</p>
-            </div>
+        <!-- LEFT: sticky preview -->
+        <aside class="gc-preview-col">
+            <div class="gc-preview-sticky">
 
-            <div class="gift-preview-display premium-preview">
-                <canvas id="giftBox" width="360" height="420"></canvas>
-
-                <div class="selection-pill" id="selPill">
-                    Loading preview...
+                <div class="gc-preview-header">
+                    <span class="gc-preview-label">Live Preview ✨</span>
+                    <button type="button" class="gc-enlarge-btn" id="gcEnlargeBtn" aria-label="Enlarge preview">⛶ Enlarge</button>
                 </div>
+
+                <div class="gc-canvas-wrap" id="gcCanvasWrap">
+                    <canvas id="giftBox" width="360" height="420" aria-label="Live gift wrap preview"></canvas>
+                </div>
+
+                <div class="gc-pill" id="selPill">Loading preview…</div>
+
             </div>
+        </aside>
 
-        </div>
+        <!-- RIGHT: scrollable controls -->
+        <div class="gc-controls-col">
 
-    </aside>
-
-    <!-- CENTER: Options -->
-    <div class="gift-preview-options-wrap">
-
-        <div class="gift-preview-options">
-
-            <div class="preview-section">
-                <div class="preview-section-title">🎁 Wrapping Paper</div>
+            <div class="gc-section">
+                <div class="gc-section-title">🎁 Wrapping Paper</div>
                 <select class="styled" id="paperCat"></select>
                 <div class="swatch-grid" id="paperSwatches"></div>
             </div>
 
-            <div class="preview-section">
-                <div class="preview-section-title">🎀 Ribbon</div>
+            <div class="gc-section">
+                <div class="gc-section-title">🎀 Ribbon</div>
                 <select class="styled" id="ribbonCat"></select>
                 <div class="swatch-grid" id="ribbonSwatches"></div>
             </div>
 
-            <div class="preview-section">
-                <div class="preview-section-title">🏷️ Gift Tag</div>
+            <div class="gc-section">
+                <div class="gc-section-title">🏷️ Gift Tag</div>
                 <select class="styled" id="tagCat"></select>
                 <div class="swatch-grid" id="tagSwatches"></div>
             </div>
 
-            <div class="preview-section">
-                <div class="preview-section-title">📏 Gift Details</div>
-
+            <div class="gc-section">
+                <div class="gc-section-title">📏 Gift Details</div>
                 <div class="gift-size-row">
-
                     <div>
                         <label for="giftSize">Gift size</label>
                         <select class="styled" id="giftSize">
@@ -607,56 +602,31 @@
                             <option value="Large">Large</option>
                         </select>
                     </div>
-
                     <div>
                         <label for="giftCountInput">Gift count</label>
                         <input type="number" id="giftCountInput" min="1" value="1">
                     </div>
-
                 </div>
-
                 <p class="gift-note">
-                    Rush order adds $10 for up to 5 gifts.
-                    Bulk pricing automatically applies for 10+ gifts.
+                    Rush order adds $10 for up to 5 gifts. Bulk pricing applies automatically for 10+ gifts.
                 </p>
-
             </div>
 
         </div>
+        <!-- end gc-controls-col -->
 
     </div>
+    <!-- end gc-layout -->
 
 </div>
+<!-- end #gift-customizer-section -->
 
-<!-- LIGHTBOX -->
-<div id="previewLightbox" class="preview-lightbox">
- <div class="preview-lightbox-inner">
 
-    <button
-        type="button"
-        class="preview-lightbox-close"
-    >
-    <div class="preview-lightbox-inner">
-
-    <button
-        type="button"
-        class="preview-lightbox-close"
-    >
-        &times;
-    </button>
-
-   <canvas
-    id="lightboxCanvas"
-    width="720"
-    height="840"
-></canvas>
-
-</div>
-
-</div>
+<!--
+ 
                 <label class="checkbox-label" style="margin-top:0.5rem;margin-bottom:1.2rem;">
                     <input type="checkbox" id="book-rush">
-                    Rush Order: $10 flat - 1-2 day turnaround for up to 5 gifts, subject to availability.
+                    Rush Order: $10 flat — 1–2 day turnaround for up to 5 gifts, subject to availability.
                 </label>
 
                 <div class="form-group">
@@ -704,6 +674,12 @@
                 </div>
 
             </form>
+            <div id="gcLightbox" class="gc-lightbox" role="dialog" aria-modal="true" aria-label="Enlarged gift preview" hidden>
+    <button type="button" class="gc-lightbox-close" id="gcLightboxClose" aria-label="Close enlarged preview">×</button>
+    <div class="gc-lightbox-inner">
+        <canvas id="lightboxCanvas" width="720" height="840" aria-label="Enlarged gift wrap preview"></canvas>
+    </div>
+</div>
         </div>
         <!-- ═══ END LEFT COLUMN ═══ -->
 
