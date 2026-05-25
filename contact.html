@@ -715,6 +715,7 @@
             if (el) el.addEventListener('input', checkInfoReady);
         });
         document.getElementById('book-rush')?.addEventListener('change', recalc);
+        document.getElementById('add-gift-btn')?.addEventListener('click', addGiftCard);
         checkInfoReady();
         recalc();
     });
@@ -769,6 +770,10 @@
 
     let giftCustomizerDetails = [];
 
+    function syncGiftDetailsField() {
+        if (giftDetailsJsonField) giftDetailsJsonField.value = JSON.stringify(giftCustomizerDetails);
+    }
+
     // Paper thumbnails grouped by category. Filenames live under Wrapping/<Category>/
     const paperCategories = [
         { category: 'Anniverary', images: ['22ann.png','50ann.png','blackandgoldann.png','Moreeveryday.png','myforeverride.png','pinkfloralhappyann.png','redroseanniversary.png','romanticann.png','thanksfor.png','thanksfornotkillingme.png'] },
@@ -800,16 +805,23 @@
         { value: 'no-bow', hex: 'transparent' }
     ];
 
-    function syncGiftDetailsField() {
-        if (giftDetailsJsonField) giftDetailsJsonField.value = JSON.stringify(giftCustomizerDetails);
-    }
+    const tagCategories = [
+        { category: 'Black', images: ['tagblackgold.jpg','BlackGold4.png','BlackGold3.png','BlackGold2.png','BlackGold1.png','Black&GoldStars4.png','Black&GoldStars3.png','Black&GoldStars2.png','Black&GoldDiamond4.png','Black&GoldDiamond3.png','Black&GoldDiamond1.png','Black&GoldDiamond.png','Black & Gold Stars.png'] },
+        { category: 'Birthday', images: ['blackandgoldtags5.png','blackandgoldtags3.png','blackandgoldtags2.png','blackandgoldtags1.png','bdaytags.png','bdaytag2.png','bdaytag1.png','1blackgold.jpg'] },
+        { category: 'Camo', images: ['Camo Tag.png','Camo Tag 7.png','Camo Tag 6.png','Camo Tag 5.png','Camo Tag 4.png','Camo Tag 3.png','Camo Tag 1.png','Baby Camo1.png','Baby Camo.png','Pink Camo 4.png','Pink Camo2.png','Pink Camo1.png','PinkCamo3.png'] },
+        { category: 'Christmas', images: ['chrismastag2.jpg','bkackgoldchristmas.jpg','Baby Camo2.png','2blackgoldchristmas.jpg'] },
+        { category: 'Floral', images: ['Lav3.png','Lav2.png','Lav1.png','Gold Rose4.png','Gold Rose3.png','Gold Rose2.png','Gold Rose.png','floral4.png','floral3.png','floral2.png','floral1.png'] },
+        { category: 'Animal', images: ['PinkAnimal4.png','PinkAnimal3.png','Pink Animal.png','Pink Animal 2.png','NeonPaint.png','NeonAnimal3.png','NeonAnimal2.png','NeonAnimal1.png','Neon Animal6.png','Neon Animal 8.png','Neon Animal 7.png','Neon Animal 5.png'] },
+        { category: 'Purple', images: ['Purple Camo4.png','Purple Camo3.png','Purple Camo2.png','Purple Camo1.png','Purple & Gold4.png','Purple & Gold3.png','Purple & Gold2.png','Purple & Gold1.png','Purple & Gold Graduation.png','Grad Name Tag.png','Grad Name Tag 2.png'] },
+        { category: 'Wedding', images: ['woodlandanniversary.png','hearts and champagne2.png','hearts and champagne.png'] },
+        { category: 'Kids', images: ['outerspacetag.jpg','image_1e4ec60d.png','girlstag.jpg'] }
+    ];
 
-    function createPaperThumbnail(category, filename, giftIndex) {
+    function createTagThumbnail(displayPath, filename, giftIndex) {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'paper-swatch';
-        const displayPath = `Wrapping/${category}/${filename}`;
-        button.dataset.value = displayPath; // human-readable path stored in gift details
+        button.dataset.value = displayPath;
 
         const img = document.createElement('img');
         img.src = encodeURI(displayPath);
@@ -822,12 +834,12 @@
         button.appendChild(label);
         button.addEventListener('click', function (e) {
             e.preventDefault();
-            openThumbnailPreview(displayPath, filename, giftIndex);
+            openThumbnailPreview(displayPath, filename, giftIndex, 'tag');
         });
         return button;
     }
 
-    function openThumbnailPreview(path, filename, giftIndex) {
+    function openThumbnailPreview(path, filename, giftIndex, type = 'paper') {
         // If modal exists, remove it first and cleanup its key handler if present
         const existing = document.getElementById('thumb-modal-overlay');
         if (existing) {
@@ -855,7 +867,7 @@
 
         const selectBtn = document.createElement('button');
         selectBtn.className = 'thumb-modal-button select';
-        selectBtn.textContent = 'Use This Paper';
+        selectBtn.textContent = type === 'tag' ? 'Use This Tag' : 'Use This Paper';
 
         const closeBtn = document.createElement('button');
         closeBtn.className = 'thumb-modal-button close';
@@ -875,7 +887,8 @@
         }
 
         selectBtn.addEventListener('click', function () {
-            updateGiftDetail(parseInt(giftIndex, 10), 'paper', path);
+            const key = type === 'tag' ? 'tagImage' : 'paper';
+            updateGiftDetail(parseInt(giftIndex, 10), key, path);
             renderGiftCustomizer();
             recalc();
             closeModal();
@@ -904,6 +917,29 @@
         return parts.length >= 2 ? parts[1] : null;
     }
 
+    function createPaperThumbnail(category, filename, giftIndex) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'paper-swatch';
+        const displayPath = `Wrapping/${category}/${filename}`;
+        button.dataset.value = displayPath;
+
+        const img = document.createElement('img');
+        img.src = encodeURI(displayPath);
+        img.alt = filename;
+        button.appendChild(img);
+
+        const label = document.createElement('div');
+        label.className = 'thumb-label';
+        label.textContent = displayNameFromFilename(filename);
+        button.appendChild(label);
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            openThumbnailPreview(displayPath, filename, giftIndex, 'paper');
+        });
+        return button;
+    }
+
     function populatePaperThumbnailsForCategory(thumbsWrap, categoryName, giftIndex, gift) {
         thumbsWrap.innerHTML = '';
         const cat = paperCategories.find(c => c.category === categoryName);
@@ -916,6 +952,18 @@
         });
     }
 
+    function populateTagThumbnailsForCategory(thumbsWrap, categoryName, giftIndex, gift) {
+        thumbsWrap.innerHTML = '';
+        const cat = tagCategories.find(c => c.category === categoryName);
+        if (!cat) return;
+        cat.images.forEach(filename => {
+            const displayPath = `Tags/${cat.category}/${filename}`;
+            const thumb = createTagThumbnail(displayPath, filename, giftIndex);
+            if (gift.tagImage === displayPath) thumb.classList.add('selected');
+            thumbsWrap.appendChild(thumb);
+        });
+    }
+
     function updateGiftDetail(index, key, value) {
         if (!giftCustomizerDetails[index]) return;
         giftCustomizerDetails[index][key] = value;
@@ -923,7 +971,7 @@
     }
 
     function addGiftCard() {
-        giftCustomizerDetails.push({ gift: giftCustomizerDetails.length + 1, size: '', paper: '', bow: 'gold', tag: '' });
+        giftCustomizerDetails.push({ gift: giftCustomizerDetails.length + 1, size: '', paper: '', bow: 'gold', tag: '', tagImage: '' });
         renderGiftCustomizer();
         recalc();
         checkInfoReady(); // re-check gate now that a gift was added
@@ -1037,6 +1085,39 @@
             bowRow.appendChild(sw);
         });
         cardEl.appendChild(bowRow);
+
+        // ── Tag image picker (thumbnails)
+        const tagPickerRow = document.createElement('div');
+        tagPickerRow.className = 'gift-customizer-row';
+        const tagPickerLabel = document.createElement('label');
+        tagPickerLabel.textContent = 'Tag Category';
+        tagPickerRow.appendChild(tagPickerLabel);
+
+        const tagCategorySelect = document.createElement('select');
+        tagCategorySelect.className = 'paper-category-select';
+        tagCategories.forEach(cat => {
+            const opt = document.createElement('option');
+            opt.value = cat.category;
+            opt.textContent = cat.category;
+            tagCategorySelect.appendChild(opt);
+        });
+        tagPickerRow.appendChild(tagCategorySelect);
+        cardEl.appendChild(tagPickerRow);
+
+        const tagThumbsRow = document.createElement('div');
+        tagThumbsRow.className = 'gift-customizer-row';
+        const tagThumbsWrap = document.createElement('div');
+        tagThumbsWrap.className = 'paper-thumbnails';
+        tagThumbsRow.appendChild(tagThumbsWrap);
+        cardEl.appendChild(tagThumbsRow);
+
+        const initialTagCat = getCategoryFromPath(gift.tagImage) || (tagCategories[0] && tagCategories[0].category);
+        if (initialTagCat) tagCategorySelect.value = initialTagCat;
+        populateTagThumbnailsForCategory(tagThumbsWrap, tagCategorySelect.value, index, gift);
+
+        tagCategorySelect.addEventListener('change', function () {
+            populateTagThumbnailsForCategory(tagThumbsWrap, tagCategorySelect.value, index, gift);
+        });
 
         const tagRow = document.createElement('div');
         tagRow.className = 'gift-customizer-row';
@@ -1177,7 +1258,7 @@
 
             // ── Email yourself via Formspree ──
             const giftSummary = giftDetails.map((g, i) =>
-                `Gift ${i+1}: ${g.size || 'size not selected'} | Paper: ${g.paper} | Bow: ${g.bow}${g.tag ? ' | Tag: "' + g.tag + '"' : ''}`
+                `Gift ${i+1}: ${g.size || 'size not selected'} | Paper: ${g.paper} | Bow: ${g.bow}${g.tag ? ' | Tag: "' + g.tag + '"' : ''}${g.tagImage ? ' | Tag Image: ' + g.tagImage : ''}`
             ).join('\n');
 
             await fetch('https://formspree.io/f/xpqykjkn', {
