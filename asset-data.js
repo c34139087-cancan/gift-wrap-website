@@ -138,6 +138,7 @@ const ribbonCategories = [
     {
         "category": "Ribbon",
         "images": [
+            "28d70356-e3df-4abd-85d3-076eb2ab58d3.png",
             "Buffalo Check Plaid.png",
             "Camo.png",
             "Chalkboard & Gold.png",
@@ -149,10 +150,13 @@ const ribbonCategories = [
             "Rustic Kraft & Twine.png",
             "Satin Purple & Gold.png",
             "Velvet Deep Red.png",
+            "pinkbow.png",
             "purplegoldgrad.jpg",
             "valday.jpg",
             "vday.jpg",
-            "vday2.jpg"
+            "vday2.jpg",
+            "vday3.jpg",
+            "xoxo.png"
         ]
     }
 ];
@@ -173,7 +177,8 @@ const tagCategories = [
             "Pink Animal 2.png",
             "Pink Animal.png",
             "PinkAnimal3.png",
-            "PinkAnimal4.png"
+            "PinkAnimal4.png",
+            "neoncheetah.png"
         ]
     },
     {
@@ -285,7 +290,20 @@ const tagCategories = [
             "Purple Camo1.png",
             "Purple Camo2.png",
             "Purple Camo3.png",
-            "Purple Camo4.png"
+            "Purple Camo4.png",
+            "goodnight.png"
+        ]
+    },
+    {
+        "category": "Valentines Day",
+        "folder": "Valentines Day",
+        "images": [
+            "1valentines.png",
+            "ChatGPT Image May 24, 2026, 11_35_58 PM.png",
+            "valentines.png",
+            "vday.jpg",
+            "vday2.png",
+            "vday3.png"
         ]
     },
     {
