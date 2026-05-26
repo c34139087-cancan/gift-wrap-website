@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | Cancan's Corner Gift Wrapping Service</title>
-    <meta name="description" content="Book your gift wrapping drop-off with Cancan's Corner in Morrison, TN. Easy online scheduling with live price calculator!">
+    <meta name="description" content="Get in touch with Cancan's Corner Gift Wrapping Service in Morrison, TN. Have questions or want to book a service? Fill out the form below!">
     <meta property="og:title" content="Contact | Cancan's Corner Gift Wrapping Service">
-    <meta property="og:description" content="Book your gift wrapping drop-off with Cancan's Corner in Morrison, TN.">
+    <meta property="og:description" content="Get in touch with Cancan's Corner Gift Wrapping Service in Morrison, TN. Have questions or want to book a service? Fill out the form below!">
     <meta property="og:image" content="https://c34139087-cancan.github.io/gift-wrap-website/purple-gifts.jpg">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css">
@@ -15,6 +15,7 @@
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <style>
+        /* ── Page header ── */
         .contact-page-header {
             text-align: center;
             padding: 3rem 2rem 1.5rem;
@@ -33,7 +34,7 @@
             color: var(--pastel-orange);
             font-size: 1rem;
             font-style: italic;
-            text-shadow: 0 0 8px rgba(245,215,154,0.4);
+            text-shadow: 0 0 8px rgba(245, 215, 154, 0.4);
         }
         .gold-divider {
             width: 80px;
@@ -58,7 +59,7 @@
 
         /* ── LEFT COLUMN: Form card ── */
         .form-card {
-            background: rgba(32,17,60,0.8);
+            background: rgba(32, 17, 60, 0.8);
             border-radius: var(--radius-xl);
             padding: 2.5rem;
             backdrop-filter: blur(10px);
@@ -81,8 +82,8 @@
 
         /* ── Payment notice ── */
         .payment-notice {
-            background: rgba(195,149,89,0.12);
-            border: 1.5px solid rgba(195,149,89,0.45);
+            background: rgba(195, 149, 89, 0.12);
+            border: 1.5px solid rgba(195, 149, 89, 0.45);
             border-radius: var(--radius-md);
             padding: 0.85rem 1.2rem;
             margin-bottom: 1.5rem;
@@ -103,6 +104,38 @@
             font-size: 0.88rem;
             color: var(--pastel-yellow);
             line-height: 1.5;
+        }
+
+        /* ── Purpose toggle ── */
+        .purpose-toggle {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2rem;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 2px solid var(--gray-lavender);
+        }
+        .purpose-toggle button {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            border: none;
+            color: var(--gray-lavender);
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .purpose-toggle button.active {
+            background: linear-gradient(135deg, var(--gray-orange) 0%, var(--pastel-orange) 100%);
+            color: #f5d79a;
+        }
+        .purpose-toggle button:not(.active):hover {
+            background: rgba(245, 215, 154, 0.1);
+            color: #f5d79a;
         }
 
         /* ── Form fields ── */
@@ -127,7 +160,7 @@
         .form-group select {
             width: 100%;
             padding: 0.85rem 1.2rem;
-            background: rgba(104,82,129,0.3);
+            background: rgba(104, 82, 129, 0.3);
             border: 2px solid var(--gray-lavender);
             border-radius: var(--radius-md);
             color: #f5d79a;
@@ -144,8 +177,8 @@
         .form-group select:focus {
             outline: none;
             border-color: var(--pastel-orange);
-            background: rgba(104,82,129,0.5);
-            box-shadow: 0 0 20px rgba(245,215,154,0.2);
+            background: rgba(104, 82, 129, 0.5);
+            box-shadow: 0 0 20px rgba(245, 215, 154, 0.2);
         }
         .form-group textarea { resize: vertical; min-height: 120px; }
 
@@ -167,6 +200,9 @@
             accent-color: var(--pastel-orange);
         }
 
+        /* ── Booking fields (hidden by default) ── */
+        #booking-fields { display: none; }
+
         /* ── Section divider inside form ── */
         .form-section-label {
             font-size: 0.7rem;
@@ -174,13 +210,13 @@
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--pastel-orange);
-            border-bottom: 1px solid rgba(245,215,154,0.2);
+            border-bottom: 1px solid rgba(245, 215, 154, 0.2);
             padding-bottom: 0.4rem;
             margin-bottom: 1.2rem;
             margin-top: 0.5rem;
         }
 
-        /* ── Buttons ── */
+        /* ── Submit / action buttons ── */
         .send-btn {
             width: 100%;
             padding: 1rem;
@@ -196,34 +232,15 @@
             cursor: pointer;
             margin-top: 0.5rem;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(245,215,154,0.3);
+            box-shadow: 0 8px 20px rgba(245, 215, 154, 0.3);
         }
-        .send-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(245,215,154,0.5); }
+        .send-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(245, 215, 154, 0.5); }
         .send-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-        .gift-add-btn { padding: 0.65rem 1.2rem; font-size: 0.88rem; margin-top: 0; }
-
-        .gift-card-heading {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-        .gift-card-heading h4 { margin: 0; font-size: 1rem; }
-        .gift-remove-button {
-            background: none;
-            border: none;
-            color: var(--gray-lavender);
-            font-size: 0.78rem;
-            cursor: pointer;
-            padding: 0;
-            align-self: flex-start;
-        }
 
         /* ── RIGHT COLUMN: Sidebar ── */
         .contact-info-card { display: flex; flex-direction: column; gap: 1.4rem; }
         .side-card {
-            background: rgba(64,41,91,0.6);
+            background: rgba(64, 41, 91, 0.6);
             backdrop-filter: blur(10px);
             border: 2px solid var(--gray-lavender);
             border-radius: var(--radius-lg);
@@ -238,13 +255,13 @@
         .info-row { display: flex; gap: 0.8rem; align-items: center; margin-bottom: 1rem; }
         .info-icon {
             width: 36px; height: 36px; flex-shrink: 0;
-            background: rgba(245,215,154,0.1); border: 1px solid rgba(245,215,154,0.25);
+            background: rgba(245, 215, 154, 0.1); border: 1px solid rgba(245, 215, 154, 0.25);
             border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
         }
         .info-label { font-size: 0.65rem; color: var(--gray-lavender); text-transform: uppercase; letter-spacing: 0.08em; }
         .info-value { font-size: 0.9rem; color: var(--pastel-orange); margin-top: 0.1rem; }
         .info-value a { color: var(--pastel-orange); text-decoration: none; transition: color 0.2s; }
-        .contact-divider { height: 1px; background: rgba(245,215,154,0.2); margin: 1rem 0; }
+        .contact-divider { height: 1px; background: rgba(245, 215, 154, 0.2); margin: 1rem 0; }
         .qr-block { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; }
         .qr-block p { font-size: 0.8rem; color: var(--gray-lavender); text-align: center; }
         .qr-img-wrap { background: #fff; border-radius: var(--radius-sm); padding: 8px; display: inline-block; box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
@@ -259,6 +276,42 @@
         }
         .cashapp-link:hover { background: rgba(245,215,154,0.2); }
 
+        /* ── Live Quote Estimator ── */
+        .quote-line { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.6rem; font-size: 0.85rem; }
+        .quote-label { color: var(--gray-lavender); flex: 1; }
+        .quote-dash  { color: rgba(245, 215, 154, 0.4); flex: 0 0 auto; }
+        .quote-price { color: #f5d79a; font-weight: 600; text-align: right; min-width: 60px; }
+        .quote-total .quote-label { color: #f5d79a; font-weight: 700; }
+        .quote-total .quote-price { font-weight: 700; font-size: 0.95rem; }
+        .quote-divider { height: 1px; background: rgba(245, 215, 154, 0.25); margin: 0.6rem 0; }
+
+        /* ── Bulk Discount Styles ── */
+        .quote-subtotal .quote-price { color: rgba(245, 215, 154, 0.7); font-weight: 600; }
+        .bulk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #52c27a 0%, #42b66d 100%);
+            color: #ffffff;
+            padding: 0.3rem 0.7rem;
+            border-radius: 0.3rem;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-left: 0.5rem;
+        }
+        .quote-discount .quote-price { color: #52c27a; font-weight: 700; }
+        .bulk-unlock-message {
+            background: rgba(82, 194, 122, 0.08);
+            border-left: 3px solid #52c27a;
+            padding: 0.6rem 0.8rem;
+            border-radius: 0.3rem;
+            font-size: 0.8rem;
+            color: #52c27a;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
         /* ── Confetti ── */
         .confetti-dot { position: absolute; border-radius: 50%; animation: confetti-fall linear infinite; pointer-events: none; }
 
@@ -269,10 +322,10 @@
         .success-message p { color: #c39559; }
         .success-message .success-tagline { color: #866e9f; font-size: 0.85rem; margin-top: 0.5rem; font-style: italic; }
 
-        /* ── Calendly gate ── */
+        /* ── Calendly gate placeholder ── */
         #calendly-gate {
-            background: rgba(104,82,129,0.2);
-            border: 2px dashed rgba(195,149,89,0.4);
+            background: rgba(104, 82, 129, 0.2);
+            border: 2px dashed rgba(195, 149, 89, 0.4);
             border-radius: 16px;
             padding: 2.5rem 1.5rem;
             text-align: center;
@@ -280,253 +333,55 @@
             transition: all 0.3s ease;
         }
         #calendly-gate .gate-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
-        #calendly-gate h4 { font-family: var(--font-display); font-size: 1.1rem; color: var(--pastel-orange); margin-bottom: 0.5rem; }
-        #calendly-gate p { font-size: 0.85rem; color: var(--gray-lavender); line-height: 1.6; }
-        #calendly-gate .gate-fields-needed { display: flex; justify-content: center; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap; }
-        #calendly-gate .gate-chip {
-            padding: 0.3rem 0.85rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
-            border: 1.5px solid rgba(195,149,89,0.4); color: var(--gray-lavender); transition: all 0.25s ease;
+        #calendly-gate h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--pastel-orange);
+            margin-bottom: 0.5rem;
         }
-        #calendly-gate .gate-chip.done { border-color: #52c27a; color: #52c27a; background: rgba(82,194,122,0.1); }
+        #calendly-gate p {
+            font-size: 0.85rem;
+            color: var(--gray-lavender);
+            line-height: 1.6;
+        }
+        #calendly-gate .gate-fields-needed {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        #calendly-gate .gate-chip {
+            padding: 0.3rem 0.85rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1.5px solid rgba(195, 149, 89, 0.4);
+            color: var(--gray-lavender);
+            transition: all 0.25s ease;
+        }
+        #calendly-gate .gate-chip.done {
+            border-color: #52c27a;
+            color: #52c27a;
+            background: rgba(82, 194, 122, 0.1);
+        }
 
         /* ── Calendly widget wrapper ── */
         #calendly-widget-wrap {
-            display: none; opacity: 0;
+            display: none;
+            opacity: 0;
             transition: opacity 0.4s ease;
             margin-bottom: 1.5rem;
         }
-        #calendly-widget-wrap.visible { display: block; opacity: 1; }
-
-        /* ── Still Have Questions section ── */
-        .still-questions {
-            max-width: 1000px;
-            margin: 0 auto 4rem;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 10;
-        }
-        .still-questions-card {
-            background: rgba(64,41,91,0.5);
-            border: 2px solid rgba(195,149,89,0.3);
-            border-radius: var(--radius-xl);
-            padding: 2rem 2.5rem;
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-        .still-questions-text h4 {
-            font-family: var(--font-display);
-            font-size: 1.3rem;
-            color: var(--pastel-orange);
-            margin-bottom: 0.4rem;
-        }
-        .still-questions-text p {
-            color: var(--gray-lavender);
-            font-size: 0.88rem;
-            line-height: 1.6;
-        }
-        .still-questions-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-            flex-shrink: 0;
-        }
-        .sq-link {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.6rem 1.2rem;
-            background: rgba(245,215,154,0.08);
-            border: 1.5px solid rgba(245,215,154,0.25);
-            border-radius: var(--radius-md);
-            color: var(--pastel-orange);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-        .sq-link:hover {
-            background: rgba(245,215,154,0.15);
-            border-color: var(--pastel-orange);
-            transform: translateX(3px);
-        }
-        .sq-faq-note {
-            text-align: center;
-            margin-top: 1rem;
-            font-size: 0.82rem;
-            color: var(--gray-lavender);
-        }
-        .sq-faq-note a {
-            color: var(--pastel-orange);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .sq-faq-note a:hover { text-decoration: underline; }
-
-        .gift-customizer-intro {
-            color: var(--gray-lavender);
-            font-size: 0.88rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-        .customizer-grid {
-            display: grid;
-            gap: 1.2rem;
-        }
-        .customizer-field {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .customizer-field label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--pastel-orange);
-        }
-        .customizer-field select {
-            width: 100%;
-            padding: 0.85rem 1rem;
-            background: rgba(255,255,255,0.92);
-            color: #3b105a;
-            border: 2px solid rgba(104,82,129,0.4);
-            border-radius: var(--radius-md);
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .customizer-field select:hover { border-color: #866e9f; }
-        .customizer-field select:focus {
-            outline: none;
-            border-color: var(--pastel-orange);
-            box-shadow: 0 0 0 3px rgba(245,215,154,0.15);
-        }
-        .customizer-field select option { color: #3b105a; background: #fff; }
-
-        /* ── Thumbnail grid ── */
-        .thumb-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 0.5rem;
-            align-items: flex-start;
-        }
-        .thumb-group {
-            width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 1rem;
-            align-items: center;
-        }
-        .thumb-category {
-            width: 100%;
-            color: var(--pastel-orange);
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: 0.3rem;
-        }
-        /* ── FIXED: bigger thumbs so designs are actually visible ── */
-        .thumb {
-            width: 60px;
-            height: 60px;
-            border-radius: 6px;
-            overflow: hidden;
-            cursor: pointer;
-            border: 2px solid transparent;
-            flex: 0 0 auto;
-            display: inline-block;
-            transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
-            position: relative;
-        }
-        .thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        #calendly-widget-wrap.visible {
             display: block;
-            pointer-events: none;
-            user-select: none;
-        }
-        .thumb:hover { transform: scale(1.08); }
-        .thumb.active {
-            width: 74px;
-            height: 74px;
-            border-color: var(--pastel-orange);
-            box-shadow: 0 0 0 3px rgba(245,215,154,0.65);
-        }
-
-        /* ── Lightbox ── */
-        .image-lightbox {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(10,5,20,0.92);
-            z-index: 99999;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .image-lightbox.active { display: flex; }
-        .image-lightbox img {
-            max-width: 90vw;
-            max-height: 85vh;
-            border-radius: 12px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-        }
-        .image-lightbox .lb-close {
-            position: absolute;
-            top: 18px;
-            right: 22px;
-            font-size: 2.4rem;
-            color: #f5d79a;
-            background: none;
-            border: none;
-            cursor: pointer;
-            z-index: 100000;
-        }
-        .lb-caption {
-            position: absolute;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(32,17,60,0.9);
-            color: #f5d79a;
-            font-size: 0.9rem;
-            font-weight: 600;
-            padding: 0.4rem 1.2rem;
-            border-radius: 20px;
-            border: 1px solid rgba(245,215,154,0.3);
-            white-space: nowrap;
-        }
-
-        .size-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-        .gift-note {
-            color: var(--gray-lavender);
-            font-size: 0.8rem;
-            margin-top: 0.75rem;
-            line-height: 1.5;
-            font-style: italic;
+            opacity: 1;
         }
 
         /* ── Responsive ── */
         @media (max-width: 720px) {
             .contact-layout { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
-            .still-questions-card { flex-direction: column; text-align: center; }
-            .still-questions-links { width: 100%; }
-            .sq-link { justify-content: center; }
-            .thumb { width: 48px; height: 48px; }
-            .thumb.active { width: 60px; height: 60px; }
         }
     </style>
 </head>
@@ -556,7 +411,7 @@
     </nav>
 
     <div class="contact-page-header" id="get-in-touch">
-        <h2>Book Your Drop-Off</h2>
+        <h2>Get In Touch</h2>
         <p>"Pretty bows &amp; tidy lines, Cancan's Corner always shines!"</p>
         <div class="gold-divider"></div>
     </div>
@@ -565,8 +420,8 @@
 
         <!-- ═══ LEFT COLUMN ═══ -->
         <div class="form-card">
-            <h3>Schedule Your Drop-Off 🎀</h3>
-            <p class="form-subtitle">Fill in your info, choose your gifts, and pick a time — it's that easy!</p>
+            <h3>Send a Message or Book Your Drop-Off!</h3>
+            <p class="form-subtitle">Choose what you need below — I'll get back to you shortly! 🎀</p>
 
             <div class="payment-notice">
                 <span class="payment-notice-icon">💳</span>
@@ -577,6 +432,56 @@
                     </div>
                 </div>
             </div>
+
+            <div class="purpose-toggle" role="group" aria-label="Form purpose">
+                <button type="button" id="btn-message" class="active" onclick="setPurpose('message')">Send a Message</button>
+                <button type="button" id="btn-book"    onclick="setPurpose('book')">Book Drop-off</button>
+            </div>
+
+            <!-- MESSAGE FORM -->
+            <form id="contact-form" action="https://formspree.io/f/xpqykjkn" method="POST">
+                <input type="hidden" name="_subject"     id="form-subject"       value="New Message — Cancan's Corner">
+                <input type="hidden" name="form_purpose" id="form-purpose-field" value="Message">
+
+                <div class="form-section-label">Your Info</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name <span class="req">*</span></label>
+                        <input type="text" name="name" placeholder="Your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number <span class="req">*</span></label>
+                        <input type="tel" name="phone" placeholder="(555) 123-4567" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Email Address <span class="req">*</span></label>
+                    <input type="email" name="email" placeholder="you@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Service Interested In</label>
+                    <select name="service">
+                        <option value="" disabled selected>Select a service…</option>
+                        <option>Basic Gift Wrapping</option>
+                        <option>Bulk Orders (10+ gifts)</option>
+                        <option>Other / Not Sure</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Preferred Contact Method</label>
+                    <select name="preferred_contact">
+                        <option value="" disabled selected>How should I reach you?</option>
+                        <option>Email</option>
+                        <option>Phone Call</option>
+                        <option>Text Message</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Message <span class="req">*</span></label>
+                    <textarea name="message" id="message-field" placeholder="What can Cancan's Corner do for you? Share your wrapping details — number of gifts, gift sizes, event date, and any special requests. The more you tell me the better I can help!" required></textarea>
+                </div>
+                <button type="submit" class="send-btn" id="submit-btn">✉ Send Message</button>
+            </form>
 
             <!-- BOOKING FORM -->
             <form id="booking-fields">
@@ -601,72 +506,56 @@
                 <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
                     <strong>Basic:</strong> Small $6 &middot; Medium $9 &middot; Large $12 &nbsp;|&nbsp; <strong>Bulk (10+ gifts):</strong> Small $5 &middot; Medium $8 &middot; Large $10
                 </p>
-
-                <div id="gift-customizer-section" class="customizer-grid">
-                    <div class="form-section-label">🎁 Choose Your Design</div>
-                    <p class="gift-customizer-intro">
-                        Select your wrapping paper, ribbon, and tag options below. Click any image to see it bigger! Each choice will be noted with your booking.
-                    </p>
-
-                    <div class="customizer-field">
-                        <label for="paperCat">Wrapping Paper</label>
-                        <select id="paperCat"></select>
-                        <div id="paperThumbs" class="thumb-grid"></div>
+                <div class="form-row" style="grid-template-columns:repeat(3,1fr);">
+                    <div class="form-group">
+                        <label>Small &mdash; $6 <span style="font-weight:400;text-transform:none;letter-spacing:0;">(up to 12&Prime;&times;8&Prime;&times;4&Prime;)</span></label>
+                        <input type="number" id="book-small" placeholder="0" min="0" value="0">
                     </div>
-
-                    <div class="customizer-field">
-                        <label for="ribbonCat">Ribbon</label>
-                        <select id="ribbonCat"></select>
-                        <div id="ribbonThumbs" class="thumb-grid"></div>
+                    <div class="form-group">
+                        <label>Medium &mdash; $9 <span style="font-weight:400;text-transform:none;letter-spacing:0;">(up to 18&Prime;&times;12&Prime;&times;6&Prime;)</span></label>
+                        <input type="number" id="book-medium" placeholder="0" min="0" value="0">
                     </div>
-
-                    <div class="customizer-field">
-                        <label for="tagCat">Gift Tag</label>
-                        <select id="tagCat"></select>
-                        <div id="tagThumbs" class="thumb-grid"></div>
-                    </div>
-
-                    <div class="customizer-field">
-                        <div class="size-row">
-                            <div>
-                                <label for="giftSize">Gift Size</label>
-                                <select id="giftSize">
-                                    <option value="Small">Small ($6–5)</option>
-                                    <option value="Medium" selected>Medium ($9–8)</option>
-                                    <option value="Large">Large ($12–10)</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="giftCountInput">How Many Gifts?</label>
-                                <input type="number" id="giftCountInput" min="1" value="1">
-                            </div>
-                        </div>
-                        <p class="gift-note">
-                            Bulk pricing (10+ gifts): Small $5 · Medium $8 · Large $10 | Rush order: +$10 (1–2 day turnaround)
-                        </p>
+                    <div class="form-group">
+                        <label>Large &mdash; $12 <span style="font-weight:400;text-transform:none;letter-spacing:0;">(up to 24&Prime;&times;18&Prime;&times;12&Prime;)</span></label>
+                        <input type="number" id="book-large" placeholder="0" min="0" value="0">
                     </div>
                 </div>
-                <!-- end #gift-customizer-section -->
+                <p id="book-gift-total" style="color:#f5d79a;font-weight:700;margin-bottom:1.2rem;">Total Gifts: 0</p>
 
-                <button type="button" id="addGiftBtn" class="send-btn gift-add-btn">+ Add Another Gift</button>
+                <p style="color:#f5d79a;font-size:0.85rem;font-style:italic;margin-bottom:0.6rem;">A classic bow is included free with every wrap 🎀</p>
 
-                <!-- Hidden fields for form data -->
-                <input type="hidden" id="booking-gift-count" name="dropoff_gifts" value="1">
-                <input type="hidden" id="booking-gift-size" name="dropoff_size" value="Medium">
-                <input type="hidden" id="booking-style" name="dropoff_style" value="basic">
-                <input type="hidden" id="book-rush-hidden" name="rush_order" value="false">
-                <input type="hidden" id="gift-details-json" name="gift_details" value="[]">
-                <input type="hidden" id="estimated-total" name="estimated_total" value="9">
+                <label class="checkbox-label" style="margin-top:0.5rem;margin-bottom:1.2rem;">
+                    <input type="checkbox" id="book-rush">
+                    Rush Order (+$10 flat)
+                </label>
 
+                <div class="form-group">
+                    <label>Special Requests or Notes</label>
+                    <textarea id="booking-notes" name="dropoff_notes" placeholder="Ribbon color, theme, occasion, anything special…"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>🏷️ Gift Tag Message</label>
+                    <textarea id="booking-gift-tag" name="gift_tag" placeholder='e.g. "To: Mom, From: The Kids — Happy Birthday! 🎉" — leave blank if no tag needed' style="min-height:80px;"></textarea>
+                </div>
+
+                <!-- Hidden fields -->
+                <input type="hidden" id="booking-gift-count" name="dropoff_gifts"   value="0">
+                <input type="hidden" id="booking-style"       name="dropoff_style"   value="basic">
+                <input type="hidden" id="booking-gift-size"   name="dropoff_size"    value="mixed">
+                <input type="hidden" id="book-rush-hidden"    name="rush_order"      value="false">
+                <input type="hidden" id="estimated-total"     name="estimated_total" value="0">
+
+                <!-- ── CALENDLY SECTION ── -->
                 <div class="form-section-label" style="margin-top:1rem;">Pick Your Drop-Off Time</div>
                 <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
                     Select a time slot below — you'll get a confirmation email automatically 🎀
                 </p>
 
+                <!-- GATE — shown until name/phone/email are filled -->
                 <div id="calendly-gate">
                     <div class="gate-icon">🗓️</div>
-                    <h4>Complete Your Info to Book</h4>
-                    <p>Fill in your name, phone, and email — then the booking calendar will appear right here.</p>
+                    <h4>Fill In Your Info First</h4>
+                    <p>Complete your name, phone, and email above and the booking calendar will appear right here.</p>
                     <div class="gate-fields-needed">
                         <span class="gate-chip" id="chip-name">✦ Name</span>
                         <span class="gate-chip" id="chip-phone">✦ Phone</span>
@@ -674,6 +563,7 @@
                     </div>
                 </div>
 
+                <!-- CALENDLY WIDGET — hidden until gate clears -->
                 <div id="calendly-widget-wrap">
                     <div class="calendly-inline-widget"
                          data-url="https://calendly.com/c34139087/drop-off"
@@ -689,11 +579,13 @@
                 </div>
 
             </form>
+
         </div>
         <!-- ═══ END LEFT COLUMN ═══ -->
 
         <!-- ═══ RIGHT COLUMN ═══ -->
         <div class="contact-info-card">
+
             <div class="side-card">
                 <div class="side-card-title">Contact Info</div>
 
@@ -718,11 +610,11 @@
                     </div>
                     <div>
                         <div class="info-label">Email</div>
-                        <div class="info-value"><a href="mailto:c34139087@gmail.com">c34139087@gmail.com</a></div>
+                        <div class="info-value"><a href="mailto:cancans.corner92@gmail.com">cancans.corner92@gmail.com</a></div>
                     </div>
                 </div>
 
-                <div class="info-row" style="margin-bottom:0;">
+                <div class="info-row" style="margin-bottom: 0;">
                     <div class="info-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c39559" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
@@ -731,14 +623,14 @@
                     </div>
                     <div>
                         <div class="info-label">Location</div>
-                        <div class="info-value">Morrison, TN</div>
+                        <div class="info-value">Tennessee</div>
                     </div>
                 </div>
 
                 <div class="contact-divider"></div>
 
                 <div class="qr-block">
-                    <div class="side-card-title" style="margin-bottom:0.4rem;">Save My Contact</div>
+                    <div class="side-card-title" style="margin-bottom: 0.4rem;">Save My Contact</div>
                     <p>Scan to save me in your phone</p>
                     <div class="qr-img-wrap">
                         <img src="QR_Code.png" alt="QR Code to save Candida Cook contact">
@@ -746,8 +638,8 @@
                 </div>
 
                 <div class="payment-side-card">
-                    <div class="side-card-title" style="margin-bottom:0.6rem;">Payment</div>
-                    <div style="font-size:0.85rem;color:var(--pastel-yellow);line-height:1.5;margin-bottom:0.7rem;">
+                    <div class="side-card-title" style="margin-bottom: 0.6rem;">Payment</div>
+                    <div style="font-size: 0.85rem; color: var(--pastel-yellow); line-height: 1.5; margin-bottom: 0.7rem;">
                         Payment is due at <strong style="color:var(--pastel-orange);">drop-off</strong> — no online payment required.
                     </div>
                     <a href="https://cash.app/$Cancans92" target="_blank" rel="noopener noreferrer" class="cashapp-link">
@@ -757,27 +649,55 @@
                         </svg>
                         Cash App: $Cancans92
                     </a>
-                    <div style="font-size:0.78rem;color:var(--gray-lavender);font-style:italic;">Also accepted: cash in person</div>
+                    <div style="font-size: 0.78rem; color: var(--gray-lavender); font-style: italic;">Also accepted: cash in person</div>
                 </div>
             </div>
+
+            <!-- Live Quote Estimator Card -->
+            <div class="side-card" id="quote-estimator-card" style="display: none;">
+                <div class="side-card-title">🎀 Estimated Quote</div>
+
+                <div class="quote-line quote-subtotal" id="est-subtotal-line" style="display: none;">
+                    <span class="quote-label">Subtotal</span>
+                    <span class="quote-dash">—</span>
+                    <span class="quote-price" id="est-subtotal">—</span>
+                </div>
+
+                <div class="quote-line quote-discount" id="est-discount-line" style="display: none;">
+                    <span class="quote-label">
+                        Bulk Discount
+                        <span class="bulk-badge" id="bulk-badge-text">BULK 20%</span>
+                    </span>
+                    <span class="quote-dash">-</span>
+                    <span class="quote-price" id="est-discount">-$0.00</span>
+                </div>
+
+                <div class="bulk-unlock-message" id="bulk-unlock-message" style="display: none;">
+                    Add <span id="gifts-needed">10</span> more gift<span id="gifts-needed-plural">s</span> to unlock bulk pricing! 🎀
+                </div>
+
+                <div class="quote-divider" id="est-divider" style="display: none;"></div>
+
+                <div class="quote-line quote-total" style="margin-bottom: 1rem;">
+                    <span class="quote-label">Estimated Total</span>
+                    <span class="quote-dash">—</span>
+                    <span class="quote-price" id="est-total">—</span>
+                </div>
+
+                <div class="quote-divider"></div>
+
+                <div class="quote-line" id="est-rush-line" style="display: none;">
+                    <span class="quote-label">Rush Order</span>
+                    <span class="quote-dash">+</span>
+                    <span class="quote-price">$10</span>
+                </div>
+
+                <p style="color:#f5d79a;font-size:0.75rem;font-style:italic;text-align:center;margin-top:0.8rem;">Final price confirmed at drop-off</p>
+            </div>
+
         </div>
         <!-- ═══ END RIGHT COLUMN ═══ -->
 
-    </div>
-
-    <!-- ═══ STILL HAVE QUESTIONS ═══ -->
-    <div class="still-questions">
-        <div class="still-questions-card">
-            <div class="still-questions-text">
-                <h4>Still Have Questions?</h4>
-                <p>Not ready to book yet? No worries — reach out anytime and I'll get back to you as soon as I can!</p>
-                <p class="sq-faq-note" style="margin-top:0.75rem;">You can also check out the <a href="services.html#faq">FAQ page</a> for quick answers.</p>
-            </div>
-            <div class="still-questions-links">
-                <a href="tel:9313044499" class="sq-link">📞 Call or Text: 931-304-4499</a>
-                <a href="mailto:c34139087@gmail.com" class="sq-link">✉️ c34139087@gmail.com</a>
-            </div>
-        </div>
     </div>
 
     <footer class="footer">
@@ -789,7 +709,7 @@
             <a href="about.html">About</a>
         </nav>
         <p>&copy; 2026 Candida Cook | Cancan's Corner Gift Wrapping <span id="secret-bow" style="cursor:default;user-select:none;">🎀</span></p>
-        <p class="footer-note">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!" <a href="inventory.html" style="text-decoration:none;cursor:default;" title="Inventory">🎁</a></p>
+        <p class="footer-note">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!" <a href="inventory.html" style="text-decoration:none; cursor:default;" title="Inventory">🎁</a></p>
     </footer>
 
     <script>
@@ -803,48 +723,66 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
+    // ── Supabase client ──
     const supabaseClient = supabase.createClient(
         "https://umfheobuqegcluwedxwm.supabase.co",
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtZmhlb2J1cWVnY2x1d2VkeHdtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1OTUzODMsImV4cCI6MjA5MTE3MTM4M30.6ejuz6sJJw9kLBRf3XLTd7Cf5OP9UWu60hGEv4TKDZY"
     );
 
-    // ── Hidden field references ──
-    const hiddenTotal          = document.getElementById('estimated-total');
-    const hiddenCount          = document.getElementById('booking-gift-count');
-    const hiddenSize           = document.getElementById('booking-gift-size');
-    const hiddenStyle          = document.getElementById('booking-style');
-    const hiddenRush           = document.getElementById('book-rush-hidden');
-    const giftDetailsJsonField = document.getElementById('gift-details-json');
+    // ── Tab switcher ──
+    function setPurpose(mode) {
+        const bookingFields = document.getElementById('booking-fields');
+        const contactForm   = document.getElementById('contact-form');
+        const submitBtn     = document.getElementById('submit-btn');
+        const btnMsg        = document.getElementById('btn-message');
+        const btnBook       = document.getElementById('btn-book');
+        const card          = document.getElementById('quote-estimator-card');
 
-    const PRICE_TABLE      = { Small: 6, Medium: 9, Large: 12 };
-    const BULK_PRICE_TABLE = { Small: 5, Medium: 8, Large: 10 };
-    const BASE = 'https://c34139087-cancan.github.io/gift-wrap-website';
+        bookingFields.style.display = 'none';
+        contactForm.style.display   = 'block';
+        submitBtn.style.display     = 'block';
+        if (card) card.style.display = 'none';
 
-    // ── recalc: updates price totals and hidden fields ──
-    function recalc() {
-        const size  = document.getElementById('giftSize')?.value || 'Medium';
-        const count = Math.max(1, parseInt(document.getElementById('giftCountInput')?.value, 10) || 1);
-        const isBulk = count >= 10;
-        const priceTable = isBulk ? BULK_PRICE_TABLE : PRICE_TABLE;
-        const unitPrice  = priceTable[size] || 9;
-        const rush  = document.getElementById('book-rush')?.checked ? 10 : 0;
-        const total = (unitPrice * count) + rush;
-        if (hiddenTotal)  hiddenTotal.value  = total.toFixed(2);
-        if (hiddenCount)  hiddenCount.value  = count;
-        if (hiddenSize)   hiddenSize.value   = size;
-        if (hiddenStyle)  hiddenStyle.value  = isBulk ? 'bulk' : 'basic';
-        updateGiftDetails();
+        if (mode === 'book') {
+            contactForm.style.display   = 'none';
+            bookingFields.style.display = 'block';
+            submitBtn.style.display     = 'none';
+            recalc();
+            checkInfoReady(); // run gate check when tab opens
+        } else {
+            submitBtn.textContent = '✉ Send Message';
+            document.getElementById('form-subject').value       = "New Message — Cancan's Corner";
+            document.getElementById('form-purpose-field').value = 'Message';
+        }
+
+        [btnMsg, btnBook].forEach(btn => btn && btn.classList.remove('active'));
+        const activeBtn = document.getElementById('btn-' + mode);
+        if (activeBtn) activeBtn.classList.add('active');
     }
 
-    // ── On load ──
+    // ── Auto-activate tab from URL ──
     window.addEventListener('DOMContentLoaded', function () {
+        const params = new URLSearchParams(window.location.search);
+        const tab    = params.get('tab');
+        const hash   = window.location.hash;
+        if (tab === 'booking' || tab === 'book' || hash === '#btn-book') {
+            setPurpose('book');
+        } else {
+            setPurpose('message');
+        }
+
+        // Attach gate listeners
         ['booking-name', 'booking-phone', 'booking-email'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.addEventListener('input', checkInfoReady);
         });
+
+        // Attach calculator listeners
+        ['book-small','book-medium','book-large'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', recalc);
+        });
         document.getElementById('book-rush')?.addEventListener('change', recalc);
-        checkInfoReady();
-        initGiftSelectors();
         recalc();
     });
 
@@ -858,458 +796,151 @@
         const phoneOk = phone.length > 0;
         const emailOk = email.includes('@') && email.includes('.');
 
-        const chipName  = document.getElementById('chip-name');
-        const chipPhone = document.getElementById('chip-phone');
-        const chipEmail = document.getElementById('chip-email');
+        // Update chips
+        document.getElementById('chip-name').classList.toggle('done',  nameOk);
+        document.getElementById('chip-phone').classList.toggle('done', phoneOk);
+        document.getElementById('chip-email').classList.toggle('done', emailOk);
 
-        if (chipName)  { chipName.classList.toggle('done', nameOk);   chipName.textContent  = nameOk  ? '✓ Name'  : '✦ Name';  }
-        if (chipPhone) { chipPhone.classList.toggle('done', phoneOk); chipPhone.textContent = phoneOk ? '✓ Phone' : '✦ Phone'; }
-        if (chipEmail) { chipEmail.classList.toggle('done', emailOk); chipEmail.textContent = emailOk ? '✓ Email' : '✦ Email'; }
+        // Update chip labels
+        document.getElementById('chip-name').textContent  = nameOk  ? '✓ Name'  : '✦ Name';
+        document.getElementById('chip-phone').textContent = phoneOk ? '✓ Phone' : '✦ Phone';
+        document.getElementById('chip-email').textContent = emailOk ? '✓ Email' : '✦ Email';
 
         const allReady = nameOk && phoneOk && emailOk;
-        const gate = document.getElementById('calendly-gate');
-        const wrap = document.getElementById('calendly-widget-wrap');
+        const gate     = document.getElementById('calendly-gate');
+        const wrap     = document.getElementById('calendly-widget-wrap');
 
         if (allReady) {
-            if (gate) gate.style.display = 'none';
-            if (wrap) { wrap.style.display = 'block'; setTimeout(() => wrap.classList.add('visible'), 20); }
+            gate.style.display = 'none';
+            wrap.style.display = 'block';
+            // Small delay so display:block takes effect before opacity transition
+            setTimeout(() => wrap.classList.add('visible'), 20);
         } else {
-            if (wrap) { wrap.classList.remove('visible'); setTimeout(() => { if (!wrap.classList.contains('visible')) wrap.style.display = 'none'; }, 420); }
-            if (gate) gate.style.display = 'block';
+            wrap.classList.remove('visible');
+            // Wait for fade-out before hiding
+            setTimeout(() => {
+                if (!wrap.classList.contains('visible')) {
+                    wrap.style.display = 'none';
+                }
+            }, 420);
+            gate.style.display = 'block';
         }
     }
 
-    // ── Design data ──
-    const PAPERS = {
-      'Anniversary': [
-        {n:'Silver & White',f:'Wrapping/Anniversary/silverwhite.png'},
-        {n:'50th Ann',f:'Wrapping/Anniversary/50ann.png'},
-        {n:'Black & Gold',f:'Wrapping/Anniversary/blackandgoldann.png'},
-        {n:'More Everyday',f:'Wrapping/Anniversary/Moreeveryday.png'},
-        {n:'My Forever',f:'Wrapping/Anniversary/myforeverride.png'},
-        {n:'Pink Floral',f:'Wrapping/Anniversary/pinkfloralhappyann.png'},
-        {n:'Red Rose',f:'Wrapping/Anniversary/redroseanniversary.png'},
-        {n:'Romantic',f:'Wrapping/Anniversary/romanticann.png'},
-        {n:'Thanks For',f:'Wrapping/Anniversary/thanksfor.png'},
-        {n:'Thanks For Not',f:'Wrapping/Anniversary/thanksfornotkillingme.png'},
-      ],
-      'Baby': [
-        {n:'Boy or Girl',f:'Wrapping/Baby/boyorgirl.png'},
-        {n:'Camo Girl',f:'Wrapping/Baby/camo its a girl.png'},
-        {n:'Hello Baby',f:'Wrapping/Baby/hellobaby.png'},
-        {n:"It's Not Your Ex",f:'Wrapping/Baby/its not your ex.png'},
-        {n:"It's a Boy Camo",f:'Wrapping/Baby/itsaboycamo.png'},
-        {n:'Purple Baby Camo',f:'Wrapping/Baby/purplebabygirlcamo.png'},
-      ],
-      'Camo': [
-        {n:'Blue Camo',f:'Wrapping/Camo/blue camo.png'},
-        {n:'Desert Camo',f:'Wrapping/Camo/desert camo.png'},
-        {n:'Green Camo',f:'Wrapping/Camo/greencamo.png'},
-        {n:'Orange Camo',f:'Wrapping/Camo/orange camo.png'},
-        {n:'Pink Camo',f:'Wrapping/Camo/pink camo.png'},
-        {n:'Woodland',f:'Wrapping/Camo/Woodland Camo.png'},
-      ],
-      'Christmas': [
-        {n:'Camo Christmas',f:'Wrapping/Christmas/camochristmas.png'},
-        {n:'Classic Christmas',f:'Wrapping/Christmas/classicchristmas.png'},
-        {n:'Classic Reindeer',f:'Wrapping/Christmas/classicredreindeer.png'},
-        {n:'Light Blue',f:'Wrapping/Christmas/lightbluechristmas.png'},
-        {n:'Red Christmas',f:'Wrapping/Christmas/redchristmas.png'},
-      ],
-      'For Her': [
-        {n:'Botanical Bday',f:'Wrapping/For Her/botanical birthday.png'},
-        {n:'Glam Bday',f:'Wrapping/For Her/glam bday.png'},
-        {n:'Neon Animal',f:'Wrapping/For Her/neon animal print.png'},
-        {n:'Pink Floral',f:'Wrapping/For Her/pink floral.png'},
-      ],
-      'For Him': [
-{n:'Birthday Plaid',f:'Wrapping/For Him/Birthday Plaid1.jpg'},        
-{n:'Geometric Bday',f:'Wrapping/For Him/geometric happy birthday.png'},
-        {n:'Outdoor Adventure',f:'Wrapping/For Him/outdoor adventure.png'},
-      ],
-      'General Birthday': [
-        {n:'Black & Gold Bday',f:'Wrapping/General Birthday/black and gold birthday.png'},
-        {n:'Royalty',f:'Wrapping/General Birthday/royalty.png'},
-        {n:'Tan Bday',f:'Wrapping/General Birthday/tan bday.png'},
-      ],
-      'Graduation': [
-        {n:'Black & Gold',f:'Wrapping/Graduation/blackandgold.png'},
-        {n:'Colorful Caps',f:'Wrapping/Graduation/colorful caps.png'},
-        {n:'Green Camo Grad',f:'Wrapping/Graduation/greencamograd.png'},
-        {n:'Navy Gold Grad',f:'Wrapping/Graduation/navygoldgrad.png'},
-        {n:'Pink Camo Grad',f:'Wrapping/Graduation/pinkgradcamo.png'},
-        {n:'Pink Hats',f:'Wrapping/Graduation/pinkhats.png'},
-        {n:'Tan Camo Grad',f:'Wrapping/Graduation/tancamograd.png'},
-      ],
-      'Kids Boys': [
-        {n:'Dino',f:'Wrapping/Kids Boys/Dino.png'},
-        {n:'Jungle',f:'Wrapping/Kids Boys/Jungle.png'},
-        {n:'Monster Trucks',f:'Wrapping/Kids Boys/Monster Trucks.png'},
-        {n:'Race Cars',f:'Wrapping/Kids Boys/Race Cars.png'},
-        {n:'Space',f:'Wrapping/Kids Boys/Space.png'},
-        {n:'Superhero Comic',f:'Wrapping/Kids Boys/Superhero Comic.png'},
-      ],
-      'Kids Girls': [
-        {n:'Mermaids',f:'Wrapping/Kids Girls/Mermaids.png'},
-        {n:'Pink Kitty',f:'Wrapping/Kids Girls/Pink Kitty.png'},
-        {n:'Princess',f:'Wrapping/Kids Girls/Princess.png'},
-        {n:'Spa Day',f:'Wrapping/Kids Girls/Spa Day.png'},
-        {n:'Unicorns',f:'Wrapping/Kids Girls/Unicorns.png'},
-      ],
-      'Kids Neutral': [
-        {n:'Balloon Birthday',f:'Wrapping/Kids Neutral/balloonbirthday.png'},
-        {n:'Confetti Explosion',f:'Wrapping/Kids Neutral/confetti explosion.png'},
-        {n:'Cupcakes',f:'Wrapping/Kids Neutral/Cupcakes.png'},
-      ],
-      'Wedding': [
-        {n:'Bachelorette Hunt',f:'Wrapping/Wedding/bachelorhunt.png'},
-        {n:'Boho',f:'Wrapping/Wedding/boho.png'},
-        {n:'Bride & Groom',f:'Wrapping/Wedding/bride and groom celebration.png'},
-        {n:'Bride Squad',f:'Wrapping/Wedding/bride squad.png'},
-        {n:'Bride to Be',f:'Wrapping/Wedding/bridetobe.png'},
-        {n:'Elegant Floral',f:'Wrapping/Wedding/Elegant white and gold floral.png'},
-        {n:'Fishing Vows',f:'Wrapping/Wedding/fishing vows.png'},
-        {n:'Girly Bridal',f:'Wrapping/Wedding/girly fun bridal.png'},
-        {n:'Greenery',f:'Wrapping/Wedding/greenery.png'},
-        {n:"Groom's Last Ride",f:'Wrapping/Wedding/groomlastride.png'},
-        {n:'Pearly',f:'Wrapping/Wedding/pearly.png'},
-        {n:'Royal Purple',f:'Wrapping/Wedding/royalpurple.png'},
-      ],
-    };
-
-    const RIBBONS = [
-      {n:'Buffalo Check Plaid',f:'Ribbon/Buffalo Check Plaid.png'},
-      {n:'Camo',f:'Ribbon/Camo.png'},
-      {n:'Chalkboard & Gold',f:'Ribbon/Chalkboard & Gold.png'},
-      {n:'Floral Blush',f:'Ribbon/Floral Blush.png'},
-      {n:'Glittery Polka Dots',f:'Ribbon/Glittery Polka Dots.png'},
-      {n:'Gold & Pink Dots',f:'Ribbon/Gold & Pink Dots.png'},
-      {n:'Gold Diagonal Stripe',f:'Ribbon/Gold Diagonal Stripe.png'},
-      {n:'Holographic Shimmer',f:'Ribbon/Holographic Shimmer.png'},
-      {n:'Pink Bow',f:'Ribbon/pinkbow.png'},
-      {n:'Purple & Black',f:'Ribbon/purpleblack.jpg'},
-      {n:'Purple Gold Grad',f:'Ribbon/purplegoldgrad.jpg'},
-      {n:'Red Plaid Bow',f:'Ribbon/redplaidbow.jpg'},
-      {n:'Rustic Kraft & Twine',f:'Ribbon/Rustic Kraft & Twine.png'},
-      {n:'Satin Purple & Gold',f:'Ribbon/Satin Purple & Gold.png'},
-      {n:'Val Day 1',f:'Ribbon/valday.jpg'},
-      {n:'Val Day 2',f:'Ribbon/vday.jpg'},
-      {n:'Val Day 3',f:'Ribbon/vday2.jpg'},
-      {n:'Val Day 4',f:'Ribbon/vday3.jpg'},
-      {n:'Galactic Camo',f:'Ribbon/gcamo.jpg'},
-      {n:'Pale Pink Bow',f:'Ribbon/palepinkbow.jpg'},
-      {n:'Purple Camo',f:'Ribbon/purplecamo.jpg'},
-      {n:'Velvet Deep Red',f:'Ribbon/Velvet Deep Red.png'},
-      {n:'XOXO',f:'Ribbon/xoxo.png'},
-    ];
-
-    const TAGS = {
-      'Animal': [
-        {n:'Neon Animal 5',f:'Tags/Animal/Neon Animal 5.png'},
-        {n:'Neon Animal 6',f:'Tags/Animal/Neon Animal6.png'},
-        {n:'Neon Animal 7',f:'Tags/Animal/Neon Animal 7.png'},
-        {n:'Neon Animal 8',f:'Tags/Animal/Neon Animal 8.png'},
-        {n:'Neon Animal 1',f:'Tags/Animal/NeonAnimal1.png'},
-        {n:'Neon Animal 2',f:'Tags/Animal/NeonAnimal2.png'},
-        {n:'Neon Animal 3',f:'Tags/Animal/NeonAnimal3.png'},
-        {n:'Neon Cheetah',f:'Tags/Animal/neoncheetah.png'},
-        {n:'Neon Paint',f:'Tags/Animal/NeonPaint.png'},
-        {n:'Pink Animal',f:'Tags/Animal/Pink Animal.png'},
-        {n:'Pink Animal 2',f:'Tags/Animal/Pink Animal 2.png'},
-        {n:'Pink Animal 3',f:'Tags/Animal/Pink Animal 3.png'},
-        {n:'Pink Animal 4',f:'Tags/Animal/Pink Animal 4.png'},
-      ],
-      'Birthday': [
-        {n:'Black Gold',f:'Tags/Birthday/1blackgold.jpg'},
-        {n:'Bday Tag 1',f:'Tags/Birthday/bdaytag1.png'},
-        {n:'Bday Tag 2',f:'Tags/Birthday/bdaytag2.png'},
-        {n:'Bday Tags',f:'Tags/Birthday/bdaytags.png'},
-        {n:'Black Gold Stars 1',f:'Tags/Birthday/blackandgoldtags1.png'},
-        {n:'Black Gold Stars 2',f:'Tags/Birthday/blackandgoldtags2.png'},
-        {n:'Black Gold Stars 3',f:'Tags/Birthday/blackandgoldtags3.png'},
-        {n:'Black Gold Stars 5',f:'Tags/Birthday/blackandgoldtags5.png'},
-      ],
-      'Black': [
-        {n:'Black & Gold Stars',f:'Tags/Black/Black & Gold Stars.png'},
-        {n:'Black & Gold Diamond',f:'Tags/Black/Black&GoldDiamond.png'},
-        {n:'Black & Gold Diamond 1',f:'Tags/Black/Black&GoldDiamond1.png'},
-        {n:'Black & Gold Diamond 3',f:'Tags/Black/Black&GoldDiamond3.png'},
-        {n:'Black & Gold Diamond 4',f:'Tags/Black/Black&GoldDiamond4.png'},
-        {n:'Black & Gold Stars 2',f:'Tags/Black/Black&GoldStars2.png'},
-        {n:'Black & Gold Stars 3',f:'Tags/Black/Black&GoldStars3.png'},
-        {n:'Black & Gold Stars 4',f:'Tags/Black/Black&GoldStars4.png'},
-        {n:'Black Gold 1',f:'Tags/Black/BlackGold1.png'},
-        {n:'Black Gold 2',f:'Tags/Black/BlackGold2.png'},
-        {n:'Black Gold 3',f:'Tags/Black/BlackGold3.png'},
-        {n:'Black Gold 4',f:'Tags/Black/BlackGold4.png'},
-        {n:'Gothrose',f:'Tags/Black/Gothrose.jpg'},
-        {n:'Tag Black Gold',f:'Tags/Black/tagblackgold.jpg'},
-      ],
-      'Camo': [
-        {n:'Baby Camo',f:'Tags/Camo/Baby Camo.png'},
-        {n:'Baby Camo 1',f:'Tags/Camo/Baby Camo1.png'},
-        {n:'Camo Tag 1',f:'Tags/Camo/Camo Tag 1.png'},
-        {n:'Camo Tag 3',f:'Tags/Camo/Camo Tag 3.png'},
-        {n:'Camo Tag 4',f:'Tags/Camo/Camo Tag 4.png'},
-        {n:'Camo Tag 5',f:'Tags/Camo/Camo Tag 5.png'},
-        {n:'Camo Tag 6',f:'Tags/Camo/Camo Tag 6.png'},
-        {n:'Camo Tag 7',f:'Tags/Camo/Camo Tag 7.png'},
-        {n:'Camo Tag',f:'Tags/Camo/Camo Tag.png'},
-        {n:'Pink Camo 1',f:'Tags/Camo/Pink Camo1.png'},
-        {n:'Pink Camo 2',f:'Tags/Camo/Pink Camo2.png'},
-        {n:'Pink Camo 3',f:'Tags/Camo/Pink Camo3.png'},
-        {n:'Pink Camo 4',f:'Tags/Camo/Pink Camo 4.png'},
-      ],
-      'Christmas': [
-        {n:'2 Black Gold Christmas',f:'Tags/Christmas/2blackgoldchristmas.jpg'},
-        {n:'2 Dino',f:'Tags/Christmas/2dino.jpg'},
-        {n:'Black Gold Christmas',f:'Tags/Christmas/bkackgoldchristmas.jpg'},
-        {n:'Christmas Dino',f:'Tags/Christmas/christmasdino.jpg'},
-        {n:'Christmas Gingerbread',f:'Tags/Christmas/christmasgingerbread.jpg'},
-        {n:'Creamy Christmas',f:'Tags/Christmas/creamychrismastag2.jpg'},
-      ],
-      'Floral': [
-        {n:'Floral Tag',f:'Tags/Floral/1floraltag.jpg'},
-        {n:'Floral 1',f:'Tags/Floral/floral1.png'},
-        {n:'Floral 2',f:'Tags/Floral/floral2.png'},
-        {n:'Floral 3',f:'Tags/Floral/floral3.png'},
-        {n:'Floral 4',f:'Tags/Floral/floral4.png'},
-        {n:'Gold Rose',f:'Tags/Floral/Gold Rose.png'},
-        {n:'Gold Rose 2',f:'Tags/Floral/Gold Rose2.png'},
-        {n:'Gold Rose 3',f:'Tags/Floral/Gold Rose3.png'},
-        {n:'Gold Rose 4',f:'Tags/Floral/Gold Rose4.png'},
-        {n:'Lavender 1',f:'Tags/Floral/Lav1.png'},
-        {n:'Lavender 2',f:'Tags/Floral/Lav2.png'},
-        {n:'Lavender 3',f:'Tags/Floral/Lav3.png'},
-      ],
-      'Kids': [
-        {n:'Girls Tag',f:'Tags/kids/girlstag.jpg'},
-        {n:'Bday Tag',f:'Tags/kids/image_1e4ec60d.png'},
-        {n:'Outer Space',f:'Tags/kids/outerspacetag.jpg'},
-      ],
-      'Purple': [
-        {n:'Goodnight',f:'Tags/Purple/goodnight.png'},
-        {n:'Grad Name Tag 2',f:'Tags/Purple/Grad Name Tag 2.png'},
-        {n:'Grad Name Tag',f:'Tags/Purple/Grad Name Tag.png'},
-        {n:'Purple & Gold Grad',f:'Tags/Purple/Purple & Gold Graduation.png'},
-        {n:'Purple & Gold 1',f:'Tags/Purple/Purple & Gold1.png'},
-        {n:'Purple & Gold 2',f:'Tags/Purple/Purple & Gold2.png'},
-        {n:'Purple & Gold 3',f:'Tags/Purple/Purple & Gold3.png'},
-        {n:'Purple & Gold 4',f:'Tags/Purple/Purple & Gold4.png'},
-        {n:'Purple Camo 1',f:'Tags/Purple/Purple Camo1.png'},
-        {n:'Purple Camo 2',f:'Tags/Purple/Purple Camo2.png'},
-        {n:'Purple Camo 3',f:'Tags/Purple/Purple Camo3.png'},
-        {n:'Purple Camo 4',f:'Tags/Purple/Purple Camo4.png'},
-      ],
-      "Valentine's Day": [
-        {n:'Valentines 1',f:'Tags/Valentines Day/1valentines.png'},
-        {n:'Cherry Val',f:'Tags/Valentines Day/cherryval.png'},
-        {n:'Floral Val',f:'Tags/Valentines Day/floralval.png'},
-        {n:'Valentines',f:'Tags/Valentines Day/valentines.png'},
-        {n:'Vday 1',f:'Tags/Valentines Day/vday.jpg'},
-        {n:'Vday 2',f:'Tags/Valentines Day/vday2.png'},
-        {n:'Vday 3',f:'Tags/Valentines Day/vday3.png'},
-        {n:'Vday 4',f:'Tags/Valentines Day/vday4.png'},
-      ],
-      'Wedding': [
-        {n:'Hearts & Champagne',f:'Tags/Wedding/hearts and champagne.png'},
-        {n:'Hearts & Champagne 2',f:'Tags/Wedding/hearts and champagne2.png'},
-        {n:'Woodland Anniversary',f:'Tags/Wedding/woodlandanniversary.png'},
-      ],
-    };
-
-    // ── Build dropdowns ──
-    function buildPaperCat() {
-        const sel = document.getElementById('paperCat');
-        if (!sel) return;
-        sel.innerHTML = '';
-        Object.keys(PAPERS).forEach(cat => {
-            const group = document.createElement('optgroup');
-            group.label = cat;
-            (PAPERS[cat] || []).forEach((p, i) => {
-                const o = document.createElement('option');
-                o.value = `${cat}||${i}`;
-                o.textContent = p.n;
-                group.appendChild(o);
+    // ── Message form submit (Formspree) ──
+    document.getElementById('contact-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const form = e.target;
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
             });
-            sel.appendChild(group);
-        });
-        if (sel.options.length) sel.selectedIndex = 0;
-        sel.onchange = () => { updateGiftDetails(); recalc(); };
-    }
-
-    function buildRibbonCat() {
-        const sel = document.getElementById('ribbonCat');
-        if (!sel) return;
-        sel.innerHTML = '';
-        const group = document.createElement('optgroup');
-        group.label = 'All Ribbons';
-        RIBBONS.forEach((r, i) => {
-            const o = document.createElement('option');
-            o.value = `__RIBBON__||${i}`;
-            o.textContent = r.n;
-            group.appendChild(o);
-        });
-        sel.appendChild(group);
-        if (sel.options.length) sel.selectedIndex = 0;
-        sel.onchange = () => { updateGiftDetails(); recalc(); };
-    }
-
-    function buildTagCat() {
-        const sel = document.getElementById('tagCat');
-        if (!sel) return;
-        sel.innerHTML = '';
-        Object.keys(TAGS).forEach(cat => {
-            const group = document.createElement('optgroup');
-            group.label = cat;
-            (TAGS[cat] || []).forEach((t, i) => {
-                const o = document.createElement('option');
-                o.value = `${cat}||${i}`;
-                o.textContent = t.n;
-                group.appendChild(o);
-            });
-            sel.appendChild(group);
-        });
-        if (sel.options.length) sel.selectedIndex = 0;
-        sel.onchange = () => { updateGiftDetails(); recalc(); };
-    }
-
-    // ── Lightbox ──
-    function openImageLightbox(src, caption) {
-        let lb = document.getElementById('imageLightbox');
-        if (!lb) {
-            lb = document.createElement('div');
-            lb.id = 'imageLightbox';
-            lb.className = 'image-lightbox';
-            lb.innerHTML = '<button class="lb-close" aria-label="Close">✕</button><img src="" alt="Enlarged preview"><div class="lb-caption"></div>';
-            document.body.appendChild(lb);
-            lb.querySelector('.lb-close').addEventListener('click', () => lb.classList.remove('active'));
-            lb.addEventListener('click', (e) => { if (e.target === lb) lb.classList.remove('active'); });
+            if (response.ok) {
+                form.style.display = 'none';
+                document.querySelector('.purpose-toggle').style.display = 'none';
+                const msg = document.createElement('div');
+                msg.className = 'success-message';
+                msg.innerHTML = `
+                    <div class="success-icon">🎀</div>
+                    <h3>Message Sent!</h3>
+                    <p>Thank you for reaching out! I'll get back to you shortly.</p>
+                    <p class="success-tagline">"Pretty bows &amp; tidy lines, Cancan's Corner always shines!"</p>
+                `;
+                document.querySelector('.form-card').appendChild(msg);
+            } else {
+                alert('Something went wrong. Please try again!');
+            }
+        } catch (err) {
+            alert('Something went wrong. Please try again!');
         }
-        lb.querySelector('img').src = src;
-        lb.querySelector('.lb-caption').textContent = caption || '';
-        lb.classList.add('active');
-    }
-
-    // ── Thumbnail builders ──
-    function buildThumbGrid(containerEl, selectEl, items, valuePrefix, wrapperId, isGrouped) {
-        if (!containerEl || !selectEl) return;
-        containerEl.innerHTML = '';
-
-        if (isGrouped) {
-            Object.keys(items).forEach(cat => {
-                const groupWrap = document.createElement('div');
-                groupWrap.className = 'thumb-group';
-                const label = document.createElement('div');
-                label.className = 'thumb-category';
-                label.textContent = cat;
-                groupWrap.appendChild(label);
-
-                (items[cat] || []).forEach((item, i) => {
-                    const thumb = makeThumb(item, `${cat}||${i}`, selectEl, wrapperId);
-                    groupWrap.appendChild(thumb);
-                });
-                containerEl.appendChild(groupWrap);
-            });
-        } else {
-            items.forEach((item, i) => {
-                const thumb = makeThumb(item, `${valuePrefix}${i}`, selectEl, wrapperId);
-                containerEl.appendChild(thumb);
-            });
-        }
-
-        const first = containerEl.querySelector('.thumb');
-        if (first) first.classList.add('active');
-    }
-
-    function makeThumb(item, value, selectEl, wrapperId) {
-        const path = item.f || '';
-        const thumb = document.createElement('div');
-        thumb.className = 'thumb';
-        thumb.title = item.n || '';
-        const img = document.createElement('img');
-        img.src = BASE + '/' + path;
-        img.alt = item.n || '';
-        thumb.appendChild(img);
-        thumb.addEventListener('click', () => {
-            selectEl.value = value;
-            document.querySelectorAll(`#${wrapperId} .thumb`).forEach(t => t.classList.remove('active'));
-            thumb.classList.add('active');
-            updateGiftDetails();
-            recalc();
-            // Open lightbox with full-size image
-            openImageLightbox(BASE + '/' + path, item.n);
-        });
-        return thumb;
-    }
-
-    function buildPaperThumbs()  { buildThumbGrid(document.getElementById('paperThumbs'),  document.getElementById('paperCat'),  PAPERS,  '',              'paperThumbs',  true);  }
-    function buildRibbonThumbs() { buildThumbGrid(document.getElementById('ribbonThumbs'), document.getElementById('ribbonCat'), RIBBONS, '__RIBBON__||',  'ribbonThumbs', false); }
-    function buildTagThumbs()    { buildThumbGrid(document.getElementById('tagThumbs'),    document.getElementById('tagCat'),    TAGS,    '',              'tagThumbs',    true);  }
-
-    function initGiftSelectors() {
-        buildPaperCat();
-        buildRibbonCat();
-        buildTagCat();
-        buildPaperThumbs();
-        buildRibbonThumbs();
-        buildTagThumbs();
-        document.getElementById('giftSize')?.addEventListener('change', recalc);
-        document.getElementById('giftCountInput')?.addEventListener('input', recalc);
-        recalc();
-    }
-
-    function updateGiftDetails() {
-        const size     = document.getElementById('giftSize')?.value || 'Medium';
-        const count    = Math.max(1, parseInt(document.getElementById('giftCountInput')?.value, 10) || 1);
-        const paperVal = document.getElementById('paperCat')?.value  || '';
-        const tagVal   = document.getElementById('tagCat')?.value    || '';
-        const ribbonVal= document.getElementById('ribbonCat')?.value || '';
-
-        let paper = {};
-        if (paperVal.includes('||')) { const [cat,idx] = paperVal.split('||'); paper = (PAPERS[cat]||[])[parseInt(idx,10)] || {}; }
-
-        let tag = {};
-        if (tagVal.includes('||')) { const [cat,idx] = tagVal.split('||'); tag = (TAGS[cat]||[])[parseInt(idx,10)] || {}; }
-
-        let ribbon = {};
-        if (ribbonVal.startsWith('__RIBBON__||')) { ribbon = RIBBONS[parseInt(ribbonVal.split('||')[1],10)] || {}; }
-
-        const details = [{ size, count,
-            paperCategory: paperVal.split('||')[0] || '',
-            paper: paper.n || '', paperImage: paper.f || '',
-            ribbon: ribbon.n || '', ribbonImage: ribbon.f || '',
-            tagCategory: tagVal.split('||')[0] || '',
-            tag: tag.n || '', tagImage: tag.f || ''
-        }];
-        if (giftDetailsJsonField) giftDetailsJsonField.value = JSON.stringify(details);
-    }
-
-    // ── Add Gift button ──
-    document.addEventListener('DOMContentLoaded', function() {
-        const addGiftBtn = document.getElementById('addGiftBtn');
-        const giftCustomizerSection = document.getElementById('gift-customizer-section');
-        if (!addGiftBtn || !giftCustomizerSection) return;
-
-        let giftCount = 1;
-        addGiftBtn.addEventListener('click', function () {
-            giftCount++;
-            const clone = giftCustomizerSection.cloneNode(true);
-            clone.id = `gift-customizer-section-${giftCount}`;
-            const heading = clone.querySelector('.form-section-label');
-            if (heading) heading.textContent = `🎁 Choose Your Design #${giftCount}`;
-            // Clear cloned selects and thumbs so they rebuild cleanly
-            ['paperCat','ribbonCat','tagCat','paperThumbs','ribbonThumbs','tagThumbs'].forEach(id => {
-                const el = clone.querySelector(`#${id}`);
-                if (el) el.id = `${id}-${giftCount}`;
-            });
-            giftCustomizerSection.parentNode.insertBefore(clone, addGiftBtn);
-        });
     });
 
-    // ── Calendly → Supabase ──
+    // ── Live Calculator ──
+    const card              = document.getElementById('quote-estimator-card');
+    const giftTotal         = document.getElementById('book-gift-total');
+    const estTotal          = document.getElementById('est-total');
+    const estSubtotalLine   = document.getElementById('est-subtotal-line');
+    const estSubtotal       = document.getElementById('est-subtotal');
+    const estDiscountLine   = document.getElementById('est-discount-line');
+    const estDiscount       = document.getElementById('est-discount');
+    const estDivider        = document.getElementById('est-divider');
+    const bulkBadgeText     = document.getElementById('bulk-badge-text');
+    const bulkUnlockMessage = document.getElementById('bulk-unlock-message');
+    const giftsNeeded       = document.getElementById('gifts-needed');
+    const giftsNeededPlural = document.getElementById('gifts-needed-plural');
+    const estRushLine       = document.getElementById('est-rush-line');
+    const hiddenTotal       = document.getElementById('estimated-total');
+    const hiddenCount       = document.getElementById('booking-gift-count');
+    const hiddenStyle       = document.getElementById('booking-style');
+    const hiddenRush        = document.getElementById('book-rush-hidden');
+
+    function recalc() {
+        const small  = parseInt(document.getElementById('book-small')?.value, 10)  || 0;
+        const medium = parseInt(document.getElementById('book-medium')?.value, 10) || 0;
+        const large  = parseInt(document.getElementById('book-large')?.value, 10)  || 0;
+        const total  = small + medium + large;
+        const rush   = document.getElementById('book-rush')?.checked || false;
+
+        if (giftTotal)   giftTotal.textContent = 'Total Gifts: ' + total;
+        if (hiddenCount) hiddenCount.value = total;
+
+        const isBulk = total >= 10;
+        if (hiddenStyle) hiddenStyle.value = isBulk ? 'bulk' : 'basic';
+        if (hiddenRush)  hiddenRush.value  = rush   ? 'true' : 'false';
+
+        if (total === 0) {
+            if (card) card.style.display = 'none';
+            if (hiddenTotal) hiddenTotal.value = '0';
+            return;
+        }
+
+        const basicPrice = (small * 6) + (medium * 9) + (large * 12);
+        const bulkPrice  = (small * 5) + (medium * 8) + (large * 10);
+        const base = isBulk ? bulkPrice : basicPrice;
+
+        let discountAmount  = 0;
+        let discountPercent = 0;
+        if (isBulk) {
+            discountAmount  = basicPrice - bulkPrice;
+            discountPercent = ((discountAmount / basicPrice) * 100).toFixed(0);
+        }
+
+        const rushAmt = rush ? 10 : 0;
+        const grand   = base + rushAmt;
+
+        if (card) card.style.display = 'block';
+
+        if (isBulk) {
+            if (estSubtotalLine) estSubtotalLine.style.display = 'flex';
+            if (estSubtotal)     estSubtotal.textContent = '$' + basicPrice.toFixed(2);
+            if (estDiscountLine) estDiscountLine.style.display = 'flex';
+            if (estDiscount)     estDiscount.textContent = '-$' + discountAmount.toFixed(2);
+            if (bulkBadgeText)   bulkBadgeText.textContent = 'BULK ' + discountPercent + '%';
+            if (bulkUnlockMessage) bulkUnlockMessage.style.display = 'none';
+            if (estDivider)      estDivider.style.display = 'block';
+        } else {
+            if (estSubtotalLine)   estSubtotalLine.style.display = 'none';
+            if (estDiscountLine)   estDiscountLine.style.display = 'none';
+            if (estDivider)        estDivider.style.display = 'none';
+            if (bulkUnlockMessage) {
+                bulkUnlockMessage.style.display = 'block';
+                const needed = 10 - total;
+                if (giftsNeeded)       giftsNeeded.textContent = needed;
+                if (giftsNeededPlural) giftsNeededPlural.textContent = needed === 1 ? '' : 's';
+            }
+        }
+
+        if (hiddenTotal) hiddenTotal.value = grand.toFixed(2);
+        if (estTotal)    estTotal.textContent = '$' + grand.toFixed(2);
+        if (estRushLine) estRushLine.style.display = rush ? 'flex' : 'none';
+    }
+
+    // ── Calendly event listener — saves to Supabase on booking confirmed ──
     window.addEventListener('message', async function (e) {
         if (e.data.event && e.data.event === 'calendly.event_scheduled') {
+
             const name    = document.getElementById('booking-name')?.value.trim();
             const phone   = document.getElementById('booking-phone')?.value.trim();
             const email   = document.getElementById('booking-email')?.value.trim();
@@ -1317,11 +948,12 @@
             const style   = hiddenStyle?.value || 'basic';
             const rushOrd = hiddenRush?.value === 'true';
             const total   = parseFloat(hiddenTotal?.value) || 0;
-            let giftDetails = [];
-            try { giftDetails = JSON.parse(giftDetailsJsonField?.value || '[]'); } catch(err) {}
+            const notes   = document.getElementById('booking-notes')?.value.trim()    || '';
+            const giftTag = document.getElementById('booking-gift-tag')?.value.trim() || '';
 
+            // Safety net — should never fire now due to gate, but just in case
             if (!name || !phone || !email) {
-                alert('Your time slot is booked! Please fill in your name, phone, and email above, then text me at 931-304-4499.');
+                alert('Your time slot is booked! Please fill in your name, phone, and email above so I can save your order, then text me at 931-304-4499.');
                 return;
             }
 
@@ -1330,10 +962,9 @@
                 phone:           phone,
                 email:           email,
                 gift_count:      count,
-                gift_size:       hiddenSize?.value || 'Mixed',
+                gift_size:       'mixed',
                 wrapping_style:  style,
                 estimated_total: '$' + total.toFixed(2),
-                gift_details:    giftDetails,
                 status:          'Received',
                 rush_order:      rushOrd
             }]);
@@ -1344,41 +975,29 @@
                 return;
             }
 
-            const giftSummary = giftDetails.map((g, i) =>
-                `Gift ${i+1}: ${g.size || 'size not selected'} | Paper: ${g.paper} | Ribbon: ${g.ribbon || 'none'} | Tag: ${g.tag || 'none'}`
-            ).join('\n');
-
-            await fetch('https://formspree.io/f/xpqykjkn', {
-                method: 'POST',
-                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    _subject:         "New Drop-Off Booking — Cancan's Corner 🎀",
-                    Name:             name,
-                    Phone:            phone,
-                    Email:            email,
-                    'Total Gifts':    count,
-                    'Wrapping Style': style === 'bulk' ? 'Bulk (10+ gifts)' : 'Basic',
-                    'Rush Order':     rushOrd ? 'YES (+$10)' : 'No',
-                    'Estimated Total':'$' + total.toFixed(2),
-                    'Gift Details':   giftSummary || 'No gift details provided',
-                    'Notes':          document.getElementById('booking-notes')?.value.trim() || 'None'
-                })
-            });
-
+            // Reset form
             document.getElementById('booking-fields').reset();
             if (hiddenTotal) hiddenTotal.value = '0';
-            if (giftDetailsJsonField) giftDetailsJsonField.value = '[]';
+            if (card)        card.style.display = 'none';
+            if (giftTotal)   giftTotal.textContent = 'Total Gifts: 0';
 
+            // Hide Calendly, reset gate
             const wrap = document.getElementById('calendly-widget-wrap');
             const gate = document.getElementById('calendly-gate');
-            if (wrap) { wrap.classList.remove('visible'); setTimeout(() => { wrap.style.display = 'none'; }, 420); }
-            if (gate) gate.style.display = 'block';
+            wrap.classList.remove('visible');
+            setTimeout(() => { wrap.style.display = 'none'; }, 420);
+            gate.style.display = 'block';
 
+            // Reset chips
             ['chip-name','chip-phone','chip-email'].forEach(id => {
                 const chip = document.getElementById(id);
-                if (chip) { chip.classList.remove('done'); chip.textContent = id === 'chip-name' ? '✦ Name' : id === 'chip-phone' ? '✦ Phone' : '✦ Email'; }
+                chip.classList.remove('done');
             });
+            document.getElementById('chip-name').textContent  = '✦ Name';
+            document.getElementById('chip-phone').textContent = '✦ Phone';
+            document.getElementById('chip-email').textContent = '✦ Email';
 
+            // Show success
             const successBox = document.getElementById('booking-success');
             if (successBox) successBox.style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1388,12 +1007,18 @@
     // ── Confetti ──
     (function () {
         const container = document.getElementById('confetti');
-        const colors = ['#f5d79a','#ecdb9f','#c39559','#866e9f','#785678'];
+        const colors    = ['#f5d79a', '#ecdb9f', '#c39559', '#866e9f', '#785678'];
         for (let i = 0; i < 50; i++) {
-            const dot = document.createElement('div');
+            const dot  = document.createElement('div');
             dot.classList.add('confetti-dot');
             const size = Math.random() * 8 + 4;
-            dot.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:-20px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${Math.random()*6+4}s;animation-delay:${Math.random()*5}s;`;
+            dot.style.width             = size + 'px';
+            dot.style.height            = size + 'px';
+            dot.style.left              = Math.random() * 100 + '%';
+            dot.style.top               = '-20px';
+            dot.style.background        = colors[Math.floor(Math.random() * colors.length)];
+            dot.style.animationDuration = (Math.random() * 6 + 4) + 's';
+            dot.style.animationDelay    = (Math.random() * 5) + 's';
             container.appendChild(dot);
         }
     })();
@@ -1401,6 +1026,7 @@
 
     <script src="script.js"></script>
 
+    <!-- Back to Top Bow Button -->
     <style>
         #backToTop {
             position: fixed; bottom: 32px; right: 28px;
