@@ -312,6 +312,84 @@
             font-weight: 500;
         }
 
+        .gift-item-area {
+            background: rgba(64, 41, 91, 0.24);
+            border: 1px solid rgba(245, 215, 154, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 1rem 1.1rem 1.2rem;
+            margin-bottom: 1.4rem;
+        }
+        .gift-item-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .gift-item-add-hint {
+            color: var(--gray-lavender);
+            font-size: 0.85rem;
+        }
+        .gift-item-list { display: flex; flex-direction: column; gap: 1rem; }
+        .gift-item-card {
+            background: rgba(32, 17, 60, 0.75);
+            border: 1px solid rgba(245, 215, 154, 0.18);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+        }
+        .gift-item-card h4 {
+            margin: 0 0 0.75rem;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--pastel-orange);
+        }
+        .gift-item-card .gift-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.85rem;
+        }
+        .gift-item-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .gift-item-card textarea { min-height: 88px; }
+        .gift-item-remove {
+            background: rgba(195, 149, 89, 0.1);
+            border: 1px solid rgba(195, 149, 89, 0.35);
+            border-radius: 999px;
+            color: var(--pastel-orange);
+            padding: 0.5rem 0.85rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .gift-item-remove:hover { background: rgba(195, 149, 89, 0.2); }
+        .gift-add-btn { width: auto; padding: 0.85rem 1.2rem; }
+        .gift-item-design {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding-top: 0.85rem;
+            border-top: 1px solid rgba(245, 215, 154, 0.12);
+        }
+        .gift-item-design-summary {
+            color: var(--gray-lavender);
+            font-size: 0.85rem;
+            line-height: 1.4;
+            flex: 1 1 100%;
+        }
+        .gift-item-customize-btn {
+            width: auto;
+            padding: 0.8rem 1rem;
+        }
+        .gift-design-target-label {
+            color: var(--gray-lavender);
+            font-size: 0.9rem;
+            margin-top: 0.45rem;
+        }
+
         /* ── Confetti ── */
         .confetti-dot { position: absolute; border-radius: 50%; animation: confetti-fall linear infinite; pointer-events: none; }
 
@@ -605,18 +683,29 @@
                 <p style="color:#f5d79a;font-size:0.85rem;margin-bottom:1rem;">
                     <strong>Basic:</strong> Small $6 &middot; Medium $9 &middot; Large $12 &nbsp;|&nbsp; <strong>Bulk (10+ gifts):</strong> Small $5 &middot; Medium $8 &middot; Large $10
                 </p>
-                <div class="form-row" style="grid-template-columns:repeat(3,1fr);">
-                    <div class="form-group">
-                        <label>Small &mdash; $6 <span style="font-weight:400;text-transform:none;letter-spacing:0;">(up to 12&Prime;&times;8&Prime;&times;4&Prime;)</span></label>
-                        <input type="number" id="book-small" placeholder="0" min="0" value="0">
+
+                <div id="gift-item-area" class="gift-item-area">
+                    <div class="gift-item-actions">
+                        <button type="button" id="add-gift-item-btn" class="send-btn gift-add-btn">+ Add Gift Item</button>
+                        <span id="gift-item-hint" class="gift-item-add-hint">Create one gift item, then choose size and notes for each.</span>
                     </div>
-                    <div class="form-group">
-                        <label>Medium &mdash; $9 <span style="font-weight:400;text-transform:none;letter-spacing:0;">(up to 18&Prime;&times;12&Prime;&times;6&Prime;)</span></label>
-                        <input type="number" id="book-medium" placeholder="0" min="0" value="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Large &mdash; $12 <span style="font-weight:400;text-transform:none;letter-spacing:0;">(up to 24&Prime;&times;18&Prime;&times;12&Prime;)</span></label>
-                        <input type="number" id="book-large" placeholder="0" min="0" value="0">
+                    <div id="gift-item-list" class="gift-item-list"></div>
+                </div>
+
+                <div id="gift-count-fallback" style="display:none;">
+                    <div class="form-row" style="grid-template-columns:repeat(3,1fr);">
+                        <div class="form-group">
+                            <label>Small &mdash; $6 <span style="font-weight:400;text-transform:none;letter-spacing:0;">(up to 12&Prime;&times;8&Prime;&times;4&Prime;)</span></label>
+                            <input type="number" id="book-small" placeholder="0" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Medium &mdash; $9 <span style="font-weight:400;text-transform:none;letter-spacing:0;">(up to 18&Prime;&times;12&Prime;&times;6&Prime;)</span></label>
+                            <input type="number" id="book-medium" placeholder="0" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Large &mdash; $12 <span style="font-weight:400;text-transform:none;letter-spacing:0;">(up to 24&Prime;&times;18&Prime;&times;12&Prime;)</span></label>
+                            <input type="number" id="book-large" placeholder="0" min="0" value="0">
+                        </div>
                     </div>
                 </div>
                 <p id="book-gift-total" style="color:#f5d79a;font-weight:700;margin-bottom:1.2rem;">Total Gifts: 0</p>
@@ -630,6 +719,7 @@
 
                 <!-- ══════════ DESIGN PICKER ══════════ -->
                 <div class="form-section-label" style="margin-top:1.5rem;">🎨 Choose Your Design</div>
+                <div id="design-target-label" class="gift-design-target-label">Select a gift to customize its wrapping and tag.</div>
                 <p style="color:var(--gray-lavender);font-size:0.85rem;margin-bottom:1.2rem;">
                     Select your occasion — then pick wrapping paper, ribbon, and gift tag. Click any image to see it bigger!
                 </p>
@@ -702,6 +792,7 @@
 
                 <!-- Hidden fields -->
                 <input type="hidden" id="booking-gift-count" name="dropoff_gifts"   value="0">
+                <input type="hidden" id="gift-details-json" name="gift_details" value="[]">
                 <input type="hidden" id="booking-style"       name="dropoff_style"   value="basic">
                 <input type="hidden" id="booking-gift-size"   name="dropoff_size"    value="mixed">
                 <input type="hidden" id="book-rush-hidden"    name="rush_order"      value="false">
@@ -909,6 +1000,7 @@
             contactForm.style.display   = 'none';
             bookingFields.style.display = 'block';
             submitBtn.style.display     = 'none';
+            if (!document.querySelector('.gift-item-card')) addGiftItem();
             recalc();
             checkInfoReady(); // run gate check when tab opens
         } else {
@@ -937,6 +1029,11 @@
         ['booking-name', 'booking-phone', 'booking-email'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.addEventListener('input', checkInfoReady);
+        });
+
+        // Attach gift item listener
+        document.getElementById('add-gift-item-btn')?.addEventListener('click', function () {
+            addGiftItem();
         });
 
         // Attach calculator listeners
@@ -1035,18 +1132,154 @@
     const estRushLine       = document.getElementById('est-rush-line');
     const hiddenTotal       = document.getElementById('estimated-total');
     const hiddenCount       = document.getElementById('booking-gift-count');
+    const hiddenSize        = document.getElementById('booking-gift-size');
     const hiddenStyle       = document.getElementById('booking-style');
     const hiddenRush        = document.getElementById('book-rush-hidden');
+    const giftDetailsJsonField = document.getElementById('gift-details-json');
+
+    function addGiftItem() {
+        const list = document.getElementById('gift-item-list');
+        if (!list) return;
+
+        const card = document.createElement('div');
+        card.className = 'gift-item-card';
+        card.innerHTML = `
+            <div class="gift-item-header">
+                <h4>Gift</h4>
+                <button type="button" class="gift-item-remove">Remove</button>
+            </div>
+            <div class="gift-item-row">
+                <div class="form-group">
+                    <label>Size</label>
+                    <select class="gift-item-size">
+                        <option value="Small">Small</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="Large">Large</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Gift Notes</label>
+                    <textarea class="gift-item-note" placeholder="Ribbon color, tag message, theme, or special request"></textarea>
+                </div>
+            </div>
+            <div class="gift-item-design">
+                <div class="gift-item-design-summary">
+                    Occasion: <strong>None</strong><br>
+                    Paper: <strong>None</strong> · Ribbon: <strong>None</strong> · Tag: <strong>None</strong>
+                </div>
+                <button type="button" class="send-btn gift-item-customize-btn">Customize Design</button>
+            </div>
+            <input type="hidden" class="gift-item-occasion" name="gift_item_occasion[]" value="">
+            <input type="hidden" class="gift-item-paper" name="gift_item_paper[]" value="">
+            <input type="hidden" class="gift-item-ribbon" name="gift_item_ribbon[]" value="">
+            <input type="hidden" class="gift-item-tag" name="gift_item_tag[]" value="">
+            <input type="hidden" class="gift-item-tag-category" name="gift_item_tag_category[]" value="">
+        `;
+
+        list.appendChild(card);
+        card.querySelector('.gift-item-size')?.addEventListener('change', updateGiftItemsSummary);
+        card.querySelector('.gift-item-note')?.addEventListener('input', updateGiftItemsSummary);
+        card.querySelector('.gift-item-customize-btn')?.addEventListener('click', function () {
+            openDesignPickerForGift(card);
+        });
+        card.querySelector('.gift-item-remove')?.addEventListener('click', function () {
+            if (activeGiftCard === card) setActiveGiftCard(null);
+            card.remove();
+            refreshGiftItemLabels();
+            updateGiftItemsSummary();
+        });
+
+        refreshGiftItemLabels();
+        updateGiftItemsSummary();
+    }
+
+    function refreshGiftItemLabels() {
+        Array.from(document.querySelectorAll('.gift-item-card')).forEach((card, index) => {
+            const heading = card.querySelector('h4');
+            if (heading) heading.textContent = `Gift ${index + 1}`;
+        });
+        if (activeGiftCard && document.body.contains(activeGiftCard)) {
+            setActiveGiftCard(activeGiftCard);
+        } else {
+            setActiveGiftCard(null);
+        }
+    }
+
+    function getGiftCountsFromItems() {
+        const cards = Array.from(document.querySelectorAll('.gift-item-card'));
+        return cards.reduce((counts, card) => {
+            const size = card.querySelector('.gift-item-size')?.value;
+            if (size === 'Small') counts.Small += 1;
+            if (size === 'Medium') counts.Medium += 1;
+            if (size === 'Large') counts.Large += 1;
+            return counts;
+        }, { Small: 0, Medium: 0, Large: 0 });
+    }
+
+    function updateGiftItemsSummary() {
+        const cards = Array.from(document.querySelectorAll('.gift-item-card'));
+        const details = cards.map((card, index) => {
+            const size = card.querySelector('.gift-item-size')?.value || 'Medium';
+            const note = card.querySelector('.gift-item-note')?.value.trim() || '';
+            const occasion = card.querySelector('.gift-item-occasion')?.value || '';
+            const paper = card.querySelector('.gift-item-paper')?.value || '';
+            const ribbon = card.querySelector('.gift-item-ribbon')?.value || '';
+            const tag = card.querySelector('.gift-item-tag')?.value || '';
+            const tagCategory = card.querySelector('.gift-item-tag-category')?.value || '';
+            updateGiftCardDesignSummary(card);
+            return { item: index + 1, size, note, occasion, paper, ribbon, tag, tagCategory };
+        });
+
+        const total = details.length;
+        if (giftTotal) giftTotal.textContent = 'Total Gifts: ' + total;
+        if (hiddenCount) hiddenCount.value = total;
+        if (hiddenStyle) hiddenStyle.value = total >= 10 ? 'bulk' : 'basic';
+        if (giftDetailsJsonField) giftDetailsJsonField.value = JSON.stringify(details);
+        if (hiddenSize) {
+            const sizeValues = details.map(item => item.size);
+            const uniqueSizes = Array.from(new Set(sizeValues));
+            hiddenSize.value = uniqueSizes.length === 1 ? uniqueSizes[0].toLowerCase() : 'mixed';
+        }
+        const hint = document.getElementById('gift-item-hint');
+        if (hint) {
+            hint.textContent = total === 0
+                ? 'Create one gift item, then choose size, design, and notes for each.'
+                : 'Gift details are saved and reflected in your booking total.';
+        }
+
+        recalc();
+    }
 
     function recalc() {
-        const small  = parseInt(document.getElementById('book-small')?.value, 10)  || 0;
-        const medium = parseInt(document.getElementById('book-medium')?.value, 10) || 0;
-        const large  = parseInt(document.getElementById('book-large')?.value, 10)  || 0;
+        const itemCards = Array.from(document.querySelectorAll('.gift-item-card'));
+        let small = 0, medium = 0, large = 0;
+        if (itemCards.length) {
+            itemCards.forEach(card => {
+                const size = card.querySelector('.gift-item-size')?.value;
+                if (size === 'Small') small += 1;
+                if (size === 'Medium') medium += 1;
+                if (size === 'Large') large += 1;
+            });
+        } else {
+            small  = parseInt(document.getElementById('book-small')?.value, 10)  || 0;
+            medium = parseInt(document.getElementById('book-medium')?.value, 10) || 0;
+            large  = parseInt(document.getElementById('book-large')?.value, 10)  || 0;
+        }
         const total  = small + medium + large;
         const rush   = document.getElementById('book-rush')?.checked || false;
+        let giftSize = 'mixed';
+
+        if (!itemCards.length) {
+            const selectedSizes = [];
+            if (small) selectedSizes.push('small');
+            if (medium) selectedSizes.push('medium');
+            if (large) selectedSizes.push('large');
+            giftSize = selectedSizes.length === 1 ? selectedSizes[0] : 'mixed';
+        }
 
         if (giftTotal)   giftTotal.textContent = 'Total Gifts: ' + total;
         if (hiddenCount) hiddenCount.value = total;
+        if (hiddenSize)  hiddenSize.value  = giftSize;
 
         const isBulk = total >= 10;
         if (hiddenStyle) hiddenStyle.value = isBulk ? 'bulk' : 'basic';
@@ -1372,11 +1605,99 @@
     };
 
     let selPaper = null, selRibbon = null, selTag = null;
+    let activeGiftCard = null;
+
+    function getGiftCardField(card, fieldClass) {
+        return card?.querySelector('.gift-item-' + fieldClass);
+    }
+
+    function setGiftCardDesignValue(type, value) {
+        if (!activeGiftCard) return;
+        const input = getGiftCardField(activeGiftCard, type);
+        if (input) input.value = value || '';
+        updateGiftCardDesignSummary(activeGiftCard);
+    }
+
+    function getGiftCardDesignValue(type) {
+        return getGiftCardField(activeGiftCard, type)?.value || '';
+    }
+
+    function updateGiftCardDesignSummary(card) {
+        if (!card) return;
+        const paper  = card.querySelector('.gift-item-paper')?.value || 'None';
+        const ribbon = card.querySelector('.gift-item-ribbon')?.value || 'None';
+        const tag    = card.querySelector('.gift-item-tag')?.value || 'None';
+        const occasion = card.querySelector('.gift-item-occasion')?.value || 'No occasion set';
+        const summary = card.querySelector('.gift-item-design-summary');
+        if (summary) {
+            summary.innerHTML = `Occasion: <strong>${occasion}</strong><br>Paper: <strong>${paper}</strong> · Ribbon: <strong>${ribbon}</strong> · Tag: <strong>${tag}</strong>`;
+        }
+    }
+
+    function setActiveGiftCard(card) {
+        activeGiftCard = card;
+        const targetLabel = document.getElementById('design-target-label');
+        if (targetLabel) {
+            const index = Array.from(document.querySelectorAll('.gift-item-card')).indexOf(card) + 1;
+            targetLabel.innerHTML = card
+                ? `Customizing design for <strong>Gift ${index}</strong>`
+                : 'Select a gift to customize its wrapping and tag.';
+        }
+        if (card) {
+            loadGiftDesignPanelValues(card);
+        }
+    }
+
+    function openDesignPickerForGift(card) {
+        if (!card) return;
+        setActiveGiftCard(card);
+        const occ = card.querySelector('.gift-item-occasion')?.value || '';
+        if (occ) {
+            document.getElementById('occasionSelect').value = occ;
+            loadGiftDesignPanelValues(card);
+        } else {
+            document.getElementById('occasionSelect').value = '';
+            setDisplay('paperDisplay', null);
+            setDisplay('ribbonDisplay', null);
+            setDisplay('tagDisplay', null);
+            document.getElementById('designPanels').classList.add('visible');
+        }
+    }
+
+    function loadGiftDesignPanelValues(card) {
+        const occ = card.querySelector('.gift-item-occasion')?.value || '';
+        if (occ) {
+            document.getElementById('occasionSelect').value = occ;
+            const panels = document.getElementById('designPanels');
+            panels.classList.add('visible');
+            renderThumbs('paperThumbs', PAPERS[occ] || [], 'paper');
+            renderThumbs('ribbonThumbs', RIBBONS, 'ribbon');
+            buildTagCatDropdown();
+            const selectedTag = card.querySelector('.gift-item-tag')?.value || '';
+            const selectedPaper = card.querySelector('.gift-item-paper')?.value || '';
+            const selectedRibbon = card.querySelector('.gift-item-ribbon')?.value || '';
+            if (selectedTag) {
+                const cat = card.querySelector('.gift-item-tag-category')?.value;
+                if (cat) {
+                    document.getElementById('tagCatSelect').value = cat;
+                    renderTagThumbs();
+                }
+            }
+            setDisplay('paperDisplay', selectedPaper || null);
+            setDisplay('ribbonDisplay', selectedRibbon || null);
+            setDisplay('tagDisplay', selectedTag || null);
+        }
+    }
 
     function onOccasionChange() {
         const occ = document.getElementById('occasionSelect').value;
         if (!occ) return;
         document.getElementById('selected-occasion').value = occ;
+        if (activeGiftCard) {
+            const occField = activeGiftCard.querySelector('.gift-item-occasion');
+            if (occField) occField.value = occ;
+            updateGiftCardDesignSummary(activeGiftCard);
+        }
         const panels = document.getElementById('designPanels');
         panels.classList.add('visible');
         selPaper = null; selRibbon = null; selTag = null;
@@ -1397,6 +1718,7 @@
         const container = document.getElementById(containerId);
         if (!container) return;
         container.innerHTML = '';
+        const selectedName = activeGiftCard ? activeGiftCard.querySelector('.gift-item-' + type)?.value || '' : '';
         items.forEach(function(item) {
             const wrap = document.createElement('div');
             wrap.className = 'thumb';
@@ -1410,6 +1732,9 @@
             nameEl.textContent = item.n;
             wrap.appendChild(img);
             wrap.appendChild(nameEl);
+            if (item.n === selectedName) {
+                wrap.classList.add('selected');
+            }
             wrap.addEventListener('click', function() {
                 container.querySelectorAll('.thumb').forEach(function(t) { t.classList.remove('selected'); });
                 wrap.classList.add('selected');
@@ -1417,14 +1742,21 @@
                     selPaper = item;
                     document.getElementById('selected-paper').value = item.n;
                     setDisplay('paperDisplay', item.n);
+                    setGiftCardDesignValue('paper', item.n);
                 } else if (type === 'ribbon') {
                     selRibbon = item;
                     document.getElementById('selected-ribbon').value = item.n;
                     setDisplay('ribbonDisplay', item.n);
+                    setGiftCardDesignValue('ribbon', item.n);
                 } else if (type === 'tag') {
                     selTag = item;
                     document.getElementById('selected-tag').value = item.n;
                     setDisplay('tagDisplay', item.n);
+                    setGiftCardDesignValue('tag', item.n);
+                    if (activeGiftCard) {
+                        const catInput = getGiftCardField(activeGiftCard, 'tag-category');
+                        if (catInput) catInput.value = document.getElementById('tagCatSelect')?.value || '';
+                    }
                 }
                 openLightbox(BASE + '/' + item.f, item.n);
             });
@@ -1479,11 +1811,13 @@
             const phone   = document.getElementById('booking-phone')?.value.trim();
             const email   = document.getElementById('booking-email')?.value.trim();
             const count   = parseInt(hiddenCount?.value, 10) || 0;
+            const size    = hiddenSize?.value || 'mixed';
             const style   = hiddenStyle?.value || 'basic';
             const rushOrd = hiddenRush?.value === 'true';
             const total   = parseFloat(hiddenTotal?.value) || 0;
             const notes   = document.getElementById('booking-notes')?.value.trim()    || '';
             const giftTag = document.getElementById('booking-gift-tag')?.value.trim() || '';
+            const giftDetails = JSON.parse(document.getElementById('gift-details-json')?.value || '[]');
 
             // Safety net — should never fire now due to gate, but just in case
             if (!name || !phone || !email) {
@@ -1496,9 +1830,12 @@
                 phone:           phone,
                 email:           email,
                 gift_count:      count,
-                gift_size:       'mixed',
+                gift_details:    giftDetails,
+                gift_size:       size,
                 wrapping_style:  style,
                 estimated_total: '$' + total.toFixed(2),
+                notes:           notes,
+                gift_tag:        giftTag,
                 status:          'Received',
                 rush_order:      rushOrd
             }]);
@@ -1514,6 +1851,13 @@
             if (hiddenTotal) hiddenTotal.value = '0';
             if (card)        card.style.display = 'none';
             if (giftTotal)   giftTotal.textContent = 'Total Gifts: 0';
+            if (giftDetailsJsonField) giftDetailsJsonField.value = '[]';
+            const giftList = document.getElementById('gift-item-list');
+            if (giftList) {
+                giftList.innerHTML = '';
+            }
+            refreshGiftItemLabels();
+            updateGiftItemsSummary();
 
             // Hide Calendly, reset gate
             const wrap = document.getElementById('calendly-widget-wrap');
