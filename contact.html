@@ -383,9 +383,108 @@
             .contact-layout { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
         }
+
+        /* ══════════════════════════════════
+           GIFT DESIGN PICKER
+        ══════════════════════════════════ */
+        .occasion-select-wrap { margin-bottom: 1.5rem; }
+        .occasion-select-wrap label {
+            display: block; font-size: 0.75rem; font-weight: 600;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--gray-lavender); margin-bottom: 0.4rem;
+        }
+        .occasion-select-wrap select {
+            width: 100%; padding: 0.85rem 1.2rem;
+            background: rgba(104,82,129,0.3);
+            border: 2px solid var(--pastel-orange);
+            border-radius: var(--radius-md);
+            color: #f5d79a; font-family: var(--font-body);
+            font-size: 1rem; font-weight: 600; cursor: pointer;
+            box-sizing: border-box; transition: all 0.3s ease;
+        }
+        .occasion-select-wrap select:focus { outline: none; box-shadow: 0 0 20px rgba(245,215,154,0.2); }
+        .occasion-select-wrap select option { background: #20113c; color: #f5d79a; }
+
+        .design-panels { display: none; animation: fadeSlideIn 0.35s ease; }
+        .design-panels.visible { display: block; }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .picker-section { margin-bottom: 1.5rem; }
+        .picker-section-label {
+            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+            text-transform: uppercase; color: var(--pastel-orange);
+            margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .picker-section-label::after {
+            content: ""; flex: 1; height: 1px; background: rgba(245,215,154,0.2);
+        }
+
+        .selected-display {
+            background: rgba(64,41,91,0.4); border: 1px solid rgba(245,215,154,0.2);
+            border-radius: 10px; padding: 0.6rem 0.9rem;
+            font-size: 0.82rem; color: #ecdb9f; margin-bottom: 0.8rem;
+            min-height: 2.4rem; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .selected-display span { color: var(--gray-lavender); }
+
+        .thumb-grid { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 0.5rem; }
+        .thumb {
+            width: 64px; height: 64px; border-radius: 8px; overflow: hidden;
+            cursor: pointer; border: 2px solid transparent; flex: 0 0 auto;
+            transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+            position: relative; background: rgba(64,41,91,0.5);
+        }
+        .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+        .thumb:hover { transform: scale(1.08); border-color: rgba(245,215,154,0.5); }
+        .thumb.selected {
+            border-color: var(--pastel-orange);
+            box-shadow: 0 0 0 3px rgba(245,215,154,0.4);
+            transform: scale(1.06);
+        }
+        .thumb-name {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: rgba(20,10,40,0.82); color: #f5d79a;
+            font-size: 8px; text-align: center; padding: 2px;
+            line-height: 1.2; display: none;
+        }
+        .thumb:hover .thumb-name { display: block; }
+
+        /* Lightbox */
+        #img-lightbox {
+            display: none; position: fixed; inset: 0;
+            background: rgba(10,5,20,0.93); z-index: 999999;
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        #img-lightbox.open { display: flex; }
+        #img-lightbox img {
+            max-width: 88vw; max-height: 82vh; border-radius: 12px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 0 2px #f5d79a; object-fit: contain;
+        }
+        #img-lightbox .lb-close {
+            position: absolute; top: 18px; right: 24px;
+            font-size: 2.4rem; color: #f5d79a;
+            background: none; border: none; cursor: pointer; z-index: 1000000;
+        }
+        #img-lightbox .lb-caption {
+            position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+            background: rgba(32,17,60,0.92); color: #f5d79a; font-size: 0.88rem;
+            font-weight: 600; padding: 0.4rem 1.2rem; border-radius: 20px;
+            border: 1px solid rgba(245,215,154,0.3); white-space: nowrap;
+        }
     </style>
 </head>
 <body>
+
+<!-- Lightbox -->
+<div id="img-lightbox">
+    <button class="lb-close" onclick="closeLightbox()">&#10005;</button>
+    <img id="lb-img" src="" alt="">
+    <div class="lb-caption" id="lb-caption"></div>
+</div>
+
 
     <div class="confetti-container" id="confetti"></div>
 
@@ -528,6 +627,72 @@
                     <input type="checkbox" id="book-rush">
                     Rush Order (+$10 flat)
                 </label>
+
+                <!-- ══════════ DESIGN PICKER ══════════ -->
+                <div class="form-section-label" style="margin-top:1.5rem;">🎨 Choose Your Design</div>
+                <p style="color:var(--gray-lavender);font-size:0.85rem;margin-bottom:1.2rem;">
+                    Select your occasion — then pick wrapping paper, ribbon, and gift tag. Click any image to see it bigger!
+                </p>
+
+                <div class="occasion-select-wrap">
+                    <label for="occasionSelect">What's the Occasion? <span style="color:var(--pastel-orange);">*</span></label>
+                    <select id="occasionSelect" onchange="onOccasionChange()">
+                        <option value="" disabled selected>— Pick an occasion —</option>
+                        <option value="Anniversary">💍 Anniversary</option>
+                        <option value="Baby">🍼 Baby</option>
+                        <option value="Camo">🌿 Camo</option>
+                        <option value="Christmas">🎄 Christmas</option>
+                        <option value="For Her">💄 For Her (Birthday)</option>
+                        <option value="For Him">🎯 For Him (Birthday)</option>
+                        <option value="General Birthday">🎂 General Birthday</option>
+                        <option value="Graduation">🎓 Graduation</option>
+                        <option value="Kids Boys">🚗 Kids — Boys</option>
+                        <option value="Kids Girls">🦄 Kids — Girls</option>
+                        <option value="Kids Neutral">🎈 Kids — Neutral</option>
+                        <option value="Wedding">💒 Wedding</option>
+                    </select>
+                </div>
+
+                <div class="design-panels" id="designPanels">
+
+                    <div class="picker-section">
+                        <div class="picker-section-label">🎁 Wrapping Paper</div>
+                        <div class="selected-display" id="paperDisplay"><span>None selected</span></div>
+                        <div class="thumb-grid" id="paperThumbs"></div>
+                    </div>
+
+                    <div class="picker-section">
+                        <div class="picker-section-label">🎀 Ribbon</div>
+                        <div class="selected-display" id="ribbonDisplay"><span>None selected</span></div>
+                        <div class="thumb-grid" id="ribbonThumbs"></div>
+                    </div>
+
+                    <div class="picker-section">
+                        <div class="picker-section-label">🏷️ Gift Tag</div>
+                        <p style="color:var(--gray-lavender);font-size:0.8rem;margin-bottom:0.6rem;">Browse by tag style below.</p>
+                        <div class="form-group" style="margin-bottom:0.8rem;">
+                            <label for="tagCatSelect" style="color:var(--gray-lavender);">Tag Style Category</label>
+                            <select id="tagCatSelect" onchange="renderTagThumbs()">
+                                <option value="" disabled selected>— Choose a tag style —</option>
+                            </select>
+                        </div>
+                        <div class="selected-display" id="tagDisplay"><span>None selected</span></div>
+                        <div class="thumb-grid" id="tagThumbs"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>🏷️ Gift Tag Message (optional)</label>
+                        <textarea id="booking-gift-tag" name="gift_tag" placeholder='e.g. "To: Mom, From: The Kids — Happy Birthday! 🎉"' style="min-height:70px;"></textarea>
+                    </div>
+
+                </div>
+                <!-- /designPanels -->
+
+                <input type="hidden" id="selected-paper" name="selected_paper" value="">
+                <input type="hidden" id="selected-ribbon" name="selected_ribbon" value="">
+                <input type="hidden" id="selected-tag" name="selected_tag" value="">
+                <input type="hidden" id="selected-occasion" name="occasion" value="">
+
 
                 <div class="form-group">
                     <label>Special Requests or Notes</label>
@@ -936,6 +1101,347 @@
         if (estTotal)    estTotal.textContent = '$' + grand.toFixed(2);
         if (estRushLine) estRushLine.style.display = rush ? 'flex' : 'none';
     }
+
+
+    const BASE = 'https://c34139087-cancan.github.io/gift-wrap-website';
+
+    const PAPERS = {
+      'Anniversary': [
+        {n:'Silver & White',f:'Wrapping/Anniversary/silverwhite.png'},
+        {n:'50th Anniversary',f:'Wrapping/Anniversary/50ann.png'},
+        {n:'Black & Gold',f:'Wrapping/Anniversary/blackandgoldann.png'},
+        {n:'More Everyday',f:'Wrapping/Anniversary/Moreeveryday.png'},
+        {n:'My Forever',f:'Wrapping/Anniversary/myforeverride.png'},
+        {n:'Pink Floral',f:'Wrapping/Anniversary/pinkfloralhappyann.png'},
+        {n:'Red Rose',f:'Wrapping/Anniversary/redroseanniversary.png'},
+        {n:'Romantic',f:'Wrapping/Anniversary/romanticann.png'},
+        {n:'Thanks For',f:'Wrapping/Anniversary/thanksfor.png'},
+        {n:'Thanks For Not',f:'Wrapping/Anniversary/thanksfornotkillingme.png'},
+      ],
+      'Baby': [
+        {n:'Boy or Girl',f:'Wrapping/Baby/boyorgirl.png'},
+        {n:'Camo Girl',f:'Wrapping/Baby/camo its a girl.png'},
+        {n:'Hello Baby',f:'Wrapping/Baby/hellobaby.png'},
+        {n:"It\'s Not Your Ex",f:'Wrapping/Baby/its not your ex.png'},
+        {n:"It\'s a Boy Camo",f:'Wrapping/Baby/itsaboycamo.png'},
+        {n:'Purple Baby Camo',f:'Wrapping/Baby/purplebabygirlcamo.png'},
+      ],
+      'Camo': [
+        {n:'Blue Camo',f:'Wrapping/Camo/blue camo.png'},
+        {n:'Desert Camo',f:'Wrapping/Camo/desert camo.png'},
+        {n:'Green Camo',f:'Wrapping/Camo/greencamo.png'},
+        {n:'Orange Camo',f:'Wrapping/Camo/orange camo.png'},
+        {n:'Pink Camo',f:'Wrapping/Camo/pink camo.png'},
+        {n:'Woodland',f:'Wrapping/Camo/Woodland Camo.png'},
+      ],
+      'Christmas': [
+        {n:'Camo Christmas',f:'Wrapping/Christmas/camochristmas.png'},
+        {n:'Classic Christmas',f:'Wrapping/Christmas/classicchristmas.png'},
+        {n:'Classic Reindeer',f:'Wrapping/Christmas/classicredreindeer.png'},
+        {n:'Light Blue',f:'Wrapping/Christmas/lightbluechristmas.png'},
+        {n:'Red Christmas',f:'Wrapping/Christmas/redchristmas.png'},
+      ],
+      'For Her': [
+        {n:'Botanical Birthday',f:'Wrapping/For Her/botanical birthday.png'},
+        {n:'Glam Birthday',f:'Wrapping/For Her/glam bday.png'},
+        {n:'Neon Animal Print',f:'Wrapping/For Her/neon animal print.png'},
+        {n:'Pink Floral',f:'Wrapping/For Her/pink floral.png'},
+      ],
+      'For Him': [
+        {n:'Birthday Plaid',f:'Wrapping/For Him/Birthday Plaid1.jpg'},
+        {n:'Geometric Birthday',f:'Wrapping/For Him/geometric happy birthday.png'},
+        {n:'Outdoor Adventure',f:'Wrapping/For Him/outdoor adventure.png'},
+      ],
+      'General Birthday': [
+        {n:'Black & Gold Birthday',f:'Wrapping/General Birthday/black and gold birthday.png'},
+        {n:'Royalty',f:'Wrapping/General Birthday/royalty.png'},
+        {n:'Tan Birthday',f:'Wrapping/General Birthday/tan bday.png'},
+      ],
+      'Graduation': [
+        {n:'Black & Gold',f:'Wrapping/Graduation/blackandgold.png'},
+        {n:'Colorful Caps',f:'Wrapping/Graduation/colorful caps.png'},
+        {n:'Green Camo Grad',f:'Wrapping/Graduation/greencamograd.png'},
+        {n:'Navy Gold Grad',f:'Wrapping/Graduation/navygoldgrad.png'},
+        {n:'Pink Camo Grad',f:'Wrapping/Graduation/pinkgradcamo.png'},
+        {n:'Pink Hats',f:'Wrapping/Graduation/pinkhats.png'},
+        {n:'Tan Camo Grad',f:'Wrapping/Graduation/tancamograd.png'},
+      ],
+      'Kids Boys': [
+        {n:'Dino',f:'Wrapping/Kids Boys/Dino.png'},
+        {n:'Jungle',f:'Wrapping/Kids Boys/Jungle.png'},
+        {n:'Monster Trucks',f:'Wrapping/Kids Boys/Monster Trucks.png'},
+        {n:'Race Cars',f:'Wrapping/Kids Boys/Race Cars.png'},
+        {n:'Space',f:'Wrapping/Kids Boys/Space.png'},
+        {n:'Superhero Comic',f:'Wrapping/Kids Boys/Superhero Comic.png'},
+      ],
+      'Kids Girls': [
+        {n:'Mermaids',f:'Wrapping/Kids Girls/Mermaids.png'},
+        {n:'Pink Kitty',f:'Wrapping/Kids Girls/Pink Kitty.png'},
+        {n:'Princess',f:'Wrapping/Kids Girls/Princess.png'},
+        {n:'Spa Day',f:'Wrapping/Kids Girls/Spa Day.png'},
+        {n:'Unicorns',f:'Wrapping/Kids Girls/Unicorns.png'},
+      ],
+      'Kids Neutral': [
+        {n:'Balloon Birthday',f:'Wrapping/Kids Neutral/balloonbirthday.png'},
+        {n:'Confetti Explosion',f:'Wrapping/Kids Neutral/confetti explosion.png'},
+        {n:'Cupcakes',f:'Wrapping/Kids Neutral/Cupcakes.png'},
+      ],
+      'Wedding': [
+        {n:'Bachelorette Hunt',f:'Wrapping/Wedding/bachelorhunt.png'},
+        {n:'Boho',f:'Wrapping/Wedding/boho.png'},
+        {n:'Bride & Groom',f:'Wrapping/Wedding/bride and groom celebration.png'},
+        {n:'Bride Squad',f:'Wrapping/Wedding/bride squad.png'},
+        {n:'Bride to Be',f:'Wrapping/Wedding/bridetobe.png'},
+        {n:'Elegant Floral',f:'Wrapping/Wedding/Elegant white and gold floral.png'},
+        {n:'Fishing Vows',f:'Wrapping/Wedding/fishing vows.png'},
+        {n:'Girly Bridal',f:'Wrapping/Wedding/girly fun bridal.png'},
+        {n:'Greenery',f:'Wrapping/Wedding/greenery.png'},
+        {n:"Groom\'s Last Ride",f:'Wrapping/Wedding/groomlastride.png'},
+        {n:'Pearly',f:'Wrapping/Wedding/pearly.png'},
+        {n:'Royal Purple',f:'Wrapping/Wedding/royalpurple.png'},
+      ],
+    };
+
+    const RIBBONS = [
+      {n:'Buffalo Check Plaid',f:'Ribbon/Buffalo Check Plaid.png'},
+      {n:'Camo',f:'Ribbon/Camo.png'},
+      {n:'Chalkboard & Gold',f:'Ribbon/Chalkboard & Gold.png'},
+      {n:'Floral Blush',f:'Ribbon/Floral Blush.png'},
+      {n:'Glittery Polka Dots',f:'Ribbon/Glittery Polka Dots.png'},
+      {n:'Gold & Pink Dots',f:'Ribbon/Gold & Pink Dots.png'},
+      {n:'Gold Diagonal Stripe',f:'Ribbon/Gold Diagonal Stripe.png'},
+      {n:'Holographic Shimmer',f:'Ribbon/Holographic Shimmer.png'},
+      {n:'Pink Bow',f:'Ribbon/pinkbow.png'},
+      {n:'Purple & Black',f:'Ribbon/purpleblack.jpg'},
+      {n:'Purple Gold Grad',f:'Ribbon/purplegoldgrad.jpg'},
+      {n:'Red Plaid Bow',f:'Ribbon/redplaidbow.jpg'},
+      {n:'Rustic Kraft & Twine',f:'Ribbon/Rustic Kraft & Twine.png'},
+      {n:'Satin Purple & Gold',f:'Ribbon/Satin Purple & Gold.png'},
+      {n:'Val Day 1',f:'Ribbon/valday.jpg'},
+      {n:'Val Day 2',f:'Ribbon/vday.jpg'},
+      {n:'Val Day 3',f:'Ribbon/vday2.jpg'},
+      {n:'Val Day 4',f:'Ribbon/vday3.jpg'},
+      {n:'Galactic Camo',f:'Ribbon/gcamo.jpg'},
+      {n:'Pale Pink Bow',f:'Ribbon/palepinkbow.jpg'},
+      {n:'Purple Camo',f:'Ribbon/purplecamo.jpg'},
+      {n:'Velvet Deep Red',f:'Ribbon/Velvet Deep Red.png'},
+      {n:'XOXO',f:'Ribbon/xoxo.png'},
+    ];
+
+    const TAGS = {
+      'Animal': [
+        {n:'Neon Animal 5',f:'Tags/Animal/Neon Animal 5.png'},
+        {n:'Neon Animal 6',f:'Tags/Animal/Neon Animal6.png'},
+        {n:'Neon Animal 7',f:'Tags/Animal/Neon Animal 7.png'},
+        {n:'Neon Animal 8',f:'Tags/Animal/Neon Animal 8.png'},
+        {n:'Neon Animal 1',f:'Tags/Animal/NeonAnimal1.png'},
+        {n:'Neon Animal 2',f:'Tags/Animal/NeonAnimal2.png'},
+        {n:'Neon Animal 3',f:'Tags/Animal/NeonAnimal3.png'},
+        {n:'Neon Cheetah',f:'Tags/Animal/neoncheetah.png'},
+        {n:'Neon Paint',f:'Tags/Animal/NeonPaint.png'},
+        {n:'Pink Animal',f:'Tags/Animal/Pink Animal.png'},
+        {n:'Pink Animal 2',f:'Tags/Animal/Pink Animal 2.png'},
+        {n:'Pink Animal 3',f:'Tags/Animal/Pink Animal 3.png'},
+        {n:'Pink Animal 4',f:'Tags/Animal/Pink Animal 4.png'},
+      ],
+      'Birthday': [
+        {n:'Black Gold',f:'Tags/Birthday/1blackgold.jpg'},
+        {n:'Bday Tag 1',f:'Tags/Birthday/bdaytag1.png'},
+        {n:'Bday Tag 2',f:'Tags/Birthday/bdaytag2.png'},
+        {n:'Bday Tags',f:'Tags/Birthday/bdaytags.png'},
+        {n:'Black Gold Stars 1',f:'Tags/Birthday/blackandgoldtags1.png'},
+        {n:'Black Gold Stars 2',f:'Tags/Birthday/blackandgoldtags2.png'},
+        {n:'Black Gold Stars 3',f:'Tags/Birthday/blackandgoldtags3.png'},
+        {n:'Black Gold Stars 5',f:'Tags/Birthday/blackandgoldtags5.png'},
+      ],
+      'Black': [
+        {n:'Black & Gold Stars',f:'Tags/Black/Black & Gold Stars.png'},
+        {n:'Black & Gold Diamond',f:'Tags/Black/Black&GoldDiamond.png'},
+        {n:'Black & Gold Diamond 1',f:'Tags/Black/Black&GoldDiamond1.png'},
+        {n:'Black & Gold Diamond 3',f:'Tags/Black/Black&GoldDiamond3.png'},
+        {n:'Black & Gold Diamond 4',f:'Tags/Black/Black&GoldDiamond4.png'},
+        {n:'Black & Gold Stars 2',f:'Tags/Black/Black&GoldStars2.png'},
+        {n:'Black & Gold Stars 3',f:'Tags/Black/Black&GoldStars3.png'},
+        {n:'Black & Gold Stars 4',f:'Tags/Black/Black&GoldStars4.png'},
+        {n:'Black Gold 1',f:'Tags/Black/BlackGold1.png'},
+        {n:'Black Gold 2',f:'Tags/Black/BlackGold2.png'},
+        {n:'Black Gold 3',f:'Tags/Black/BlackGold3.png'},
+        {n:'Black Gold 4',f:'Tags/Black/BlackGold4.png'},
+        {n:'Gothrose',f:'Tags/Black/Gothrose.jpg'},
+        {n:'Tag Black Gold',f:'Tags/Black/tagblackgold.jpg'},
+      ],
+      'Camo': [
+        {n:'Baby Camo',f:'Tags/Camo/Baby Camo.png'},
+        {n:'Baby Camo 1',f:'Tags/Camo/Baby Camo1.png'},
+        {n:'Camo Tag 1',f:'Tags/Camo/Camo Tag 1.png'},
+        {n:'Camo Tag 3',f:'Tags/Camo/Camo Tag 3.png'},
+        {n:'Camo Tag 4',f:'Tags/Camo/Camo Tag 4.png'},
+        {n:'Camo Tag 5',f:'Tags/Camo/Camo Tag 5.png'},
+        {n:'Camo Tag 6',f:'Tags/Camo/Camo Tag 6.png'},
+        {n:'Camo Tag 7',f:'Tags/Camo/Camo Tag 7.png'},
+        {n:'Camo Tag',f:'Tags/Camo/Camo Tag.png'},
+        {n:'Pink Camo 1',f:'Tags/Camo/Pink Camo1.png'},
+        {n:'Pink Camo 2',f:'Tags/Camo/Pink Camo2.png'},
+        {n:'Pink Camo 3',f:'Tags/Camo/Pink Camo3.png'},
+        {n:'Pink Camo 4',f:'Tags/Camo/Pink Camo 4.png'},
+      ],
+      'Christmas': [
+        {n:'2 Black Gold Christmas',f:'Tags/Christmas/2blackgoldchristmas.jpg'},
+        {n:'2 Dino',f:'Tags/Christmas/2dino.jpg'},
+        {n:'Black Gold Christmas',f:'Tags/Christmas/bkackgoldchristmas.jpg'},
+        {n:'Christmas Dino',f:'Tags/Christmas/christmasdino.jpg'},
+        {n:'Christmas Gingerbread',f:'Tags/Christmas/christmasgingerbread.jpg'},
+        {n:'Creamy Christmas',f:'Tags/Christmas/creamychrismastag2.jpg'},
+      ],
+      'Floral': [
+        {n:'Floral Tag',f:'Tags/Floral/1floraltag.jpg'},
+        {n:'Floral 1',f:'Tags/Floral/floral1.png'},
+        {n:'Floral 2',f:'Tags/Floral/floral2.png'},
+        {n:'Floral 3',f:'Tags/Floral/floral3.png'},
+        {n:'Floral 4',f:'Tags/Floral/floral4.png'},
+        {n:'Gold Rose',f:'Tags/Floral/Gold Rose.png'},
+        {n:'Gold Rose 2',f:'Tags/Floral/Gold Rose2.png'},
+        {n:'Gold Rose 3',f:'Tags/Floral/Gold Rose3.png'},
+        {n:'Gold Rose 4',f:'Tags/Floral/Gold Rose4.png'},
+        {n:'Lavender 1',f:'Tags/Floral/Lav1.png'},
+        {n:'Lavender 2',f:'Tags/Floral/Lav2.png'},
+        {n:'Lavender 3',f:'Tags/Floral/Lav3.png'},
+      ],
+      'Kids': [
+        {n:'Girls Tag',f:'Tags/kids/girlstag.jpg'},
+        {n:'Bday Tag',f:'Tags/kids/image_1e4ec60d.png'},
+        {n:'Outer Space',f:'Tags/kids/outerspacetag.jpg'},
+      ],
+      'Purple': [
+        {n:'Goodnight',f:'Tags/Purple/goodnight.png'},
+        {n:'Grad Name Tag 2',f:'Tags/Purple/Grad Name Tag 2.png'},
+        {n:'Grad Name Tag',f:'Tags/Purple/Grad Name Tag.png'},
+        {n:'Purple & Gold Grad',f:'Tags/Purple/Purple & Gold Graduation.png'},
+        {n:'Purple & Gold 1',f:'Tags/Purple/Purple & Gold1.png'},
+        {n:'Purple & Gold 2',f:'Tags/Purple/Purple & Gold2.png'},
+        {n:'Purple & Gold 3',f:'Tags/Purple/Purple & Gold3.png'},
+        {n:'Purple & Gold 4',f:'Tags/Purple/Purple & Gold4.png'},
+        {n:'Purple Camo 1',f:'Tags/Purple/Purple Camo1.png'},
+        {n:'Purple Camo 2',f:'Tags/Purple/Purple Camo2.png'},
+        {n:'Purple Camo 3',f:'Tags/Purple/Purple Camo3.png'},
+        {n:'Purple Camo 4',f:'Tags/Purple/Purple Camo4.png'},
+      ],
+      "Valentine\'s Day": [
+        {n:'Valentines 1',f:'Tags/Valentines Day/1valentines.png'},
+        {n:'Cherry Val',f:'Tags/Valentines Day/cherryval.png'},
+        {n:'Floral Val',f:'Tags/Valentines Day/floralval.png'},
+        {n:'Valentines',f:'Tags/Valentines Day/valentines.png'},
+        {n:'Vday 1',f:'Tags/Valentines Day/vday.jpg'},
+        {n:'Vday 2',f:'Tags/Valentines Day/vday2.png'},
+        {n:'Vday 3',f:'Tags/Valentines Day/vday3.png'},
+        {n:'Vday 4',f:'Tags/Valentines Day/vday4.png'},
+      ],
+      'Wedding': [
+        {n:'Hearts & Champagne',f:'Tags/Wedding/hearts and champagne.png'},
+        {n:'Hearts & Champagne 2',f:'Tags/Wedding/hearts and champagne2.png'},
+        {n:'Woodland Anniversary',f:'Tags/Wedding/woodlandanniversary.png'},
+      ],
+    };
+
+    let selPaper = null, selRibbon = null, selTag = null;
+
+    function onOccasionChange() {
+        const occ = document.getElementById('occasionSelect').value;
+        if (!occ) return;
+        document.getElementById('selected-occasion').value = occ;
+        const panels = document.getElementById('designPanels');
+        panels.classList.add('visible');
+        selPaper = null; selRibbon = null; selTag = null;
+        ['selected-paper','selected-ribbon','selected-tag'].forEach(id => {
+            const el = document.getElementById(id); if (el) el.value = '';
+        });
+        setDisplay('paperDisplay', null);
+        setDisplay('ribbonDisplay', null);
+        setDisplay('tagDisplay', null);
+        renderThumbs('paperThumbs', PAPERS[occ] || [], 'paper');
+        renderThumbs('ribbonThumbs', RIBBONS, 'ribbon');
+        buildTagCatDropdown();
+        document.getElementById('tagThumbs').innerHTML = '';
+        panels.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function renderThumbs(containerId, items, type) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = '';
+        items.forEach(function(item) {
+            const wrap = document.createElement('div');
+            wrap.className = 'thumb';
+            wrap.title = item.n;
+            const img = document.createElement('img');
+            img.src = BASE + '/' + item.f;
+            img.alt = item.n;
+            img.loading = 'lazy';
+            const nameEl = document.createElement('div');
+            nameEl.className = 'thumb-name';
+            nameEl.textContent = item.n;
+            wrap.appendChild(img);
+            wrap.appendChild(nameEl);
+            wrap.addEventListener('click', function() {
+                container.querySelectorAll('.thumb').forEach(function(t) { t.classList.remove('selected'); });
+                wrap.classList.add('selected');
+                if (type === 'paper') {
+                    selPaper = item;
+                    document.getElementById('selected-paper').value = item.n;
+                    setDisplay('paperDisplay', item.n);
+                } else if (type === 'ribbon') {
+                    selRibbon = item;
+                    document.getElementById('selected-ribbon').value = item.n;
+                    setDisplay('ribbonDisplay', item.n);
+                } else if (type === 'tag') {
+                    selTag = item;
+                    document.getElementById('selected-tag').value = item.n;
+                    setDisplay('tagDisplay', item.n);
+                }
+                openLightbox(BASE + '/' + item.f, item.n);
+            });
+            container.appendChild(wrap);
+        });
+    }
+
+    function buildTagCatDropdown() {
+        const sel = document.getElementById('tagCatSelect');
+        if (!sel) return;
+        sel.innerHTML = '<option value="" disabled selected>— Choose a tag style —</option>';
+        Object.keys(TAGS).forEach(function(cat) {
+            const o = document.createElement('option');
+            o.value = cat;
+            o.textContent = cat + ' (' + TAGS[cat].length + ')';
+            sel.appendChild(o);
+        });
+    }
+
+    function renderTagThumbs() {
+        const cat = document.getElementById('tagCatSelect').value;
+        if (!cat) return;
+        renderThumbs('tagThumbs', TAGS[cat] || [], 'tag');
+    }
+
+    function setDisplay(id, name) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.innerHTML = name
+            ? '&#10003; <strong style="color:#f5d79a;">' + name + '</strong>'
+            : '<span>None selected</span>';
+    }
+
+    function openLightbox(src, caption) {
+        document.getElementById('lb-img').src = src;
+        document.getElementById('lb-caption').textContent = caption || '';
+        document.getElementById('img-lightbox').classList.add('open');
+    }
+    function closeLightbox() {
+        document.getElementById('img-lightbox').classList.remove('open');
+    }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+    document.getElementById('img-lightbox').addEventListener('click', function(e) {
+        if (e.target === this) closeLightbox();
+    });
 
     // ── Calendly event listener — saves to Supabase on booking confirmed ──
     window.addEventListener('message', async function (e) {
