@@ -680,10 +680,7 @@
                         <div class="thumb-grid" id="tagThumbs"></div>
                     </div>
 
-                    <div class="form-group">
-                        <label>🏷️ Gift Tag Message (optional)</label>
-                        <textarea id="booking-gift-tag" name="gift_tag" placeholder='e.g. "To: Mom, From: The Kids — Happy Birthday! 🎉"' style="min-height:70px;"></textarea>
-                    </div>
+                    <!-- Removed duplicate gift tag message textarea (kept the later one) -->
 
                 </div>
                 <!-- /designPanels -->
@@ -1103,7 +1100,7 @@
     }
 
 
-    const BASE = 'https://c34139087-cancan.github.io/gift-wrap-website';
+    const BASE = (location.protocol === 'file:') ? '.' : 'https://c34139087-cancan.github.io/gift-wrap-website';
 
     const PAPERS = {
       'Anniversary': [
@@ -1186,20 +1183,19 @@
         {n:'Confetti Explosion',f:'Wrapping/Kids Neutral/confetti explosion.png'},
         {n:'Cupcakes',f:'Wrapping/Kids Neutral/Cupcakes.png'},
       ],
-      'Wedding': [
-        {n:'Bachelorette Hunt',f:'Wrapping/Wedding/bachelorhunt.png'},
-        {n:'Boho',f:'Wrapping/Wedding/boho.png'},
-        {n:'Bride & Groom',f:'Wrapping/Wedding/bride and groom celebration.png'},
-        {n:'Bride Squad',f:'Wrapping/Wedding/bride squad.png'},
-        {n:'Bride to Be',f:'Wrapping/Wedding/bridetobe.png'},
-        {n:'Elegant Floral',f:'Wrapping/Wedding/Elegant white and gold floral.png'},
-        {n:'Fishing Vows',f:'Wrapping/Wedding/fishing vows.png'},
-        {n:'Girly Bridal',f:'Wrapping/Wedding/girly fun bridal.png'},
-        {n:'Greenery',f:'Wrapping/Wedding/greenery.png'},
-        {n:"Groom\'s Last Ride",f:'Wrapping/Wedding/groomlastride.png'},
-        {n:'Pearly',f:'Wrapping/Wedding/pearly.png'},
-        {n:'Royal Purple',f:'Wrapping/Wedding/royalpurple.png'},
-      ],
+            'Wedding': [
+                {n:'Bachelorette Hunt',f:'Wrapping/Wedding/bachelorhunt.png'},
+                {n:'Boho',f:'Wrapping/Wedding/boho.png'},
+                {n:'Bride & Groom',f:'Wrapping/Wedding/bride and groom celebration.png'},
+                {n:'Bride Squad',f:'Wrapping/Wedding/bride squad.png'},
+                {n:'Bride to Be',f:'Wrapping/Wedding/bridetobe.png'},
+                {n:'Elegant Floral',f:'Wrapping/Wedding/Elegant white and gold floral.png'},
+                {n:'Girly Bridal',f:'Wrapping/Wedding/girly fun bridal.png'},
+                {n:'Greenery',f:'Wrapping/Wedding/greenery.png'},
+                {n:"Groom\'s Last Ride",f:'Wrapping/Wedding/groomlastride.png'},
+                {n:'Pearly',f:'Wrapping/Wedding/pearly.png'},
+                {n:'Royal Purple',f:'Wrapping/Wedding/royalpurple.png'},
+            ],
     };
 
     const RIBBONS = [
@@ -1228,22 +1224,42 @@
       {n:'XOXO',f:'Ribbon/xoxo.png'},
     ];
 
-    const TAGS = {
-      'Animal': [
-        {n:'Neon Animal 5',f:'Tags/Animal/Neon Animal 5.png'},
-        {n:'Neon Animal 6',f:'Tags/Animal/Neon Animal6.png'},
-        {n:'Neon Animal 7',f:'Tags/Animal/Neon Animal 7.png'},
-        {n:'Neon Animal 8',f:'Tags/Animal/Neon Animal 8.png'},
-        {n:'Neon Animal 1',f:'Tags/Animal/NeonAnimal1.png'},
-        {n:'Neon Animal 2',f:'Tags/Animal/NeonAnimal2.png'},
-        {n:'Neon Animal 3',f:'Tags/Animal/NeonAnimal3.png'},
-        {n:'Neon Cheetah',f:'Tags/Animal/neoncheetah.png'},
-        {n:'Neon Paint',f:'Tags/Animal/NeonPaint.png'},
-        {n:'Pink Animal',f:'Tags/Animal/Pink Animal.png'},
-        {n:'Pink Animal 2',f:'Tags/Animal/Pink Animal 2.png'},
-        {n:'Pink Animal 3',f:'Tags/Animal/Pink Animal 3.png'},
-        {n:'Pink Animal 4',f:'Tags/Animal/Pink Animal 4.png'},
-      ],
+        const TAGS = {
+            'Anniversary': [
+                {n:'Black Hearts',f:'Tags/Anniversary/blackhearts.png'},
+                {n:'Dark Heart',f:'Tags/Anniversary/darkheart.png'},
+                {n:'Lock & Key',f:'Tags/Anniversary/lockandkey.png'},
+                {n:'Pink Rose',f:'Tags/Anniversary/pinkrose.png'},
+                {n:'Red Rose',f:'Tags/Anniversary/Redrose.png'},
+                {n:'Rose',f:'Tags/Anniversary/rose.png'},
+                {n:'Rose Black',f:'Tags/Anniversary/roseblack.png'},
+                {n:'Woodland Anniversary',f:'Tags/Anniversary/woodlandanniversary.png'},
+            ],
+            'Animal': [
+                {n:'Animal 1',f:'Tags/Animal/animal1.png'},
+                {n:'Animal 2',f:'Tags/Animal/animal2.png'},
+                {n:'Animal 3',f:'Tags/Animal/animal3.png'},
+                {n:'Animal 4',f:'Tags/Animal/animal4.png'},
+                {n:'Animal 5',f:'Tags/Animal/animal5.png'},
+                {n:'Animal 6',f:'Tags/Animal/animal6.png'},
+                {n:'Animal 7',f:'Tags/Animal/animal7.png'},
+                {n:'Animal 8',f:'Tags/Animal/animal8.png'},
+                {n:'Animal 9',f:'Tags/Animal/animal9.png'},
+                {n:'Animal 10',f:'Tags/Animal/animal10.png'},
+                {n:'Neon Animal 5',f:'Tags/Animal/Neon Animal 5.png'},
+                {n:'Neon Animal 6',f:'Tags/Animal/Neon Animal6.png'},
+                {n:'Neon Animal 7',f:'Tags/Animal/Neon Animal 7.png'},
+                {n:'Neon Animal 8',f:'Tags/Animal/Neon Animal 8.png'},
+                {n:'Neon Animal 1',f:'Tags/Animal/NeonAnimal1.png'},
+                {n:'Neon Animal 2',f:'Tags/Animal/NeonAnimal2.png'},
+                {n:'Neon Animal 3',f:'Tags/Animal/NeonAnimal3.png'},
+                {n:'Neon Cheetah',f:'Tags/Animal/neoncheetah.png'},
+                {n:'Neon Paint',f:'Tags/Animal/NeonPaint.png'},
+                {n:'Pink Animal',f:'Tags/Animal/Pink Animal.png'},
+                {n:'Pink Animal 2',f:'Tags/Animal/Pink Animal 2.png'},
+                {n:'Pink Animal 3',f:'Tags/Animal/PinkAnimal3.png'},
+                {n:'Pink Animal 4',f:'Tags/Animal/PinkAnimal4.png'},
+            ],
       'Birthday': [
         {n:'Black Gold',f:'Tags/Birthday/1blackgold.jpg'},
         {n:'Bday Tag 1',f:'Tags/Birthday/bdaytag1.png'},
@@ -1282,17 +1298,19 @@
         {n:'Camo Tag',f:'Tags/Camo/Camo Tag.png'},
         {n:'Pink Camo 1',f:'Tags/Camo/Pink Camo1.png'},
         {n:'Pink Camo 2',f:'Tags/Camo/Pink Camo2.png'},
-        {n:'Pink Camo 3',f:'Tags/Camo/Pink Camo3.png'},
+        {n:'Pink Camo 3',f:'Tags/Camo/PinkCamo3.png'},
         {n:'Pink Camo 4',f:'Tags/Camo/Pink Camo 4.png'},
       ],
-      'Christmas': [
-        {n:'2 Black Gold Christmas',f:'Tags/Christmas/2blackgoldchristmas.jpg'},
-        {n:'2 Dino',f:'Tags/Christmas/2dino.jpg'},
-        {n:'Black Gold Christmas',f:'Tags/Christmas/bkackgoldchristmas.jpg'},
-        {n:'Christmas Dino',f:'Tags/Christmas/christmasdino.jpg'},
-        {n:'Christmas Gingerbread',f:'Tags/Christmas/christmasgingerbread.jpg'},
-        {n:'Creamy Christmas',f:'Tags/Christmas/creamychrismastag2.jpg'},
-      ],
+            'Christmas': [
+                {n:'2 Black Gold Christmas',f:'Tags/Christmas/2blackgoldchristmas.jpg'},
+                {n:'2 Dino',f:'Tags/Christmas/2dino.jpg'},
+                {n:'Black Gold Christmas',f:'Tags/Christmas/bkackgoldchristmas.jpg'},
+                {n:'Christmas Dino',f:'Tags/Christmas/christmasdino.jpg'},
+                {n:'Christmas Gingerbread',f:'Tags/Christmas/christmasgingerbread.jpg'},
+                {n:'Creamy Christmas',f:'Tags/Christmas/creamychrismastag2.jpg'},
+                {n:'Purple Christmas Tag',f:'Tags/Christmas/purplechristmastag.jpg'},
+                {n:'Red Plaid',f:'Tags/Christmas/redplaid.jpg'},
+            ],
       'Floral': [
         {n:'Floral Tag',f:'Tags/Floral/1floraltag.jpg'},
         {n:'Floral 1',f:'Tags/Floral/floral1.png'},
@@ -1316,7 +1334,7 @@
         {n:'Goodnight',f:'Tags/Purple/goodnight.png'},
         {n:'Grad Name Tag 2',f:'Tags/Purple/Grad Name Tag 2.png'},
         {n:'Grad Name Tag',f:'Tags/Purple/Grad Name Tag.png'},
-        {n:'Purple & Gold Grad',f:'Tags/Purple/Purple & Gold Graduation.png'},
+        {n:'Purple & Gold Grad',f:'Tags/Purple/Purple & Gold1.png'},
         {n:'Purple & Gold 1',f:'Tags/Purple/Purple & Gold1.png'},
         {n:'Purple & Gold 2',f:'Tags/Purple/Purple & Gold2.png'},
         {n:'Purple & Gold 3',f:'Tags/Purple/Purple & Gold3.png'},
@@ -1326,21 +1344,31 @@
         {n:'Purple Camo 3',f:'Tags/Purple/Purple Camo3.png'},
         {n:'Purple Camo 4',f:'Tags/Purple/Purple Camo4.png'},
       ],
-      "Valentine\'s Day": [
-        {n:'Valentines 1',f:'Tags/Valentines Day/1valentines.png'},
-        {n:'Cherry Val',f:'Tags/Valentines Day/cherryval.png'},
-        {n:'Floral Val',f:'Tags/Valentines Day/floralval.png'},
-        {n:'Valentines',f:'Tags/Valentines Day/valentines.png'},
-        {n:'Vday 1',f:'Tags/Valentines Day/vday.jpg'},
-        {n:'Vday 2',f:'Tags/Valentines Day/vday2.png'},
-        {n:'Vday 3',f:'Tags/Valentines Day/vday3.png'},
-        {n:'Vday 4',f:'Tags/Valentines Day/vday4.png'},
-      ],
-      'Wedding': [
-        {n:'Hearts & Champagne',f:'Tags/Wedding/hearts and champagne.png'},
-        {n:'Hearts & Champagne 2',f:'Tags/Wedding/hearts and champagne2.png'},
-        {n:'Woodland Anniversary',f:'Tags/Wedding/woodlandanniversary.png'},
-      ],
+            "Valentine\'s Day": [
+                {n:'Valentines 1',f:'Tags/Valentines Day/1valentines.png'},
+                {n:'Cherry Val',f:'Tags/Valentines Day/cherryval.png'},
+                {n:'Cupid',f:'Tags/Valentines Day/cupid.png'},
+                {n:'Floral Val',f:'Tags/Valentines Day/floralval.png'},
+                {n:'Valentines',f:'Tags/Valentines Day/valentines.png'},
+                {n:'Vday JPG',f:'Tags/Valentines Day/vday.jpg'},
+                {n:'Vday PNG',f:'Tags/Valentines Day/vday.png'},
+                {n:'Vday 2',f:'Tags/Valentines Day/vday2.png'},
+                {n:'Vday 3',f:'Tags/Valentines Day/vday3.png'},
+                {n:'Vday 4',f:'Tags/Valentines Day/vday4.png'},
+                {n:'Vday 7',f:'Tags/Valentines Day/vday7.png'},
+                {n:'Vday 8',f:'Tags/Valentines Day/vday8.png'},
+            ],
+            'Wedding': [
+                {n:'Black & White Dots',f:'Tags/Wedding/BlackandWhiteDots.png'},
+                {n:'Black Bow',f:'Tags/Wedding/BlackBow.png'},
+                {n:'Hearts & Champagne',f:'Tags/Wedding/hearts and champagne.png'},
+                {n:'Hearts & Champagne 2',f:'Tags/Wedding/hearts and champagne2.png'},
+                {n:'Lifetime of Happiness',f:'Tags/Wedding/Lifetimeofhappiness.png'},
+                {n:'Mr. & Mrs',f:'Tags/Wedding/Mr. & Mrs..png'},
+                {n:'Pink Rose',f:'Tags/Wedding/pinkrose.png'},
+                {n:'Wedding Tag',f:'Tags/Wedding/wedding tag.png'},
+                {n:'Wedding Tag 1',f:'Tags/Wedding/Wedding tag1.png'},
+            ],
     };
 
     let selPaper = null, selRibbon = null, selTag = null;
