@@ -712,10 +712,11 @@
 
                 <p style="color:#f5d79a;font-size:0.85rem;font-style:italic;margin-bottom:0.6rem;">A classic bow is included free with every wrap 🎀</p>
 
-                <label class="checkbox-label" style="margin-top:0.5rem;margin-bottom:1.2rem;">
+                <label class="checkbox-label" style="margin-top:0.5rem;margin-bottom:0.25rem; display:block;">
                     <input type="checkbox" id="book-rush">
-                    Rush Order (+$10 flat)
+                    Rush Order (+$10)
                 </label>
+                <p style="color:#f5d79a;font-size:0.78rem; margin-top:0.2rem; margin-bottom:1.2rem; line-height:1.4;">Available for orders of 5 gifts or fewer only. Guarantees a 1–2 day turnaround, subject to availability. Orders over 5 gifts are not eligible for rush service.</p>
 
                 <!-- ══════════ DESIGN PICKER ══════════ -->
                 <div class="form-section-label" style="margin-top:1.5rem;">🎨 Choose Your Design</div>
@@ -1818,6 +1819,14 @@
             const notes   = document.getElementById('booking-notes')?.value.trim()    || '';
             const giftTag = document.getElementById('booking-gift-tag')?.value.trim() || '';
             const giftDetails = JSON.parse(document.getElementById('gift-details-json')?.value || '[]');
+            let designChoice = giftDetails.length
+                ? giftDetails.map(item => `${item.occasion || 'No occasion'} · ${item.size || 'Medium'} · Paper: ${item.paper || 'None'} · Ribbon: ${item.ribbon || 'None'} · Tag: ${item.tag || 'None'}`).join(' | ')
+                : null;
+            if (giftTag) {
+                designChoice = designChoice
+                    ? designChoice + ' | Gift Tag: ' + giftTag
+                    : 'Gift Tag: ' + giftTag;
+            }
 
             // Safety net — should never fire now due to gate, but just in case
             if (!name || !phone || !email) {
@@ -1835,9 +1844,8 @@
                 wrapping_style:  style,
                 estimated_total: '$' + total.toFixed(2),
                 notes:           notes,
-                gift_tag:        giftTag,
                 status:          'Received',
-                rush_order:      rushOrd ,
+                rush_order:      rushOrd,
                 design_choice:   designChoice
             }]);
 
