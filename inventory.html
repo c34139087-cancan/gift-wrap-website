@@ -121,6 +121,61 @@
             color: var(--pastel-orange);
         }
 
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            max-width: 1100px;
+            margin: 0 auto 2rem;
+            padding: 0 2rem;
+        }
+        .dashboard-card {
+            background: rgba(32,17,60,0.78);
+            border: 2px solid rgba(195,149,89,0.26);
+            border-radius: var(--radius-lg);
+            padding: 1.4rem;
+            min-height: 220px;
+            backdrop-filter: blur(10px);
+        }
+        .dashboard-title {
+            font-family: var(--font-display);
+            font-size: 1.05rem; font-weight: 700;
+            color: var(--pastel-orange);
+            margin-bottom: 1rem;
+        }
+        .dashboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            color: #f5d79a;
+        }
+        .dashboard-table th,
+        .dashboard-table td {
+            text-align: left;
+            padding: 0.65rem 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .dashboard-table th {
+            color: var(--gray-lavender);
+            font-weight: 700;
+        }
+        .client-summary-card {
+            margin-bottom: 0.85rem;
+            padding: 0.9rem 1rem;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.04);
+        }
+        .client-summary-card strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        .client-summary-card p {
+            margin: 0;
+            color: #d8c49f;
+            font-size: 0.92rem;
+        }
+
         /* ── MAIN LAYOUT ── */
         .main-layout {
             max-width: 1100px;
@@ -355,7 +410,7 @@
       inventoryModal.style.display = 'none';
       inventoryFeedback.textContent = '';
       inventoryInput.value = '';
-      loadInventory();
+      Promise.all([loadInventory(), loadDashboard()]);
     } else {
       inventoryFeedback.textContent = 'Incorrect password. Access denied.';
       inventoryInput.value = '';
@@ -412,6 +467,34 @@
     <div class="summary-card">
         <div class="s-label">Vendors</div>
         <div class="s-value" id="stat-vendors">—</div>
+    </div>
+    <div class="summary-card">
+        <div class="s-label">Total Orders</div>
+        <div class="s-value" id="stat-orders">—</div>
+    </div>
+    <div class="summary-card">
+        <div class="s-label">Total Clients</div>
+        <div class="s-value" id="stat-clients">—</div>
+    </div>
+</div>
+
+<div class="dashboard-grid">
+    <div class="dashboard-card">
+        <div class="dashboard-title">Recent Orders</div>
+        <table class="dashboard-table">
+            <thead>
+                <tr><th>Customer</th><th>Total</th><th>Status</th><th>Rush</th></tr>
+            </thead>
+            <tbody id="latestOrdersBody">
+                <tr><td colspan="4"><div class="empty-state"><div class="bow">🎀</div><p>Loading order summary…</p></div></td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="dashboard-card">
+        <div class="dashboard-title">Recent Clients</div>
+        <div id="recentClients">
+            <div class="empty-state"><div class="bow">🎀</div><p>Loading client summary…</p></div>
+        </div>
     </div>
 </div>
 
@@ -596,6 +679,70 @@ function updateStats(items) {
     document.getElementById('stat-value').textContent   = '$' + totalValue.toFixed(2);
     document.getElementById('stat-low').textContent     = lowStock;
     document.getElementById('stat-vendors').textContent = vendors;
+}
+
+async function loadDashboard() {
+    await Promise.all([loadOrdersSummary(), loadClientsSummary()]);
+}
+
+async function loadOrdersSummary() {
+    const { data, error, count } = await db
+        .from('orders')
+        .select('id,customer_name,estimated_total,status,rush_order', { count: 'exact' })
+        .order('created_at', { ascending: false })
+        .limit(4);
+
+    if (error) {
+        document.getElementById('latestOrdersBody').innerHTML = `
+            <tr><td colspan="4"><div class="empty-state"><div class="bow">⚠️</div><p>Could not load order summary.</p></div></td></tr>`;
+        document.getElementById('stat-orders').textContent = '—';
+        return;
+    }
+
+    document.getElementById('stat-orders').textContent = count ?? (data ? data.length : 0);
+    if (!data || data.length === 0) {
+        document.getElementById('latestOrdersBody').innerHTML = `
+            <tr><td colspan="4"><div class="empty-state"><div class="bow">🎀</div><p>No orders yet.</p></div></td></tr>`;
+        return;
+    }
+
+    document.getElementById('latestOrdersBody').innerHTML = data.map(order => `
+        <tr>
+            <td>${order.customer_name || '—'}</td>
+            <td>${order.estimated_total || '—'}</td>
+            <td>${order.status || '—'}</td>
+            <td>${order.rush_order ? 'Yes' : 'No'}</td>
+        </tr>
+    `).join('');
+}
+
+async function loadClientsSummary() {
+    const { data, error, count } = await db
+        .from('clients')
+        .select('id,name,email', { count: 'exact' })
+        .order('created_at', { ascending: false })
+        .limit(4);
+
+    if (error) {
+        document.getElementById('recentClients').innerHTML = `
+            <div class="empty-state"><div class="bow">⚠️</div><p>Could not load client summary.</p></div>`;
+        document.getElementById('stat-clients').textContent = '—';
+        return;
+    }
+
+    document.getElementById('stat-clients').textContent = count ?? (data ? data.length : 0);
+    if (!data || data.length === 0) {
+        document.getElementById('recentClients').innerHTML = `
+            <div class="empty-state"><div class="bow">🎀</div><p>No clients yet.</p></div>`;
+        return;
+    }
+
+    document.getElementById('recentClients').innerHTML = data.map(client => `
+        <div class="client-summary-card">
+            <strong>${client.name || '—'}</strong>
+            <p>${client.email || '—'}</p>
+        </div>
+    `).join('');
 }
 
 // ── FILTER TABLE ──

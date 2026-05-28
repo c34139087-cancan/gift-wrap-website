@@ -1804,6 +1804,114 @@
         if (e.target === this) closeLightbox();
     });
 
+    async function syncClientRecord(name, phone, email, notes) {
+        if (!name || (!phone && !email)) return;
+        const payload = {
+            name,
+            phone: phone || null,
+            email: email || null,
+            notes: notes || null,
+            last_contact: new Date().toISOString().slice(0, 10)
+        };
+
+        try {
+            const { data, error } = await supabaseClient.from('clients').select('id').eq('email', email).maybeSingle();
+            if (error) {
+                console.warn('Client sync lookup failed:', error);
+                return;
+            }
+            if (data && data.id) {
+                const { error: updateError } = await supabaseClient.from('clients').update(payload).eq('id', data.id);
+                if (updateError) console.warn('Client sync update failed:', updateError);
+            } else {
+                const { error: insertError } = await supabaseClient.from('clients').insert([payload]);
+                if (insertError) console.warn('Client sync insert failed:', insertError);
+            }
+        } catch (err) {
+            console.warn('Client sync error:', err);
+        }
+    }
+
+    async function syncInventoryForOrder(giftDetails) {
+        if (!Array.isArray(giftDetails) || giftDetails.length === 0) return;
+
+        const usage = new Map();
+        giftDetails.forEach(item => {
+            const candidates = [
+                { value: item.paper, category: 'Wrapping Paper' },
+                { value: item.ribbon || item.bow, category: 'Ribbon' },
+                { value: item.tag, category: 'Other' }
+            ];
+            candidates.forEach(entry => {
+                const value = String(entry.value || '').trim();
+                if (!value) return;
+                const key = value.toLowerCase() + '|' + entry.category;
+                usage.set(key, {
+                    value,
+                    category: entry.category,
+                    count: (usage.get(key)?.count || 0) + 1
+                });
+            });
+        });
+
+        for (const item of usage.values()) {
+            try {
+                let { data: match, error } = await supabaseClient
+                    .from('inventory')
+                    .select('id,quantity,item_name,category')
+                    .ilike('item_name', `%${item.value}%`)
+                    .limit(1)
+                    .maybeSingle();
+
+                if (error) {
+                    console.warn('Inventory lookup failed for', item.value, error);
+                    continue;
+                }
+
+                if (!match || !match.id) {
+                    const fallback = await supabaseClient
+                        .from('inventory')
+                        .select('id,quantity,item_name,category')
+                        .eq('category', item.category)
+                        .limit(1)
+                        .maybeSingle();
+                    if (fallback.error) {
+                        console.warn('Inventory fallback lookup failed for', item.category, fallback.error);
+                        continue;
+                    }
+                    match = fallback.data;
+                }
+
+                if (!match || !match.id) {
+                    console.warn('No inventory item found for', item.value, 'category', item.category);
+                    continue;
+                }
+
+                const currentQty = typeof match.quantity === 'number' ? match.quantity : parseInt(match.quantity, 10);
+                if (Number.isNaN(currentQty)) {
+                    console.warn('Inventory quantity invalid for', match.id, match);
+                    continue;
+                }
+
+                const newQty = Math.max(0, currentQty - item.count);
+                if (newQty === currentQty) continue;
+
+                const { error: updateError } = await supabaseClient
+                    .from('inventory')
+                    .update({ quantity: newQty })
+                    .eq('id', match.id);
+
+                if (updateError) {
+                    console.warn('Failed to update inventory for', match.item_name || match.id, updateError);
+                } else {
+                    console.log('Inventory updated for', match.item_name || match.id, 'new qty', newQty);
+                }
+            } catch (err) {
+                console.warn('Inventory sync error:', err);
+            }
+        }
+    }
+
     // ── Calendly event listener — saves to Supabase on booking confirmed ──
     window.addEventListener('message', async function (e) {
         if (e.data.event && e.data.event === 'calendly.event_scheduled') {
@@ -1843,17 +1951,19 @@
                 gift_size:       size,
                 wrapping_style:  style,
                 estimated_total: '$' + total.toFixed(2),
-                notes:           notes,
                 status:          'Received',
                 rush_order:      rushOrd,
                 design_choice:   designChoice
             }]);
 
             if (error) {
-                console.error('Supabase error:', error);
+                console.error('Supabase order insert failed:', error);
                 alert('Your drop-off time is booked! There was an issue saving your details — please text me at 931-304-4499.');
                 return;
             }
+
+            await syncClientRecord(name, phone, email, notes);
+            await syncInventoryForOrder(giftDetails);
 
             // Reset form
             document.getElementById('booking-fields').reset();
