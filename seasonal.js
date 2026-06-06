@@ -241,9 +241,11 @@
 
     // ── Confetti recolor ──────────────────────────────────────────────────
     function recolorConfetti() {
-        const container = document.getElementById('confetti');
-        if (!container) return;
-        container.querySelectorAll('.confetti-dot').forEach(dot => {
+        const dots = document.querySelectorAll(
+            '#confetti .confetti-dot, #confettiContainer .confetti, ' +
+            '.confetti-container .confetti-dot, .confetti-container .confetti'
+        );
+        dots.forEach(function (dot) {
             dot.style.background = t.colors[Math.floor(Math.random() * t.colors.length)];
         });
     }
