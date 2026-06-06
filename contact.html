@@ -675,9 +675,129 @@
             transition: color 0.3s ease; margin: 0;
         }
         .gp-caption.gp-done { color: #52c27a; font-style: normal; font-weight: 600; }
+
+        /* ── Gift Preview Modal (enlarged) ── */
+        #gift-preview-modal {
+            display: none; position: fixed; inset: 0;
+            z-index: 999998; align-items: center; justify-content: center;
+        }
+        #gift-preview-modal.open { display: flex; }
+        .gpm-backdrop {
+            position: absolute; inset: 0;
+            background: rgba(5,2,15,0.88); cursor: pointer;
+        }
+        .gpm-content {
+            position: relative; z-index: 1;
+            background: rgba(28,14,52,0.98);
+            border: 2px solid rgba(245,215,154,0.3);
+            border-radius: 20px; padding: 2rem 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+            max-width: 92vw;
+            animation: gpmFadeIn 0.25s ease;
+        }
+        @keyframes gpmFadeIn {
+            from { opacity: 0; transform: scale(0.92); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+        .gpm-close {
+            position: absolute; top: 12px; right: 16px;
+            background: none; border: none;
+            color: var(--pastel-orange); font-size: 1.5rem;
+            cursor: pointer; opacity: 0.7; transition: opacity 0.2s;
+            line-height: 1;
+        }
+        .gpm-close:hover { opacity: 1; }
+        .gpm-title {
+            font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;
+            color: var(--pastel-orange); margin-bottom: 1.4rem;
+        }
+        /* Large stage */
+        .gpm-stage {
+            position: relative; display: inline-block;
+            width: 390px; height: 298px; margin-bottom: 0.6rem;
+        }
+        .gpm-box {
+            position: absolute; left: 0; top: 0;
+            width: 320px; height: 264px;
+            border-radius: 14px; overflow: hidden;
+            background: rgba(50,30,80,0.9);
+            box-shadow: 0 14px 44px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
+            border: 1px solid rgba(245,215,154,0.15);
+        }
+        .gpm-box::after {
+            content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+            height: 11px; background: rgba(0,0,0,0.22); pointer-events: none;
+        }
+        /* Override inner element sizes for the large box */
+        .gpm-box .gp-paper-ph   { font-size: 4.5rem; }
+        .gpm-box .gp-band-v     { width: 27px; }
+        .gpm-box .gp-band-h     { height: 27px; }
+        .gpm-box .gp-bow        { width: 80px; height: 80px; top: calc(38% - 40px); }
+        .gpm-box .gp-bow-default { font-size: 2.4rem; }
+
+        .gpm-tag-wrap {
+            position: absolute; right: 0; top: 48px;
+            display: flex; flex-direction: column;
+            align-items: center; z-index: 4;
+        }
+        .gpm-tag-string {
+            width: 1px; height: 28px;
+            background: linear-gradient(to bottom, transparent, rgba(245,215,154,0.5));
+        }
+        .gpm-tag-card {
+            width: 58px; height: 76px; border-radius: 5px; overflow: hidden;
+            border: 2px solid rgba(245,215,154,0.35);
+            box-shadow: 3px 4px 14px rgba(0,0,0,0.6);
+            background: rgba(50,35,75,0.6); transform: rotate(5deg);
+            position: relative;
+        }
+        .gpm-tag-card .gp-tag-ph  { font-size: 1.6rem; }
+        .gpm-tag-card .gp-tag-img { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .gpm-tag-card .gp-tag-img.gp-active { display: block; }
+
+        .gpm-hint {
+            font-size: 0.75rem; color: var(--gray-lavender);
+            margin: 0.5rem 0 0; font-style: italic;
+        }
+        /* Expand cursor hint on small preview */
+        .gift-preview-wrap { cursor: zoom-in; }
+        .gift-preview-wrap:hover .gp-box {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.55), 0 0 0 2px rgba(245,215,154,0.3), inset 0 1px 0 rgba(255,255,255,0.08);
+        }
     </style>
 </head>
 <body>
+
+<!-- Gift Preview Modal -->
+<div id="gift-preview-modal">
+    <div class="gpm-backdrop" onclick="closeGiftPreviewModal()"></div>
+    <div class="gpm-content">
+        <button class="gpm-close" onclick="closeGiftPreviewModal()">&#10005;</button>
+        <div class="gpm-title">🎁 Your Gift Preview</div>
+        <div class="gpm-stage">
+            <div class="gpm-box" id="gpm-box">
+                <div class="gp-paper-ph" id="gp2-paper-ph">🎁</div>
+                <div class="gp-paper-layer" id="gp2-paper-layer"></div>
+                <div class="gp-band-v"></div>
+                <div class="gp-band-h"></div>
+                <div class="gp-bow">
+                    <div class="gp-bow-default" id="gp2-bow-default">🎀</div>
+                    <img class="gp-bow-img" id="gp2-bow-img" src="" alt="ribbon">
+                </div>
+            </div>
+            <div class="gpm-tag-wrap">
+                <div class="gpm-tag-string"></div>
+                <div class="gpm-tag-card">
+                    <div class="gp-tag-ph" id="gp2-tag-ph">🏷️</div>
+                    <img class="gp-tag-img" id="gp2-tag-img" src="" alt="tag">
+                </div>
+            </div>
+        </div>
+        <p class="gp-caption gp-done" id="gp2-caption"></p>
+        <p class="gpm-hint">Click outside or press Esc to close</p>
+    </div>
+</div>
 
 <!-- Lightbox -->
 <div id="img-lightbox">
@@ -1181,6 +1301,9 @@
             const el = document.getElementById(id);
             if (el) el.addEventListener('input', checkInfoReady);
         });
+
+        // Gift preview click-to-enlarge
+        document.querySelector('.gift-preview-wrap')?.addEventListener('click', openGiftPreviewModal);
 
         // Name validation listeners
         const contactNameEl = document.getElementById('contact-name');
@@ -1930,25 +2053,76 @@
             if (tagPh) tagPh.classList.remove('gp-hidden');
         }
 
-        // Caption
-        const caption = document.getElementById('gp-caption');
-        if (caption) {
-            const filled = [paper, ribbon, tag].filter(Boolean).length;
-            if (filled === 3) {
-                caption.textContent = '✓ Design complete — looking great!';
-                caption.classList.add('gp-done');
-            } else if (filled === 0) {
-                caption.textContent = 'Pick wrapping paper, ribbon & tag below!';
-                caption.classList.remove('gp-done');
+        // Sync large modal preview
+        const paperLayer2 = document.getElementById('gp2-paper-layer');
+        const paperPh2    = document.getElementById('gp2-paper-ph');
+        if (paperLayer2) {
+            const pd = (paper && occ && PAPERS[occ]) ? PAPERS[occ].find(p => p.n === paper) : null;
+            if (pd) {
+                paperLayer2.style.backgroundImage = `url('${BASE}/${pd.f}')`;
+                paperLayer2.classList.add('gp-active');
+                if (paperPh2) paperPh2.classList.add('gp-hidden');
             } else {
-                const miss = [];
-                if (!paper)  miss.push('paper');
-                if (!ribbon) miss.push('ribbon');
-                if (!tag)    miss.push('tag');
-                caption.textContent = 'Still choosing: ' + miss.join(', ');
-                caption.classList.remove('gp-done');
+                paperLayer2.classList.remove('gp-active');
+                if (paperPh2) paperPh2.classList.remove('gp-hidden');
             }
         }
+        const bowImg2     = document.getElementById('gp2-bow-img');
+        const bowDefault2 = document.getElementById('gp2-bow-default');
+        if (ribbon && bowImg2) {
+            const rd = RIBBONS.find(r => r.n === ribbon);
+            if (rd) {
+                bowImg2.src = `${BASE}/${rd.f}`;
+                bowImg2.classList.add('gp-active');
+                if (bowDefault2) bowDefault2.classList.add('gp-hidden');
+            }
+        } else {
+            if (bowImg2) bowImg2.classList.remove('gp-active');
+            if (bowDefault2) bowDefault2.classList.remove('gp-hidden');
+        }
+        const tagImg2 = document.getElementById('gp2-tag-img');
+        const tagPh2  = document.getElementById('gp2-tag-ph');
+        if (tag && tagImg2) {
+            const allTags = Object.values(TAGS).flat();
+            const td = allTags.find(t => t.n === tag);
+            if (td) {
+                tagImg2.src = `${BASE}/${td.f}`;
+                tagImg2.classList.add('gp-active');
+                if (tagPh2) tagPh2.classList.add('gp-hidden');
+            }
+        } else {
+            if (tagImg2) tagImg2.classList.remove('gp-active');
+            if (tagPh2) tagPh2.classList.remove('gp-hidden');
+        }
+
+        // Caption (small + large)
+        const filled = [paper, ribbon, tag].filter(Boolean).length;
+        let captionText = '', captionDone = false;
+        if (filled === 3) {
+            captionText = '✓ Design complete — looking great!';
+            captionDone = true;
+        } else if (filled === 0) {
+            captionText = 'Pick wrapping paper, ribbon & tag below!';
+        } else {
+            const miss = [];
+            if (!paper)  miss.push('paper');
+            if (!ribbon) miss.push('ribbon');
+            if (!tag)    miss.push('tag');
+            captionText = 'Still choosing: ' + miss.join(', ');
+        }
+        ['gp-caption', 'gp2-caption'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = captionText;
+            el.classList.toggle('gp-done', captionDone);
+        });
+    }
+
+    function openGiftPreviewModal() {
+        document.getElementById('gift-preview-modal').classList.add('open');
+    }
+    function closeGiftPreviewModal() {
+        document.getElementById('gift-preview-modal').classList.remove('open');
     }
 
     function onOccasionChange() {
@@ -2062,7 +2236,9 @@
     function closeLightbox() {
         document.getElementById('img-lightbox').classList.remove('open');
     }
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') { closeLightbox(); closeGiftPreviewModal(); }
+    });
     document.getElementById('img-lightbox').addEventListener('click', function(e) {
         if (e.target === this) closeLightbox();
     });
