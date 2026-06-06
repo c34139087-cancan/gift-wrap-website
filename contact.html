@@ -565,6 +565,116 @@
             font-weight: 600; padding: 0.4rem 1.2rem; border-radius: 20px;
             border: 1px solid rgba(245,215,154,0.3); white-space: nowrap;
         }
+
+        /* ══════════════════════════════════
+           LIVE GIFT PREVIEW
+        ══════════════════════════════════ */
+        .gift-preview-wrap {
+            background: rgba(12,6,30,0.55);
+            border: 1.5px solid rgba(245,215,154,0.18);
+            border-radius: 14px;
+            padding: 1.1rem 1rem 1rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .gp-title {
+            font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+            text-transform: uppercase; color: var(--pastel-orange);
+            margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .gp-title::before, .gp-title::after {
+            content: ""; flex: 1; height: 1px; background: rgba(245,215,154,0.2);
+        }
+        .gp-stage {
+            position: relative; display: inline-block;
+            width: 220px; height: 165px; margin-bottom: 0.75rem;
+        }
+        .gp-box {
+            position: absolute; left: 0; top: 0; width: 182px; height: 148px;
+            border-radius: 10px; overflow: hidden;
+            background: rgba(50,30,80,0.9);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
+            border: 1px solid rgba(245,215,154,0.12);
+        }
+        .gp-box::after {
+            content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+            height: 7px; background: rgba(0,0,0,0.22); pointer-events: none;
+        }
+        .gp-paper-layer {
+            position: absolute; inset: 0;
+            background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 0.45s ease;
+        }
+        .gp-paper-layer.gp-active { opacity: 1; }
+        .gp-paper-ph {
+            position: absolute; inset: 0; display: flex;
+            align-items: center; justify-content: center;
+            font-size: 2.6rem; opacity: 0.28; z-index: 1;
+            pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .gp-paper-ph.gp-hidden { opacity: 0; }
+        .gp-band-v {
+            position: absolute; left: 50%; top: 0; bottom: 0; width: 16px;
+            transform: translateX(-50%);
+            background: linear-gradient(to right,
+                rgba(139,105,55,0.9), rgba(195,149,89,1) 35%,
+                rgba(225,182,112,1) 50%, rgba(195,149,89,1) 65%, rgba(139,105,55,0.9));
+            box-shadow: 1px 0 5px rgba(0,0,0,0.35), -1px 0 5px rgba(0,0,0,0.35);
+            z-index: 2;
+        }
+        .gp-band-h {
+            position: absolute; left: 0; right: 0; top: 38%; height: 16px;
+            background: linear-gradient(to bottom,
+                rgba(139,105,55,0.9), rgba(195,149,89,1) 35%,
+                rgba(225,182,112,1) 50%, rgba(195,149,89,1) 65%, rgba(139,105,55,0.9));
+            box-shadow: 0 1px 5px rgba(0,0,0,0.35), 0 -1px 5px rgba(0,0,0,0.35);
+            z-index: 2;
+        }
+        .gp-bow {
+            position: absolute; left: 50%; top: calc(38% - 20px);
+            transform: translateX(-50%);
+            width: 48px; height: 48px; border-radius: 50%;
+            border: 2px solid rgba(245,215,154,0.55);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+            background: rgba(50,30,80,0.95); overflow: hidden; z-index: 3;
+        }
+        .gp-bow-img { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .gp-bow-img.gp-active { display: block; }
+        .gp-bow-default {
+            position: absolute; inset: 0; display: flex;
+            align-items: center; justify-content: center;
+            font-size: 1.5rem; opacity: 0.5;
+        }
+        .gp-bow-default.gp-hidden { display: none; }
+        .gp-tag-wrap {
+            position: absolute; right: 0; top: 28px;
+            display: flex; flex-direction: column; align-items: center; z-index: 4;
+        }
+        .gp-tag-string {
+            width: 1px; height: 18px;
+            background: linear-gradient(to bottom, transparent, rgba(245,215,154,0.5));
+        }
+        .gp-tag-card {
+            width: 34px; height: 44px; border-radius: 3px; overflow: hidden;
+            border: 1.5px solid rgba(245,215,154,0.3);
+            box-shadow: 2px 3px 10px rgba(0,0,0,0.55);
+            background: rgba(50,35,75,0.6); transform: rotate(5deg);
+            position: relative;
+        }
+        .gp-tag-img { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .gp-tag-img.gp-active { display: block; }
+        .gp-tag-ph {
+            position: absolute; inset: 0; display: flex;
+            align-items: center; justify-content: center;
+            font-size: 0.9rem; opacity: 0.3;
+        }
+        .gp-tag-ph.gp-hidden { display: none; }
+        .gp-caption {
+            font-size: 0.78rem; color: rgba(195,149,89,0.65);
+            font-style: italic; min-height: 1em;
+            transition: color 0.3s ease; margin: 0;
+        }
+        .gp-caption.gp-done { color: #52c27a; font-style: normal; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -760,6 +870,31 @@
                 </div>
 
                 <div class="design-panels" id="designPanels">
+
+                    <!-- ── Live Gift Preview ── -->
+                    <div class="gift-preview-wrap">
+                        <div class="gp-title">Live Preview</div>
+                        <div class="gp-stage">
+                            <div class="gp-box">
+                                <div class="gp-paper-ph" id="gp-paper-ph">🎁</div>
+                                <div class="gp-paper-layer" id="gp-paper-layer"></div>
+                                <div class="gp-band-v"></div>
+                                <div class="gp-band-h"></div>
+                                <div class="gp-bow">
+                                    <div class="gp-bow-default" id="gp-bow-default">🎀</div>
+                                    <img class="gp-bow-img" id="gp-bow-img" src="" alt="ribbon">
+                                </div>
+                            </div>
+                            <div class="gp-tag-wrap">
+                                <div class="gp-tag-string"></div>
+                                <div class="gp-tag-card">
+                                    <div class="gp-tag-ph" id="gp-tag-ph">🏷️</div>
+                                    <img class="gp-tag-img" id="gp-tag-img" src="" alt="tag">
+                                </div>
+                            </div>
+                        </div>
+                        <p class="gp-caption" id="gp-caption">Pick wrapping paper, ribbon &amp; tag below!</p>
+                    </div>
 
                     <div class="picker-section">
                         <div class="picker-section-label">🎁 Wrapping Paper</div>
@@ -1686,6 +1821,8 @@
         }
         if (card) {
             loadGiftDesignPanelValues(card);
+        } else {
+            updateGiftPreview();
         }
     }
 
@@ -1727,6 +1864,90 @@
             setDisplay('paperDisplay', selectedPaper || null);
             setDisplay('ribbonDisplay', selectedRibbon || null);
             setDisplay('tagDisplay', selectedTag || null);
+            updateGiftPreview();
+        }
+    }
+
+    function updateGiftPreview() {
+        let occ = '', paper = '', ribbon = '', tag = '', tagCat = '';
+        if (activeGiftCard) {
+            occ    = activeGiftCard.querySelector('.gift-item-occasion')?.value     || '';
+            paper  = activeGiftCard.querySelector('.gift-item-paper')?.value        || '';
+            ribbon = activeGiftCard.querySelector('.gift-item-ribbon')?.value       || '';
+            tag    = activeGiftCard.querySelector('.gift-item-tag')?.value          || '';
+            tagCat = activeGiftCard.querySelector('.gift-item-tag-category')?.value || '';
+        } else {
+            occ    = document.getElementById('selected-occasion')?.value || '';
+            paper  = document.getElementById('selected-paper')?.value    || '';
+            ribbon = document.getElementById('selected-ribbon')?.value   || '';
+            tag    = document.getElementById('selected-tag')?.value      || '';
+            tagCat = document.getElementById('tagCatSelect')?.value      || '';
+        }
+
+        // Paper
+        const paperLayer = document.getElementById('gp-paper-layer');
+        const paperPh    = document.getElementById('gp-paper-ph');
+        if (paperLayer) {
+            const pd = (paper && occ && PAPERS[occ]) ? PAPERS[occ].find(p => p.n === paper) : null;
+            if (pd) {
+                paperLayer.style.backgroundImage = `url('${BASE}/${pd.f}')`;
+                paperLayer.classList.add('gp-active');
+                if (paperPh) paperPh.classList.add('gp-hidden');
+            } else {
+                paperLayer.classList.remove('gp-active');
+                if (paperPh) paperPh.classList.remove('gp-hidden');
+            }
+        }
+
+        // Ribbon (shown as bow circle)
+        const bowImg     = document.getElementById('gp-bow-img');
+        const bowDefault = document.getElementById('gp-bow-default');
+        if (ribbon && bowImg) {
+            const rd = RIBBONS.find(r => r.n === ribbon);
+            if (rd) {
+                bowImg.src = `${BASE}/${rd.f}`;
+                bowImg.classList.add('gp-active');
+                if (bowDefault) bowDefault.classList.add('gp-hidden');
+            }
+        } else {
+            if (bowImg) bowImg.classList.remove('gp-active');
+            if (bowDefault) bowDefault.classList.remove('gp-hidden');
+        }
+
+        // Tag
+        const tagImg = document.getElementById('gp-tag-img');
+        const tagPh  = document.getElementById('gp-tag-ph');
+        if (tag && tagImg) {
+            const allTags = Object.values(TAGS).flat();
+            const td = allTags.find(t => t.n === tag);
+            if (td) {
+                tagImg.src = `${BASE}/${td.f}`;
+                tagImg.classList.add('gp-active');
+                if (tagPh) tagPh.classList.add('gp-hidden');
+            }
+        } else {
+            if (tagImg) tagImg.classList.remove('gp-active');
+            if (tagPh) tagPh.classList.remove('gp-hidden');
+        }
+
+        // Caption
+        const caption = document.getElementById('gp-caption');
+        if (caption) {
+            const filled = [paper, ribbon, tag].filter(Boolean).length;
+            if (filled === 3) {
+                caption.textContent = '✓ Design complete — looking great!';
+                caption.classList.add('gp-done');
+            } else if (filled === 0) {
+                caption.textContent = 'Pick wrapping paper, ribbon & tag below!';
+                caption.classList.remove('gp-done');
+            } else {
+                const miss = [];
+                if (!paper)  miss.push('paper');
+                if (!ribbon) miss.push('ribbon');
+                if (!tag)    miss.push('tag');
+                caption.textContent = 'Still choosing: ' + miss.join(', ');
+                caption.classList.remove('gp-done');
+            }
         }
     }
 
@@ -1752,6 +1973,7 @@
         renderThumbs('ribbonThumbs', RIBBONS, 'ribbon');
         buildTagCatDropdown();
         document.getElementById('tagThumbs').innerHTML = '';
+        updateGiftPreview();
         panels.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
@@ -1799,6 +2021,7 @@
                         if (catInput) catInput.value = document.getElementById('tagCatSelect')?.value || '';
                     }
                 }
+                updateGiftPreview();
                 openLightbox(BASE + '/' + item.f, item.n);
             });
             container.appendChild(wrap);
