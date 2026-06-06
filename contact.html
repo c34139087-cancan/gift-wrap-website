@@ -456,6 +456,19 @@
             opacity: 1;
         }
 
+        /* ── Name field validation ── */
+        .form-group input.field-invalid {
+            border-color: #e05252 !important;
+            box-shadow: 0 0 12px rgba(224, 82, 82, 0.25) !important;
+        }
+        .field-error {
+            color: #e05252;
+            font-size: 0.78rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+        .field-error.visible { display: block; }
+
         /* ── Responsive ── */
         @media (max-width: 720px) {
             .contact-layout { grid-template-columns: 1fr; }
@@ -624,7 +637,8 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label>Full Name <span class="req">*</span></label>
-                        <input type="text" name="name" placeholder="Your full name" required>
+                        <input type="text" id="contact-name" name="name" placeholder="Your full name" required>
+                        <div class="field-error" id="contact-name-error">Please use letters only — no numbers or special characters.</div>
                     </div>
                     <div class="form-group">
                         <label>Phone Number <span class="req">*</span></label>
@@ -668,6 +682,7 @@
                     <div class="form-group">
                         <label>Full Name <span class="req">*</span></label>
                         <input type="text" id="booking-name" name="dropoff_name" placeholder="Your full name" required>
+                        <div class="field-error" id="booking-name-error">Please use letters only — no numbers or special characters.</div>
                     </div>
                     <div class="form-group">
                         <label>Phone Number <span class="req">*</span></label>
@@ -1032,6 +1047,12 @@
             if (el) el.addEventListener('input', checkInfoReady);
         });
 
+        // Name validation listeners
+        const contactNameEl = document.getElementById('contact-name');
+        if (contactNameEl) contactNameEl.addEventListener('input', () => validateNameField(contactNameEl, 'contact-name-error'));
+        const bookingNameEl = document.getElementById('booking-name');
+        if (bookingNameEl) bookingNameEl.addEventListener('input', () => validateNameField(bookingNameEl, 'booking-name-error'));
+
         // Attach gift item listener
         document.getElementById('add-gift-item-btn')?.addEventListener('click', function () {
             addGiftItem();
@@ -1052,7 +1073,7 @@
         const phone = document.getElementById('booking-phone')?.value.trim() || '';
         const email = document.getElementById('booking-email')?.value.trim() || '';
 
-        const nameOk  = name.length > 0;
+        const nameOk  = name.length > 0 && isValidName(name);
         const phoneOk = phone.length > 0;
         const emailOk = email.includes('@') && email.includes('.');
 
@@ -1087,10 +1108,29 @@
         }
     }
 
+    // ── Name validation ──
+    function isValidName(val) {
+        return /^[A-Za-z\s'\-]+$/.test(val);
+    }
+
+    function validateNameField(inputEl, errorId) {
+        const val = inputEl.value.trim();
+        const invalid = val.length > 0 && !isValidName(val);
+        inputEl.classList.toggle('field-invalid', invalid);
+        const errEl = document.getElementById(errorId);
+        if (errEl) errEl.classList.toggle('visible', invalid);
+        return !invalid;
+    }
+
     // ── Message form submit (Formspree) ──
     document.getElementById('contact-form').addEventListener('submit', async function (e) {
         e.preventDefault();
         const form = e.target;
+        const contactNameEl = document.getElementById('contact-name');
+        if (contactNameEl && !validateNameField(contactNameEl, 'contact-name-error')) {
+            contactNameEl.focus();
+            return;
+        }
         try {
             const response = await fetch(form.action, {
                 method: 'POST',
