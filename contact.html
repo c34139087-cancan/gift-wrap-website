@@ -631,35 +631,45 @@
             z-index: 2;
         }
         .gp-bow {
-            position: absolute; left: 50%; top: calc(38% - 22px);
+            position: absolute; left: 50%; top: calc(38% - 32px);
             transform: translateX(-50%);
-            width: 58px; height: 44px; z-index: 3;
+            width: 72px; height: 62px; z-index: 3;
         }
+        /* Ribbon tails that drape below the knot */
+        .gp-bow-tail {
+            position: absolute;
+            width: 9px; height: 18px; bottom: 0;
+            background-color: rgba(195,149,89,0.92);
+            background-size: cover; background-position: center;
+            box-shadow: 1px 2px 4px rgba(0,0,0,0.35);
+            border-radius: 0 0 3px 3px;
+        }
+        .gp-bow-tail-l { left: calc(50% - 10px); transform: rotate(-14deg); transform-origin: top center; }
+        .gp-bow-tail-r { left: calc(50% + 1px);  transform: rotate(14deg);  transform-origin: top center; }
+        /* Petal/teardrop loops — sharp corner faces center, round end fans out */
         .gp-bow-loop {
             position: absolute;
-            width: 22px; height: 17px;
-            border-radius: 50% 50% 46% 46%;
-            background-color: rgba(195,149,89,0.95);
+            width: 30px; height: 30px;
+            background-color: rgba(195,149,89,0.93);
             background-size: cover; background-position: center;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: inset 0 3px 8px rgba(0,0,0,0.4), 0 3px 6px rgba(0,0,0,0.35);
             border: 1px solid rgba(255,255,255,0.14);
-            top: 5px;
         }
-        .gp-bow-left  { left: 1px;  transform: rotate(-32deg); transform-origin: right center; }
-        .gp-bow-right { right: 1px; transform: rotate(32deg);  transform-origin: left center; }
+        .gp-bow-left  { border-radius: 50% 0 50% 50%; left: 3px;  top: 2px; transform: rotate(-45deg); }
+        .gp-bow-right { border-radius: 0 50% 50% 50%; right: 3px; top: 2px; transform: rotate(45deg);  }
         .gp-bow-knot {
-            position: absolute; left: 50%; top: 50%;
+            position: absolute; left: 50%; top: 42%;
             transform: translate(-50%, -50%);
-            width: 14px; height: 12px; border-radius: 50%;
+            width: 16px; height: 16px; border-radius: 50%;
             background-color: rgba(195,149,89,1);
             background-size: cover; background-position: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.45);
-            z-index: 3; border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.55);
+            z-index: 3; border: 1.5px solid rgba(255,255,255,0.2);
         }
         .gp-bow-default {
             position: absolute; inset: 0; display: flex;
             align-items: center; justify-content: center;
-            font-size: 1.6rem; opacity: 0.55; pointer-events: none;
+            font-size: 1.7rem; opacity: 0.55; pointer-events: none; z-index: 4;
         }
         .gp-bow-default.gp-hidden { display: none; }
         .gp-tag-wrap {
@@ -749,10 +759,15 @@
         .gpm-box .gp-paper-ph   { font-size: 4.5rem; }
         .gpm-box .gp-band-v     { width: 27px; }
         .gpm-box .gp-band-h     { height: 27px; }
-        .gpm-box .gp-bow        { width: 96px; height: 74px; top: calc(38% - 37px); }
-        .gpm-box .gp-bow-loop   { width: 37px; height: 28px; top: 8px; }
-        .gpm-box .gp-bow-knot   { width: 24px; height: 20px; }
-        .gpm-box .gp-bow-default { font-size: 2.6rem; }
+        .gpm-box .gp-bow       { width: 122px; height: 104px; top: calc(38% - 52px); }
+        .gpm-box .gp-bow-tail  { width: 15px; height: 30px; }
+        .gpm-box .gp-bow-tail-l { left: calc(50% - 17px); }
+        .gpm-box .gp-bow-tail-r { left: calc(50% + 2px); }
+        .gpm-box .gp-bow-loop  { width: 50px; height: 50px; }
+        .gpm-box .gp-bow-left  { left: 5px; top: 3px; }
+        .gpm-box .gp-bow-right { right: 5px; top: 3px; }
+        .gpm-box .gp-bow-knot  { width: 28px; height: 28px; top: 42%; }
+        .gpm-box .gp-bow-default { font-size: 2.8rem; }
 
         /* Tag message overlay */
         .gp-tag-msg {
@@ -827,10 +842,12 @@
                 <div class="gp-band-v"></div>
                 <div class="gp-band-h"></div>
                 <div class="gp-bow">
-                    <div class="gp-bow-loop gp-bow-left"  id="gp2-bow-left"></div>
-                    <div class="gp-bow-loop gp-bow-right" id="gp2-bow-right"></div>
-                    <div class="gp-bow-knot"              id="gp2-bow-knot"></div>
-                    <div class="gp-bow-default"           id="gp2-bow-default">🎀</div>
+                    <div class="gp-bow-tail gp-bow-tail-l" id="gp2-bow-tail-l"></div>
+                    <div class="gp-bow-tail gp-bow-tail-r" id="gp2-bow-tail-r"></div>
+                    <div class="gp-bow-loop gp-bow-left"   id="gp2-bow-left"></div>
+                    <div class="gp-bow-loop gp-bow-right"  id="gp2-bow-right"></div>
+                    <div class="gp-bow-knot"               id="gp2-bow-knot"></div>
+                    <div class="gp-bow-default"            id="gp2-bow-default">🎀</div>
                 </div>
             </div>
             <div class="gpm-tag-wrap">
@@ -1049,10 +1066,12 @@
                                 <div class="gp-band-v"></div>
                                 <div class="gp-band-h"></div>
                                 <div class="gp-bow">
-                                    <div class="gp-bow-loop gp-bow-left"  id="gp-bow-left"></div>
-                                    <div class="gp-bow-loop gp-bow-right" id="gp-bow-right"></div>
-                                    <div class="gp-bow-knot"              id="gp-bow-knot"></div>
-                                    <div class="gp-bow-default"           id="gp-bow-default">🎀</div>
+                                    <div class="gp-bow-tail gp-bow-tail-l" id="gp-bow-tail-l"></div>
+                                    <div class="gp-bow-tail gp-bow-tail-r" id="gp-bow-tail-r"></div>
+                                    <div class="gp-bow-loop gp-bow-left"   id="gp-bow-left"></div>
+                                    <div class="gp-bow-loop gp-bow-right"  id="gp-bow-right"></div>
+                                    <div class="gp-bow-knot"               id="gp-bow-knot"></div>
+                                    <div class="gp-bow-default"            id="gp-bow-default">🎀</div>
                                 </div>
                             </div>
                             <div class="gp-tag-wrap">
@@ -2090,18 +2109,17 @@
 
         // Ribbon (shown as bow shape)
         const bowDefault = document.getElementById('gp-bow-default');
-        const bowLeft    = document.getElementById('gp-bow-left');
-        const bowRight   = document.getElementById('gp-bow-right');
-        const bowKnot    = document.getElementById('gp-bow-knot');
+        const bowParts   = ['gp-bow-left','gp-bow-right','gp-bow-knot','gp-bow-tail-l','gp-bow-tail-r']
+                            .map(id => document.getElementById(id));
         if (ribbon) {
             const rd = RIBBONS.find(r => r.n === ribbon);
             if (rd) {
                 const ru = `url('${BASE}/${rd.f}')`;
-                [bowLeft, bowRight, bowKnot].forEach(el => { if (el) el.style.backgroundImage = ru; });
+                bowParts.forEach(el => { if (el) el.style.backgroundImage = ru; });
                 if (bowDefault) bowDefault.classList.add('gp-hidden');
             }
         } else {
-            [bowLeft, bowRight, bowKnot].forEach(el => { if (el) el.style.backgroundImage = ''; });
+            bowParts.forEach(el => { if (el) el.style.backgroundImage = ''; });
             if (bowDefault) bowDefault.classList.remove('gp-hidden');
         }
 
@@ -2136,18 +2154,17 @@
             }
         }
         const bowDefault2 = document.getElementById('gp2-bow-default');
-        const bowLeft2    = document.getElementById('gp2-bow-left');
-        const bowRight2   = document.getElementById('gp2-bow-right');
-        const bowKnot2    = document.getElementById('gp2-bow-knot');
+        const bowParts2   = ['gp2-bow-left','gp2-bow-right','gp2-bow-knot','gp2-bow-tail-l','gp2-bow-tail-r']
+                             .map(id => document.getElementById(id));
         if (ribbon) {
             const rd = RIBBONS.find(r => r.n === ribbon);
             if (rd) {
                 const ru2 = `url('${BASE}/${rd.f}')`;
-                [bowLeft2, bowRight2, bowKnot2].forEach(el => { if (el) el.style.backgroundImage = ru2; });
+                bowParts2.forEach(el => { if (el) el.style.backgroundImage = ru2; });
                 if (bowDefault2) bowDefault2.classList.add('gp-hidden');
             }
         } else {
-            [bowLeft2, bowRight2, bowKnot2].forEach(el => { if (el) el.style.backgroundImage = ''; });
+            bowParts2.forEach(el => { if (el) el.style.backgroundImage = ''; });
             if (bowDefault2) bowDefault2.classList.remove('gp-hidden');
         }
         const tagImg2 = document.getElementById('gp2-tag-img');
