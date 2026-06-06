@@ -827,6 +827,7 @@
         }
     </style>
     <script src="seasonal.js"></script>
+    <script src="quiz.js"></script>
 </head>
 <body>
 
@@ -923,6 +924,7 @@
                 <button type="button" id="btn-message" class="active" onclick="setPurpose('message')">Send a Message</button>
                 <button type="button" id="btn-book"    onclick="setPurpose('book')">Book Drop-off</button>
             </div>
+            <div id="slots-widget"></div>
 
             <!-- MESSAGE FORM -->
             <form id="contact-form" action="https://formspree.io/f/xpqykjkn" method="POST">
@@ -1397,6 +1399,109 @@
         });
         document.getElementById('book-rush')?.addEventListener('change', recalc);
         recalc();
+
+        // ── Slots availability widget ──────────────────────────────────
+        (async function loadSlotsWidget() {
+            const widget = document.getElementById('slots-widget');
+            if (!widget) return;
+            try {
+                const now          = new Date();
+                const startOfWeek  = new Date(now);
+                startOfWeek.setDate(now.getDate() - now.getDay());
+                startOfWeek.setHours(0, 0, 0, 0);
+                const endOfWeek = new Date(startOfWeek);
+                endOfWeek.setDate(startOfWeek.getDate() + 7);
+
+                const { count, error } = await supabaseClient
+                    .from('orders')
+                    .select('id', { count: 'exact', head: true })
+                    .gte('created_at', startOfWeek.toISOString())
+                    .lt('created_at', endOfWeek.toISOString());
+
+                if (error) throw error;
+                const MAX    = 20;
+                const booked = count || 0;
+                const avail  = Math.max(0, MAX - booked);
+
+                let color, icon, msg;
+                if (avail === 0) {
+                    color = '#e05252'; icon = '🔴';
+                    msg = 'Fully booked this week — check back for next week!';
+                } else if (avail <= 5) {
+                    color = '#ff6b35'; icon = '🟠';
+                    msg = `Only <strong>${avail} slot${avail === 1 ? '' : 's'}</strong> left this week — book fast!`;
+                } else if (avail <= 10) {
+                    color = '#f5b942'; icon = '🟡';
+                    msg = `<strong>${avail} slots</strong> available this week — book soon!`;
+                } else {
+                    color = '#4caf7d'; icon = '🟢';
+                    msg = `<strong>${avail} slots</strong> available this week — plenty of time!`;
+                }
+
+                widget.innerHTML = `<span style="font-size:0.75rem;margin-right:0.3rem;">${icon}</span>${msg}`;
+                widget.style.cssText = [
+                    'display:block',
+                    'background:rgba(255,255,255,0.04)',
+                    `border:1px solid ${color}44`,
+                    `border-left:3px solid ${color}`,
+                    'border-radius:8px',
+                    'padding:0.5rem 0.9rem',
+                    'font-size:0.82rem',
+                    'color:#f5d79a',
+                    'margin:0.65rem 0 0.1rem',
+                    'line-height:1.5',
+                    "font-family:'Poppins',sans-serif",
+                ].join(';');
+            } catch (e) {
+                console.warn('Slots widget:', e);
+            }
+        })();
+
+        // ── Quiz pre-selection from URL params ─────────────────────────
+        const quizOccasion = params.get('occasion');
+        const quizPaper    = params.get('paper');
+        const quizRibbon   = params.get('ribbon');
+
+        if (params.get('quiz') === '1' && quizOccasion) {
+            setTimeout(function () {
+                const sel = document.getElementById('occasionSelect');
+                if (sel) { sel.value = quizOccasion; onOccasionChange(); }
+
+                setTimeout(function () {
+                    if (quizPaper) {
+                        document.querySelectorAll('#paperThumbs .thumb').forEach(function (t) {
+                            if (t.querySelector('.thumb-name')?.textContent === quizPaper) t.click();
+                        });
+                    }
+                    if (quizRibbon) {
+                        document.querySelectorAll('#ribbonThumbs .thumb').forEach(function (t) {
+                            if (t.querySelector('.thumb-name')?.textContent === quizRibbon) t.click();
+                        });
+                    }
+                    // Insert a "quiz loaded" notice above the design panel
+                    const notice = document.createElement('div');
+                    notice.style.cssText = [
+                        'background:linear-gradient(135deg,#1a0a30,#20113c)',
+                        'border:1px solid rgba(195,149,89,0.35)',
+                        'border-left:3px solid #c39559',
+                        'border-radius:10px',
+                        'padding:0.75rem 1rem',
+                        'margin:0.6rem 0',
+                        'font-size:0.83rem',
+                        'color:#f5d79a',
+                        "font-family:'Poppins',sans-serif",
+                        'line-height:1.5',
+                    ].join(';');
+                    notice.innerHTML = `✨ Quiz result loaded! <strong>${quizOccasion} — ${quizPaper}</strong> with <strong>${quizRibbon}</strong> ribbon. Adjust anything below, then schedule your drop-off!`;
+                    const panels = document.getElementById('designPanels');
+                    if (panels && !document.getElementById('quiz-notice')) {
+                        notice.id = 'quiz-notice';
+                        panels.insertAdjacentElement('beforebegin', notice);
+                        notice.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 250);
+            }, 450);
+        }
     });
 
     // ── Calendly gate logic ──
