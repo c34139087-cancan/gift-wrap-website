@@ -59,7 +59,7 @@
     // Variable-date windows (14-day lead-up + the day itself)
     if (!theme && today >= dBefore(easterDate,       14) && today <= easterDate)       theme = 'easter';
     if (!theme && today >= dBefore(mothersDayDate,   14) && today <= mothersDayDate)   theme = 'mothers';
-    if (!theme && today >= dBefore(fathersDayDate,   14) && today <= fathersDayDate)   theme = 'fathers';
+    if (!theme && today >= dBefore(fathersDayDate,   16) && today <= fathersDayDate)   theme = 'fathers';
     if (!theme && today >= dBefore(thanksgivingDate, 14) && today <= thanksgivingDate) theme = 'thanksgiving';
 
     if (!theme) return; // Default purple/gold theme — nothing to do
