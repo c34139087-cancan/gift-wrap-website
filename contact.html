@@ -826,6 +826,7 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.55), 0 0 0 2px rgba(245,215,154,0.3), inset 0 1px 0 rgba(255,255,255,0.08);
         }
     </style>
+    <script src="seasonal.js"></script>
 </head>
 <body>
 
@@ -2539,7 +2540,7 @@
     // ── Confetti ──
     (function () {
         const container = document.getElementById('confetti');
-        const colors    = ['#f5d79a', '#ecdb9f', '#c39559', '#866e9f', '#785678'];
+        const colors    = (window.CANCAN_HOLIDAY && window.CANCAN_HOLIDAY.colors) || ['#f5d79a', '#ecdb9f', '#c39559', '#866e9f', '#785678'];
         for (let i = 0; i < 50; i++) {
             const dot  = document.createElement('div');
             dot.classList.add('confetti-dot');
