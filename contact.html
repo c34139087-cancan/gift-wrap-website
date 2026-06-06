@@ -771,15 +771,15 @@
 
         /* Tag message overlay */
         .gp-tag-msg {
-            position: absolute; inset: 0; display: flex;
-            align-items: center; justify-content: center;
-            font-size: 4.5px; line-height: 1.3;
+            position: absolute; left: 0; right: 0; top: 36%; bottom: 2px;
+            display: flex; align-items: flex-start; justify-content: center;
+            font-size: 4.5px; line-height: 1.35;
             color: rgba(20,10,40,0.92); text-align: center;
-            padding: 3px; word-break: break-word; overflow: hidden;
+            padding: 1px 3px; word-break: break-word; overflow: hidden;
             z-index: 6; pointer-events: none; font-weight: 700;
             text-shadow: 0 0 2px rgba(255,255,255,0.75);
         }
-        .gpm-tag-msg { font-size: 8px; padding: 6px; line-height: 1.35; }
+        .gpm-tag-msg { font-size: 8px; padding: 2px 6px; line-height: 1.35; top: 36%; }
 
         /* Cursor fix — all dark overlays */
         #gift-preview-modal, #gift-preview-modal * { cursor: default; }
@@ -841,8 +841,8 @@
             <div class="gpm-box" id="gpm-box">
                 <div class="gp-paper-ph" id="gp2-paper-ph">🎁</div>
                 <div class="gp-paper-layer" id="gp2-paper-layer"></div>
-                <div class="gp-band-v"></div>
-                <div class="gp-band-h"></div>
+                <div class="gp-band-v" id="gp2-band-v"></div>
+                <div class="gp-band-h" id="gp2-band-h"></div>
                 <div class="gp-bow">
                     <div class="gp-bow-tail gp-bow-tail-l" id="gp2-bow-tail-l"></div>
                     <div class="gp-bow-tail gp-bow-tail-r" id="gp2-bow-tail-r"></div>
@@ -1066,8 +1066,8 @@
                             <div class="gp-box">
                                 <div class="gp-paper-ph" id="gp-paper-ph">🎁</div>
                                 <div class="gp-paper-layer" id="gp-paper-layer"></div>
-                                <div class="gp-band-v"></div>
-                                <div class="gp-band-h"></div>
+                                <div class="gp-band-v" id="gp-band-v"></div>
+                                <div class="gp-band-h" id="gp-band-h"></div>
                                 <div class="gp-bow">
                                     <div class="gp-bow-tail gp-bow-tail-l" id="gp-bow-tail-l"></div>
                                     <div class="gp-bow-tail gp-bow-tail-r" id="gp-bow-tail-r"></div>
@@ -2215,19 +2215,25 @@
             }
         }
 
-        // Ribbon (shown as bow shape)
+        // Ribbon (bow + crossing bands)
         const bowDefault = document.getElementById('gp-bow-default');
         const bowParts   = ['gp-bow-left','gp-bow-right','gp-bow-knot','gp-bow-tail-l','gp-bow-tail-r']
                             .map(id => document.getElementById(id));
+        const bandV = document.getElementById('gp-band-v');
+        const bandH = document.getElementById('gp-band-h');
         if (ribbon) {
             const rd = RIBBONS.find(r => r.n === ribbon);
             if (rd) {
                 const ru = `url('${BASE}/${rd.f}')`;
                 bowParts.forEach(el => { if (el) el.style.backgroundImage = ru; });
+                if (bandV) bandV.style.background = `${ru} center/cover`;
+                if (bandH) bandH.style.background = `${ru} center/cover`;
                 if (bowDefault) bowDefault.classList.add('gp-hidden');
             }
         } else {
             bowParts.forEach(el => { if (el) el.style.backgroundImage = ''; });
+            if (bandV) bandV.style.background = '';
+            if (bandH) bandH.style.background = '';
             if (bowDefault) bowDefault.classList.remove('gp-hidden');
         }
 
@@ -2264,15 +2270,21 @@
         const bowDefault2 = document.getElementById('gp2-bow-default');
         const bowParts2   = ['gp2-bow-left','gp2-bow-right','gp2-bow-knot','gp2-bow-tail-l','gp2-bow-tail-r']
                              .map(id => document.getElementById(id));
+        const bandV2 = document.getElementById('gp2-band-v');
+        const bandH2 = document.getElementById('gp2-band-h');
         if (ribbon) {
             const rd = RIBBONS.find(r => r.n === ribbon);
             if (rd) {
                 const ru2 = `url('${BASE}/${rd.f}')`;
                 bowParts2.forEach(el => { if (el) el.style.backgroundImage = ru2; });
+                if (bandV2) bandV2.style.background = `${ru2} center/cover`;
+                if (bandH2) bandH2.style.background = `${ru2} center/cover`;
                 if (bowDefault2) bowDefault2.classList.add('gp-hidden');
             }
         } else {
             bowParts2.forEach(el => { if (el) el.style.backgroundImage = ''; });
+            if (bandV2) bandV2.style.background = '';
+            if (bandH2) bandH2.style.background = '';
             if (bowDefault2) bowDefault2.classList.remove('gp-hidden');
         }
         const tagImg2 = document.getElementById('gp2-tag-img');
