@@ -631,19 +631,35 @@
             z-index: 2;
         }
         .gp-bow {
-            position: absolute; left: 50%; top: calc(38% - 20px);
+            position: absolute; left: 50%; top: calc(38% - 22px);
             transform: translateX(-50%);
-            width: 48px; height: 48px; border-radius: 50%;
-            border: 2px solid rgba(245,215,154,0.55);
-            box-shadow: 0 4px 14px rgba(0,0,0,0.5);
-            background: rgba(50,30,80,0.95); overflow: hidden; z-index: 3;
+            width: 58px; height: 44px; z-index: 3;
         }
-        .gp-bow-img { width: 100%; height: 100%; object-fit: cover; display: none; }
-        .gp-bow-img.gp-active { display: block; }
+        .gp-bow-loop {
+            position: absolute;
+            width: 22px; height: 17px;
+            border-radius: 50% 50% 46% 46%;
+            background-color: rgba(195,149,89,0.95);
+            background-size: cover; background-position: center;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.14);
+            top: 5px;
+        }
+        .gp-bow-left  { left: 1px;  transform: rotate(-32deg); transform-origin: right center; }
+        .gp-bow-right { right: 1px; transform: rotate(32deg);  transform-origin: left center; }
+        .gp-bow-knot {
+            position: absolute; left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+            width: 14px; height: 12px; border-radius: 50%;
+            background-color: rgba(195,149,89,1);
+            background-size: cover; background-position: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.45);
+            z-index: 3; border: 1px solid rgba(255,255,255,0.15);
+        }
         .gp-bow-default {
             position: absolute; inset: 0; display: flex;
             align-items: center; justify-content: center;
-            font-size: 1.5rem; opacity: 0.5;
+            font-size: 1.6rem; opacity: 0.55; pointer-events: none;
         }
         .gp-bow-default.gp-hidden { display: none; }
         .gp-tag-wrap {
@@ -733,8 +749,35 @@
         .gpm-box .gp-paper-ph   { font-size: 4.5rem; }
         .gpm-box .gp-band-v     { width: 27px; }
         .gpm-box .gp-band-h     { height: 27px; }
-        .gpm-box .gp-bow        { width: 80px; height: 80px; top: calc(38% - 40px); }
-        .gpm-box .gp-bow-default { font-size: 2.4rem; }
+        .gpm-box .gp-bow        { width: 96px; height: 74px; top: calc(38% - 37px); }
+        .gpm-box .gp-bow-loop   { width: 37px; height: 28px; top: 8px; }
+        .gpm-box .gp-bow-knot   { width: 24px; height: 20px; }
+        .gpm-box .gp-bow-default { font-size: 2.6rem; }
+
+        /* Tag message overlay */
+        .gp-tag-msg {
+            position: absolute; inset: 0; display: flex;
+            align-items: center; justify-content: center;
+            font-size: 4.5px; line-height: 1.3;
+            color: rgba(20,10,40,0.92); text-align: center;
+            padding: 3px; word-break: break-word; overflow: hidden;
+            z-index: 6; pointer-events: none; font-weight: 700;
+            text-shadow: 0 0 2px rgba(255,255,255,0.75);
+        }
+        .gpm-tag-msg { font-size: 8px; padding: 6px; line-height: 1.35; }
+
+        /* Cursor fix in modal */
+        #gift-preview-modal, #gift-preview-modal * { cursor: default; }
+        #gift-preview-modal .gpm-backdrop { cursor: pointer; }
+        #gift-preview-modal .gpm-close    { cursor: pointer; }
+
+        /* Pulse animation when Customize Design is clicked */
+        @keyframes gpPulse {
+            0%   { box-shadow: 0 0 0 0   rgba(245,215,154,0.55); }
+            40%  { box-shadow: 0 0 0 10px rgba(245,215,154,0.2); }
+            100% { box-shadow: 0 0 0 0   rgba(245,215,154,0); }
+        }
+        .occasion-select-wrap.gp-pulse { animation: gpPulse 0.8s ease-out; }
 
         .gpm-tag-wrap {
             position: absolute; right: 0; top: 48px;
@@ -782,8 +825,10 @@
                 <div class="gp-band-v"></div>
                 <div class="gp-band-h"></div>
                 <div class="gp-bow">
-                    <div class="gp-bow-default" id="gp2-bow-default">🎀</div>
-                    <img class="gp-bow-img" id="gp2-bow-img" src="" alt="ribbon">
+                    <div class="gp-bow-loop gp-bow-left"  id="gp2-bow-left"></div>
+                    <div class="gp-bow-loop gp-bow-right" id="gp2-bow-right"></div>
+                    <div class="gp-bow-knot"              id="gp2-bow-knot"></div>
+                    <div class="gp-bow-default"           id="gp2-bow-default">🎀</div>
                 </div>
             </div>
             <div class="gpm-tag-wrap">
@@ -791,6 +836,7 @@
                 <div class="gpm-tag-card">
                     <div class="gp-tag-ph" id="gp2-tag-ph">🏷️</div>
                     <img class="gp-tag-img" id="gp2-tag-img" src="" alt="tag">
+                    <div class="gp-tag-msg gpm-tag-msg" id="gp2-tag-msg"></div>
                 </div>
             </div>
         </div>
@@ -1001,8 +1047,10 @@
                                 <div class="gp-band-v"></div>
                                 <div class="gp-band-h"></div>
                                 <div class="gp-bow">
-                                    <div class="gp-bow-default" id="gp-bow-default">🎀</div>
-                                    <img class="gp-bow-img" id="gp-bow-img" src="" alt="ribbon">
+                                    <div class="gp-bow-loop gp-bow-left"  id="gp-bow-left"></div>
+                                    <div class="gp-bow-loop gp-bow-right" id="gp-bow-right"></div>
+                                    <div class="gp-bow-knot"              id="gp-bow-knot"></div>
+                                    <div class="gp-bow-default"           id="gp-bow-default">🎀</div>
                                 </div>
                             </div>
                             <div class="gp-tag-wrap">
@@ -1010,6 +1058,7 @@
                                 <div class="gp-tag-card">
                                     <div class="gp-tag-ph" id="gp-tag-ph">🏷️</div>
                                     <img class="gp-tag-img" id="gp-tag-img" src="" alt="tag">
+                                    <div class="gp-tag-msg" id="gp-tag-msg"></div>
                                 </div>
                             </div>
                         </div>
@@ -1304,6 +1353,9 @@
 
         // Gift preview click-to-enlarge
         document.querySelector('.gift-preview-wrap')?.addEventListener('click', openGiftPreviewModal);
+
+        // Tag message → live preview update
+        document.getElementById('booking-gift-tag')?.addEventListener('input', updateGiftPreview);
 
         // Name validation listeners
         const contactNameEl = document.getElementById('contact-name');
@@ -1963,6 +2015,18 @@
             setDisplay('tagDisplay', null);
             document.getElementById('designPanels').classList.add('visible');
         }
+        // Scroll to and pulse the occasion select so customers see where to go
+        setTimeout(() => {
+            const sel = document.getElementById('occasionSelect');
+            if (sel) sel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            const wrap = document.querySelector('.occasion-select-wrap');
+            if (wrap) {
+                wrap.classList.remove('gp-pulse');
+                void wrap.offsetWidth;
+                wrap.classList.add('gp-pulse');
+                setTimeout(() => wrap.classList.remove('gp-pulse'), 850);
+            }
+        }, 60);
     }
 
     function loadGiftDesignPanelValues(card) {
@@ -2022,18 +2086,20 @@
             }
         }
 
-        // Ribbon (shown as bow circle)
-        const bowImg     = document.getElementById('gp-bow-img');
+        // Ribbon (shown as bow shape)
         const bowDefault = document.getElementById('gp-bow-default');
-        if (ribbon && bowImg) {
+        const bowLeft    = document.getElementById('gp-bow-left');
+        const bowRight   = document.getElementById('gp-bow-right');
+        const bowKnot    = document.getElementById('gp-bow-knot');
+        if (ribbon) {
             const rd = RIBBONS.find(r => r.n === ribbon);
             if (rd) {
-                bowImg.src = `${BASE}/${rd.f}`;
-                bowImg.classList.add('gp-active');
+                const ru = `url('${BASE}/${rd.f}')`;
+                [bowLeft, bowRight, bowKnot].forEach(el => { if (el) el.style.backgroundImage = ru; });
                 if (bowDefault) bowDefault.classList.add('gp-hidden');
             }
         } else {
-            if (bowImg) bowImg.classList.remove('gp-active');
+            [bowLeft, bowRight, bowKnot].forEach(el => { if (el) el.style.backgroundImage = ''; });
             if (bowDefault) bowDefault.classList.remove('gp-hidden');
         }
 
@@ -2067,17 +2133,19 @@
                 if (paperPh2) paperPh2.classList.remove('gp-hidden');
             }
         }
-        const bowImg2     = document.getElementById('gp2-bow-img');
         const bowDefault2 = document.getElementById('gp2-bow-default');
-        if (ribbon && bowImg2) {
+        const bowLeft2    = document.getElementById('gp2-bow-left');
+        const bowRight2   = document.getElementById('gp2-bow-right');
+        const bowKnot2    = document.getElementById('gp2-bow-knot');
+        if (ribbon) {
             const rd = RIBBONS.find(r => r.n === ribbon);
             if (rd) {
-                bowImg2.src = `${BASE}/${rd.f}`;
-                bowImg2.classList.add('gp-active');
+                const ru2 = `url('${BASE}/${rd.f}')`;
+                [bowLeft2, bowRight2, bowKnot2].forEach(el => { if (el) el.style.backgroundImage = ru2; });
                 if (bowDefault2) bowDefault2.classList.add('gp-hidden');
             }
         } else {
-            if (bowImg2) bowImg2.classList.remove('gp-active');
+            [bowLeft2, bowRight2, bowKnot2].forEach(el => { if (el) el.style.backgroundImage = ''; });
             if (bowDefault2) bowDefault2.classList.remove('gp-hidden');
         }
         const tagImg2 = document.getElementById('gp2-tag-img');
@@ -2115,6 +2183,13 @@
             if (!el) return;
             el.textContent = captionText;
             el.classList.toggle('gp-done', captionDone);
+        });
+
+        // Tag message overlay
+        const tagMsg = document.getElementById('booking-gift-tag')?.value.trim() || '';
+        ['gp-tag-msg', 'gp2-tag-msg'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = tagMsg;
         });
     }
 
