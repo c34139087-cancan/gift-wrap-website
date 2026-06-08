@@ -117,26 +117,39 @@
 
     // ── CSS ───────────────────────────────────────────────────────────────
     const CSS = `
-        #quiz-float-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 24px;
-            background: linear-gradient(135deg, #3d1a6e, #5c2d9e);
-            color: #f5d79a;
-            border: 1.5px solid rgba(195,149,89,0.5);
-            border-radius: 50px;
-            padding: 0.7rem 1.3rem;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.88rem;
-            font-weight: 600;
-            cursor: pointer;
-            z-index: 9000;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-            transition: transform 0.2s, box-shadow 0.2s;
-            letter-spacing: 0.02em;
-        }
-        #quiz-float-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,0.6); }
-
+   #quiz-float-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 24px;
+    background: linear-gradient(135deg, #c39559, #f5d79a);
+    color: #20113c;
+    border: none;
+    border-radius: 16px;
+    padding: 0.85rem 1.4rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    z-index: 9000;
+    box-shadow: 0 8px 24px rgba(195,149,89,0.5);
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.02em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    min-width: 130px;
+    animation: quiz-pulse 2.5s ease-in-out infinite;
+}
+#quiz-float-btn:hover { 
+    transform: translateY(-4px); 
+    box-shadow: 0 14px 32px rgba(195,149,89,0.65);
+    animation: none;
+}
+@keyframes quiz-pulse {
+    0%, 100% { box-shadow: 0 8px 24px rgba(195,149,89,0.5); transform: translateY(0); }
+    50% { box-shadow: 0 12px 32px rgba(195,149,89,0.75); transform: translateY(-4px); }
+}
         #quiz-backdrop {
             position: fixed; inset: 0;
             background: rgba(8,3,22,0.96);
@@ -254,7 +267,7 @@
     function injectFloatBtn() {
         const btn = document.createElement('button');
         btn.id = 'quiz-float-btn';
-        btn.innerHTML = '🎀 Find My Style';
+btn.innerHTML = '<span style="font-size:1.6rem;display:block;">🎀</span><span style="font-size:0.82rem;font-weight:700;">Find My Style</span>';
         btn.setAttribute('aria-label', 'Take the wrapping style quiz');
         btn.onclick = openQuiz;
         document.body.appendChild(btn);
