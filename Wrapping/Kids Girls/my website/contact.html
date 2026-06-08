@@ -1228,7 +1228,7 @@
         thumb.className = 'thumb';
         thumb.title = item.n || '';
         const img = document.createElement('img');
-        img.src = BASE + '/' + path;
+        img.src = BASE + '/' + encodeURI(path);
         img.alt = item.n || '';
         thumb.appendChild(img);
         thumb.addEventListener('click', () => {
@@ -1238,7 +1238,7 @@
             updateGiftDetails();
             recalc();
             // Open lightbox with full-size image
-            openImageLightbox(BASE + '/' + path, item.n);
+            openImageLightbox(BASE + '/' + encodeURI(path), item.n);
         });
         return thumb;
     }

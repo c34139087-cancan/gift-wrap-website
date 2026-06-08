@@ -2206,7 +2206,7 @@
         if (paperLayer) {
             const pd = (paper && occ && PAPERS[occ]) ? PAPERS[occ].find(p => p.n === paper) : null;
             if (pd) {
-                paperLayer.style.backgroundImage = `url('${BASE}/${pd.f}')`;
+                paperLayer.style.backgroundImage = `url('${BASE}/${encodeURI(pd.f)}')`;
                 paperLayer.classList.add('gp-active');
                 if (paperPh) paperPh.classList.add('gp-hidden');
             } else {
@@ -2224,7 +2224,7 @@
         if (ribbon) {
             const rd = RIBBONS.find(r => r.n === ribbon);
             if (rd) {
-                const ru = `url('${BASE}/${rd.f}')`;
+                const ru = `url('${BASE}/${encodeURI(rd.f)}')`;
                 bowParts.forEach(el => { if (el) el.style.backgroundImage = ru; });
                 if (bandV) bandV.style.background = `${ru} center/cover`;
                 if (bandH) bandH.style.background = `${ru} center/cover`;
@@ -2244,7 +2244,7 @@
             const allTags = Object.values(TAGS).flat();
             const td = allTags.find(t => t.n === tag);
             if (td) {
-                tagImg.src = `${BASE}/${td.f}`;
+                tagImg.src = `${BASE}/${encodeURI(td.f)}`;
                 tagImg.classList.add('gp-active');
                 if (tagPh) tagPh.classList.add('gp-hidden');
             }
@@ -2259,7 +2259,7 @@
         if (paperLayer2) {
             const pd = (paper && occ && PAPERS[occ]) ? PAPERS[occ].find(p => p.n === paper) : null;
             if (pd) {
-                paperLayer2.style.backgroundImage = `url('${BASE}/${pd.f}')`;
+                paperLayer2.style.backgroundImage = `url('${BASE}/${encodeURI(pd.f)}')`;
                 paperLayer2.classList.add('gp-active');
                 if (paperPh2) paperPh2.classList.add('gp-hidden');
             } else {
@@ -2275,7 +2275,7 @@
         if (ribbon) {
             const rd = RIBBONS.find(r => r.n === ribbon);
             if (rd) {
-                const ru2 = `url('${BASE}/${rd.f}')`;
+                const ru2 = `url('${BASE}/${encodeURI(rd.f)}')`;
                 bowParts2.forEach(el => { if (el) el.style.backgroundImage = ru2; });
                 if (bandV2) bandV2.style.background = `${ru2} center/cover`;
                 if (bandH2) bandH2.style.background = `${ru2} center/cover`;
@@ -2293,7 +2293,7 @@
             const allTags = Object.values(TAGS).flat();
             const td = allTags.find(t => t.n === tag);
             if (td) {
-                tagImg2.src = `${BASE}/${td.f}`;
+                tagImg2.src = `${BASE}/${encodeURI(td.f)}`;
                 tagImg2.classList.add('gp-active');
                 if (tagPh2) tagPh2.classList.add('gp-hidden');
             }
@@ -2375,7 +2375,7 @@
             wrap.className = 'thumb';
             wrap.title = item.n;
             const img = document.createElement('img');
-            img.src = BASE + '/' + item.f;
+            img.src = BASE + '/' + encodeURI(item.f);
             img.alt = item.n;
             img.loading = 'lazy';
             const nameEl = document.createElement('div');
@@ -2410,7 +2410,7 @@
                     }
                 }
                 updateGiftPreview();
-                openLightbox(BASE + '/' + item.f, item.n);
+                openLightbox(BASE + '/' + encodeURI(item.f), item.n);
             });
             container.appendChild(wrap);
         });
