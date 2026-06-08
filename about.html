@@ -66,14 +66,22 @@
                     every detail is crafted with care and precision.
                 </p>
                 <div class="skills-tags">
-                    <a href="gallery.html?img=corpgifts3.png" class="tag" style="text-decoration: none;">Custom Design</a>
-                    <a href="gallery.html?img=aigiftsforsite.png" class="tag" style="text-decoration: none;">Luxury Materials</a>
-                    <a href="gallery.html?img=bridegroomfavors2.png" class="tag" style="text-decoration: none;">Event Styling</a>
-                    <a href="services.html" class="tag" style="text-decoration: none;">Sustainable Options</a>
+                    <a href="#" class="tag skill-pill" data-modal="image" data-img="corpgifts3.png" data-title="Custom Design" style="text-decoration: none;">Custom Design</a>
+                    <a href="#" class="tag skill-pill" data-modal="image" data-img="aigiftsforsite.png" data-title="Luxury Materials" style="text-decoration: none;">Luxury Materials</a>
+                    <a href="#" class="tag skill-pill" data-modal="image" data-img="bridegroomfavors2.png" data-title="Event Styling" style="text-decoration: none;">Event Styling</a>
+                    <a href="#" class="tag skill-pill" data-modal="pricing" data-title="Sustainable Options" style="text-decoration: none;">Sustainable Options</a>
                 </div>
             </div>
         </div>
     </section>
+
+    <div id="skill-modal-overlay" class="skill-modal-overlay" hidden>
+        <div class="skill-modal-content" role="dialog" aria-modal="true" aria-labelledby="skill-modal-title">
+            <button type="button" class="skill-modal-close" aria-label="Close modal">×</button>
+            <h2 id="skill-modal-title"></h2>
+            <div id="skill-modal-body"></div>
+        </div>
+    </div>
 
       
 <footer class="footer">
@@ -167,7 +175,7 @@ cursor.style.cssText = `
     width: 28px;
     height: 28px;
     pointer-events: none;
-    z-index: 99999;
+    z-index: 100001;
     font-size: 22px;
     line-height: 1;
     transform: translate(-50%, -50%);
@@ -201,6 +209,133 @@ document.addEventListener('mouseup', () => {
     cursor.style.transform = 'translate(-50%, -50%) scale(1)';
 });
 </script>
+    <style>
+        .skill-modal-overlay {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.78);
+            z-index: 100000;
+        }
+        .skill-modal-overlay[hidden] {
+            display: none;
+        }
+        .skill-modal-content {
+            position: relative;
+            width: min(100%, 860px);
+            max-height: 90vh;
+            overflow: hidden;
+            background: rgba(20, 12, 34, 0.98);
+            border: 1px solid rgba(236, 219, 159, 0.25);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 28px 60px rgba(0, 0, 0, 0.45);
+            color: #f4e8c4;
+        }
+        .skill-modal-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 42px;
+            height: 42px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(236, 219, 159, 0.12);
+            color: #ecdb9f;
+            font-size: 1.6rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .skill-modal-content h2 {
+            margin: 0;
+            font-size: clamp(1.5rem, 2vw, 2rem);
+            color: #ecdb9f;
+        }
+        .skill-modal-body {
+            margin-top: 1.2rem;
+            line-height: 1.65;
+            color: #f5d79a;
+            font-size: 0.98rem;
+        }
+        .skill-modal-body img {
+            width: auto;
+            height: auto;
+            max-width: 90%;
+            max-height: 60vh;
+            display: block;
+            margin: auto;
+            border-radius: 18px;
+            margin-top: 1rem;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+        }
+        .skill-modal-overlay {
+            cursor: none;
+        }
+        .skill-modal-body ul {
+            margin: 1rem 0 0;
+            padding-left: 1.2rem;
+        }
+        .skill-modal-body li {
+            margin-bottom: 0.8rem;
+        }
+    </style>
+    <script>
+        (function () {
+            const overlay = document.getElementById('skill-modal-overlay');
+            const titleEl = document.getElementById('skill-modal-title');
+            const bodyEl = document.getElementById('skill-modal-body');
+            const closeBtn = overlay.querySelector('.skill-modal-close');
+            const pills = document.querySelectorAll('.skill-pill');
+
+            function openModal(title, content) {
+                titleEl.textContent = title;
+                bodyEl.innerHTML = content;
+                overlay.hidden = false;
+                closeBtn.focus();
+            }
+
+            function closeModal() {
+                overlay.hidden = true;
+                bodyEl.innerHTML = '';
+            }
+
+            pills.forEach((pill) => {
+                pill.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const modalType = pill.dataset.modal;
+                    const title = pill.dataset.title || pill.textContent.trim();
+
+                    if (modalType === 'image') {
+                        const imageName = pill.dataset.img;
+                        openModal(title, `<img src="${imageName}" alt="${title}">`);
+                    } else if (modalType === 'pricing') {
+                        openModal(title, `
+                            <p><strong>Basic Wrap</strong>: Small $6, Medium $9, Large $12 per gift.</p>
+                            <p><strong>Bulk Orders 10+ gifts</strong>: Small $5, Medium $8, Large $10 per gift.</p>
+                            <p>Payment due at drop-off via Cash App or cash.</p>
+                        `);
+                    }
+                });
+            });
+
+            closeBtn.addEventListener('click', closeModal);
+            overlay.addEventListener('click', function (event) {
+                if (event.target === overlay) {
+                    closeModal();
+                }
+            });
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' && !overlay.hidden) {
+                    closeModal();
+                }
+            });
+        })();
+    </script>
 
     <!-- Back to Top Bow Button -->
     <style>
