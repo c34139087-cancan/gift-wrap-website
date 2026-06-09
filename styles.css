@@ -994,7 +994,7 @@ body {
 
 .hero-image {
     flex: 1;
-    max-width: 450px;
+    max-width: 100%;
     height: auto;
     border-radius: 20px;
     /* Optional: adds a nice curve to the image corners */
@@ -1059,7 +1059,9 @@ body {
 }
 
 @media (max-width: 768px) {
-  .hero-image { max-width: 100%; }
+  .hero-image { max-width: 100%; height: auto; width: 100%; display: block; }
+    .hero-visual { max-width: 100%; width: 100%; overflow: hidden; }
+    .hero-visual img { max-width: 100%; height: auto; }
 }
 /* FOOTER NAV */
 .footer-nav {
@@ -1342,4 +1344,18 @@ nav a:hover::after {
 .why-card p {
     color: rgba(255,255,255,0.78);
     line-height: 1.7;
+}
+/* ===== HERO MOBILE FIX ===== */
+@media (max-width: 768px) {
+  .hero-content {
+    flex-direction: column !important;
+    padding: 20px 5% !important;
+    gap: 20px !important;
+    text-align: center;
+  }
+  .hero-image {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 12px;
+  }
 }
