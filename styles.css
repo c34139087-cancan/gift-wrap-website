@@ -994,7 +994,7 @@ body {
 
 .hero-image {
     flex: 1;
-    max-width: 100%;
+    max-width: 45%;
     height: auto;
     border-radius: 20px;
     /* Optional: adds a nice curve to the image corners */
